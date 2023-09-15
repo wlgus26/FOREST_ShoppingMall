@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta charset="UTF-8">
+
+ <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<title>학생 관리</title>
+<script th:src="@{/js/jquery-3.7.0.js}"></script>
+</head>
+<body>
+	<h1>스프링 부트 웹 MVC</h1>
+	<h2>학생 관리</h2>
+	
+	<label for="deptNo">학과 : </label>
+	<select id="deptNo">
+		<option selected value="">-------- 선택 --------</option>
+	    <option th:each="department : ${departments}" 
+	    	    th:value="${department.no}" 
+	    	    th:text="${department.name}"></option>
+	</select>
+	
+	<label for="absenceYn">휴학여부 :</label>
+	<select id="absenceYn">
+		<option value="">모두</option>
+		<option value="Y">휴학중</option>
+		<option value="N">재학중</option>
+	</select>
+	
+	<button id="btnSearch" >검색</button>
+	
+	<p id="result"></p>
+
+	
+	<h4>학생목록</h4>
+	<ul id="studentsList"></ul>
+	
+
+	
+	<script>
+	// 선호. onclick="test();" test()를 전역함수로 등록시켜놓음. 대신 어디서든 호출 할수도 있다. 
+/* 	function test() {
+		alert('click');
+	} */
+	
+	$(document).ready(() => {
+			$('#btnSearch').on('click', () => {
+				
+				let deptNo = $('#deptNo>option:selected').val();
+				let absenceYn = $('#absenceYn>option:selected').val();
+				
+				$.getJSON('/students', {deptNo, absenceYn}).done((obj) => {	
+					let result = '';
+					let select = $('#studentsList');
+					let students = obj.students;
+					
+					console.log(obj);
+					
+					select.empty();
+					
+					select.append("총 학생 수: " + students.length + "명<br><br>");
+					
+					for(let i = 0; i < students.length; i++) {
+						result += '학번 : ' + students[i].no + 
+								  '<br>이름 : ' + students[i].name + 
+								  '<br>주소 : ' + students[i].address + 
+								  '<br>주민번호 : ' + students[i].ssn + 
+								  '<br>입학년도 : ' + (new Date(students[i].entranceDate).getYear() + 1900) + 
+								  '<br>휴학여부 : ' + students[i].absenceYn + 
+								  // 임의로 만든 속성값 sno를 추가시켜서 학생번호도 같이 넘겨준다.
+								  '<br><button class="btnDelete" sno="' + students[i].no + '">삭제</button>' + 
+								  // '<br><button onclick="test();">삭제</button>' + 
+								  '<br><br>';
+						select.append((i + 1) + ". " + students[i].no + "  " + students[i].name + "<br>");
+					}
+
+					$('#result').html(result);
+					
+					// 화면에 그려지고 난 후 이벤트 등록 
+ 					$('.btnDelete').on('click', (event) => {
+ 						// 자바스크립트 jquery쪽 
+ 						let sno = $(event.target).attr('sno');
+						
+ 						// rest Api 같은 경우 요청동작의 메소드속성(type)에 따라서 작동함. post는 등록, 수정할때는 catch(일부만수정) / put(전체수정)  
+ 						// confirm() : 사용자에게 예, 아니오 띄우고 true,false값 받아옴
+						if(confirm('학생 정보를 삭제하시겠습니까?')) {
+							$.ajax({
+								type : 'DELETE',
+								url : '/students/' + sno,
+								dataType : 'json',
+								success : (obj) => {
+									console.log(obj);
+									
+									if(obj.resultCode > 0) {
+										alert('삭제 되었습니다.');
+										
+										// 삭제된 후 검색 버튼에 click 이벤트를 강제로(trigger 이용) 준다. (새로고침효과)
+										$('#btnSearch').trigger('click');
+									} else {
+										alert('삭제 실패하였습니다.');
+									}
+								}
+							});
+						}
+					}); 				
+				});
+			});			
+		});
+	</script>
+	
+</body>
+</html>
