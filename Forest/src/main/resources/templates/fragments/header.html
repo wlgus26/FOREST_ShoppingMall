@@ -1,0 +1,182 @@
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+<!--headerFragment 선언-->
+<div th:fragment="headerFragment">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>FORE:ST</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <script th:src="@{/js/jquery-3.7.0.js}"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">  
+ </head>
+ 
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        	<!-- Navigation_left -->
+            <div id="main-div" class="container px-4 px-lg-5">
+             <div id="main-div-left" >
+                <a class="navbar-brand" href="/">FORE:ST</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+             </div>
+
+	
+       		  <!-- Navigation_right -->
+              <div id="main-div-right">
+               
+                <!-- Nav_rignt_top -->
+                <div id="Nav_top">
+                <div class="collapse navbar-collapse d-flex" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4" style="font-size:12px; ">
+                        <li class="nav-item"><a class="nav-link" href="/login">로그인</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/enroll">회원가입 </a></li>
+                        <li class="nav-item"><a class="nav-link">&#124;</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/cart"> 장바구니</a></li>
+                    </ul>
+                    <form action="/cart">
+                        <button class="btn btn-outline-dark" type="submit" >
+                            <i class="bi-cart-fill me-1" style="color:#426D39"></i>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </button>
+                    </form> 
+                </div>
+                </div>
+                
+           		<!-- Nav_rignt_bottom -->
+                <div class="collapse navbar-collapse nav_menu"  id="navbarSupportedContent" >
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <!--※※ if ~~ 관리자인 경우 메뉴바 전부 보이게, 유저는 4개만 보이게 -->
+                        <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/program">참여하기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/product">제품보기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/board">소통하기</a></li>
+                        <!-- 관리자메뉴_드롭다운기능 -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">관리자페이지</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/admin">매출관리</a></li>
+                                <li><a class="dropdown-item" href="/admin">상품관리</a></li>
+                                <li><a class="dropdown-item" href="/admin">클래스관리</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="/admin">회원관리</a></li>
+                                <li><a class="dropdown-item" href="/admin">게시판관리</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+					  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+					  <span class="input-group-text border-0" id="search-addon">
+					    <a href="/" ><i class="bi bi-search"></i></a>
+					  </span>
+					</div>
+                </div>
+              </div>
+            </div>
+        </nav>
+        
+        <!-- Header -->
+        <!-- home -->
+        <th:block th:if="${pageName eq 'home'}">
+        <header class="bg-main" >
+            <div class="container">
+                <div class="text-center text-white">
+                  <!-- home 영상 -->
+	               <video class="bg-main-video" autoplay loop muted playsinline>
+		               <source src="/videos/main_video.mp4" type="video/mp4" quality="high">
+		           </video>
+                    <h1 class="display-4 fw-bolder">FORE:ST</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">Preserving the beauty of the Earth and brightening the future with FORE:ST</p>
+                 </div>
+               </div>
+         </header>   
+         </th:block>
+                
+         <!-- about -->
+		 <th:block th:if="${pageName eq 'about'}">
+	         <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
+			     <div class="container">
+			          <div class="text-center text-white">		         	 
+			              <h3 class="display-6 fw-bolder">ABOUT</h3>
+			          </div>
+			     </div>
+			  </header>
+		 </th:block>
+		 
+         <!-- 참여하기 -->
+		 <th:block th:if="${pageName eq 'program'}">
+	         <header class="bg-main-header py-5" style="background-image: url('/images/program_pic.png');">
+			     <div class="container">
+			          <div class="text-center text-white">		         	 
+			              <h3 class="display-6 fw-bolder">참여하기</h3>
+			          </div>
+			     </div>
+			  </header>
+		 </th:block>
+		 
+         <!-- 제품보기 -->
+		 <th:block th:if="${pageName eq 'product'}">
+	         <header class="bg-main-header py-5" style="background-image: url('/images/product_pic.png');">
+			     <div class="container">
+			          <div class="text-center text-white">		         	 
+			              <h3 class="display-6 fw-bolder">제품보기</h3>
+			          </div>
+			     </div>
+			  </header>
+		 </th:block>
+		 
+         <!-- 소통하기 -->
+		 <th:block th:if="${pageName eq 'board'}">
+	         <header class="bg-main-header py-5" style="background-image: url('/images/board_pic.png');">
+			     <div class="container">
+			          <div class="text-center text-white">		         	 
+			              <h3 class="display-6 fw-bolder">소통하기</h3>
+			          </div>
+			     </div>
+			  </header>
+		 </th:block>
+		 
+		 <!-- 기타페이지_공통 -->
+		 <th:block th:unless="${pageName eq 'home' or pageName eq 'about' or pageName eq 'program' or pageName eq 'product' or pageName eq 'board'}">
+	         <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
+			     <div class="container">
+			          <div class="text-center text-white">		         	 
+			              <h3 class="display-6 fw-bolder">FORE:ST</h3>
+			          </div>
+			     </div>
+			  </header>
+		 </th:block>
+		 <!--  <p class="lead fw-normal text-white-50 mb-0">Preserving the beauty of the Earth and brightening the future with FOREST</p>
+		 -->
+	
+        
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        
+        
+        <!-- main_video 자동 재생 -->
+        <script>
+        	document.addEventListener('DOMContentLoaded', function () {
+        	  var video = document.getElementById('video-background');
+
+        	  // 비디오가 재생될 때 반복 재생
+        	  video.addEventListener('ended', function () {
+        	    video.currentTime = 0;
+        	    video.play(); 
+        	  });
+        	});
+        </script>
+    </body>
+</div>
+</html>
