@@ -192,9 +192,36 @@
 				  </ul>
 				</div>
 	       </th:block>
+	       
+	       <!-- 관리자 페이지 -->
+	       <th:block th:if="${pageName eq 'salesMgmt' or pageName eq 'programMgmt' or 
+	       					  pageName eq 'productMgmt' or pageName eq 'boardMgmt' or 
+	       					  pageName eq 'memberMgmt'}">
+	            <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
+	              <div class="container">
+	                   <div class="text-center text-white">                   
+	                       <h3 class="display-6 fw-bolder">FORE:ST</h3>
+	                   </div>
+	              </div>
+	           </header>
+              	<div class="MyPagemenu">
+				  <ul>
+				    <li>
+				      <a th:href="@{/admin/salesMgmt}" th:classappend="${pageName eq 'salesMgmt'} ? 'active-menu' : ''">매출관리</a>
+				      <a th:href="@{/admin/productMgmt}" th:classappend="${pageName eq 'productMgmt'} ? 'active-menu' : ''">제품관리</a>
+				      <a th:href="@{/admin/programMgmt}" th:classappend="${pageName eq 'programMgmt'} ? 'active-menu' : ''">클래스관리</a>
+				      <a th:href="@{/admin/memberMgmt}" th:classappend="${pageName eq 'memberMgmt'} ? 'active-menu' : ''">회원관리</a>
+				      <a th:href="@{/admin/boardMgmt}" th:classappend="${pageName eq 'boardMgmt'} ? 'active-menu' : ''">게시판관리</a>
+				    </li>
+				  </ul>
+				</div>
+	       </th:block>
        
        <!-- 기타페이지_공통 -->
-       <th:block th:unless="${pageName eq 'home' or pageName eq 'about' or pageName eq 'program' or pageName eq 'product' or pageName eq 'board' or pageName eq 'myPage'}">
+       <th:block th:unless="${pageName eq 'home' or pageName eq 'about' or pageName eq 'program' or 
+       	 					  pageName eq 'product' or pageName eq 'board' or pageName eq 'myPage' or 
+       	 					  pageName eq 'salesMgmt' or pageName eq 'programMgmt' or pageName eq 'productMgmt' or 
+       	 					  pageName eq 'boardMgmt' or pageName eq 'memberMgmt'}">
             <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
               <div class="container">
                    <div class="text-center text-white">                   
