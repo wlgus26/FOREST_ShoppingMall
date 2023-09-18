@@ -1891,6 +1891,12 @@ progress {
     --bs-gutter-y: 3rem;
   }
 }
+
+.table-div {
+	display: flex;
+	align-items: center;
+	justify-content: center; 
+}
 .table {
   --bs-table-color: var(--bs-body-color);
   --bs-table-bg: transparent;
@@ -1902,7 +1908,7 @@ progress {
   --bs-table-active-bg: rgba(0, 0, 0, 0.1);
   --bs-table-hover-color: var(--bs-body-color);
   --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
-  width: 100%;
+  width: 80%;
   margin-bottom: 1rem;
   color: var(--bs-table-color);
   vertical-align: top;
@@ -7311,6 +7317,12 @@ textarea.form-control-lg {
 
 .translate-middle-y {
   transform: translateY(-50%) !important;
+}
+
+
+/* th 커스텀 */
+.th-custom-style {
+	font-size: 25px;
 }
 
 .border {
