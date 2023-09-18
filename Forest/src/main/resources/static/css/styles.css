@@ -91,6 +91,126 @@
   }
 }
 
+/* 소통하기 */
+.adminmenu {
+  background-color: #f0f0f0;
+  padding: 1px;
+  margin-top: 1px;
+}
+
+.adminmenu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.adminmenu li {
+  display: flex; /* Flexbox 사용 */
+  justify-content: space-between; /* 각 항목을 가능한 넓게 펼치기 */
+}
+
+.adminmenu a {
+  flex: 1; /* 너비를 같게 설정 */
+  text-align: center;
+  padding: 1px; /* 내부 여백 설정 */
+  text-decoration: none; /* 링크 밑줄 제거 */
+  color: #333; /* 링크 텍스트 색상 설정 */
+}
+
+.adminmenu a:last-child {
+  border-right: none; /* 마지막 항목의 구분선 제거 */
+}
+
+/* 참여하기 */
+.Participationmenu {
+  background-color: #f0f0f0;
+  padding: 1px;
+  margin-top: 1px;
+}
+
+.Participationmenu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.Participationmenu li {
+  display: flex; /* Flexbox 사용 */
+  justify-content: space-between; /* 각 항목을 가능한 넓게 펼치기 */
+}
+
+.Participationmenu a {
+  flex: 1; /* 너비를 같게 설정 */
+  text-align: center;
+  padding: 1px; /* 내부 여백 설정 */
+  text-decoration: none; /* 링크 밑줄 제거 */
+  color: #333; /* 링크 텍스트 색상 설정 */
+}
+
+.Participationmenu a:last-child {
+  border-right: none; /* 마지막 항목의 구분선 제거 */
+}
+
+/* 제품보기 */
+.Productmenu {
+  background-color: #f0f0f0;
+  padding: 1px;
+  margin-top: 1px;
+}
+
+.Productmenu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.Productmenu li {
+  display: flex; /* Flexbox 사용 */
+  justify-content: space-between; /* 각 항목을 가능한 넓게 펼치기 */
+}
+
+.Productmenu a {
+  flex: 1; /* 너비를 같게 설정 */
+  text-align: center;
+  padding: 1px; /* 내부 여백 설정 */
+  text-decoration: none; /* 링크 밑줄 제거 */
+  color: #333; /* 링크 텍스트 색상 설정 */
+}
+
+.Productmenu a:last-child {
+  border-right: none; /* 마지막 항목의 구분선 제거 */
+}
+
+/* 마이페이지 */
+.MyPagemenu {
+  background-color: #f0f0f0;
+  padding: 1px;
+  margin-top: 1px;
+}
+
+.MyPagemenu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.MyPagemenu li {
+  display: flex; /* Flexbox 사용 */
+  justify-content: space-between; /* 각 항목을 가능한 넓게 펼치기 */
+}
+
+.MyPagemenu a {
+  flex: 1; /* 너비를 같게 설정 */
+  text-align: center;
+  padding: 1px; /* 내부 여백 설정 */
+  text-decoration: none; /* 링크 밑줄 제거 */
+  color: #333; /* 링크 텍스트 색상 설정 */
+}
+
+.MyPagemenu a:last-child {
+  border-right: none; /* 마지막 항목의 구분선 제거 */
+}
+
+
+
+
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);
