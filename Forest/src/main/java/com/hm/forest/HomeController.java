@@ -55,12 +55,52 @@ public class HomeController {
 		return modlAndView;
 	}
 	
-	// 관리자페이지로 이동
-	@GetMapping("/admin")
-	public ModelAndView admin (ModelAndView modlAndView) {
+	// 관리자페이지_매출관리로 이동
+	@GetMapping("/admin/salesMgmt")
+	public ModelAndView salesMgmt (ModelAndView modlAndView) {
 		
-		modlAndView.addObject("pageName", "admin");
-		modlAndView.setViewName("page/admin");
+		modlAndView.addObject("pageName", "salesMgmt");
+		modlAndView.setViewName("page/admin/salesMgmt");
+		
+		return modlAndView;
+	}
+	
+	// 관리자페이지_제품관리로 이동
+	@GetMapping("/admin/productMgmt")
+	public ModelAndView productMgmt (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "productMgmt");
+		modlAndView.setViewName("page/admin/productMgmt");
+		
+		return modlAndView;
+	}
+	
+	// 관리자페이지_클래스관리로 이동
+	@GetMapping("/admin/programMgmt")
+	public ModelAndView programMgmt (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "programMgmt");
+		modlAndView.setViewName("page/admin/programMgmt");
+		
+		return modlAndView;
+	}
+	
+	// 관리자페이지_회원관리로 이동
+	@GetMapping("/admin/memberMgmt")
+	public ModelAndView memberMgmt (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "memberMgmt");
+		modlAndView.setViewName("page/admin/memberMgmt");
+		
+		return modlAndView;
+	}
+	
+	// 관리자페이지_게시판관리로 이동
+	@GetMapping("/admin/boardMgmt")
+	public ModelAndView boardMgmt (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "boardMgmt");
+		modlAndView.setViewName("page/admin/boardMgmt");
 		
 		return modlAndView;
 	}
