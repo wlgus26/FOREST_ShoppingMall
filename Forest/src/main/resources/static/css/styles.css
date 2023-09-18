@@ -94,13 +94,13 @@
 /* 소통하기 */
 .adminmenu {
   background-color: #f0f0f0;
-  padding: 1px;
-  margin-top: 1px;
+  /* padding: 1px; */
+  margin-top: 15px;
 }
 
 .adminmenu ul {
   list-style: none;
-  padding: 0;
+  padding: 10px;
 }
 
 .adminmenu li {
@@ -123,13 +123,13 @@
 /* 참여하기 */
 .Participationmenu {
   background-color: #f0f0f0;
-  padding: 1px;
-  margin-top: 1px;
+  /* padding: 1px; */
+  margin-top: 15px;
 }
 
 .Participationmenu ul {
   list-style: none;
-  padding: 0;
+  padding: 10px;
 }
 
 .Participationmenu li {
@@ -152,13 +152,13 @@
 /* 제품보기 */
 .Productmenu {
   background-color: #f0f0f0;
-  padding: 1px;
-  margin-top: 1px;
+  /*padding: 1px;*/
+  margin-top: 15px;
 }
 
 .Productmenu ul {
   list-style: none;
-  padding: 0;
+  padding: 10px;
 }
 
 .Productmenu li {
@@ -181,13 +181,13 @@
 /* 마이페이지 */
 .MyPagemenu {
   background-color: #f0f0f0;
-  padding: 1px;
-  margin-top: 1px;
+  /*padding: 1px;*/
+  margin-top: 15px;
 }
 
 .MyPagemenu ul {
   list-style: none;
-  padding: 0;
+  padding: 10px;
 }
 
 .MyPagemenu li {
@@ -206,8 +206,6 @@
 .MyPagemenu a:last-child {
   border-right: none; /* 마지막 항목의 구분선 제거 */
 }
-
-
 
 
 
