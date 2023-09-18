@@ -12,7 +12,7 @@
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="/css/styles.css" rel="stylesheet" />
         <script th:src="@{/js/jquery-3.7.0.js}"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <!-- Fonts -->
@@ -64,12 +64,12 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">관리자페이지</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="/admin">매출관리</a></li>
-                                <li><a class="dropdown-item" href="/admin">상품관리</a></li>
-                                <li><a class="dropdown-item" href="/admin">클래스관리</a></li>
+                                <li><a class="dropdown-item" href="/admin/salesMgmt">매출관리</a></li>
+                                <li><a class="dropdown-item" href="/admin/productMgmt">상품관리</a></li>
+                                <li><a class="dropdown-item" href="/admin/programMgmt">클래스관리</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="/admin">회원관리</a></li>
-                                <li><a class="dropdown-item" href="/admin">게시판관리</a></li>
+                                <li><a class="dropdown-item" href="/admin/memberMgmt">회원관리</a></li>
+                                <li><a class="dropdown-item" href="/admin/boardMgmt">게시판관리</a></li>
                             </ul>
                         </li>
                     </ul>
