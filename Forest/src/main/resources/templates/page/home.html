@@ -8,6 +8,62 @@
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
+    <style>
+        #navi > li {
+            display: inline-block;
+            position: relative;
+            list-style-type: none;
+            margin: 10px;
+            margin-left: 150px;
+            /* top: 10px;
+            left: 260px; */
+        }
+        #navi > li > a {
+            display:block; position:relative; padding-bottom:19px;
+            /* margin: 50px; */
+        }
+        /* #navi > li > a > img {
+            width:50px; height:50px;
+        } */
+        
+        #navi > li > a > span {
+            position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0)
+        }
+        
+        #product > li {
+            display: inline-block;
+            position: relative;
+            top: 10px;
+            margin-left: -35px;
+        }
+        #product > li > a {
+            display:block; position:relative; padding-bottom:19px;
+            padding: 50px;
+        }
+        #product > li > a > img {
+            width:200px; height:150px;
+        }
+        #product > li > a > span {
+            position:absolute; left:55%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0)
+        }
+
+        #camp > li {
+            display: inline-block;
+            position: relative;
+            /* top: 10px; */
+        }
+        #camp > li > a {
+            display:block; position:relative; padding-bottom:19px;
+            padding: 50px;
+        }
+        #camp > li > a > img {
+            width:200px; height:150px;
+        }
+        #camp > li > a > span {
+            position:absolute; left:55%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0)
+        }
+
+    </style>
 </th:block>
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
@@ -16,6 +72,42 @@
 
 <!-- Content -->
 <div layout:fragment="content">
-    <h5> templates > page > Home.html > Content </h5>
+   <div style="align-content: center;">
+        <div id="content1">
+            <ul id="navi">
+                <li><a href="#"><img src="../images/home1.PNG"><span>원데이 클래스</span></a></li>
+                <li><a href="#"><img src="../images/home1.PNG"><span>참여형 클래스</span></a></li>
+                <li><a href="#"><img src="../images/home1.PNG"><span>제품보기</span></a></li>
+                <li><a href="#"><img src="../images/home1.PNG"><span>실천인증</span></a></li>
+                <li><a href="#"><img src="../images/home1.PNG"><span>공지사항</span></a></li>
+        </div>
+        <br> <br>
+        <div id="content2">
+            <h3 style="color: rgb(5, 71, 5);" >FORE:ST MISSION</h3>
+                <p>일회용품 사용량 증가와 과잉 소비는 세계적인 환경 위기로 이어졌습니다.  <br>
+                쓰레기 대부분은 재활용이 가능함에도 불구하고 수익성이 없다는 이유로 재활용되기 보다는 소각 또는 매립되어 지구를 오염시키고 있습니다. <br>
+                FORE:ST의 미션은 Reduce Reuse Recycle Recovery의 4 RE_ACT를 통한 자원 순환입니다.</p>
+                <img src="../images/home06.PNG" style="margin-left: 10px; margin-top: 30px; width: 1000px;">
+        </div>
+        <div id="content3">
+            <ul id="product">
+                <h4 style="color: rgb(5, 71, 5); margin-top: 100px; ">이벤트 / 기획전</h4>
+                <li><a href="#"><img src="../images/home10.PNG"><span style="bottom: -25px;">주식회사 크랫딧 <br> 주식회사 | 제로웨이스트 세트 <br> <br><strike>15,200</strike> &rarr; 12,400원 </span></a></li>
+                <li><a href="#"><img src="../images/home11.PNG"><span style="bottom: -38px;">주식회사 인비저블 컴퍼니 <br> 보이브 멀티퍼퓸 섬유탈취제 <br> 섬유향수 <br><br> <strike>28,000원</strike> &rarr; 19,600원 </span></a></li>
+                <li><a href="#"><img src="../images/home12.PNG"><span style="bottom: -25px;">주식회사 더사랑 <br> [보킷] 친환경 문구세트 숲 <br><br> 8,900원 </span></a></li>
+                <li><a href="#"><img src="../images/home13.PNG"><span style="bottom: -38px;">주식회사 오랜 <br> [오랜] 오가닉 다회용 재사용 <br> 화장솜 제로웨이스트 <br><br> 8,700</span></a></li>
+            </ul>
+        </div>
+    
+        <div id="content4">
+            <ul id="camp">
+                <h4 style="color: rgb(5, 71, 5); margin-top: 100px; ">진행 중인 캠패인</h4>
+                <p>건강한 지구를 만들기 위한 자원 순환 캠페인</p>
+                <li><a href="#"><img src="../images/home14.PNG"><span style="bottom: -0.5px;">신세계인터내셔날 S.I 뷰티 캠페인 <br> 화장품 공병 수거 캠페인</span></a></li>
+                <li><a href="#"><img src="../images/home15.PNG"><span style="bottom: -0.5px;">비오템 <br> 화장품 공병 재활용 캠페인</span></a></li>
+                <li><a href="#"><img src="../images/home16.PNG"><span style="bottom: -0.5px;">브리타 그린 리프 멤버십 <br> 필터 재활용 프로그램</span></a></li>
+            </ul>
+        </div>
+    </div>
 </div>
 </html>
