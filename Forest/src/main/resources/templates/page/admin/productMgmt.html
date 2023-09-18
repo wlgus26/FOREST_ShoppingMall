@@ -8,6 +8,11 @@
 <!-- productMgmt.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/producstMgmt.css}" >-->
+	<style>
+	.table > th {
+		width: 25%;
+	}
+	</style>
 </th:block>
 <!-- productMgmt.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
@@ -20,7 +25,7 @@
   <table class="table">
 	  <thead>
 	    <tr class="border-bottom" >
-	      <th scope="col" colspan="4" class="th-custom-style" style="border-bottom-width: 3px; 
+	      <th scope="col" colspan="2" class="th-custom-style" style="border-bottom-width: 3px; 
 	border-bottom-color: #082f1c;
 	color: #082f1c;">제품등록</th>
 	    </tr>
@@ -29,27 +34,27 @@
 	  <tbody>
 	    <tr>
 	      <th scope="row">제품명</th>
-	      <td colspan="3"> <input type="text"> </td>
+	      <td><input type="text"></td>
 	    </tr>
 	    <tr>
 	      <th scope="row">판매가</th>
-	      <td colspan="3"> <input type="text"> </td>
+	      <td><input type="text"> </td>
 	    </tr>
 	    <tr>
 	      <th scope="row">재고수량</th>
-	      <td colspan="3"> <input type="number"> </td>
+	      <td><input type="number" min="0"></td>
 	    </tr>
 	    <tr>
 	      <th scope="row">설명</th>
-	      <td colspan="3"> <input type="text"> </td>
+	      <td><textarea rows="3" cols="50" resize="none"></textarea></td>
 	    </tr>
 	    <tr>
 	      <th scope="row">대표이미지</th>
-	      <td colspan="3"> <input type="file"> </td>
+	      <td> <input type="file"></td>
 	    </tr>
 	    <tr>
 	      <th scope="row">상세이미지</th>
-	      <td colspan="3"> <input type="file"> </td>
+	      <td><input type="file"></td>
 	    </tr>
 	    <tr>
 	      <th></th>
@@ -59,7 +64,9 @@
 	      </td>
 	      </tr>
 	  </tbody>
-</table>
+	  </table>
+
 </div>
 </div>
+
 </html>
