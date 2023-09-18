@@ -212,6 +212,11 @@
 }
 
 
+/* 페이지에 맞게 메뉴바 text bold 활성화 */
+.MyPagemenu a.active-menu {
+    font-weight: bold;
+    text-decoration: underline;
+}
 
 
 body {
