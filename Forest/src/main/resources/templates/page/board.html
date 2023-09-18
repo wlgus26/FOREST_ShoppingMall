@@ -9,22 +9,22 @@
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/page/product.css}" >
     <style>
-  #tbl-board {
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid white;
-  }
-  #tbl-board th, td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: center;
-  } 
+  	#tbl-board {
+	    border-collapse: collapse;
+	    width: 100%;
+	    border: 1px solid white;
+  	 }
+  	#tbl-board th, td {
+	    border: 1px solid black;
+	    padding: 8px;
+	    text-align: center;
+  	 } 
      section {
-     max-width: 100%;
-     text-align:center;
+	     max-width: 100%;
+	     text-align:center;
      }
-	
-	dl{width:600px;}
+     
+	dl{}
 	dt{height:30px; background:#ffffff; color:#000000; font-weight:bold; border-bottom:1px solid #ccc; text-indent:20px;}/*text-indent 들여쓰기*/
 	dd{margin-left:15px; background:#f5efef; padding:50px;}
 	dt.over{background:#ffffff; cursor:pointer;}
@@ -41,7 +41,7 @@
 <div layout:fragment="content">
 
 <div style="width: 100%; margin: 20px 20px 20px 0px">
-<h1 style="margin-left:15px; font-size: 1.5em; color: #000000;">자주 묻는 질문 TOP 8</h1>
+<h1 style="text-align:center; font-size: 1.5em; color: #000000;">자주 묻는 질문 TOP 8</h1>
 <br>
 <div id="board-list-container">
 	<table id="tbl-board" style="justify-content: space-between; width: 100%; border: 1px solid #ddd;">
