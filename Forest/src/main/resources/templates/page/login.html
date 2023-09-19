@@ -24,17 +24,25 @@
 			 <a class="navbar-brand">FORE:ST</a>
 			</div>
 		</header>
-		<form th:action="@{/login}" method="post">
-    <div class="login-input-wrap">
-        <input name="username" placeholder="username" type="text"></input>
-    </div>
-    <div class="login-input-wrap password-wrap">
-        <input name="password" placeholder="password" type="password"></input>
-    </div>
-    <div class="login-button-wrap">
-        <input type="submit" value="로그인"></input>
-    </div>
-</form>
+			<form th:action="@{/login}" method="post">
+			<section class="login-input-section-wrap">
+				<div class="login-input-wrap">
+			        <input name="username" placeholder="username" type="text"></input>
+			    </div>
+			    <div class="login-input-wrap password-wrap">
+			        <input name="password" placeholder="password" type="password"></input>
+			    </div>
+			    <div class="login-button-wrap">
+			        <input type="submit" value="로그인"></input>
+			    </div>
+			    <div class="login-stay-sign-in">
+						<i class="far fa-check-circle"></i>
+						<span>로그인 유지하기</span>
+						<span style="padding-left:264px;"><a href="/enroll">회원가입</a></span>
+					</div>
+			</section>
+			
+			</form>
 		</div>
 	</div>
 </html>
