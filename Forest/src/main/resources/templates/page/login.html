@@ -1,21 +1,48 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default_layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <th:block th:with="pageName='login'"></th:block>      
 <!-- login.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/login.css}" >-->
+<link rel="stylesheet" href="/css/login.css">
 </th:block>
 <!-- login.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
     <!-- ex)  <script th:src="@{/js/page/login.js}"></script>-->
+    <script src="https://kit.fontawesome.com/51db22a717.js" crossorigin="anonymous"></script>
 </th:block>
 
 <!-- Content -->
-<div layout:fragment="content">
-   <h5> templates > page > login.html > Content </h5>
-</div>
+<div class="main-container">
+		<div class="main-wrap">
+		<header>
+			<div class="sel-lang-wrap">
+			</div>
+			<div class="logo-wrap">
+			 <a class="navbar-brand">FORE:ST</a>
+			</div>
+		</header>
+			<form th:action="@{/login}" method="post">
+			<section class="login-input-section-wrap">
+				<div class="login-input-wrap">
+			        <input name="username" placeholder="username" type="text"></input>
+			    </div>
+			    <div class="login-input-wrap password-wrap">
+			        <input name="password" placeholder="password" type="password"></input>
+			    </div>
+			    <div class="login-button-wrap">
+			        <input type="submit" value="로그인"></input>
+			    </div>
+			    <div class="login-stay-sign-in">
+						<i class="far fa-check-circle"></i>
+						<span>로그인 유지하기</span>
+						<span style="padding-left:264px;"><a href="/enroll">회원가입</a></span>
+					</div>
+			</section>
+			
+			</form>
+		</div>
+	</div>
 </html>
