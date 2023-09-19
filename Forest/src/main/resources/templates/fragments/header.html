@@ -59,7 +59,7 @@
                         <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="/program">참여하기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/product">제품보기</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/board">소통하기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/board/notice">소통하기</a></li>
                         <!-- 관리자메뉴_드롭다운기능 -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">관리자페이지</a>
@@ -121,7 +121,7 @@
 			          </div>
 			     </div>
 			  </header>
-			   <div class="Participationmenu">
+			   <div class="sub-menu">
 				  <ul>
 				    <li>
 				      <a href="#">원데이 클래스</a>
@@ -140,7 +140,7 @@
 			          </div>
 			     </div>
 			  </header>
-		        <div class="Productmenu">
+		        <div class="sub-menu">
 				  <ul>
 				    <li>
 				      <a href="#">주방</a>
@@ -152,21 +152,21 @@
 		 </th:block>
 		 
          <!-- 소통하기 -->
-		 <th:block th:if="${pageName eq 'board'}">
+		 <th:block th:if="${pageName eq 'notice' or pageName eq 'faq' or pageName eq 'community' or pageName eq 'act'}">
 	         <header class="bg-main-header py-5" style="background-image: url('/images/board_pic.png');">
 			     <div class="container">
 			          <div class="text-center text-white">		         	 
-			              <h3 class="display-6 fw-bolder">소통하기2222</h3>
+			              <h3 class="display-6 fw-bolder">소통하기</h3>
 			          </div>
 			     </div>
 			  </header>
-			     <div class="adminmenu">
+			     <div class="sub-menu">
 				  <ul>
 				    <li>
-				      <a href="#">공지사항</a>
-				      <a href="#">자주묻는 질문</a>
-				      <a href="#">자유게시판</a>
-				      <a href="#">실천 인증</a>
+				      <a th:href="@{/board/notice}" th:classappend="${pageName eq 'notice'} ? 'active-menu' : ''">공지사항</a>
+				      <a th:href="@{/board/faq}" th:classappend="${pageName eq 'faq'} ? 'active-menu' : ''">자주묻는 질문</a>
+				      <a th:href="@{/board/community}" th:classappend="${pageName eq 'community'} ? 'active-menu' : ''">자유게시판</a>
+				      <a th:href="@{/board/act}" th:classappend="${pageName eq 'act'} ? 'active-menu' : ''">실천 인증</a>
 				    </li>
 				  </ul>
 				</div>
@@ -181,7 +181,7 @@
 	                   </div>
 	              </div>
 	           </header>
-              	<div class="MyPagemenu">
+              	<div class="sub-menu">
 				  <ul>
 				    <li>
 				      <a href="#">주문 내역</a>
@@ -204,7 +204,7 @@
 	                   </div>
 	              </div>
 	           </header>
-              	<div class="MyPagemenu">
+              	<div class="sub-menu">
 				  <ul>
 				    <li>
 				      <a th:href="@{/admin/salesMgmt}" th:classappend="${pageName eq 'salesMgmt'} ? 'active-menu' : ''">매출관리</a>
@@ -221,7 +221,8 @@
        <th:block th:unless="${pageName eq 'home' or pageName eq 'about' or pageName eq 'program' or 
        	 					  pageName eq 'product' or pageName eq 'board' or pageName eq 'myPage' or 
        	 					  pageName eq 'salesMgmt' or pageName eq 'programMgmt' or pageName eq 'productMgmt' or 
-       	 					  pageName eq 'boardMgmt' or pageName eq 'memberMgmt'}">
+       	 					  pageName eq 'boardMgmt' or pageName eq 'memberMgmt' or pageName eq 'notice' or 
+       	 					  pageName eq 'faq' or pageName eq 'community' or pageName eq 'act'}">
             <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
               <div class="container">
                    <div class="text-center text-white">                   
