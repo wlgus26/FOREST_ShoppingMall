@@ -16,6 +16,76 @@
 
 <!-- Content -->
 <div layout:fragment="content">
-   <h5> notice.html > Content </h5>
+  <div class="table-div">
+	  <table class="table table table-hover">
+		  <thead>
+		    <tr class="border-bottom" >
+		      <th scope="col" colspan="5" class="th-custom-style" style="border-bottom-width: 3px; 
+		border-bottom-color: #082f1c;
+		color: #082f1c;">공지사항 <button class="btn btn-sm btn-outline-secondary" type="button" onclick="location.href='${ path }/board/write?boardId=${ boardId }'">글쓰기</button></th>
+		    </tr>
+		  </thead>
+		  
+		  <tbody>
+		  	    <tr style="text-align: center;">
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>조회</th>
+				</tr>
+				
+			    <tr th:each="board : ${list}" class="clickable-row" th:href="@{'page/board/notice/' + ${board.id}}" style="text-align:center;">
+		            <td th:text="${board.no}"></td>
+		            <td style="text-align:left;" th:text="${board.title}"></td>
+		            <td th:text="${board.writerId}"></td>
+		            <td th:text="${board.createDate}"></td>
+		            <td th:text="${board.readCount}"></td>
+		        </tr>
+
+		  </tbody>
+	  </table>
+	</div>
+	
+	<div class="table-div">
+		<div id="pageBar">
+			<!-- 맨 처음으로 -->
+			    <button onclick="location.href='${ path }/board/notice?boardId=${ boardId }&page=${ pageInfo.startPage }'">&lt;&lt;</button>
+			    	
+				<!-- 이전 페이지로 -->
+				<button onclick="location.href='${ path }/board/notice?boardId=${ boardId }&page=${ pageInfo.prevPage }'">&lt;</button>
+	
+				<!--  10개 페이지 목록 -->
+				<c:forEach var="current" begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }">
+					<c:choose>
+						<c:when test="${ current == pageInfo.currentPage }">					
+							<button disabled>${ current }</button>			
+						</c:when>
+						<c:otherwise>
+							<button onclick="location.href='${ path }/board/notice?boardId=${ boardId }&page=${ current }'">${ current }</button>			
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+	
+				<!-- 다음 페이지로 -->
+				<button onclick="location.href='${ path }/board/notice?boardId=${ boardId }&page=${ pageInfo.nextPage }'">&gt;</button>
+	
+				<!-- 맨 끝으로 -->
+				<button onclick="location.href='${ path }/board/notice?boardId=${ boardId }&page=${ pageInfo.maxPage }'">&gt;&gt;</button>
+			</div>
+		</div>
+	<script>
+		// 각 행을 클릭할 때 링크로 연결되도록 처리
+		  var rows = document.querySelectorAll(".clickable-row");
+		  rows.forEach(function(row) {
+		    row.addEventListener("click", function() {
+		      var href = row.getAttribute("href");
+		      if (href) {
+		        window.location.href = href;
+		      }
+		    });
+		  });
+	</script>
 </div>
+
 </html>

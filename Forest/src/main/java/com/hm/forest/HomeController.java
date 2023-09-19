@@ -30,6 +30,24 @@ public class HomeController {
         return modlAndView;
 	}
 	
+	// 캠페인 페이지_aesop으로 이동
+	@GetMapping("/campaign/aesop")
+	public ModelAndView aseop (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "aesop");
+		modlAndView.setViewName("page/campaign/aesop");
+    
+        return modlAndView;
+	}
+	
+	// 캠페인 페이지_biotherm으로 이동
+	@GetMapping("/campaign/biotherm")
+	public ModelAndView biotherm (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "biotherm");
+		modlAndView.setViewName("page/campaign/biotherm");
+		
+		return modlAndView;
+	}
+	
 	// about으로 이동
 	@GetMapping("/about")
 	public ModelAndView about (ModelAndView modlAndView) {
@@ -50,12 +68,32 @@ public class HomeController {
 		return modlAndView;
 	}
 	
-	// 제품보기로 이동
-	@GetMapping("/product")
+	// 제품보기_주방으로 이동
+	@GetMapping("/product/kitchen")
+	public ModelAndView kitchen (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "kitchen");
+		modlAndView.setViewName("page/product/kitchen");
+		
+		return modlAndView;
+		}
+		
+	// 제품보기_패션으로 이동
+	@GetMapping("/product/style")
+	public ModelAndView style (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "style");
+		modlAndView.setViewName("page/product/style");
+		
+		return modlAndView;
+	}
+	
+	// 제품보기_친환경제품로 이동
+	@GetMapping("/product/eco")
 	public ModelAndView product (ModelAndView modlAndView) {
 		
-		modlAndView.addObject("pageName", "product");
-		modlAndView.setViewName("page/product");
+		modlAndView.addObject("pageName", "eco");
+		modlAndView.setViewName("page/product/eco");
 		
 		return modlAndView;
 	}
