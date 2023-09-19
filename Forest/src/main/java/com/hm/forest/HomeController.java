@@ -15,6 +15,24 @@ public class HomeController {
         return modlAndView;
 	}
 	
+	// 캠페인 페이지_aesop으로 이동
+	@GetMapping("/campaign/aesop")
+	public ModelAndView aseop (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "aesop");
+		modlAndView.setViewName("page/campaign/aesop");
+    
+        return modlAndView;
+	}
+	
+	// 캠페인 페이지_biotherm으로 이동
+	@GetMapping("/campaign/biotherm")
+	public ModelAndView biotherm (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "biotherm");
+		modlAndView.setViewName("page/campaign/biotherm");
+		
+		return modlAndView;
+	}
+	
 	// about으로 이동
 	@GetMapping("/about")
 	public ModelAndView about (ModelAndView modlAndView) {
