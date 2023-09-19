@@ -5,9 +5,9 @@
       layout:decorate="~{layouts/default_layout}">
 
 <th:block th:with="pageName='faq'"></th:block> 
-<!-- product.html 고유 CSS 추가 -->
+<!-- faq.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <link rel="stylesheet" th:href="@{/css/page/product.css}" >
+    <link rel="stylesheet" th:href="@{/css/page/faq.css}" >
     <style>
   	#tbl-board {
 	    border-collapse: collapse;
@@ -24,16 +24,16 @@
 	     text-align:center;
      }
      
-	dl{}
+	dl{margin-left: 15px;}
 	dt{height:30px; background:#ffffff; color:#000000; font-weight:bold; border-bottom:1px solid #ccc; text-indent:20px;}/*text-indent 들여쓰기*/
 	dd{margin-left:15px; background:#f5efef; padding:50px;}
 	dt.over{background:#ffffff; cursor:pointer;}
 	dt.selected{background:#ffffff; cursor:default;}/*cursor:default; 기본 커서*/
 </style>
 </th:block>
-<!-- product.html 고유 스크립트 추가 -->
+<!-- faq.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <script th:src="@{/js/page/product.js}"></script>
+    <script th:src="@{/js/page/faq.js}"></script>
 </th:block>
 
 <!-- Content -->
@@ -44,7 +44,7 @@
 <h1 style="text-align:center; font-size: 1.5em; color: #000000;">자주 묻는 질문 TOP 8</h1>
 <br>
 <div id="board-list-container">
-	<table id="tbl-board" style="justify-content: space-between; width: 100%; border: 1px solid #ddd;">
+	<table id="tbl-board" style="justify-content: space-between; width: 95%; border: 1px solid #ddd;">
   		<dl style="width:100%; border-color: #D2DAFF;">
 
 			<dt id="text1">[사이트 소개]FOREST'는 어떤 사이트 인가요?</dt>
