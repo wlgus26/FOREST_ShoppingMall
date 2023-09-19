@@ -45,12 +45,42 @@ public class HomeController {
 		return modlAndView;
 	}
 	
-	// 소통하기로 이동
-	@GetMapping("/board")
-	public ModelAndView board (ModelAndView modlAndView) {
+	// 소통하기_공지사항으로 이동
+	@GetMapping("/board/notice")
+	public ModelAndView notice (ModelAndView modlAndView) {
 		
-		modlAndView.addObject("pageName", "board");
-		modlAndView.setViewName("page/board");
+		modlAndView.addObject("pageName", "notice");
+		modlAndView.setViewName("page/board/notice");
+		
+		return modlAndView;
+	}
+	
+	// 소통하기_자주묻는질문으로 이동
+	@GetMapping("/board/faq")
+	public ModelAndView faq (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "faq");
+		modlAndView.setViewName("page/board/faq");
+		
+		return modlAndView;
+	}
+	
+	// 소통하기_자유게시판으로 이동
+	@GetMapping("/board/community")
+	public ModelAndView community (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "community");
+		modlAndView.setViewName("page/board/community");
+		
+		return modlAndView;
+	}
+	
+	// 소통하기_실천인증으로 이동
+	@GetMapping("/board/act")
+	public ModelAndView act (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "act");
+		modlAndView.setViewName("page/board/act");
 		
 		return modlAndView;
 	}

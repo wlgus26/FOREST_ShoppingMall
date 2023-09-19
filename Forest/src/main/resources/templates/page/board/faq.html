@@ -5,9 +5,9 @@
       layout:decorate="~{layouts/default_layout}">
 
 <th:block th:with="pageName='faq'"></th:block> 
-<!-- product.html 고유 CSS 추가 -->
+<!-- faq.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <link rel="stylesheet" th:href="@{/css/page/product.css}" >
+    <link rel="stylesheet" th:href="@{/css/page/faq.css}" >
     <style>
   	#tbl-board {
 	    border-collapse: collapse;
@@ -31,9 +31,9 @@
 	dt.selected{background:#ffffff; cursor:default;}/*cursor:default; 기본 커서*/
 </style>
 </th:block>
-<!-- product.html 고유 스크립트 추가 -->
+<!-- faq.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <script th:src="@{/js/page/product.js}"></script>
+    <script th:src="@{/js/page/faq.js}"></script>
 </th:block>
 
 <!-- Content -->
