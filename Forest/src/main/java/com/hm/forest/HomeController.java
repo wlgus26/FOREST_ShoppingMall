@@ -35,12 +35,32 @@ public class HomeController {
 		return modlAndView;
 	}
 	
-	// 제품보기로 이동
-	@GetMapping("/product")
+	// 제품보기_주방으로 이동
+	@GetMapping("/product/kitchen")
+	public ModelAndView kitchen (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "kitchen");
+		modlAndView.setViewName("page/product/kitchen");
+		
+		return modlAndView;
+		}
+		
+	// 제품보기_패션으로 이동
+	@GetMapping("/product/style")
+	public ModelAndView style (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "style");
+		modlAndView.setViewName("page/product/style");
+		
+		return modlAndView;
+	}
+	
+	// 제품보기_친환경제품로 이동
+	@GetMapping("/product/eco")
 	public ModelAndView product (ModelAndView modlAndView) {
 		
-		modlAndView.addObject("pageName", "product");
-		modlAndView.setViewName("page/product");
+		modlAndView.addObject("pageName", "eco");
+		modlAndView.setViewName("page/product/eco");
 		
 		return modlAndView;
 	}

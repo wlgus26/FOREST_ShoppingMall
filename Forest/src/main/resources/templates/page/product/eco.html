@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
 
-</body>
+<th:block th:with="pageName='eco'"></th:block> 
+<!-- faq.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/page/eco.css}" >
+</th:block>
+<!-- faq.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:src="@{/js/page/eco.js}"></script>
+</th:block>
+
+<!-- Content -->
+
+<div layout:fragment="content">
+<p>  ㅇ겨는 에코 상품처 입니다.</p>
 </html>
