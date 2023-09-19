@@ -225,10 +225,16 @@ ul {
 }
 
 ol,
-ul,
-dl {
+ul {
   margin-top: 0;
   margin-bottom: 1rem;
+}
+
+dl{
+  margin-top: 0;
+  margin-bottom: 1rem;
+  width:100%; 
+  border-color: #D2DAFF;
 }
 
 ol ol,
@@ -1802,9 +1808,14 @@ progress {
   }
 }
 
+.table-faq{
+	width: 70%;
+    margin: 0 auto; /* 가로 중앙 정렬을 위한 margin 설정 */
+    border-collapse: collapse; /* 테이블 셀 간격 제거 */
+}
+
 .table-div {
 	display: flex;
-	align-items: center;
 	justify-content: center; 
 }
 .table {
