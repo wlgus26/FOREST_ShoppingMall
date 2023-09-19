@@ -58,7 +58,7 @@
                     <!--※※ if ~~ 관리자인 경우 메뉴바 전부 보이게, 유저는 4개만 보이게 -->
                         <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="/program">참여하기</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/product">제품보기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/product/eco">제품보기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/board/notice">소통하기</a></li>
                         <!-- 관리자메뉴_드롭다운기능 -->
                         <li class="nav-item dropdown">
@@ -132,7 +132,7 @@
 		 </th:block>
 		 
          <!-- 제품보기 -->
-		 <th:block th:if="${pageName eq 'product'}">
+		 <th:block th:if="${pageName eq 'kitchen' or pageName eq 'style' or pageName eq 'eco'}">
 	         <header class="bg-main-header py-5" style="background-image: url('/images/product_pic.png');">
 			     <div class="container">
 			          <div class="text-center text-white">		         	 
@@ -143,9 +143,9 @@
 		        <div class="sub-menu">
 				  <ul>
 				    <li>
-				      <a href="#">주방</a>
-				      <a href="#">패션</a>
-				      <a href="#">친환경 키트</a>
+				      <a th:href="@{/product/kitchen}" th:classappend="${pageName eq 'kitchen'} ? 'active-menu' : ''">주방</a>
+				      <a th:href="@{/product/style}" th:classappend="${pageName eq 'style'} ? 'active-menu' : ''">패션</a>
+				      <a th:href="@{/product/eco}" th:classappend="${pageName eq 'eco'} ? 'active-menu' : ''">친환경 키트</a>
 				    </li>
 				  </ul>
 				</div>
@@ -219,7 +219,8 @@
        
        <!-- 기타페이지_공통 -->
        <th:block th:unless="${pageName eq 'home' or pageName eq 'about' or pageName eq 'program' or 
-       	 					  pageName eq 'product' or pageName eq 'board' or pageName eq 'myPage' or 
+       	 					  pageName eq 'kitchen' or pageName eq 'style' or pageName eq 'eco' or 
+       	 					  pageName eq 'board' or pageName eq 'myPage' or 
        	 					  pageName eq 'salesMgmt' or pageName eq 'programMgmt' or pageName eq 'productMgmt' or 
        	 					  pageName eq 'boardMgmt' or pageName eq 'memberMgmt' or pageName eq 'notice' or 
        	 					  pageName eq 'faq' or pageName eq 'community' or pageName eq 'act'}">

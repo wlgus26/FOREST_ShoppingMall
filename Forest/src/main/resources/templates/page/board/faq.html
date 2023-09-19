@@ -24,7 +24,7 @@
 	     text-align:center;
      }
      
-	dl{margin-left: 15px;}
+	dl{}
 	dt{height:30px; background:#ffffff; color:#000000; font-weight:bold; border-bottom:1px solid #ccc; text-indent:20px;}/*text-indent 들여쓰기*/
 	dd{margin-left:15px; background:#f5efef; padding:50px;}
 	dt.over{background:#ffffff; cursor:pointer;}
@@ -37,16 +37,14 @@
 </th:block>
 
 <!-- Content -->
-
 <div layout:fragment="content">
 
-<div style="width: 100%; margin: 20px 20px 20px 0px">
+<div style="width: 100%; margin: 0 auto;">
 <h1 style="text-align:center; font-size: 1.5em; color: #000000;">자주 묻는 질문 TOP 8</h1>
 <br>
-<div id="board-list-container">
-	<table id="tbl-board" style="justify-content: space-between; width: 95%; border: 1px solid #ddd;">
-  		<dl style="width:100%; border-color: #D2DAFF;">
-
+<div class="table-div">
+	<table class="table-faq">
+  		<dl>
 			<dt id="text1">[사이트 소개]FOREST'는 어떤 사이트 인가요?</dt>
 				<dd>
 					FOSEST 내용~~~ 
@@ -84,7 +82,7 @@
 					신청 인원이 마감된 경우 클래스를 참여하실 수 없으며, 결제 후 신청 인원이 마감된 경우 결제 금액에 대해 전액 환불 도와드리고 있습니다.
 				</dd>
 		</dl>
-</table>
+	</table>
 </div>
 
 
@@ -113,5 +111,6 @@
 		});
     });
 </script>
-
+</div>
+</div>
 </html>
