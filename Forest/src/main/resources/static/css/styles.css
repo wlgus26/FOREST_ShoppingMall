@@ -91,25 +91,25 @@
   }
 }
 
-/* 소통하기 */
-.adminmenu {
+/* 서브메뉴바 */
+.sub-menu {
   background-color: #f0f0f0;
   /* padding: 1px; */
   margin-top: 15px;
 }
 
-.adminmenu ul {
+.sub-menu ul {
   list-style: none;
   padding: 10px;
 }
 
-.adminmenu li {
+.sub-menu li {
   display: flex; /* Flexbox 사용 */
   justify-content: space-between; /* 각 항목을 가능한 넓게 펼치기 */
   font-weight: bold;
 }
 
-.adminmenu a {
+.sub-menu a {
   flex: 1; /* 너비를 같게 설정 */
   text-align: center;
   padding: 1px; /* 내부 여백 설정 */
@@ -117,103 +117,12 @@
   color: #333; /* 링크 텍스트 색상 설정 */
 }
 
-.adminmenu a:last-child {
+.sub-menu a:last-child {
   border-right: none; /* 마지막 항목의 구분선 제거 */
 }
-
-/* 참여하기 */
-.Participationmenu {
-  background-color: #f0f0f0;
-  /* padding: 1px; */
-  margin-top: 15px;
-}
-
-.Participationmenu ul {
-  list-style: none;
-  padding: 10px;
-}
-
-.Participationmenu li {
-  display: flex; /* Flexbox 사용 */
-  justify-content: space-between; /* 각 항목을 가능한 넓게 펼치기 */
-  font-weight: bold;
-}
-
-.Participationmenu a {
-  flex: 1; /* 너비를 같게 설정 */
-  text-align: center;
-  padding: 1px; /* 내부 여백 설정 */
-  text-decoration: none; /* 링크 밑줄 제거 */
-  color: #333; /* 링크 텍스트 색상 설정 */
-}
-
-.Participationmenu a:last-child {
-  border-right: none; /* 마지막 항목의 구분선 제거 */
-}
-
-/* 제품보기 */
-.Productmenu {
-  background-color: #f0f0f0;
-  /*padding: 1px;*/
-  margin-top: 15px;
-}
-
-.Productmenu ul {
-  list-style: none;
-  padding: 10px;
-}
-
-.Productmenu li {
-  display: flex; /* Flexbox 사용 */
-  justify-content: space-between; /* 각 항목을 가능한 넓게 펼치기 */
-  font-weight: bold;
-}
-
-.Productmenu a {
-  flex: 1; /* 너비를 같게 설정 */
-  text-align: center;
-  padding: 1px; /* 내부 여백 설정 */
-  text-decoration: none; /* 링크 밑줄 제거 */
-  color: #333; /* 링크 텍스트 색상 설정 */
-}
-
-.Productmenu a:last-child {
-  border-right: none; /* 마지막 항목의 구분선 제거 */
-}
-
-/* 마이페이지 */
-.MyPagemenu {
-  background-color: #f0f0f0;
-  /*padding: 1px;*/
-  margin-top: 15px;
-}
-
-.MyPagemenu ul {
-  list-style: none;
-  padding: 10px;
-}
-
-.MyPagemenu li {
-  display: flex; /* Flexbox 사용 */
-  justify-content: space-between; /* 각 항목을 가능한 넓게 펼치기 */
-  font-weight: bold;
-}
-
-.MyPagemenu a {
-  flex: 1; /* 너비를 같게 설정 */
-  text-align: center;
-  padding: 1px; /* 내부 여백 설정 */
-  text-decoration: none; /* 링크 밑줄 제거 */
-  color: #333; /* 링크 텍스트 색상 설정 */
-}
-
-.MyPagemenu a:last-child {
-  border-right: none; /* 마지막 항목의 구분선 제거 */
-}
-
 
 /* 페이지에 맞게 메뉴바 text bold 활성화 */
-.MyPagemenu a.active-menu {
+.sub-menu a.active-menu {
     font-weight: bold;
     text-decoration: underline;
 }
