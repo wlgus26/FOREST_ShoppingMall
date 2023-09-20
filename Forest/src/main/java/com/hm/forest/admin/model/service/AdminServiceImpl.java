@@ -1,23 +1,23 @@
-package com.hm.forest.product.model.service;
+package com.hm.forest.admin.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hm.forest.product.model.mapper.ProductMapper;
-import com.hm.forest.product.model.vo.Product;
+import com.hm.forest.admin.model.mapper.AdminMapper;
+import com.hm.forest.admin.model.vo.Product;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class AdminServiceImpl implements AdminService {
 	@Autowired
-	private ProductMapper productMapper;
+	private AdminMapper adminMapper;
 
 	@Override
 	@Transactional
 	public int save(Product product) {
 		int result = 0;
 		
-		result = productMapper.insertproduct(product);
+		result = adminMapper.insertProduct(product);
 
 		
 		return result;

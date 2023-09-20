@@ -21,7 +21,8 @@
 
 <!-- Content -->
 <div layout:fragment="content">
-<form class="container" action="/admin/productInsert" method="post">
+<form class="container" action="/admin/productMgmt/insert" method="post" th:action="@{/admin/productMgmt/insert}">
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
 <div class="table-div">
   <table class="table">
