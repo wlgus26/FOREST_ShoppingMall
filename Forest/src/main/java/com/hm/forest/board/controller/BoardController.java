@@ -25,8 +25,7 @@ public class BoardController {
 		 public ModelAndView FindAll(ModelAndView modelAndView) {
 			 String type = "notice";
 			 List<Board> boardLists = boardService.getBoardLists(type);
-		
-			 
+
 			 
 			 modelAndView.addObject("pageName", "notice");
 			 modelAndView.addObject("boardLists", boardLists);
@@ -35,7 +34,7 @@ public class BoardController {
 		 }
 		
 		// 자주묻는질문으로 이동
-		@GetMapping("/board/faq")
+		@GetMapping("/faq")
 		public ModelAndView faq (ModelAndView modlAndView) {
 			
 			
@@ -46,7 +45,7 @@ public class BoardController {
 		}
 		
 		// 자유게시판으로 이동
-		@GetMapping("/board/community")
+		@GetMapping("/community")
 		public ModelAndView communityFindAll (ModelAndView modlAndView) {
 			
 			modlAndView.addObject("pageName", "community");
@@ -56,7 +55,7 @@ public class BoardController {
 		}
 		
 		// 실천인증으로 이동
-		@GetMapping("/board/act")
+		@GetMapping("/act")
 		public ModelAndView act (ModelAndView modlAndView) {
 			
 			modlAndView.addObject("pageName", "act");
