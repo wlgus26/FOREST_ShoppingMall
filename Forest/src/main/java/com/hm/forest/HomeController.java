@@ -1,20 +1,8 @@
 package com.hm.forest;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.hm.forest.product.model.service.ProductService;
-import com.hm.forest.product.model.vo.Product;
 
 @Controller
 public class HomeController {
@@ -43,6 +31,42 @@ public class HomeController {
 	public ModelAndView biotherm (ModelAndView modlAndView) {
 		modlAndView.addObject("pageName", "biotherm");
 		modlAndView.setViewName("page/campaign/biotherm");
+		
+		return modlAndView;
+	}
+	
+	// 캠페인 페이지_brita으로 이동
+	@GetMapping("/campaign/brita")
+	public ModelAndView brita (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "brita");
+		modlAndView.setViewName("page/campaign/brita");
+		
+		return modlAndView;
+	}
+	
+	// 캠페인 페이지_melixir으로 이동
+	@GetMapping("/campaign/melixir")
+	public ModelAndView melixir (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "melixir");
+		modlAndView.setViewName("page/campaign/melixir");
+		
+		return modlAndView;
+	}
+	
+	// 캠페인 페이지_boonbastick으로 이동
+	@GetMapping("/campaign/boonbastick")
+	public ModelAndView boonbastick (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "boonbastick");
+		modlAndView.setViewName("page/campaign/boonbastick");
+		
+		return modlAndView;
+	}
+	
+	// 캠페인 페이지_mbci으로 이동
+	@GetMapping("/campaign/mbci")
+	public ModelAndView mbci (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "mbci");
+		modlAndView.setViewName("page/campaign/mbci");
 		
 		return modlAndView;
 	}
