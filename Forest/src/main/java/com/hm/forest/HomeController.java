@@ -18,8 +18,7 @@ import com.hm.forest.product.model.vo.Product;
 
 @Controller
 public class HomeController {
-	@Autowired
-	private ProductService productService;
+	
 	
 	// home으로 이동
 	@GetMapping("/")
@@ -158,19 +157,7 @@ public class HomeController {
 		return modlAndView;
 	}
 	
-	// 제품 등록하기
-	@RequestMapping(value = "/admin/productInsert", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> enroll(Product product) {
-		int result = 0;
-		Map<String, Object> map = new HashMap<>();
-				
-		result = productService.save(product);
-		
-		map.put("resultCode", result);
-		map.put("product", product);
-		
-		return ResponseEntity.ok(map);
-	}
+	
 	
 	
 	// 관리자페이지_클래스관리로 이동
