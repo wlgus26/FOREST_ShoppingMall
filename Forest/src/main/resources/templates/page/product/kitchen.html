@@ -8,6 +8,44 @@
 <!-- kitchen.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/page/kitchen.css}" >
+<style>
+	#kitchen1 > li {
+        display: inline-block;
+        position: relative;
+        top: 10px;
+        margin-left: -30px;
+    }      
+    #kitchen1 > li > a {
+        display:block; position:relative; padding-bottom:19px;
+        padding: 48px;
+    }
+    #kitchen1 > li > a > img {
+        width:300px; height:250px;
+    }
+    #kitchen1 > li > a > span {
+        position:absolute; left:50%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0);
+        bottom: -10px;
+    }
+    #content1{ text-align: center;}
+    #content2{ text-align: center;}
+    #kitchen2 > li {
+        display: inline-block;
+        position: relative;
+        top: 10px;
+        margin-left: -30px;
+    }      
+    #kitchen2 > li > a {
+        display:block; position:relative; padding-bottom:19px;
+        padding: 48px;
+    }
+    #kitchen2 > li > a > img {
+        width:300px; height:250px;
+    }
+    #kitchen2 > li > a > span {
+        position:absolute; left:50%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0);
+        bottom: -10px;
+    }
+</style>
 </th:block>
 <!-- kitchen.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
@@ -17,12 +55,27 @@
 <!-- Content -->
 <div layout:fragment="content">
 	<div id="content1">
-		<ul id="kitchen">
-			<p>여기느 ㄴ주방용품작품입니다.</p>
-			<li><a href="#"><img src="../images/home11.PNG" style="width: 100px"><span>섬유탈취제 & 섬유향수 <br> <strike>28,000원</strike> &rarr; 19,600원</span></a></li>
+		<ul id="kitchen1">
+			<p>여기는 주방 상품 코너입니다.  </p>
+			<li><a href="#"><img src="../images/product_ki1.PNG"><span> <b>담비 주방장갑(1p)</b> <br><br> &nbsp; &nbsp; 14,000원 </span></a></li>
+			<li><a href="#"><img src="../images/product_ki1.PNG"><span> <b>담비 주방장갑(1p)</b> <br><br> &nbsp; &nbsp; 14,000원 </span></a></li>
+			<li><a href="#"><img src="../images/product_ki1.PNG"><span> <b>담비 주방장갑(1p)</b> <br><br> &nbsp; &nbsp; 14,000원 </span></a></li>
+			<li><a href="#"><img src="../images/product_ki1.PNG"><span> <b>담비 주방장갑(1p)</b> <br><br> &nbsp; &nbsp; 14,000원 </span></a></li>
 		</ul>
 	</div>
-
+	
+	<div id="content2">
+		<ul id="kitchen2">
+			<p>여기는 주방 상품 코너입니다.  </p>
+			<li><a href="#"><img src="../images/product_ki2.PNG"><span> <b>업사이클링 고래 비누받침</b> <br><br> &nbsp; &nbsp; 	11,000원 </span></a></li>
+			<li><a href="#"><img src="../images/product_ki2.PNG"><span> <b>업사이클링 고래 비누받침</b> <br><br> &nbsp; &nbsp; 	11,000원 </span></a></li>
+			<li><a href="#"><img src="../images/product_ki2.PNG"><span> <b>업사이클링 고래 비누받침</b> <br><br> &nbsp; &nbsp; 	11,000원 </span></a></li>
+			<li><a href="#"><img src="../images/product_ki2.PNG"><span> <b>업사이클링 고래 비누받침</b> <br><br> &nbsp; &nbsp; 	11,000원 </span></a></li>
+		</ul>
+	</div>
+	
+	
+<br><br><br><br><br><br>
    <h5> kitchen.html > Content </h5>
 </div>
 </html>
