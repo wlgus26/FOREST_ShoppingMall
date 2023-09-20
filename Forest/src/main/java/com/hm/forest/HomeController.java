@@ -1,19 +1,8 @@
 package com.hm.forest;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-
 
 @Controller
 public class HomeController {
@@ -69,6 +58,15 @@ public class HomeController {
 	public ModelAndView boonbastick (ModelAndView modlAndView) {
 		modlAndView.addObject("pageName", "boonbastick");
 		modlAndView.setViewName("page/campaign/boonbastick");
+		
+		return modlAndView;
+	}
+	
+	// 캠페인 페이지_mbci으로 이동
+	@GetMapping("/campaign/mbci")
+	public ModelAndView mbci (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "mbci");
+		modlAndView.setViewName("page/campaign/mbci");
 		
 		return modlAndView;
 	}
