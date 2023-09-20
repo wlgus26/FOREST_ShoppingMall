@@ -60,6 +60,15 @@ public class HomeController {
 		return modlAndView;
 	}
 	
+	// 캠페인 페이지_mbci으로 이동
+	@GetMapping("/campaign/mbci")
+	public ModelAndView mbci (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "mbci");
+		modlAndView.setViewName("page/campaign/mbci");
+		
+		return modlAndView;
+	}
+	
 	// about으로 이동
 	@GetMapping("/about")
 	public ModelAndView about (ModelAndView modlAndView) {
