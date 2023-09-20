@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <th:block th:with="pageName='notice'"></th:block>      
 <!-- notice.html 고유 CSS 추가 -->
@@ -34,18 +35,20 @@
 					<th>작성일</th>
 					<th>조회</th>
 				</tr>
-				
-			    <tr th:each="board : ${list}" class="clickable-row" th:href="@{'page/board/notice/' + ${board.id}}" style="text-align:center;">
-		            <td th:text="${board.no}"></td>
-		            <td style="text-align:left;" th:text="${board.title}"></td>
-		            <td th:text="${board.writerId}"></td>
-		            <td th:text="${board.createDate}"></td>
-		            <td th:text="${board.readCount}"></td>
-		        </tr>
+				<tr style="text-align: center;" th:each="board : ${boardLists}">
+			        <td th:text="${board.no}"></td>
+			        <td th:text="${board.title}" style="text-align:left; width:60%;"></td>
+			        <td th:text="${board.writerId}"></td>
+			        <td th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
+			        <td th:text="${board.readCount}"></td>
+			    </tr>
 
 		  </tbody>
 	  </table>
 	</div>
+	
+
+				  
 	
 	<div class="table-div">
 		<div id="pageBar">
@@ -53,6 +56,7 @@
 			    <button onclick="location.href='${ path }/board/notice?boardId=${ boardId }&page=${ pageInfo.startPage }'">&lt;&lt;</button>
 			    	
 				<!-- 이전 페이지로 -->
+				<i class="fa-light fa-angle-left" style="color: #082f1c;"></i>
 				<button onclick="location.href='${ path }/board/notice?boardId=${ boardId }&page=${ pageInfo.prevPage }'">&lt;</button>
 	
 				<!--  10개 페이지 목록 -->
