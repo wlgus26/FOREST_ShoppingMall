@@ -63,6 +63,12 @@
 		    <artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		
+		<dependency>
+    		<groupId>org.thymeleaf.extras</groupId>
+		    <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+		
+		
 		<!-- 스프링에서 mybatis 사용하기 위한 의존성 모음 -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
