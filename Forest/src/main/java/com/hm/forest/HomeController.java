@@ -46,6 +46,33 @@ public class HomeController {
 		return modlAndView;
 	}
 	
+	// 캠페인 페이지_brita으로 이동
+	@GetMapping("/campaign/brita")
+	public ModelAndView brita (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "brita");
+		modlAndView.setViewName("page/campaign/brita");
+		
+		return modlAndView;
+	}
+	
+	// 캠페인 페이지_melixir으로 이동
+	@GetMapping("/campaign/melixir")
+	public ModelAndView melixir (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "melixir");
+		modlAndView.setViewName("page/campaign/melixir");
+		
+		return modlAndView;
+	}
+	
+	// 캠페인 페이지_boonbastick으로 이동
+	@GetMapping("/campaign/boonbastick")
+	public ModelAndView boonbastick (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "boonbastick");
+		modlAndView.setViewName("page/campaign/boonbastick");
+		
+		return modlAndView;
+	}
+	
 	// about으로 이동
 	@GetMapping("/about")
 	public ModelAndView about (ModelAndView modlAndView) {
