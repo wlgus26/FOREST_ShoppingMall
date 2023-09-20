@@ -34,18 +34,20 @@
 					<th>작성일</th>
 					<th>조회</th>
 				</tr>
-				
-			    <tr th:each="board : ${list}" class="clickable-row" th:href="@{'page/board/notice/' + ${board.id}}" style="text-align:center;">
-		            <td th:text="${board.no}"></td>
-		            <td style="text-align:left;" th:text="${board.title}"></td>
-		            <td th:text="${board.writerId}"></td>
-		            <td th:text="${board.createDate}"></td>
-		            <td th:text="${board.readCount}"></td>
-		        </tr>
+				<tr style="text-align: center;" th:each="board : ${boardLists}">
+			        <td th:text="${board.no}"></td>
+			        <td th:text="${board.title}" style="text-align:left;"></td>
+			        <td th:text="${board.writerId}"></td>
+			        <td th:text="${board.createDate}"></td>
+			        <td th:text="${board.readCount}"></td>
+			    </tr>
 
 		  </tbody>
 	  </table>
 	</div>
+	
+
+				  
 	
 	<div class="table-div">
 		<div id="pageBar">

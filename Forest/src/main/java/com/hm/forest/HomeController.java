@@ -4,6 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class HomeController {
 	// home으로 이동
@@ -39,6 +42,7 @@ public class HomeController {
 		
 		modlAndView.addObject("pageName", "about");
 		modlAndView.setViewName("page/about");
+		
 		
         return modlAndView;
 	}
@@ -83,45 +87,6 @@ public class HomeController {
 		return modlAndView;
 	}
 	
-	// 소통하기_공지사항으로 이동
-	@GetMapping("/board/notice")
-	public ModelAndView notice (ModelAndView modlAndView) {
-		
-		modlAndView.addObject("pageName", "notice");
-		modlAndView.setViewName("page/board/notice");
-		
-		return modlAndView;
-	}
-	
-	// 소통하기_자주묻는질문으로 이동
-	@GetMapping("/board/faq")
-	public ModelAndView faq (ModelAndView modlAndView) {
-		
-		modlAndView.addObject("pageName", "faq");
-		modlAndView.setViewName("page/board/faq");
-		
-		return modlAndView;
-	}
-	
-	// 소통하기_자유게시판으로 이동
-	@GetMapping("/board/community")
-	public ModelAndView community (ModelAndView modlAndView) {
-		
-		modlAndView.addObject("pageName", "community");
-		modlAndView.setViewName("page/board/community");
-		
-		return modlAndView;
-	}
-	
-	// 소통하기_실천인증으로 이동
-	@GetMapping("/board/act")
-	public ModelAndView act (ModelAndView modlAndView) {
-		
-		modlAndView.addObject("pageName", "act");
-		modlAndView.setViewName("page/board/act");
-		
-		return modlAndView;
-	}
 	
 	// 관리자페이지_매출관리로 이동
 	@GetMapping("/admin/salesMgmt")
