@@ -91,6 +91,43 @@
   }
 }
 
+/* 서브메뉴바 */
+.sub-menu {
+  background-color: #f0f0f0;
+  /* padding: 1px; */
+  margin-top: 15px;
+}
+
+.sub-menu ul {
+  list-style: none;
+  padding: 10px;
+}
+
+.sub-menu li {
+  display: flex; /* Flexbox 사용 */
+  justify-content: space-between; /* 각 항목을 가능한 넓게 펼치기 */
+  font-weight: bold;
+}
+
+.sub-menu a {
+  flex: 1; /* 너비를 같게 설정 */
+  text-align: center;
+  padding: 1px; /* 내부 여백 설정 */
+  text-decoration: none; /* 링크 밑줄 제거 */
+  color: #333; /* 링크 텍스트 색상 설정 */
+}
+
+.sub-menu a:last-child {
+  border-right: none; /* 마지막 항목의 구분선 제거 */
+}
+
+/* 페이지에 맞게 메뉴바 text bold 활성화 */
+.sub-menu a.active-menu {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);
@@ -188,10 +225,16 @@ ul {
 }
 
 ol,
-ul,
-dl {
+ul {
   margin-top: 0;
   margin-bottom: 1rem;
+}
+
+dl{
+  margin-top: 0;
+  margin-bottom: 1rem;
+  width:100%; 
+  border-color: #D2DAFF;
 }
 
 ol ol,
@@ -398,7 +441,7 @@ button:not(:disabled),
 }
 
 textarea {
-  resize: vertical;
+  resize: none;
 }
 
 fieldset {
@@ -1764,6 +1807,17 @@ progress {
     --bs-gutter-y: 3rem;
   }
 }
+
+.table-faq{
+	width: 70%;
+    margin: 0 auto; /* 가로 중앙 정렬을 위한 margin 설정 */
+    border-collapse: collapse; /* 테이블 셀 간격 제거 */
+}
+
+.table-div {
+	display: flex;
+	justify-content: center; 
+}
 .table {
   --bs-table-color: var(--bs-body-color);
   --bs-table-bg: transparent;
@@ -1775,7 +1829,7 @@ progress {
   --bs-table-active-bg: rgba(0, 0, 0, 0.1);
   --bs-table-hover-color: var(--bs-body-color);
   --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
-  width: 100%;
+  width: 70%;
   margin-bottom: 1rem;
   color: var(--bs-table-color);
   vertical-align: top;
@@ -7184,6 +7238,12 @@ textarea.form-control-lg {
 
 .translate-middle-y {
   transform: translateY(-50%) !important;
+}
+
+
+/* th 커스텀 */
+.th-custom-style {
+	font-size: 25px;
 }
 
 .border {

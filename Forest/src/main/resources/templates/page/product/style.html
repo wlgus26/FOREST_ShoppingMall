@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<th:block th:with="pageName='style'"></th:block>      
+<!-- style.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/page/style.css}" >
+<style>
+	#style1 > li {
+        display: inline-block;
+        position: relative;
+        top: 10px;
+        margin-left: -30px;
+    }      
+    #style1 > li > a {
+        display:block; position:relative; padding-bottom:19px;
+        padding: 48px;
+    }
+    #style1 > li > a > img {
+        width:300px; height:250px;
+    }
+    #style1 > li > a > span {
+        position:absolute; left:50%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0);
+        bottom: -10px;
+    }
+    #content1{ text-align: center;}
+    #content2{ text-align: center;}
+   	#style2 > li {
+        display: inline-block;
+        position: relative;
+        top: 10px;
+        margin-left: -30px;
+    }      
+    #style2 > li > a {
+        display:block; position:relative; padding-bottom:19px;
+        padding: 48px;
+    }
+    #style2 > li > a > img {
+        width:300px; height:250px;
+    }
+    #style2 > li > a > span {
+        position:absolute; left:50%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0);
+        bottom: -10px;
+    }
+    
+</style>
+</th:block>
+<!-- style.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:src="@{/js/page/style.js}"></script>
+</th:block>
+
+<!-- Content -->
+<div layout:fragment="content">
+	<div id="content1">
+		<ul id="style1">
+			<p>여기는 패션 상품 코너입니다.</p>
+			<li><a href="#"><img src="../images/home11.PNG"><span> <b>섬유탈취제 & 섬유향수</b> <br><br> <strike>28,000원</strike> &rarr; 19,600원</span></a></li>
+			<li><a href="#"><img src="../images/home11.PNG"><span> <b>섬유탈취제 & 섬유향수</b> <br><br> <strike>28,000원</strike> &rarr; 19,600원</span></a></li>
+			<li><a href="#"><img src="../images/home11.PNG"><span> <b>섬유탈취제 & 섬유향수</b> <br><br> <strike>28,000원</strike> &rarr; 19,600원</span></a></li>
+			<li><a href="#"><img src="../images/home11.PNG"><span> <b>섬유탈취제 & 섬유향수</b> <br><br> <strike>28,000원</strike> &rarr; 19,600원</span></a></li>
+		</ul>
+	</div>
+	<div id="content2">
+		<ul id="style2">
+			<li><a href="#"><img src="../images/product_style1.PNG"><span> <b>플랫 파우치</b> <br><br> 	12,000원</span></a></li>
+			<li><a href="#"><img src="../images/product_style1.PNG"><span> <b>플랫 파우치</b> <br><br> 	12,000원</span></a></li>
+			<li><a href="#"><img src="../images/product_style1.PNG"><span> <b>플랫 파우치</b> <br><br> 	12,000원</span></a></li>
+			<li><a href="#"><img src="../images/product_style1.PNG"><span> <b>플랫 파우치</b> <br><br> 	12,000원</span></a></li>
+		</ul>
+	</div>
+	<br><br><br>
+   <h5> style.html > Content </h5>
+</div>
+</html>

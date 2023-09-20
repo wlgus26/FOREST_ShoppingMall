@@ -4,18 +4,18 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 
-<th:block th:with="pageName='board'"></th:block>      
-<!-- board.html 고유 CSS 추가 -->
+<th:block th:with="pageName='act'"></th:block>      
+<!-- act.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/board.css}" >-->
+    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/act.css}" >-->
 </th:block>
-<!-- board.html 고유 스크립트 추가 -->
+<!-- act.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <!-- ex)  <script th:src="@{/js/page/board.js}"></script>-->
+    <!-- ex)  <script th:src="@{/js/page/act.js}"></script>-->
 </th:block>
 
 <!-- Content -->
 <div layout:fragment="content">
-   <h5> templates > page > board.html > Content </h5>
+   <h5> act.html > Content </h5>
 </div>
 </html>

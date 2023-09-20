@@ -1,11 +1,26 @@
 package com.hm.forest;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.hm.forest.product.model.service.ProductService;
+import com.hm.forest.product.model.vo.Product;
 
 @Controller
 public class HomeController {
+	@Autowired
+	private ProductService productService;
+	
 	// home으로 이동
 	@GetMapping("/")
 	public ModelAndView home (ModelAndView modlAndView) {
@@ -13,6 +28,24 @@ public class HomeController {
 		modlAndView.setViewName("page/home");
     
         return modlAndView;
+	}
+	
+	// 캠페인 페이지_aesop으로 이동
+	@GetMapping("/campaign/aesop")
+	public ModelAndView aseop (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "aesop");
+		modlAndView.setViewName("page/campaign/aesop");
+    
+        return modlAndView;
+	}
+	
+	// 캠페인 페이지_biotherm으로 이동
+	@GetMapping("/campaign/biotherm")
+	public ModelAndView biotherm (ModelAndView modlAndView) {
+		modlAndView.addObject("pageName", "biotherm");
+		modlAndView.setViewName("page/campaign/biotherm");
+		
+		return modlAndView;
 	}
 	
 	// about으로 이동
@@ -35,32 +68,97 @@ public class HomeController {
 		return modlAndView;
 	}
 	
-	// 제품보기로 이동
-	@GetMapping("/product")
+	// 제품보기_주방으로 이동
+	@GetMapping("/product/kitchen")
+	public ModelAndView kitchen (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "kitchen");
+		modlAndView.setViewName("page/product/kitchen");
+		
+		return modlAndView;
+		}
+		
+	// 제품보기_패션으로 이동
+	@GetMapping("/product/style")
+	public ModelAndView style (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "style");
+		modlAndView.setViewName("page/product/style");
+		
+		return modlAndView;
+	}
+	
+	// 제품보기_친환경제품로 이동
+	@GetMapping("/product/eco")
 	public ModelAndView product (ModelAndView modlAndView) {
 		
-		modlAndView.addObject("pageName", "product");
-		modlAndView.setViewName("page/product");
+		modlAndView.addObject("pageName", "eco");
+		modlAndView.setViewName("page/product/eco");
 		
 		return modlAndView;
 	}
 	
-	// 소통하기로 이동
-	@GetMapping("/board")
-	public ModelAndView board (ModelAndView modlAndView) {
+	// 관리자페이지_매출관리로 이동
+	@GetMapping("/admin/salesMgmt")
+	public ModelAndView salesMgmt (ModelAndView modlAndView) {
 		
-		modlAndView.addObject("pageName", "board");
-		modlAndView.setViewName("page/board");
+		modlAndView.addObject("pageName", "salesMgmt");
+		modlAndView.setViewName("page/admin/salesMgmt");
 		
 		return modlAndView;
 	}
 	
-	// 관리자페이지로 이동
-	@GetMapping("/admin")
-	public ModelAndView admin (ModelAndView modlAndView) {
+	// 관리자페이지_제품관리로 이동
+	@GetMapping("/admin/productMgmt")
+	public ModelAndView productMgmt (ModelAndView modlAndView) {
 		
-		modlAndView.addObject("pageName", "admin");
-		modlAndView.setViewName("page/admin");
+		modlAndView.addObject("pageName", "productMgmt");
+		modlAndView.setViewName("page/admin/productMgmt");
+		
+		return modlAndView;
+	}
+	
+	// 제품 등록하기
+	@RequestMapping(value = "/admin/productInsert", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> enroll(Product product) {
+		int result = 0;
+		Map<String, Object> map = new HashMap<>();
+				
+		result = productService.save(product);
+		
+		map.put("resultCode", result);
+		map.put("product", product);
+		
+		return ResponseEntity.ok(map);
+	}
+	
+	
+	// 관리자페이지_클래스관리로 이동
+	@GetMapping("/admin/programMgmt")
+	public ModelAndView programMgmt (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "programMgmt");
+		modlAndView.setViewName("page/admin/programMgmt");
+		
+		return modlAndView;
+	}
+	
+	// 관리자페이지_회원관리로 이동
+	@GetMapping("/admin/memberMgmt")
+	public ModelAndView memberMgmt (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "memberMgmt");
+		modlAndView.setViewName("page/admin/memberMgmt");
+		
+		return modlAndView;
+	}
+	
+	// 관리자페이지_게시판관리로 이동
+	@GetMapping("/admin/boardMgmt")
+	public ModelAndView boardMgmt (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "boardMgmt");
+		modlAndView.setViewName("page/admin/boardMgmt");
 		
 		return modlAndView;
 	}

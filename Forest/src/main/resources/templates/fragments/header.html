@@ -12,7 +12,7 @@
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="/css/styles.css" rel="stylesheet" />
         <script th:src="@{/js/jquery-3.7.0.js}"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <!-- Fonts -->
@@ -58,18 +58,18 @@
                     <!--※※ if ~~ 관리자인 경우 메뉴바 전부 보이게, 유저는 4개만 보이게 -->
                         <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="/program">참여하기</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/product">제품보기</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/board">소통하기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/product/kitchen">제품보기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/board/notice">소통하기</a></li>
                         <!-- 관리자메뉴_드롭다운기능 -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">관리자페이지</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="/admin">매출관리</a></li>
-                                <li><a class="dropdown-item" href="/admin">상품관리</a></li>
-                                <li><a class="dropdown-item" href="/admin">클래스관리</a></li>
+                                <li><a class="dropdown-item" href="/admin/salesMgmt">매출관리</a></li>
+                                <li><a class="dropdown-item" href="/admin/productMgmt">상품관리</a></li>
+                                <li><a class="dropdown-item" href="/admin/programMgmt">클래스관리</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="/admin">회원관리</a></li>
-                                <li><a class="dropdown-item" href="/admin">게시판관리</a></li>
+                                <li><a class="dropdown-item" href="/admin/memberMgmt">회원관리</a></li>
+                                <li><a class="dropdown-item" href="/admin/boardMgmt">게시판관리</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -121,10 +121,18 @@
 			          </div>
 			     </div>
 			  </header>
+			   <div class="sub-menu">
+				  <ul>
+				    <li>
+				      <a href="#">원데이 클래스</a>
+				      <a href="#">참여형 클래스</a>
+				    </li>
+				  </ul>
+				</div>
 		 </th:block>
 		 
          <!-- 제품보기 -->
-		 <th:block th:if="${pageName eq 'product'}">
+		 <th:block th:if="${pageName eq 'kitchen' or pageName eq 'style' or pageName eq 'eco'}">
 	         <header class="bg-main-header py-5" style="background-image: url('/images/product_pic.png');">
 			     <div class="container">
 			          <div class="text-center text-white">		         	 
@@ -132,10 +140,19 @@
 			          </div>
 			     </div>
 			  </header>
+		        <div class="sub-menu">
+				  <ul>
+				    <li>
+				      <a th:href="@{/product/kitchen}" th:classappend="${pageName eq 'kitchen'} ? 'active-menu' : ''">주방</a>
+				      <a th:href="@{/product/style}" th:classappend="${pageName eq 'style'} ? 'active-menu' : ''">패션</a>
+				      <a th:href="@{/product/eco}" th:classappend="${pageName eq 'eco'} ? 'active-menu' : ''">친환경 키트</a>
+				    </li>
+				  </ul>
+				</div>
 		 </th:block>
 		 
          <!-- 소통하기 -->
-		 <th:block th:if="${pageName eq 'board'}">
+		 <th:block th:if="${pageName eq 'notice' or pageName eq 'faq' or pageName eq 'community' or pageName eq 'act'}">
 	         <header class="bg-main-header py-5" style="background-image: url('/images/board_pic.png');">
 			     <div class="container">
 			          <div class="text-center text-white">		         	 
@@ -143,20 +160,80 @@
 			          </div>
 			     </div>
 			  </header>
+			     <div class="sub-menu">
+				  <ul>
+				    <li>
+				      <a th:href="@{/board/notice}" th:classappend="${pageName eq 'notice'} ? 'active-menu' : ''">공지사항</a>
+				      <a th:href="@{/board/faq}" th:classappend="${pageName eq 'faq'} ? 'active-menu' : ''">자주묻는 질문</a>
+				      <a th:href="@{/board/community}" th:classappend="${pageName eq 'community'} ? 'active-menu' : ''">자유게시판</a>
+				      <a th:href="@{/board/act}" th:classappend="${pageName eq 'act'} ? 'active-menu' : ''">실천 인증</a>
+				    </li>
+				  </ul>
+				</div>
 		 </th:block>
 		 
-		 <!-- 기타페이지_공통 -->
-		 <th:block th:unless="${pageName eq 'home' or pageName eq 'about' or pageName eq 'program' or pageName eq 'product' or pageName eq 'board'}">
-	         <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
-			     <div class="container">
-			          <div class="text-center text-white">		         	 
-			              <h3 class="display-6 fw-bolder">FORE:ST</h3>
-			          </div>
-			     </div>
-			  </header>
-		 </th:block>
-		 <!--  <p class="lead fw-normal text-white-50 mb-0">Preserving the beauty of the Earth and brightening the future with FOREST</p>
-		 -->
+		<!-- 마이페이지 -->
+	       <th:block th:if="${pageName eq 'myPage'}">
+	            <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
+	              <div class="container">
+	                   <div class="text-center text-white">                   
+	                       <h3 class="display-6 fw-bolder">MY FORE:ST</h3>
+	                   </div>
+	              </div>
+	           </header>
+              	<div class="sub-menu">
+				  <ul>
+				    <li>
+				      <a href="#">주문 내역</a>
+				      <a href="#">참여 확인</a>
+				      <a href="#">1:1 문의하기</a>
+				      <a href="#">개인정보 수정</a>
+				    </li>
+				  </ul>
+				</div>
+	       </th:block>
+	       
+	       <!-- 관리자 페이지 -->
+	       <th:block th:if="${pageName eq 'salesMgmt' or pageName eq 'programMgmt' or 
+	       					  pageName eq 'productMgmt' or pageName eq 'boardMgmt' or 
+	       					  pageName eq 'memberMgmt'}">
+	            <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
+	              <div class="container">
+	                   <div class="text-center text-white">                   
+	                       <h3 class="display-6 fw-bolder">FORE:ST</h3>
+	                   </div>
+	              </div>
+	           </header>
+              	<div class="sub-menu">
+				  <ul>
+				    <li>
+				      <a th:href="@{/admin/salesMgmt}" th:classappend="${pageName eq 'salesMgmt'} ? 'active-menu' : ''">매출관리</a>
+				      <a th:href="@{/admin/productMgmt}" th:classappend="${pageName eq 'productMgmt'} ? 'active-menu' : ''">제품관리</a>
+				      <a th:href="@{/admin/programMgmt}" th:classappend="${pageName eq 'programMgmt'} ? 'active-menu' : ''">클래스관리</a>
+				      <a th:href="@{/admin/memberMgmt}" th:classappend="${pageName eq 'memberMgmt'} ? 'active-menu' : ''">회원관리</a>
+				      <a th:href="@{/admin/boardMgmt}" th:classappend="${pageName eq 'boardMgmt'} ? 'active-menu' : ''">게시판관리</a>
+				    </li>
+				  </ul>
+				</div>
+	       </th:block>
+       
+       <!-- 기타페이지_공통 -->
+       <th:block th:unless="${pageName eq 'home' or pageName eq 'about' or pageName eq 'program' or 
+       	 					  pageName eq 'kitchen' or pageName eq 'style' or pageName eq 'eco' or 
+       	 					  pageName eq 'board' or pageName eq 'myPage' or 
+       	 					  pageName eq 'salesMgmt' or pageName eq 'programMgmt' or pageName eq 'productMgmt' or 
+       	 					  pageName eq 'boardMgmt' or pageName eq 'memberMgmt' or pageName eq 'notice' or 
+       	 					  pageName eq 'faq' or pageName eq 'community' or pageName eq 'act'}">
+            <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
+              <div class="container">
+                   <div class="text-center text-white">                   
+                       <h3 class="display-6 fw-bolder">FORE:ST</h3>
+                   </div>
+              </div>
+           </header>
+       </th:block>
+       <!--  <p class="lead fw-normal text-white-50 mb-0">Preserving the beauty of the Earth and brightening the future with FOREST</p>
+       -->
 	
         
         <!-- Bootstrap core JS-->
@@ -177,6 +254,15 @@
         	  });
         	});
         </script>
-    </body>
+    
+    
+ 
+	
+ 
+
+   
+	
+
+
 </div>
 </html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<th:block th:with="pageName='productMgmt'"></th:block>      
+<!-- productMgmt.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/producstMgmt.css}" >-->
+	<style>
+	.table > th {
+		width: 25%;
+	}
+	</style>
+</th:block>
+<!-- productMgmt.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- ex)  <script th:src="@{/js/page/productMgmt.js}"></script>-->
+</th:block>
+
+<!-- Content -->
+<div layout:fragment="content">
+<form class="container" action="/admin/productInsert" method="post">
+
+<div class="table-div">
+  <table class="table">
+	  <thead>
+	    <tr class="border-bottom" >
+	      <th scope="col" colspan="2" class="th-custom-style" style="border-bottom-width: 3px; 
+	border-bottom-color: #082f1c;
+	color: #082f1c;">제품등록</th>
+	    </tr>
+	  </thead>
+	  
+	  <tbody>
+	    <tr>
+	      <th scope="row">카테고리</th>
+	      <td>
+	      	<select id="pd_category" name="pd_category">
+			    <option value="" selected>--- 선택 ---</option>
+			    <option value="kitchen">주방</option>
+			    <option value="option2">옵션 2</option>
+			    <option value="option3">옵션 3</option>
+		    </select>
+		 </td>
+	    </tr>
+	    <tr>
+	      <th scope="row">제품명</th>
+	      <td><input type="text"></td>
+	    </tr>
+	    <tr>
+	      <th scope="row">판매가</th>
+	      <td><input type="text"> </td>
+	    </tr>
+	    <tr>
+	      <th scope="row">제품색상</th>
+	      <td><input type="text"></td>
+	    </tr>
+	    <tr>
+	      <th scope="row">제품수량</th>
+	      <td><input type="number" min="0"></td>
+	    </tr>
+	    <tr>
+	      <th scope="row">제품사이즈</th>
+	      <td>
+	      	<select id="pd_size" name="pd_size">
+			    <option value="" selected>--- 선택 ---</option>
+			    <option value="S">S</option>
+			    <option value="M">M</option>
+			    <option value="L">L</option>
+		    </select>
+		  </td>
+	    </tr>
+	    <tr>
+	      <th scope="row">설명</th>
+	      <td><textarea rows="3" cols="50" resize="none"></textarea></td>
+	    </tr>
+	    <tr>
+	      <th scope="row">대표이미지</th>
+	      <td> <input type="file"></td>
+	    </tr>
+	    <tr>
+	      <th scope="row">상세이미지</th>
+	      <td><input type="file"></td>
+	    </tr>
+	    <tr>
+	      <th></th>
+	      <td> 
+		      <input type="submit" value="등록">
+		      <input type="reset" value="취소">
+	      </td>
+	      </tr>
+	  </tbody>
+	  </table>
+
+</div>
+</div>
+</form>
+
+</html>
