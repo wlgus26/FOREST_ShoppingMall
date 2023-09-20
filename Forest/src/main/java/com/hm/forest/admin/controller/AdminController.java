@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
@@ -50,21 +52,35 @@ public class AdminController {
 		}
 		
 		// 관리자페이지_제품등록
-		@NonNull
 		@PostMapping("/productMgmt/insert")
-		public ResponseEntity<Map<String, Object>> insert(@ModelAttribute Product product) {
-			int result = 0;
-			Map<String, Object> map = new HashMap<>();
-							
-			result = adminService.save(product);
-					
-			map.put("resultCode", result);
-			map.put("produnct", product);
+		@ResponseBody
+		public String insert (Product product) {
+
+			System.out.println("getName :" + product.getName());
+			System.out.println("getPrice :" + product.getPrice());
+			System.out.println("getColor :" + product.getColor());
+			System.out.println("amount :" + product.getAmount());
 			
-			System.out.println(map);
-					
-			return ResponseEntity.ok(map);
-				}
+			adminService.save(product);
+			
+			
+			return "제품을 등록하였습니다";
+		
+		}
+		
+//		public ResponseEntity<Map<String, Object>> insert(@ModelAttribute("Product") Product product) {
+//			int result = 0;
+//			Map<String, Object> map = new HashMap<>();
+//							
+//			result = adminService.save(product);
+//					
+//			map.put("resultCode", result);
+//			map.put("produnct", product);
+//			
+//			System.out.println(result);
+//					
+//			return ResponseEntity.ok(map);
+//		}
 		
 		
 		// 관리자페이지_클래스관리로 이동
