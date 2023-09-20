@@ -48,22 +48,22 @@
 	    </tr>
 	    <tr>
 	      <th scope="row">제품명</th>
-	      <td><input type="text"></td>
+	      <td><input type="text" id="name"></td>
 	    </tr>
 	    <tr>
 	      <th scope="row">판매가</th>
-	      <td><input type="text"> </td>
+	      <td><input type="text" id="price"> </td>
 	    </tr>
 	    <tr>
 	      <th scope="row">제품색상</th>
-	      <td><input type="text"></td>
+	      <td><input type="text" id="color"></td>
 	    </tr>
 	    <tr>
 	      <th scope="row">제품수량</th>
-	      <td><input type="number" min="0"></td>
+	      <td><input type="number" min="0" id="amount"></td>
 	    </tr>
 	    <tr>
-	      <th scope="row">제품사이즈</th>
+	      <th scope="row" id="sizeSml">제품사이즈</th>
 	      <td>
 	      	<select id="pd_size" name="pd_size">
 			    <option value="" selected>--- 선택 ---</option>
@@ -74,11 +74,11 @@
 		  </td>
 	    </tr>
 	    <tr>
-	      <th scope="row">설명</th>
+	      <th scope="row" id="content">설명</th>
 	      <td><textarea rows="3" cols="50" resize="none"></textarea></td>
 	    </tr>
 	    <tr>
-	      <th scope="row">대표이미지</th>
+	      <th scope="row" id="image">대표이미지</th>
 	      <td> <input type="file"></td>
 	    </tr>
 	    <tr>
@@ -88,7 +88,7 @@
 	    <tr>
 	      <th></th>
 	      <td> 
-		      <input type="submit" value="등록">
+		      <input type="submit" id="btnEnroll" value="등록">
 		      <input type="reset" value="취소">
 	      </td>
 	      </tr>
@@ -96,7 +96,7 @@
 	  </table>
 
 </div>
-</div>
 </form>
+
 
 </html>

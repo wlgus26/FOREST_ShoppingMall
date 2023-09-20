@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Product {
 	
 	private int no;
@@ -32,6 +33,8 @@ public class Product {
 	private String company;
 	
 	private int discountrate;
+	
+	private String status;
 	
 	private String image;
 	
