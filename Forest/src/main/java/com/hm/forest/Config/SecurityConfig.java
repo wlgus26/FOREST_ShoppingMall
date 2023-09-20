@@ -57,6 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error=true")
                 .permitAll()
                 .and()
+                .rememberMe()
+                .key("uniqueAndSecretKey")
+                .userDetailsService(userDetailsService())
+                .tokenValiditySeconds(86400)
+                .and()
             .logout()
                 .permitAll();
     }
