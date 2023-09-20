@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.board.model.vo.Board;
 import com.hm.forest.board.service.BoardService;
+import com.hm.forest.common.util.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,27 +25,28 @@ public class BoardController {
 		private BoardService boardService;
 	
 		 @GetMapping("/notice")
-		 public ModelAndView FindAll(ModelAndView modelAndView) {
+		 public ModelAndView FindAll(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
 			 String type = "notice";
-			 List<Board> boardLists = boardService.getBoardLists(type);
+			 int listCount = 0;
+			 PageInfo pageInfo = null;
+			 List<Board> boardLists = null;
 
-			 
-			 
-			 
+			 listCount = boardService.selectBoardCountByType(type);
+			 pageInfo = new PageInfo(page, 10, listCount, 10);
+			 boardLists = boardService.getBoardLists(type, pageInfo);
 			 
 			 modelAndView.addObject("pageName", "notice");
+			 modelAndView.addObject("pageInfo", pageInfo);
 			 modelAndView.addObject("boardLists", boardLists);
+			 
 			 modelAndView.setViewName("page/board/notice");
 			 return modelAndView;
-			 
-			 
-		
+
 		 }
 		
 		// 자주묻는질문으로 이동
 		@GetMapping("/faq")
 		public ModelAndView faq (ModelAndView modelAndView) {
-			
 			
 			modelAndView.addObject("pageName", "faq");
 			modelAndView.setViewName("page/board/faq");
@@ -55,10 +58,10 @@ public class BoardController {
 		@GetMapping("/community")
 		public ModelAndView communityFindAll (ModelAndView modelAndView) {
 			String type = "community";
-			List<Board> boardLists = boardService.getBoardLists(type);
+			// List<Board> boardLists = boardService.getBoardLists(type);
 
 			modelAndView.addObject("pageName", "community");
-			modelAndView.addObject("boardLists", boardLists);
+		//	modelAndView.addObject("boardLists", boardLists);
 			modelAndView.setViewName("page/board/community");
 			
 			return modelAndView;
