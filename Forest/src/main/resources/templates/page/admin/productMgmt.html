@@ -8,9 +8,23 @@
 <!-- productMgmt.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/producstMgmt.css}" >-->
+    <script
+	src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
+	
 	<style>
 	.table > th {
 		width: 25%;
+	}
+	
+	
+	.ck.ck-editor {
+		width: 80%;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.ck-editor__editable {
+		height: 80vh;
 	}
 	</style>
 </th:block>
@@ -29,8 +43,8 @@
 	  <thead>
 	    <tr class="border-bottom" >
 	      <th scope="col" colspan="2" class="th-custom-style" style="border-bottom-width: 3px; 
-	border-bottom-color: #082f1c;
-	color: #082f1c;">제품등록</th>
+				border-bottom-color: #082f1c;
+				color: #082f1c;">제품등록</th>
 	    </tr>
 	  </thead>
 	  
@@ -48,24 +62,24 @@
 	    </tr>
 	    <tr>
 	      <th scope="row">제품명</th>
-	      <td><input type="text" id="name"></td>
+	      <td><input type="text" id="name" name="name"></td>
 	    </tr>
 	    <tr>
 	      <th scope="row">판매가</th>
-	      <td><input type="text" id="price"> </td>
+	      <td><input type="text" id="price" name="price"> </td>
 	    </tr>
 	    <tr>
 	      <th scope="row">제품색상</th>
-	      <td><input type="text" id="color"></td>
+	      <td><input type="text" id="color" name="color"></td>
 	    </tr>
 	    <tr>
 	      <th scope="row">제품수량</th>
-	      <td><input type="number" min="0" id="amount"></td>
+	      <td><input type="number" min="0" id="amount" name="amount"></td>
 	    </tr>
 	    <tr>
-	      <th scope="row" id="sizeSml">제품사이즈</th>
+	      <th scope="row" id="sizeSml" name="sizeSml">제품사이즈</th>
 	      <td>
-	      	<select id="pd_size" name="pd_size">
+	      	<select id="sizeSml" name="sizeSml" >
 			    <option value="" selected>--- 선택 ---</option>
 			    <option value="S">S</option>
 			    <option value="M">M</option>
@@ -74,21 +88,31 @@
 		  </td>
 	    </tr>
 	    <tr>
-	      <th scope="row" id="content">설명</th>
-	      <td><textarea rows="3" cols="50" resize="none"></textarea></td>
+	      <th scope="row">설명</th>
+	      <td><textarea rows="3" cols="100" resize="none" id="editor" name="content"></textarea></td>
 	    </tr>
 	    <tr>
-	      <th scope="row" id="image">대표이미지</th>
-	      <td> <input type="file"></td>
+	      <th scope="row" id="image" name="image">대표이미지</th>
+	      <td> <input type="file" id="image" name="image"></td>
 	    </tr>
 	    <tr>
-	      <th scope="row">상세이미지</th>
+	      <th scope="row" >상세이미지</th>
 	      <td><input type="file"></td>
+	    </tr>
+	   <th scope="row" id="status" name="status">판매상태</th>
+	      <td>
+	      	<select id="status" name="status" >
+			    <option value="" selected>--- 선택 ---</option>
+			    <option value="Y">판매중</option>
+			    <option value="N">품절</option>
+		    </select>
+		  </td>
 	    </tr>
 	    <tr>
 	      <th></th>
 	      <td> 
-		      <input type="submit" id="btnEnroll" value="등록">
+		      <input type="submit" id="btnInsert"value="등록">
+		      <input type="submit" id="btnDelete" value="삭제">
 		      <input type="reset" value="취소">
 	      </td>
 	      </tr>
@@ -97,6 +121,24 @@
 
 </div>
 </form>
+
+<!-- CKEditor -->
+	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+	<script>		
+	ClassicEditor
+	.create(document.querySelector('#editor'), {
+		ckfinder: {
+			uploadUrl : '/image/upload'
+		}
+	})
+	.then(editor => {
+		console.log('Editor was initialized');
+	})
+	.catch(error => {
+		console.error(error);
+	});
+	</script>
+	
 
 
 </html>

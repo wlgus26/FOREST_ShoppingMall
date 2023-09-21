@@ -9,4 +9,6 @@ public interface AdminMapper {
 	
 	int insertProduct(Product product);
 
+	int deleteProduct(Product product);
+
 }
