@@ -63,6 +63,12 @@
 		    <artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		
+		<dependency>
+    		<groupId>org.thymeleaf.extras</groupId>
+		    <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+		
+		
 		<!-- 스프링에서 mybatis 사용하기 위한 의존성 모음 -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -70,6 +76,14 @@
 			<version>2.3.1</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- jpa -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+		    <version>3.1.1</version>
+		</dependency>
+		
 		
 	</dependencies>
 
