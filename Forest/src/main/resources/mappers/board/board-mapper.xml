@@ -20,7 +20,13 @@
 		<result property="modifyDate" column="MODIFY_DATE"/>
 	</resultMap>
 	
-	<select id="findAll" parameterType="string" resultMap="boardResultMap">
+	<select id="selectBoardCountByType" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD 
+		WHERE  STATUS = 'Y' AND TYPE = #{type}
+	</select>
+	
+	<select id="selectBoardListsByType" parameterType="string" resultMap="boardResultMap">
 		SELECT B.NO, 
 			   B.TYPE, 
 			   B.WRITER_NO, 
@@ -39,4 +45,6 @@
 		WHERE  B.STATUS = 'Y' AND B.TYPE = #{type}
 		ORDER BY B.NO DESC
 	</select>
+	
+	
 </mapper>
