@@ -8,14 +8,125 @@
 <!-- enroll.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/enroll.css}" >-->
+    <link rel="stylesheet" href="/css/enroll.css" >
 </th:block>
 <!-- enroll.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
     <!-- ex)  <script th:src="@{/js/page/enroll.js}"></script>-->
+<script>
+function openZipSearch() {
+    new daum.Postcode({
+    	oncomplete: function(data) {     
+		var addr = ''; 
+		if (data.userSelectedType === 'R') { 
+			addr = data.roadAddress;
+		} else {
+			addr = data.jibunAddress;
+		}
+
+		$("#zip_code").val(data.zonecode);
+		$("#addr").val(addr);
+		$("#addr_dtl").val("");
+		$("#addr_dtl").focus();
+        }
+    }).open();   
+}
+</script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </th:block>
 
 <!-- Content -->
 <div layout:fragment="content">
-   <h5> templates > page > enroll.html > Content </h5>
+	<div class="container">
+      <div class="input-form">
+        <h3 class="mb-3">회원가입</h3>
+        <p>회원이 되어 다양한 혜택을 경험해 보세요!</p>
+        <form class="validation-form" novalidate>
+          <div class="row">
+            <div class="mb-3">
+				    <label for="userId">아이디</label>
+				    <a ></a>
+				    <div class="input-group">
+				        <input type="text" class="form-control" id="userId" placeholder="아이디 입력(6~20자)" value="" required>
+				        <div class="input-group-append">
+				            <button class="btn btn-outline-secondary" type="button" id="checkUsernameBtn">아이디 확인</button>
+				        </div>
+				    </div>
+				    <div class="invalid-feedback">
+				        아이디를 입력해주세요.
+				    </div>
+				</div>
+          </div>
+          
+          	<div class="mb-3">
+              <label for="password">비밀번호</label>
+              <input type="text" class="form-control" id="password" placeholder="비밀번호 입력(문자, 숫자, 특수문자 포함 8~20자)" value="" required>
+              <div class="invalid-feedback">
+                비밀번호를 입력해주세요.
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="password">비밀번호 확인</label>
+              <input type="text" class="form-control" id="password" placeholder="비밀번호 재입력" value="" required>
+              <div class="invalid-feedback">
+                비밀번호가 일치하지 않습니다.
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="name">이름</label>
+              <input type="text" class="form-control" id="name" placeholder="이름을 입력하세요" value="" required>
+              <div class="invalid-feedback">
+                이름을 입력해주세요.
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="phoneNumber">전화번호</label>
+              <input type="text" class="form-control" id="phoneNumber" placeholder="휴대폰 번호 입력('-'제외 11자리 입력)" value="" required>
+              <div class="invalid-feedback">
+                전화번호를 입력해주세요.
+              </div>
+            </div>
+
+          <div class="mb-3">
+            <label for="email">이메일</label>
+            <input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요" required>
+            <div class="invalid-feedback">
+              이메일을 입력해주세요.
+            </div>
+          </div>
+          
+          <div class="mb-3">
+              <label for="zip_code">우편번호</label>
+              <input type="text" class="form-control"  id="zip_code" name="zip_code" onclick="openZipSearch();" readonly="readonly" placeholder="우편번호">
+              <div class="invalid-feedback">
+                우편번호를 입력해주세요.
+              </div>
+            </div>
+
+          <div class="mb-3">
+            <label for="addr">주소</label>
+            <input type="text" class="form-control" id="addr" name="addr" onclick="openZipSearch();" readonly="readonly" placeholder="기본주소">
+            <div class="invalid-feedback">
+              주소를 입력해주세요.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="addr_dtl">상세주소<span class="text-muted">&nbsp;</span></label>
+            <input type="text" class="form-control" id="addr_dtl" name="addr_dtl" placeholder="상세주소를 입력해주세요">
+          </div>
+          <hr class="mb-4">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="aggrement" required>
+            <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
+          </div>
+          <br>
+          <button class="btn-primary btn-lg btn-block btn mx-auto" type="submit">가입 완료</button>
+        </form>
+      </div>
+  </div>
 </div>
 </html>
