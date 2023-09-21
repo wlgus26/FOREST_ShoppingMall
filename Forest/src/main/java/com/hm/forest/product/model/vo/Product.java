@@ -1,29 +1,18 @@
 package com.hm.forest.product.model.vo;
 
-import lombok.AllArgsConstructor;
-<<<<<<< HEAD
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-=======
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@Data
-@Builder
-@ToString
+
 @Getter
 @Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
->>>>>>> main
+@AllArgsConstructor
 public class Product {
 	private int no;
 	
@@ -34,17 +23,10 @@ public class Product {
 	private String content;
 	
 	private String color;
-<<<<<<< HEAD
 	 
 	private int amount;
 	
-	private String size_sml;
-=======
-	
-	private int amount;
-	
 	private String sizeSml;
->>>>>>> main
 	
 	private int stock;
 	
@@ -57,9 +39,5 @@ public class Product {
 	private String image;
 	
 	private int wish;
-<<<<<<< HEAD
-=======
-	
-	
->>>>>>> main
+
 }

@@ -1,20 +1,5 @@
 package com.hm.forest.product.controller;
 
-<<<<<<< HEAD
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-@Controller
-@RequestMapping("/product")
-public class ProductController {
-	
-	@GetMapping("/product/productdetail")
-	public String productdetail() {
-		
-		return "productdetail";
-	}
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,19 +49,5 @@ public class ProductController {
 		return modelAndView;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
->>>>>>> main
+
 }

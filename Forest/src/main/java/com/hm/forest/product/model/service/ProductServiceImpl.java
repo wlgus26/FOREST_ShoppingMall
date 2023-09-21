@@ -13,11 +13,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 	private final ProductMapper productMapper;
-	
+
+	// 오류 없애려고 일단 넣어둠 삭제해도 됨
 	@Override
 	public List<Product> getProductsByNo(String no) {
-		
-		return productMapper.selectAllNo(no);
+		// TODO Auto-generated method stub
+		return null;
 	}
+	
 
 }
