@@ -11,4 +11,6 @@ public interface BoardService {
 
 	int selectBoardCountByType(String bType);
 
+	Board getBoardByNo(int no);
+
 }

@@ -1869,9 +1869,12 @@ progress {
   border-bottom-width: 1px;
   box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
 }
+
 .table > tbody {
   vertical-align: inherit;
 }
+
+
 .table > thead {
   vertical-align: bottom;
 }
@@ -1920,6 +1923,7 @@ progress {
 .table-hover > tbody > tr:hover > * {
   --bs-table-accent-bg: var(--bs-table-hover-bg);
   color: var(--bs-table-hover-color);
+  cursor: pointer;
 }
 
 .table-primary {
@@ -2215,6 +2219,10 @@ progress {
   margin: -0.5rem -1rem;
   -webkit-margin-end: 1rem;
           margin-inline-end: 1rem;
+}
+
+.form-board {
+	width: 70%;
 }
 
 textarea.form-control {
@@ -3108,7 +3116,7 @@ textarea.form-control-lg {
   --bs-btn-color: #6c757d;
   --bs-btn-border-color: #6c757d;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #6c757d;
+  --bs-btn-hover-bg: #082f1c;
   --bs-btn-hover-border-color: #6c757d;
   --bs-btn-focus-shadow-rgb: 108, 117, 125;
   --bs-btn-active-color: #fff;
