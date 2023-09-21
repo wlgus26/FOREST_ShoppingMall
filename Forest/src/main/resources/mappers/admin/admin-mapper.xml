@@ -22,37 +22,41 @@
 	</resultMap>
 
 	<insert id="insertProduct" parameterType="Product">
-		<selectKey resultType="string" keyProperty="no">
 		INSERT INTO PRODUCT (
-	        NO,
-	        NAME,
-	        PRICE,
-	        CONTENT,
-	        COLOR,
-	        AMOUNT,
-	        SIZE_SML,
-	        STOCK,
-	        COMPANY,
-	        DISCOUNTRATE,
-	        STATUS,
-	        IMAGE,
-	        WISH
-	    ) VALUES (
-	        #{no},
-	        #{name},
-	        #{price},
-	        #{content},
-	        #{color},
-	        #{amount},
-	        #{sizeSml}, 
-	        #{stock},
-	        #{company},
-	        #{discountrate},
-	        #{status},
-	        #{image},
-	        #{wish}
-	    )
-	</selectKey>
+			NO, 
+			NAME, 
+			PRICE, 
+			CONTENT, 
+			COLOR, 
+			AMOUNT, 
+			SIZE_SML, 
+			STOCK, 
+			COMPANY, 
+			DISCOUNTRATE, 
+			STATUS, 
+			IMAGE, 
+			WISH
+		) VALUES (
+			SEQ_PD_NO.NEXTVAL, 
+			#{name}, 
+			#{price}, 
+			#{content}, 
+			#{color}, 
+			#{amount}, 
+			#{sizeSml}, 
+			#{stock}, 
+			#{company}, 
+			#{discountrate}, 
+			#{status}, 
+			#{image}, 
+			#{wish}
+		)
 </insert>
+
+<delete id="deleteProduct" parameterType="_int">
+		DELETE 
+		FROM PRODUCT 
+		WHERE NO=#{no}
+	</delete>
 
 </mapper>

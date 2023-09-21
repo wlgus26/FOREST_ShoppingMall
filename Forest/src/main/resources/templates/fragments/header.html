@@ -85,9 +85,10 @@
                         <li class="nav-item"><a class="nav-link" href="/program">참여하기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/product/kitchen">제품보기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/board/notice">소통하기</a></li>
+                        <!-- 
                         <li class="nav-item"><a class="nav-link" href="/myPage"
                         th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a></li>
-                        <!-- 관리자메뉴_드롭다운기능 -->
+                      관리자메뉴_드롭다운기능 
                        <li class="nav-item dropdown"  th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
 						    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">관리자페이지</a>
 						    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -99,6 +100,7 @@
 						        <li><a class="dropdown-item" href="/admin/boardMgmt">게시판관리</a></li>
 						    </ul>
 						</li>
+                         -->
                     </ul>
                     <div class="d-flex">
 					  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
@@ -179,7 +181,7 @@
 		 </th:block>
 		 
          <!-- 소통하기 -->
-		 <th:block th:if="${pageName eq 'notice' or pageName eq 'faq' or pageName eq 'community' or pageName eq 'act'}">
+		 <th:block th:if="${pageName eq 'notice' or pageName eq 'faq' or pageName eq 'community' or pageName eq 'act' or pageName eq 'view' or pageName eq 'write' or pageName eq 'update'}">
 	         <header class="bg-main-header py-5" style="background-image: url('/images/board_pic.png');">
 			     <div class="container">
 			          <div class="text-center text-white">		         	 
@@ -190,7 +192,8 @@
 			     <div class="sub-menu">
 				  <ul>
 				    <li>
-				      <a th:href="@{/board/notice}" th:classappend="${pageName eq 'notice'} ? 'active-menu' : ''">공지사항</a>
+				    <a th:href="@{/board/notice}" th:classappend="${pageName eq 'notice'} ? 'active-menu' : ''">공지사항</a>
+				   <!--    <a th:href="@{pageName eq 'notice' ? '/board/notice' : '/board/write?type=notice'}" th:href="@{/board/write}"  th:classappend="${pageName eq 'notice'} ? 'active-menu' : ''">공지사항</a>--> 
 				      <a th:href="@{/board/faq}" th:classappend="${pageName eq 'faq'} ? 'active-menu' : ''">자주묻는 질문</a>
 				      <a th:href="@{/board/community}" th:classappend="${pageName eq 'community'} ? 'active-menu' : ''">자유게시판</a>
 				      <a th:href="@{/board/act}" th:classappend="${pageName eq 'act'} ? 'active-menu' : ''">실천 인증</a>
@@ -250,7 +253,8 @@
        	 					  pageName eq 'board' or pageName eq 'myPage' or 
        	 					  pageName eq 'salesMgmt' or pageName eq 'programMgmt' or pageName eq 'productMgmt' or 
        	 					  pageName eq 'boardMgmt' or pageName eq 'memberMgmt' or pageName eq 'notice' or 
-       	 					  pageName eq 'faq' or pageName eq 'community' or pageName eq 'act'}">
+       	 					  pageName eq 'faq' or pageName eq 'community' or pageName eq 'act' or 
+       	 					  pageName eq 'write' or pageName eq 'update' or pageName eq 'view'}">
             <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
               <div class="container">
                    <div class="text-center text-white">                   

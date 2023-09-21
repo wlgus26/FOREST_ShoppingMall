@@ -23,4 +23,12 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
+	@Override
+	public int delete(Product product) {
+		int result = 0;
+		
+		result = adminMapper.deleteProduct(product);
+		return 0;
+	}
+
 }

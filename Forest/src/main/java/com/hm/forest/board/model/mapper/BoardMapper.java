@@ -19,5 +19,8 @@ public interface BoardMapper {
 	// 게시글 전체 목록 조회
 	List<Board> selectBoardListsByType(@Param("type") String type, RowBounds bounds);
 
+	// 특정 게시글 조회
+	Board selectBoardByNo(int no);
+
 
 }
