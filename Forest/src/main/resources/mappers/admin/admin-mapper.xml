@@ -23,35 +23,35 @@
 
 	<insert id="insertProduct" parameterType="Product">
 		<selectKey resultType="string" keyProperty="no">
-	INSERT INTO PRODUCT (
-        NO,
-        NAME,
-        PRICE,
-        CONTENT,
-        COLOR,
-        AMOUNT,
-        SIZE_SML,
-        STOCK,
-        COMPANY,
-        DISCOUNTRATE,
-        STATUS,
-        IMAGE,
-        WISH
-    ) VALUES (
-        #{no},
-        #{name},
-        #{price},
-        #{content},
-        #{color},
-        #{amount},
-        #{sizeSml}, 
-        #{stock},
-        #{company},
-        #{discountrate},
-        #{status},
-        #{image},
-        #{wish}
-    )
+		INSERT INTO PRODUCT (
+	        NO,
+	        NAME,
+	        PRICE,
+	        CONTENT,
+	        COLOR,
+	        AMOUNT,
+	        SIZE_SML,
+	        STOCK,
+	        COMPANY,
+	        DISCOUNTRATE,
+	        STATUS,
+	        IMAGE,
+	        WISH
+	    ) VALUES (
+	        #{no},
+	        #{name},
+	        #{price},
+	        #{content},
+	        #{color},
+	        #{amount},
+	        #{sizeSml}, 
+	        #{stock},
+	        #{company},
+	        #{discountrate},
+	        #{status},
+	        #{image},
+	        #{wish}
+	    )
 	</selectKey>
 </insert>
 
