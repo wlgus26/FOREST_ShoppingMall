@@ -26,6 +26,8 @@ public class ProductController {
 		modelAndView.addObject("pageName", "kitchen");
 		modelAndView.setViewName("page/product/kitchen");
 		
+		productservice.getProductPage();
+		
 		return modelAndView;
 	}
 	

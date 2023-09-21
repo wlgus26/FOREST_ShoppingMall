@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.product.model.mapper.ProductMapper;
 
 @Service
@@ -16,12 +16,9 @@ public class ProductServiceImpl implements ProductService {
 	private ProductMapper productmapper;
 
 	@Override
-	@Transactional
-	public List<Product> getlistProduct(String type) {
+	public List<Product> getProductPage() {
 		
-		
-		return productmapper.listProduct(getlistProduct(Product));
+		return productmapper.listProduct();
 	}
-
 
 }

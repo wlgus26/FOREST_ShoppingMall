@@ -3,12 +3,13 @@ package com.hm.forest.product.model.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
-import com.hm.forest.product.model.vo.Product;
+import com.hm.forest.admin.model.vo.Product;
 
 @Mapper
 public interface ProductMapper {
-//	String listProduct(Product product);
-	
-	List<Product> listProduct(Product product);
+
+	List<com.hm.forest.admin.model.vo.Product> listProduct();
+
 }

@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hm.forest.product.model.mapper.ProductMapper">
 	
-	<resultMap id="productResultMap" type="Product" >
+	<resultMap id="productResultMap" type="ProductPage" >
 		<id property="no" column="No"/>
 		<result property="name" column="NAME"/>
 		<result property="price" column="PRICE"/>
@@ -20,7 +20,7 @@
 		<result property="wish" column="WISH"/>
 	</resultMap>
 	
-	<select id="listProduct" parameterType="Product" resultType="com.hm.forest.product.model.mapper.ProductMapper">
+	<select id="listProduct" parameterType="string" resultMap="productResultMap">
 		SELECT NO,
 		       NAME,
 		       PRICE,
