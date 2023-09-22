@@ -8,24 +8,37 @@
 <!-- productMgmt.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/producstMgmt.css}" >-->
+    
+    <!-- 첫번째
     <script
 	src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
+     -->
+	
+	<script src="/js/ckeditor/ckeditor.js"></script>
+	<!-- 
+	<script src="/js/ckeditor/build/ckeditor.js"></script>
+	 -->
 	
 	<style>
 	.table > th {
 		width: 25%;
 	}
 	
-	
+
+
 	.ck.ck-editor {
-		width: 80%;
-		max-width: 800px;
+		width: 650px;
+		max-width: px;
 		margin: 0 auto;
 	}
 
 	.ck-editor__editable {
-		height: 80vh;
+		height: 50vh;
 	}
+
+	
+	
+	
 	</style>
 </th:block>
 <!-- productMgmt.html 고유 스크립트 추가 -->
@@ -122,13 +135,14 @@
 </div>
 </form>
 
-<!-- CKEditor -->
-	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+
+
+<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
 	<script>		
 	ClassicEditor
 	.create(document.querySelector('#editor'), {
 		ckfinder: {
-			uploadUrl : '/image/upload'
+			uploadUrl : '/iamge/upload'
 		}
 	})
 	.then(editor => {
@@ -138,6 +152,45 @@
 		console.error(error);
 	});
 	</script>
+
+	
+	<!-- 
+	ko 밑에
+	ckfinder : {
+
+ 	    uploadUrl: "/image/upload",
+ 	    withCredentials: true
+ 	})
+ 	.then(editor => {
+		console.log('Editor was initialized');
+	})
+	.catch(error => {
+		console.error(error);
+	 -->
+
+ 
+ 
+<!--  
+ <script>
+ 	ClassicEditor.create( document.querySelector( '#editor' ), {
+ 		
+ 		language: "ko"
+ 			ckfinder : {
+
+ 		 	    uploadUrl: "/image/upload",
+ 		 	    withCredentials: true
+ 		 	})
+ 		 	.then(editor => {
+ 				console.log('Editor was initialized');
+ 			})
+ 			.catch(error => {
+ 				console.error(error);
+ 		
+	});
+ 		);
+ </script>
+-->
+
 	
 
 
