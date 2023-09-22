@@ -2,27 +2,16 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<<<<<<< HEAD
   
 <mapper namespace="com.hm.forest.product.model.mapper.ProductMapper">
-	<resultMap id="productResultMap" type="Product">
-		<id property="no" column="NO"/>
-=======
-<mapper namespace="com.hm.forest.product.model.mapper.ProductMapper">
-	
-	<resultMap id="productResultMap" type="ProductPage" >
+	<resultMap id="productResultMap" type="Products" >
 		<id property="no" column="No"/>
->>>>>>> main
 		<result property="name" column="NAME"/>
 		<result property="price" column="PRICE"/>
 		<result property="content" column="CONTENT"/>
 		<result property="color" column="COLOR"/>
 		<result property="amount" column="AMOUNT"/>
-<<<<<<< HEAD
 		<result property="size_sml" column="SIZE_SML"/>
-=======
-		<result property="sizeSml" column="SIZE_SML"/>
->>>>>>> main
 		<result property="stock" column="STOCK"/>
 		<result property="company" column="COMPANY"/>
 		<result property="discountrate" column="DISCOUNTRATE"/>
@@ -31,39 +20,7 @@
 		<result property="wish" column="WISH"/>
 	</resultMap>
 	
-<<<<<<< HEAD
-	<select id="selectAllNo" parameterType="map" resultType="productResultMap">
-		SELECT NO,
-	           NAME,
-	           PRICE,
-	           CONTENT,
-	           COLOR,
-	           AMOUNT,
-	           SIZE_SML,
-	           STOCK,
-	           COMPANY,
-	           DISCOUNTRATE,
-	           STATUS,
-	           IMAGE,
-	           WISH
-		FROM PRODUCT
-		WHERE NO = #{no}
-	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-=======
 	<select id="listProduct" parameterType="string" resultMap="productResultMap">
 		SELECT NO,
 		       NAME,
@@ -78,7 +35,6 @@
 		       STATUS,
 		       IMAGE,
 		       WISH
-		 FROM PRODUCT;
+		 FROM PRODUCT
 </select>
->>>>>>> main
 </mapper>

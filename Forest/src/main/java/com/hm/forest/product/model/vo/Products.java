@@ -13,7 +13,7 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class Products {
 	private int no;
 	
 	private String name;

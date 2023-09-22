@@ -7,13 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hm.forest.product.service.ProductService;
+import com.hm.forest.product.model.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 @Controller
 public class ProductController {
 	
@@ -26,7 +25,7 @@ public class ProductController {
 		modelAndView.addObject("pageName", "kitchen");
 		modelAndView.setViewName("page/product/kitchen");
 		
-		productservice.getProductPage();
+		productservice.getProducts();
 		
 		return modelAndView;
 	}
@@ -37,6 +36,8 @@ public class ProductController {
 		modelAndView.addObject("PageName", "style");
 		modelAndView.setViewName("page/product/style");
 		
+		productservice.getProducts();
+		
 		return modelAndView;
 	}
 	
@@ -45,6 +46,8 @@ public class ProductController {
 		
 		modelAndView.addObject("PageName", "eco");
 		modelAndView.setViewName("page/product/eco");
+		
+		productservice.getProducts();
 		
 		return modelAndView;
 	}
