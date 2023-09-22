@@ -7,39 +7,30 @@
 <th:block th:with="pageName='productMgmt'"></th:block>      
 <!-- productMgmt.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/producstMgmt.css}" >-->
-    
-    <!-- 첫번째
-    <script
-	src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
-     -->
-	
-	<script src="/js/ckeditor/ckeditor.js"></script>
-	<!-- 
-	<script src="/js/ckeditor/build/ckeditor.js"></script>
-	 -->
-	
-	<style>
+<!-- ex)   <link rel="stylesheet" th:href="@{/css/page/producstMgmt.css}" >-->
+
+
+<script src="/js/ckeditor/ckeditor.js"></script>
+<script src="/js/jquery-3.7.0.min.js"></script>
+
+<style>
 	.table > th {
 		width: 25%;
 	}
-	
-
 
 	.ck.ck-editor {
 		width: 650px;
 		max-width: px;
-		margin: 0 auto;
+		
 	}
 
 	.ck-editor__editable {
 		height: 50vh;
 	}
 
-	
-	
-	
-	</style>
+
+</style>
+
 </th:block>
 <!-- productMgmt.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
@@ -127,6 +118,7 @@
 		      <input type="submit" id="btnInsert"value="등록">
 		      <input type="reset" id="btnDelete" value="삭제">
 		      <input type="reset" value="취소">
+		      
 	      </td>
 	      </tr>
 	  </tbody>
@@ -135,63 +127,39 @@
 </div>
 </form>
 
-
-
-<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+<!-- CKEditor -->
+	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
 	<script>		
 	ClassicEditor
-	.create(document.querySelector('#editor'), {
-		ckfinder: {
-			uploadUrl : '/iamge/upload'
-		}
-	})
+	.create(document.querySelector('#editor'))
 	.then(editor => {
 		console.log('Editor was initialized');
 	})
 	.catch(error => {
 		console.error(error);
 	});
-	</script>
+</script>
 
-	
-	<!-- 
-	ko 밑에
-	ckfinder : {
+<!-- 등록버튼 누르면 ajax로 처리 -->
+<script>
+$(document).ready(function() {
+    $('#btnInsert').click(function(e) {
+        e.preventDefault(); 
 
- 	    uploadUrl: "/image/upload",
- 	    withCredentials: true
- 	})
- 	.then(editor => {
-		console.log('Editor was initialized');
-	})
-	.catch(error => {
-		console.error(error);
-	 -->
+        var formData = $('form').serialize();
 
- 
- 
-<!--  
- <script>
- 	ClassicEditor.create( document.querySelector( '#editor' ), {
- 		
- 		language: "ko"
- 			ckfinder : {
-
- 		 	    uploadUrl: "/image/upload",
- 		 	    withCredentials: true
- 		 	})
- 		 	.then(editor => {
- 				console.log('Editor was initialized');
- 			})
- 			.catch(error => {
- 				console.error(error);
- 		
-	});
- 		);
- </script>
--->
-
-	
-
+        $.ajax({
+            type: 'POST',
+            url: '/admin/productMgmt/insert',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
 
 </html>

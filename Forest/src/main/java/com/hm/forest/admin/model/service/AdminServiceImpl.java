@@ -1,5 +1,7 @@
 package com.hm.forest.admin.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,12 @@ public class AdminServiceImpl implements AdminService {
 		
 		result = adminMapper.deleteProduct(product);
 		return 0;
+	}
+
+	@Override
+	public List<Product> getProductLists() {
+		
+		return adminMapper.selectAll();
 	}
 
 }
