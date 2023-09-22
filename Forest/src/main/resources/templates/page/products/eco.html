@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<th:block th:with="pageName='kitchen'"></th:block>      
+<!-- kitchen.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/page/kitchen.css}" >
+<style>
+	#eco1 > li {
+        display: inline-block;
+        position: relative;
+        top: 10px;
+        margin-left: -30px;
+    }      
+    #eco1 > li > a {
+        display:block; position:relative; padding-bottom:19px;
+        padding: 48px;
+    }
+    #eco1 > li > a > img {
+        width:300px; height:250px;
+    }
+    #eco1 > li > a > span {
+        position:absolute; left:50%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0);
+        bottom: -10px;
+    }
+    #content1{ text-align: center;}
+    #content2{ text-align: center;}
+    #eco2 > li {
+        display: inline-block;
+        position: relative;
+        top: 10px;
+        margin-left: -30px;
+    }      
+    #eco2 > li > a {
+        display:block; position:relative; padding-bottom:19px;
+        padding: 48px;
+    }
+    #eco2 > li > a > img {
+        width:300px; height:250px;
+    }
+    #eco2 > li > a > span {
+        position:absolute; left:50%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0);
+        bottom: -10px;
+    }
+</style>
+</th:block>
+<!-- kitchen.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:src="@{/js/page/kitchen.js}"></script>
+</th:block>
+
+<!-- Content -->
+<div layout:fragment="content" style="aspect-ratio: 16 / 9 ">
+	<div id="content1">
+		<ul id="eco1">
+			<p>여기는 친환경 상품 코너입니다.</p>
+			<li><a href="#"><img src="../images/product_eco1.PNG"><span> <b>헤어밴드1 (Hair Band)</b> <br><br> &nbsp; &nbsp; 13,000원</span></a></li>
+			<li><a href="#"><img src="../images/product_eco1.PNG"><span> <b>헤어밴드2 (Hair Band)</b> <br><br> &nbsp; &nbsp; 13,000원</span></a></li>
+			<li><a href="#"><img src="../images/product_eco1.PNG"><span> <b>헤어밴드3 (Hair Band)</b> <br><br> &nbsp; &nbsp; 13,000원</span></a></li>
+			<li><a href="#"><img src="../images/product_eco1.PNG"><span> <b>헤어밴드4 (Hair Band)</b> <br><br> &nbsp; &nbsp; 13,000원</span></a></li>
+		</ul>
+	</div>
+	<div id="content2">
+		<ul id="eco2">
+			<li><a href="#"><img src="../images/product_eco2.PNG"><span> <b>커피연필1</b> <br><br>	3,000원</span></a></li>		
+			<li><a href="#"><img src="../images/product_eco2.PNG"><span> <b>커피연필2</b> <br><br>	3,000원</span></a></li>		
+			<li><a href="#"><img src="../images/product_eco2.PNG"><span> <b>커피연필3</b> <br><br>	3,000원</span></a></li>		
+			<li><a href="#"><img src="../images/product_eco2.PNG"><span> <b>커피연필4</b> <br><br>	3,000원</span></a></li>		
+		</ul>
+	</div>
+<br><br><br>
+   <h5> kitchen.html > Content </h5>
+</div>
+</html>

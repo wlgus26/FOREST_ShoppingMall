@@ -1,4 +1,5 @@
-package com.hm.forest.admin.model.vo;
+package com.hm.forest.product.model.vo;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,13 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
+
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
-	
+public class Products {
 	private int no;
 	
 	private String name;
@@ -22,7 +23,7 @@ public class Product {
 	private String content;
 	
 	private String color;
-	
+	 
 	private int amount;
 	
 	private String sizeSml;
@@ -38,6 +39,5 @@ public class Product {
 	private String image;
 	
 	private int wish;
-	
-	
+
 }

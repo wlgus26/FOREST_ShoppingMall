@@ -6,4 +6,6 @@ public interface AdminService {
 	
 	int save(Product product);
 
+	int delete(Product product);
+
 }
