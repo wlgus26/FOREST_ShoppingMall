@@ -4,54 +4,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 <head>
-    <!-- 필요한 스크립트 및 스타일 시트를 불러옵니다. -->
- 	<script th:src="@{/js/jquery-3.7.0.min.js}"></script>
+    <!-- 필요한 스크립트 및 스타일 시트를 불러옵니다.
+     -->
+    <!-- Bootstrap core JS-->
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+ 	<script th:src="@{/js/jquery-3.7.0.js}"></script>
  	<!-- 
  	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
  	 -->
-    <script th:src="@{/js/jquery.bxslider.js}"></script>
-    <link rel="stylesheet" th:href="@{/css/jquery.bxslider.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css">
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            // 슬라이더 초기화
-            var visualSlider = $("#visual_slider").bxSlider({
-                mode: 'horizontal', // 슬라이드 이동 방향 설정 (horizontal, vertical, fade)
-                auto: false, // 자동 슬라이드 비활성화
-                autoControls: false, // 시작, 정지 버튼 비활성화
-                pager: false, // 동그라미 페이징 불릿 버튼 비활성화
-                speed: 700, // 슬라이드 전환 속도 (0.7초)
-            });
-
-            // 이전 슬라이드로 이동하는 버튼 클릭 이벤트
-            $("#vis_prev").on("click", function () {
-                visualSlider.goToPrevSlide();
-            });
-
-            // 다음 슬라이드로 이동하는 버튼 클릭 이벤트
-            $("#vis_next").on("click", function () {
-                visualSlider.goToNextSlide();
-            });
-
-            // 캠페인 슬라이더 초기화 (같은 방식으로 버튼 추가 및 클릭 이벤트 처리)
-            var campaignSlider = $("#campaign_slider").bxSlider({
-                mode: 'horizontal',
-                auto: false,
-                autoControls: false,
-                pager: false,
-                speed: 700,
-            });
-
-            $("#camp_prev").on("click", function () {
-                campaignSlider.goToPrevSlide();
-            });
-
-            $("#camp_next").on("click", function () {
-                campaignSlider.goToNextSlide();
-            });
-        });
-    </script>
+   
 
 <th:block th:with="pageName='home'"></th:block>
 <!-- index.html 고유 CSS 추가 -->
@@ -112,13 +75,13 @@
             position:absolute; left:50%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0)
         }
         #content1{margin-left: 360px;}
-        #content2{margin-left: 300px;}
-        #content3{margin-left: 250px;}
+        #content2{margin-left: 250px;}
+        #content3{margin-left: 200px;}
         #content4{}
 		
 		/* Apply left padding to all li elements */
 		.campaign-list li {
-		    padding-left: 200px;
+		    padding-left: 150px;
 		}
 		
 		/* Reset padding for every third li element */
@@ -212,12 +175,12 @@
         </div>
 
         <div id="content4" style=" background-color: lightyellow; padding-bottom: 20px;">
-	        <div class="campaign-slider">
+	        <div class="campaign-slider" style="margin-top: 150px;">
 	        <span class="btn_prev" id="vis_prev"></span>
 			<span class="btn_next" id="vis_next"></span>
 	            <ul id="camp" class="campaign-list">
-	                <h4 id="tt" style="color: rgb(5, 71, 5); margin-top: 150px; padding-left: 250px; padding-top: 20px;">진행 중인 캠페인</h4>
-	                <p style="padding-left: 250px;">건강한 지구를 만들기 위한 자원 순환 캠페인</p>
+	                <h4 id="tt" style="color: rgb(5, 71, 5); margin-top: 150px; padding-left: 200px; padding-top: 20px;">진행 중인 캠페인</h4>
+	                <p style="padding-left: 200px;">건강한 지구를 만들기 위한 자원 순환 캠페인</p>
 	                <li><a href="/campaign/aesop"><img src="../images/home14.PNG"><span style="bottom: -0.5px; text-align: center;">신세계인터내셔날 S.I 뷰티 캠페인 <br> 화장품 공병 수거 캠페인</span></a></li>
 	                <li><a href="/campaign/biotherm"><img src="../images/home15.PNG"><span style="bottom: -0.5px; text-align: center;">비오템 <br> 화장품 공병 재활용 캠페인</span></a></li>
 	                <li><a href="/campaign/brita"><img src="../images/home16.PNG"><span style="bottom: -0.5px; text-align: center;">브리타 그린 리프 멤버십 <br> 필터 재활용 프로그램</span></a></li>		                          

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<!-- 공통으로 쓰이는 script파일을넣는다.-->
+	<th:block th:fragment="scriptFragment">
+	<link href="/css/styles.css" rel="stylesheet" />
+	
+    <!-- Bootstrap core JavaScript-->
+    
+     <script th:src="@{/js/jquery.bxslider.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/jquery.bxslider.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // 슬라이더 초기화
+            var visualSlider = $("#visual_slider").bxSlider({
+                mode: 'horizontal', // 슬라이드 이동 방향 설정 (horizontal, vertical, fade)
+                auto: false, // 자동 슬라이드 비활성화
+                autoControls: false, // 시작, 정지 버튼 비활성화
+                pager: false, // 동그라미 페이징 불릿 버튼 비활성화
+                speed: 700, // 슬라이드 전환 속도 (0.7초)
+            });
+
+            // 이전 슬라이드로 이동하는 버튼 클릭 이벤트
+            $("#vis_prev").on("click", function () {
+                visualSlider.goToPrevSlide();
+            });
+
+            // 다음 슬라이드로 이동하는 버튼 클릭 이벤트
+            $("#vis_next").on("click", function () {
+                visualSlider.goToNextSlide();
+            });
+
+            // 캠페인 슬라이더 초기화 (같은 방식으로 버튼 추가 및 클릭 이벤트 처리)
+            var campaignSlider = $("#campaign_slider").bxSlider({
+                mode: 'horizontal',
+                auto: false,
+                autoControls: false,
+                pager: false,
+                speed: 700,
+            });
+
+            $("#camp_prev").on("click", function () {
+                campaignSlider.goToPrevSlide();
+            });
+
+            $("#camp_next").on("click", function () {
+                campaignSlider.goToNextSlide();
+            });
+        });
+    </script>
+    
+
+
+</th:block>
+</html>
