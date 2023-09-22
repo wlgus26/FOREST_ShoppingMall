@@ -31,6 +31,12 @@ public class BoardServiceImpl implements BoardService {
 	public int selectBoardCountByType(String type) {
 		return boardMapper.selectBoardCountByType(type);
 	}
+
+	// 특정 게시글 조회
+	@Override
+	public Board getBoardByNo(int no) {
+		return boardMapper.selectBoardByNo(no);
+	}
 	
 
 }

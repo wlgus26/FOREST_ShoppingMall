@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<th:block th:with="pageName='view'"></th:block>      
+<style>
+tbody > tr {
+
+}
+</style>
+<th:block layout:fragment="css">
+    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/view.css}" >-->
+</th:block>
+<!-- view.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!-- ex)  <script th:src="@{/js/page/view.js}"></script>-->
+</th:block>
+
+<!-- Content -->
+<div layout:fragment="content">
+   <div class="table-div">
+	  <table class="table table">
+		  <thead>
+		    <tr class="border-bottom" >
+		      <th scope="col" colspan="6" class="th-custom-style" style="border-bottom-width: 3px; 
+				  border-bottom-color: #082f1c;
+				  color: #082f1c;">공지사항 
+				 
+			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="location.href='/board/update'">수정하기</button>
+			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="#">삭제하기</button>
+			  	
+			  </th>
+		    </tr>
+		  </thead>
+		  
+		  <tbody class="board-view">
+		  		<!-- 번호는 게시글 확인용 -->
+		  	    <tr style="text-align: center;">
+					<th>번호</th>
+					<!-- <td th:text="${board.no}">no</td> -->
+					<td colspan="5" style="text-align: left;" th:text="${board.no}">no</td>
+				</tr>
+				<tr style="text-align: center;">
+					<th >제목</th>
+					<td colspan="5" style="text-align: left;" th:text="${board.title}">title</td>
+				</tr>
+				<tr style="text-align: center;">
+					<th>작성자</th>
+					<td style="text-align: left;" th:text="${board.writerId}"></td>
+					<th>작성일</th>
+					 <td style="text-align: left;"  th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
+					<th>조회</th>
+					<td style="text-align: left;" th:text="${board.readCount}"></td>
+				</tr>
+				<tr>
+					<td colspan="6" style="padding-left: 50px;" th:text="${board.content}"></td>
+				</tr>
+				<tr style="text-align: center;">
+					<td colspan="6">
+					<button class="btn btn-sm btn-outline-secondary" type="button" onclick="location.href='/board/notice'">목록으로</button>				
+					</td>
+				</tr>
+		  </tbody>
+	  </table>
+	</div>
+</div>
+</html>
