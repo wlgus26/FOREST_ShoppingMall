@@ -10,4 +10,10 @@ public interface ProductService {
 
 	List<Products> getProducts();
 
+
+	int datailProduct(Products products);
+
+
+	List<Products> datailProduct();
+
 }

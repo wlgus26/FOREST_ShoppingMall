@@ -11,7 +11,7 @@
 		<result property="content" column="CONTENT"/>
 		<result property="color" column="COLOR"/>
 		<result property="amount" column="AMOUNT"/>
-		<result property="size_sml" column="SIZE_SML"/>
+		<result property="sizeSml" column="SIZE_SML"/>
 		<result property="stock" column="STOCK"/>
 		<result property="company" column="COMPANY"/>
 		<result property="discountrate" column="DISCOUNTRATE"/>
@@ -37,4 +37,31 @@
 		       WISH
 		 FROM PRODUCT
 </select>
+
+<select id="datailProduct" parameterType="string" resultMap="productResultMap">
+	SELECT NO,
+	       NAME,
+	       PRICE,
+	       CONTENT,
+	       COLOR,
+	       AMOUNT,
+	       SIZE_SML,
+	       STOCK,
+	       COMPANY,
+	       DISCOUNTRATE,	
+	       STATUS,
+	       IMAGE,
+	       WISH
+	 FROM PRODUCT 
+     WHERE NO = #{no}
+</select>
+
+
+
+
+
+
+
+
+
 </mapper>
