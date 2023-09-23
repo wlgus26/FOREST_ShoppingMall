@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hm.forest.product.model.vo.Products;
-import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.product.model.mapper.ProductMapper;
 
 @Service
@@ -15,11 +14,6 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductMapper productmapper;
 
-//	@Override
-//	public List<Products> getProductPage() {
-//		
-//		return productmapper.listProduct();
-//	}
 	@Override
 	public List<Products> getProducts() {
 		

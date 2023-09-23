@@ -23,7 +23,7 @@ public class ProductController {
 	private ModelAndView kitchen (ModelAndView modelAndView) {
 		
 		modelAndView.addObject("pageName", "kitchen");
-		modelAndView.setViewName("page/product/kitchen");
+		modelAndView.setViewName("page/products/kitchen");
 		
 		productservice.getProducts();
 		
@@ -34,7 +34,7 @@ public class ProductController {
 	private ModelAndView style (ModelAndView modelAndView) {
 		
 		modelAndView.addObject("PageName", "style");
-		modelAndView.setViewName("page/product/style");
+		modelAndView.setViewName("page/products/style");
 		
 		productservice.getProducts();
 		
@@ -45,7 +45,7 @@ public class ProductController {
 	private ModelAndView eco (ModelAndView modelAndView) {
 		
 		modelAndView.addObject("PageName", "eco");
-		modelAndView.setViewName("page/product/eco");
+		modelAndView.setViewName("page/products/eco");
 		
 		productservice.getProducts();
 		

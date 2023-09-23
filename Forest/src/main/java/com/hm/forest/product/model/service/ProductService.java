@@ -8,9 +8,6 @@ import com.hm.forest.common.util.PageInfo;
 public interface ProductService {
 
 
-	
-
 	List<Products> getProducts();
 
-//	void getProducts();
 }
