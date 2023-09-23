@@ -13,4 +13,6 @@ public interface BoardService {
 
 	Board getBoardByNo(int no);
 
+	int save(Board board);
+
 }

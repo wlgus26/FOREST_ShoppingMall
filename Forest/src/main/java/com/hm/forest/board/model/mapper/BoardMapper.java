@@ -22,5 +22,8 @@ public interface BoardMapper {
 	// 특정 게시글 조회
 	Board selectBoardByNo(int no);
 
+	// 게시글 등록
+	int insertBoard(Board board);
+
 
 }

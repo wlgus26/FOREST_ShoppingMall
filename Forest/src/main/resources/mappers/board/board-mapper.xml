@@ -7,6 +7,7 @@
 	<resultMap id="boardResultMap" type="Board">
 		<id property="no" column="NO"/>
 		<result property="type" column="TYPE"/>
+		<result property="category" column="CATEGORY"/>
 		<result property="writerNo" column="WRITER_NO"/>
 		<result property="writerId" column="ID"/>
 		<result property="title" column="TITLE"/>
@@ -29,6 +30,7 @@
 	<select id="selectBoardListsByType" parameterType="string" resultMap="boardResultMap">
 		SELECT B.NO, 
 			   B.TYPE, 
+			   B.CATEGORY,
 			   B.WRITER_NO, 
 			   M.ID,
 			   B.TITLE, 
@@ -49,6 +51,7 @@
 	<select id="selectBoardByNo" parameterType="_int" resultMap="boardResultMap">
 		SELECT B.NO, 
 			   B.TYPE, 
+			   B.CATEGORY,
 			   B.WRITER_NO, 
 			   M.ID,
 			   B.TITLE, 
@@ -65,4 +68,30 @@
 		WHERE  B.STATUS = 'Y' AND B.NO = #{no}
 	</select>
 	
+	<insert id="insertBoard" parameterType="Board">
+	<selectKey resultType="_int" keyProperty="no" order="BEFORE">
+			SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+	</selectKey>
+	INSERT INTO BOARD(
+		NO,
+		TYPE,
+	    CATEGORY,
+	    WRITER_NO,
+	    TITLE,
+	    CONTENT,
+	    CONTENT2,
+	    ORIGINAL_FILENAME,
+	    RENAMED_FILENAME
+	) VALUES(
+		#{no},
+		#{type},
+		#{category},
+		#{writerNo},
+		#{title},
+		#{content},
+		#{content2},
+		#{originalFilename},
+		#{renamedFilename}
+	)
+	</insert>
 </mapper>

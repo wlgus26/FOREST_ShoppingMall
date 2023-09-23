@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -100,10 +101,11 @@ public class BoardController {
 			return modelAndView;
 		}
 		
-		// 글 작성하기로 이동
+		// 게시글 작성 페이지 요청
 		@GetMapping("/write")
-		public ModelAndView write (ModelAndView modelAndView) {
+		public ModelAndView write (ModelAndView modelAndView, @RequestParam("type") String type) {
 			modelAndView.addObject("pageName", "write");
+			modelAndView.addObject("type", type);
 			modelAndView.setViewName("page/board/write");
 			
 			return modelAndView;
@@ -111,21 +113,25 @@ public class BoardController {
 		
 		// 게시글 작성(등록)
 		@PostMapping("/write")
-		public ModelAndView write (ModelAndView modelAndView, @RequestParam("type") String type, 
-					   			   Board board) {
-			log.info("■■■" + type);
+		public ModelAndView save (ModelAndView modelAndView, @RequestParam("type") String type, Board board) {
 			int result = 0;
+			board.setType(type);
+			board.setWriterNo(1);
 			
-			
+			System.out.println(board);			
+			System.out.println("getWriterId: " + board.getWriterId());
+			System.out.println("getWriterNo: " + board.getWriterNo());
+			result = boardService.save(board);
 			
 			if (result > 0) {
-				modelAndView.addObject("msg", "게시글 등록 성공");
-				modelAndView.addObject("location", "/board/view?no" + board.getNo());
+				modelAndView.setViewName("page/board/notice");
 			} else {
+				modelAndView.setViewName("page/board/" + board.getType());
+//				modelAndView.addObject("msg", "게시글 등록 실패");
+//				modelAndView.addObject("location", "/board/write?type=" + board.getType());
 				
 			}
-			modelAndView.addObject("pageName", "write");
-			modelAndView.setViewName("page/board/write");
+			
 			
 			return modelAndView;
 		}

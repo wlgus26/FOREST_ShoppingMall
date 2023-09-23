@@ -17,9 +17,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Data
-@Builder // SQL 사용시 파라미터에 값을 쉽게 넣어주는 @
-@ToString // 객체의 값 확인을 위한 @
-@Entity(name = "board")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Board {
@@ -30,6 +27,8 @@ public class Board {
 	private int rowNum;
 	
 	private String type;
+	
+	private String category;
 	
 	private int writerNo;
 	
