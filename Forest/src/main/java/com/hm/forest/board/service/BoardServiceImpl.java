@@ -16,7 +16,7 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 
-	// 게시글 전체 목록 조회
+	// 게시글 전체 목록 조회(게시판 타입별로)
 	@Override
 	public List<Board> getBoardLists(String type, PageInfo pageInfo) {
 		int limit = pageInfo.getListLimit();
@@ -27,7 +27,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.selectBoardListsByType(type, bounds);
 	}
 
-	// 게시글 개수
+	// 게시글 개수(게시판 타입별로)
 	@Override
 	public int selectBoardCountByType(String type) {
 		return boardMapper.selectBoardCountByType(type);
@@ -47,13 +47,20 @@ public class BoardServiceImpl implements BoardService {
 		
 		if (board.getNo() > 0) {
 			// update
-			//result = boardMapper.updateBoard(board);
+			result = boardMapper.updateBoard(board);
 		} else {
 			// insert
 			result = boardMapper.insertBoard(board);
 		}	
 		return result;
 	}
-	
+
+	// 게시글 삭제
+	@Override
+	@Transactional
+	public int delete(int no) {
+		return boardMapper.updateStatus(no, "N");
+	}
+
 
 }

@@ -3,15 +3,11 @@ package com.hm.forest.board.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.board.model.vo.Board;
@@ -118,33 +114,87 @@ public class BoardController {
 			board.setType(type);
 			board.setWriterNo(1);
 			
-			System.out.println(board);			
-			System.out.println("getWriterId: " + board.getWriterId());
-			System.out.println("getWriterNo: " + board.getWriterNo());
 			result = boardService.save(board);
 			
 			if (result > 0) {
-				modelAndView.setViewName("page/board/notice");
+				modelAndView.addObject("msg", "게시글 등록 성공");
+				modelAndView.addObject("location", "view?no=" + board.getNo());				
 			} else {
-				modelAndView.setViewName("page/board/" + board.getType());
-//				modelAndView.addObject("msg", "게시글 등록 실패");
-//				modelAndView.addObject("location", "/board/write?type=" + board.getType());
-				
+				modelAndView.addObject("msg", "게시글 등록 실패");
+				modelAndView.addObject("location", "write?type=" + board.getType());				
+
 			}
-			
-			
+			modelAndView.setViewName("page/common/msg");
+
 			return modelAndView;
 		}
 		
-		// 글 수정하기로 이동
+		// 게시글 수정 페이지 요청
 		@GetMapping("/update")
-		public ModelAndView update (ModelAndView modelAndView) {
+		public ModelAndView update (ModelAndView modelAndView, @RequestParam("no") int no) {
+			Board board = boardService.getBoardByNo(no);
 			
 			modelAndView.addObject("pageName", "update");
+			modelAndView.addObject("board", board);
 			modelAndView.setViewName("page/board/update");
 			
 			return modelAndView;
 		}
 		
+		// 게시글 수정
+		@PostMapping("/update")
+		public ModelAndView save (ModelAndView modelAndView, @RequestParam("no") int no,
+						   		  @RequestParam("title") String title, @RequestParam("content") String content) {
+			int result = 0;
+			Board board = null;
+			
+			board = boardService.getBoardByNo(no);
+			System.out.println(title);
+			board.setTitle(title);
+			System.out.println("★" + board.getTitle());
+			board.setContent(content);
+			
+			result = boardService.save(board);
+		
+			if (result > 0) {
+				modelAndView.addObject("msg", "게시글 수정 성공");
+				modelAndView.addObject("location", "view?no=" + board.getNo());								
+			} else {
+				modelAndView.addObject("msg", "게시글 수정 실패");
+				modelAndView.addObject("location", "update?no=" + board.getNo());			
+			}
+	
+			modelAndView.setViewName("page/common/msg");
+
+			return modelAndView;
+		}
+		
+		// 게시글 삭제(상태값 변경)
+		@GetMapping("/delete")
+		public ModelAndView delete(ModelAndView modelAndView, @RequestParam("no") int no) {
+			int result = 0;
+			Board board = null;
+			
+			board = boardService.getBoardByNo(no);
+			
+//			if (board != null && board.getWriterId().equals(loginMember.getId())) {
+				result = boardService.delete(board.getNo());
+				
+				if (result > 0) {
+					modelAndView.addObject("msg", "게시글이 정상적으로 삭제되었습니다.");
+					modelAndView.addObject("location", board.getType());			
+				} else {				
+					modelAndView.addObject("msg", "게시글 삭제에 실패하였습니다.");
+					modelAndView.addObject("location", "/board/view?no=" + board.getNo());				
+				}
+//			} else {
+//				modelAndView.addObject("msg", "잘못된 접근입니다.");
+//				modelAndView.addObject("location", "/board/list");
+//			}
+			
+			modelAndView.setViewName("page/common/msg");
+			
+			return modelAndView;
+		}
 		
 }

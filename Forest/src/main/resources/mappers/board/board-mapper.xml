@@ -6,6 +6,7 @@
 
 	<resultMap id="boardResultMap" type="Board">
 		<id property="no" column="NO"/>
+		<result property="rowNum" column="BOARD_ROWNUM"/>
 		<result property="type" column="TYPE"/>
 		<result property="category" column="CATEGORY"/>
 		<result property="writerNo" column="WRITER_NO"/>
@@ -28,7 +29,8 @@
 	</select>
 	
 	<select id="selectBoardListsByType" parameterType="string" resultMap="boardResultMap">
-		SELECT B.NO, 
+		SELECT ROWNUM AS BOARD_ROWNUM,
+			   B.NO, 
 			   B.TYPE, 
 			   B.CATEGORY,
 			   B.WRITER_NO, 
@@ -94,4 +96,33 @@
 		#{renamedFilename}
 	)
 	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="Board">
+		UPDATE BOARD 
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="title != null">
+				TITLE=#{title},
+			</if>
+			<if test="content != null">
+				CONTENT=#{content},
+			</if>
+			<if test="originalFilename != null">
+				ORIGINAL_FILENAME=#{originalFilename},			
+			</if>
+			<if test="renamedFilename != null">			
+				RENAMED_FILENAME=#{renamedFilename},
+			</if>
+			MODIFY_DATE=SYSDATE 
+		</trim>			
+		WHERE NO=#{no}
+	</update>
+	
+	<!-- 게시글 삭제(상태값 변경) -->
+	<update id="updateStatus" parameterType="map">
+		UPDATE BOARD
+		SET
+			STATUS = #{status}
+		WHERE NO = #{no}
+	</update>
 </mapper>
