@@ -4,6 +4,27 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hm.forest.board.model.mapper.BoardMapper">
 
+	<sql id="boardListSql">
+	SELECT ROWNUM AS BOARD_ROWNUM,
+			   B.NO, 
+			   B.TYPE, 
+			   B.CATEGORY,
+			   B.WRITER_NO, 
+			   M.ID,
+			   B.TITLE, 
+			   B.CONTENT, 
+			   B.CONTENT2, 
+			   B.ORIGINAL_FILENAME, 
+			   B.RENAMED_FILENAME, 
+			   B.READCOUNT, 
+			   B.STATUS, 
+			   B.CREATE_DATE, 
+			   B.MODIFY_DATE
+		FROM BOARD B
+		INNER JOIN MEMBER M ON (B.WRITER_NO = M.NO)
+		WHERE  B.STATUS = 'Y' 
+	</sql>
+
 	<resultMap id="boardResultMap" type="Board">
 		<id property="no" column="NO"/>
 		<result property="rowNum" column="BOARD_ROWNUM"/>
@@ -22,12 +43,14 @@
 		<result property="modifyDate" column="MODIFY_DATE"/>
 	</resultMap>
 	
+	<!-- 게시판 타입별 게시글 전체 개수 -->
 	<select id="selectBoardCountByType" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
 		FROM BOARD 
 		WHERE  STATUS = 'Y' AND TYPE = #{type}
 	</select>
 	
+	<!-- 게시판 타입별 게시글 전체 목록 조회 -->
 	<select id="selectBoardListsByType" parameterType="string" resultMap="boardResultMap">
 		SELECT ROWNUM AS BOARD_ROWNUM,
 			   B.NO, 
@@ -50,6 +73,65 @@
 		ORDER BY B.NO DESC
 	</select>
 	
+	<!-- [검색값 o] 게시판 타입별 게시글 전체 개수 -->
+	<select id="selectBoardCountBySearchValue" parameterType="map" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD B
+		INNER JOIN MEMBER M ON (B.WRITER_NO = M.NO)
+		WHERE B.STATUS = 'Y' AND B.TYPE = #{type} 
+		<if test="searchType != null">
+			<choose>
+				<when test='searchType.equals("writer")'>
+				AND M.ID LIKE '%' || #{keyWord} || '%'
+				</when>
+				<when test='searchType.equals("title")'>
+				AND B.TITLE LIKE '%' || #{keyWord} || '%'
+				</when>
+				<when test='searchType.equals("content")'>
+				AND B.CONTENT LIKE '%' || #{keyWord} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	<!-- [검색값 o] 게시판 타입별 게시글 전체 목록 조회 -->
+	<select id="selectBoardListsBySearchValue" parameterType="map" resultMap="boardResultMap">
+		SELECT ROWNUM AS BOARD_ROWNUM,
+			   B.NO, 
+			   B.TYPE, 
+			   B.CATEGORY,
+			   B.WRITER_NO, 
+			   M.ID,
+			   B.TITLE, 
+			   B.CONTENT, 
+			   B.CONTENT2, 
+			   B.ORIGINAL_FILENAME, 
+			   B.RENAMED_FILENAME, 
+			   B.READCOUNT, 
+			   B.STATUS, 
+			   B.CREATE_DATE, 
+			   B.MODIFY_DATE
+		FROM BOARD B
+		INNER JOIN MEMBER M ON (B.WRITER_NO = M.NO)
+		WHERE  B.STATUS = 'Y' AND B.TYPE = #{type}
+		<if test="searchType != null">
+			<choose>
+				<when test='searchType.equals("writer")'>
+				AND M.ID LIKE '%' || #{keyWord} || '%'
+				</when>
+				<when test='searchType.equals("title")'>
+				AND B.TITLE LIKE '%' || #{keyWord} || '%'
+				</when>
+				<when test='searchType.equals("content")'>
+				AND B.CONTENT LIKE '%' || #{keyWord} || '%'
+				</when>
+			</choose>
+		</if>
+		ORDER BY B.NO DESC
+	</select>
+	
+	
+	<!-- 특정 게시글 조회 -->
 	<select id="selectBoardByNo" parameterType="_int" resultMap="boardResultMap">
 		SELECT B.NO, 
 			   B.TYPE, 
@@ -70,31 +152,32 @@
 		WHERE  B.STATUS = 'Y' AND B.NO = #{no}
 	</select>
 	
+	<!-- 게시글 등록 -->
 	<insert id="insertBoard" parameterType="Board">
 	<selectKey resultType="_int" keyProperty="no" order="BEFORE">
-			SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+		SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
 	</selectKey>
-	INSERT INTO BOARD(
-		NO,
-		TYPE,
-	    CATEGORY,
-	    WRITER_NO,
-	    TITLE,
-	    CONTENT,
-	    CONTENT2,
-	    ORIGINAL_FILENAME,
-	    RENAMED_FILENAME
-	) VALUES(
-		#{no},
-		#{type},
-		#{category},
-		#{writerNo},
-		#{title},
-		#{content},
-		#{content2},
-		#{originalFilename},
-		#{renamedFilename}
-	)
+		INSERT INTO BOARD(
+			NO,
+			TYPE,
+		    CATEGORY,
+		    WRITER_NO,
+		    TITLE,
+		    CONTENT,
+		    CONTENT2,
+		    ORIGINAL_FILENAME,
+		    RENAMED_FILENAME
+		) VALUES(
+			#{no},
+			#{type},
+			#{category},
+			#{writerNo},
+			#{title},
+			#{content},
+			#{content2},
+			#{originalFilename},
+			#{renamedFilename}
+		)
 	</insert>
 	
 	<!-- 게시글 수정 -->
@@ -121,8 +204,14 @@
 	<!-- 게시글 삭제(상태값 변경) -->
 	<update id="updateStatus" parameterType="map">
 		UPDATE BOARD
-		SET
-			STATUS = #{status}
+		SET STATUS = #{status}
+		WHERE NO = #{no}
+	</update>
+	
+	<!-- 게시글 조회수 업데이트 -->
+	<update id="updateReadCount" parameterType="_int">
+		UPDATE BOARD
+		SET READCOUNT = READCOUNT + 1
 		WHERE NO = #{no}
 	</update>
 </mapper>

@@ -15,8 +15,14 @@ import com.hm.forest.common.util.PageInfo;
 public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
+	
+	// 게시판 타입별 게시글 전체 개수
+	@Override
+	public int selectBoardCountByType(String type) {
+		return boardMapper.selectBoardCountByType(type);
+	}
 
-	// 게시글 전체 목록 조회(게시판 타입별로)
+	// 게시판 타입별 게시글 전체 목록 조회
 	@Override
 	public List<Board> getBoardLists(String type, PageInfo pageInfo) {
 		int limit = pageInfo.getListLimit();
@@ -26,11 +32,22 @@ public class BoardServiceImpl implements BoardService {
 		
 		return boardMapper.selectBoardListsByType(type, bounds);
 	}
-
-	// 게시글 개수(게시판 타입별로)
+	
+	// [검색값 o] 게시판 타입별 게시글 전체 개수
 	@Override
-	public int selectBoardCountByType(String type) {
-		return boardMapper.selectBoardCountByType(type);
+	public int selectBoardCountBySearchValue(String type, String searchType, String keyWord) {
+		return boardMapper.selectBoardCountBySearchValue(type, searchType, keyWord);
+	}
+	
+	// [검색값 o] 게시판 타입별 게시글 전체 목록 조회
+	@Override
+	public List<Board> getBoardListsBySearchValue(String type, PageInfo pageInfo, String searchType, String keyWord) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		
+		RowBounds bounds = new RowBounds(offset, limit);
+		
+		return boardMapper.selectBoardListsBySearchValue(type, bounds, searchType, keyWord);
 	}
 
 	// 특정 게시글 조회
@@ -61,6 +78,15 @@ public class BoardServiceImpl implements BoardService {
 	public int delete(int no) {
 		return boardMapper.updateStatus(no, "N");
 	}
+
+	// 게시글 조회수 업데이트
+	@Override
+	@Transactional
+	public int updateReadCount(int no) {
+		return boardMapper.updateReadCount(no);
+	}
+
+
 
 
 }
