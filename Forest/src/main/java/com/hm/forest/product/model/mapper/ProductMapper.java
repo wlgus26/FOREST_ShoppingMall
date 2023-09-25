@@ -12,5 +12,8 @@ public interface ProductMapper {
 
 	List<Products> listProduct();
 
+	int datailProduct(Products products);
+	
+
 
 }
