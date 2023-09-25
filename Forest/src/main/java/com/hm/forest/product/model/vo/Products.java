@@ -14,6 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Products {
+	
 	private int no;
 	
 	private String name;
@@ -23,7 +24,7 @@ public class Products {
 	private String content;
 	
 	private String color;
-	 
+	
 	private int amount;
 	
 	private String sizeSml;
@@ -39,5 +40,6 @@ public class Products {
 	private String image;
 	
 	private int wish;
+	
 
 }
