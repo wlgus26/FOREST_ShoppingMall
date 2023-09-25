@@ -24,19 +24,13 @@ public class ProductServiceImpl implements ProductService {
 
 
 	@Override
-	public List<Products> datailProduct() {
+	public Products getProductsById(int no) {
 
-		return null;
+		return productmapper.findById(no);
 	}
 
 
 
-	@Override
-	public int datailProduct(Products products) {
-
-		return 0;
-	}
-	
 	
 
 }
