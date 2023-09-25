@@ -38,7 +38,7 @@
 		 FROM PRODUCT
 </select>
 
-<select id="datailProduct" parameterType="string" resultMap="productResultMap">
+<select id="findById" parameterType="int" resultMap="productResultMap">
 	SELECT NO,
 	       NAME,
 	       PRICE,

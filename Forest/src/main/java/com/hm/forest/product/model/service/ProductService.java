@@ -9,11 +9,15 @@ public interface ProductService {
 
 
 	List<Products> getProducts();
+	
+
+	Products getProductsById(int no);
+	
+	
+
+//	List<Products> datailProduct();
 
 
-	int datailProduct(Products products);
-
-
-	List<Products> datailProduct();
+//	int productdetail(int no);
 
 }
