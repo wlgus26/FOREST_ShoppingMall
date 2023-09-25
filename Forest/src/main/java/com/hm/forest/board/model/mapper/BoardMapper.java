@@ -20,7 +20,16 @@ public interface BoardMapper {
 	List<Board> selectBoardListsByType(@Param("type") String type, RowBounds bounds);
 
 	// 특정 게시글 조회
-	Board selectBoardByNo(int no);
+	Board selectBoardByNo(@Param("no") int no);
+
+	// 게시글 등록
+	int insertBoard(Board board);
+
+	// 게시글 수정 
+	int updateBoard(Board board);
+
+	// 게시글 삭제
+	int updateStatus(@Param("no") int no,@Param("status") String status);
 
 
 }

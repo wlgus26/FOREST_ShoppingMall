@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>common</title>
 </head>
 <body>
-	<script>
-		// 알림 메세지를 띄움	
-		alert("${ msg }");
-		
-		// 실행시켜야 할 스크립트가 있으면 실행
-		if(${ not empty script }) {
-			${ script}
-		}
-		
-		// 페이지 이동
-		location.replace("${ pageContext.request.contextPath }${ location }");
-		
-	</script>
+
+<script th:inline="javascript">
+	// 알림 메세지를 띄움	
+	alert([[${msg}]]);
+
+	// 페이지 이동
+    location.replace([[${location}]]);
+</script>
+
+
+
+
+
+
 </body>
 </html>

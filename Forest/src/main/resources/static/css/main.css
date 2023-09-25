@@ -1,14 +1,14 @@
 @charset "UTF-8";
 
-*{margin:0; padding:0;}
+*{margin:0;}
 ul,li,ol{list-style:none;}
 a,img{border:0;}
 
 /*visual*/
 .visual{position:relative;}
 .visual > span{position:absolute; display:block; width:80px; height:80px; z-index:99; cursor:pointer; top:40%;}
-.visual > span.btn_prev{background:url(../image/bullet.png) no-repeat 0 0; left:10%;}
-.visual > span.btn_next{background:url(../image/bullet.png) no-repeat -80px 0; right:10%;}
+.visual > span.btn_prev{background:url(../images/bullet2.png) no-repeat 0 0; left:10%;}
+.visual > span.btn_next{background:url(../images/bullet2.png) no-repeat -80px 0; right:10%;}
 
 .visual ul li img{width:100%;}
 

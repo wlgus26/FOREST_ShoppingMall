@@ -7,39 +7,35 @@
 <th:block th:with="pageName='productMgmt'"></th:block>      
 <!-- productMgmt.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/producstMgmt.css}" >-->
-    
-    <!-- 첫번째
-    <script
-	src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
-     -->
-	
-	<script src="/js/ckeditor/ckeditor.js"></script>
-	<!-- 
-	<script src="/js/ckeditor/build/ckeditor.js"></script>
-	 -->
-	
-	<style>
+<!-- ex)   <link rel="stylesheet" th:href="@{/css/page/producstMgmt.css}" >-->
+
+<!-- ckeditor 
+<link rel="stylesheet" th:href="@{/resources/static/css/ckeditor.css}" type="text/css">
+-->
+ 
+
+<script src="/js/ckeditor/ckeditor.js"></script>
+
+<script src="/js/jquery-3.7.0.min.js"></script>
+
+<style>
 	.table > th {
 		width: 25%;
 	}
-	
-
 
 	.ck.ck-editor {
 		width: 650px;
 		max-width: px;
-		margin: 0 auto;
+		
 	}
 
 	.ck-editor__editable {
 		height: 50vh;
 	}
 
-	
-	
-	
-	</style>
+
+</style>
+
 </th:block>
 <!-- productMgmt.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
@@ -65,7 +61,7 @@
 	    <tr>
 	      <th scope="row">카테고리</th>
 	      <td>
-	      	<select id="pd_category" name="pd_category">
+	      	<select id="category" name="category">
 			    <option value="" selected>--- 선택 ---</option>
 			    <option value="kitchen">주방</option>
 			    <option value="option2">옵션 2</option>
@@ -102,7 +98,7 @@
 	    </tr>
 	    <tr>
 	      <th scope="row">설명</th>
-	      <td><textarea rows="3" cols="100" resize="none" id="editor" name="content"></textarea></td>
+	      <td><textarea rows="3" cols="100" resize="none" id="content" class="editor" name="content"></textarea></td>
 	    </tr>
 	    <tr>
 	      <th scope="row" id="image" name="image">대표이미지</th>
@@ -127,6 +123,7 @@
 		      <input type="submit" id="btnInsert"value="등록">
 		      <input type="reset" id="btnDelete" value="삭제">
 		      <input type="reset" value="취소">
+		      
 	      </td>
 	      </tr>
 	  </tbody>
@@ -136,62 +133,43 @@
 </form>
 
 
-
-<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+<!-- CKEditor 
+	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
 	<script>		
 	ClassicEditor
-	.create(document.querySelector('#editor'), {
-		ckfinder: {
-			uploadUrl : '/iamge/upload'
-		}
-	})
+	.create(document.querySelector('#editor'))
 	.then(editor => {
 		console.log('Editor was initialized');
 	})
 	.catch(error => {
 		console.error(error);
 	});
-	</script>
+</script>
+ -->
 
-	
-	<!-- 
-	ko 밑에
-	ckfinder : {
+<script src="/js/ckeditor/script.js"></script>
 
- 	    uploadUrl: "/image/upload",
- 	    withCredentials: true
- 	})
- 	.then(editor => {
-		console.log('Editor was initialized');
-	})
-	.catch(error => {
-		console.error(error);
-	 -->
+<!-- 등록버튼 누르면 ajax로 처리 -->
+<script>
+$(document).ready(function() {
+    $('#btnInsert').click(function(e) {
+        e.preventDefault(); 
 
- 
- 
-<!--  
- <script>
- 	ClassicEditor.create( document.querySelector( '#editor' ), {
- 		
- 		language: "ko"
- 			ckfinder : {
+        var formData = $('form').serialize();
 
- 		 	    uploadUrl: "/image/upload",
- 		 	    withCredentials: true
- 		 	})
- 		 	.then(editor => {
- 				console.log('Editor was initialized');
- 			})
- 			.catch(error => {
- 				console.error(error);
- 		
-	});
- 		);
- </script>
--->
-
-	
+        $.ajax({
+            type: 'POST',
+            url: '/admin/productMgmt/insert',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
 
 
 </html>
