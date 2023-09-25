@@ -4,8 +4,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 
-<th:block th:with="pageName='boardWrite'"></th:block>
-<!-- write.html 고유 CSS 추가 -->
+<th:block th:with="pageName='qnaWrite'"></th:block>
+<!-- qnaWrite.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
 	<style>
 	.table > th {
@@ -22,7 +22,7 @@
 	}
 	</style>
 </th:block>
-<!-- write.html 고유 스크립트 추가 -->
+<!-- qnaWrite.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
      <script th:src="@{/js/ckeditor/ckeditor.js}"></script>
 </th:block>
@@ -30,7 +30,7 @@
 <!-- Content -->
 <div layout:fragment="content">
     <!-- 게시글 작성하기 form --> 
-	<form class="container" action="/board/write" method="POST">
+	<form class="container" action="/myPage/write" method="POST">
 	 <!-- csrf토큰과 type값을 hidden 속성으로 넘겨준다. -->
 	 <input type="hidden" th:name="type" th:value="${type}"/>
 	 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
@@ -41,14 +41,24 @@
 			      <th scope="col" colspan="2" class="th-custom-style" style="border-bottom-width: 3px; 
 				 	  border-bottom-color: #082f1c;
 				 	  color: #082f1c;">
-					<span th:if="${type == 'notice'}">공지사항</span>
-	    			<span th:if="${type == 'community'}">자유게시판</span>
-	    			<span th:if="${type == 'faq'}">자주묻는질문</span>
+					<span th:if="${type == 'qna'}">1:1문의하기</span>
 				  </th>
 			    </tr>
 			  </thead>
 			  
 			  <tbody>
+		  	    <tr>
+			      <th scope="row">문의유형</th>
+			      <td>
+			      	<select id="category" name="category">
+					    <option value="" selected>--- 선택 ---</option>
+					    <option value="상품">상품</option>
+					    <option value="배송">배송</option>
+					    <option value="주문/취소">주문/취소</option>
+					    <option value="교환/환불">교환/환불</option>
+				    </select>
+				 </td>
+			    </tr>
 			    <tr>
 			      <th scope="row">제목</th>
 			      	<td><input type="text" name="title" style="width: 61%;"></td>
@@ -110,7 +120,7 @@
 	  <script>	
 			// 목록으로 버튼 클릭 시, 게시판 타입에 따라 해당 게시판 목록으로 이동
 			function redirectToBoard(type){
-				window.location.href = '/board/' + type;
+				window.location.href = '/myPage/' + type;
 			}
 		
 			// editor 스크립트
