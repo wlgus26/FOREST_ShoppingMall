@@ -4,42 +4,31 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 
-<th:block th:with="pageName='productMgmt'"></th:block>      
+<th:block th:with="pageName='productMgmt'"></th:block>
 <!-- productMgmt.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-<!-- ex)   <link rel="stylesheet" th:href="@{/css/page/producstMgmt.css}" >-->
+<!-- productMgmt.html 고유 스크립트 추가 -->
 
-<!-- ckeditor 
-<link rel="stylesheet" th:href="@{/resources/static/css/ckeditor.css}" type="text/css">
--->
- 
-
-<script src="/js/ckeditor/ckeditor.js"></script>
-
-<script src="/js/jquery-3.7.0.min.js"></script>
-
-<style>
+	<style>
 	.table > th {
 		width: 25%;
 	}
-
+	
 	.ck.ck-editor {
-		width: 650px;
-		max-width: px;
-		
+		width: 600px;
+		max-width: 650px;
 	}
 
 	.ck-editor__editable {
 		height: 50vh;
 	}
-
-
-</style>
-
+	</style>
 </th:block>
-<!-- productMgmt.html 고유 스크립트 추가 -->
+
 <th:block layout:fragment="script">
-    <!-- ex)  <script th:src="@{/js/page/productMgmt.js}"></script>-->
+
+     <script th:src="@{/js/ckeditor/ckeditor.js}"></script>
+
 </th:block>
 
 <!-- Content -->
@@ -131,13 +120,11 @@
 
 </div>
 </form>
-
-
-<!-- CKEditor 
-	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
-	<script>		
+ 
+ 
+<script>		
 	ClassicEditor
-	.create(document.querySelector('#editor'))
+	.create(document.querySelector('.editor'))
 	.then(editor => {
 		console.log('Editor was initialized');
 	})
@@ -145,9 +132,29 @@
 		console.error(error);
 	});
 </script>
- -->
 
-<script src="/js/ckeditor/script.js"></script>
+
+<!-- 
+ <script src="/js/ckeditor/script.js"></script>
+  -->
+
+<!-- CKEditor 
+	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+	<script>		
+	ClassicEditor
+	.create(document.querySelector('.editor'))
+	.then(editor => {
+		console.log('Editor was initialized');
+	})
+	.catch(error => {
+		console.error(error);
+	});
+</script>
+-->
+
+
+
+
 
 <!-- 등록버튼 누르면 ajax로 처리 -->
 <script>

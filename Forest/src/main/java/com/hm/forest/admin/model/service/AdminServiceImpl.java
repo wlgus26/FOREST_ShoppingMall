@@ -64,8 +64,5 @@ public class AdminServiceImpl implements AdminService {
 		return adminMapper.selectProductBoardByNo(no);
 	}
 
-	
-	
-
 
 }

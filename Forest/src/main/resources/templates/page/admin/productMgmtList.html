@@ -7,35 +7,40 @@
 <th:block th:with="pageName='productMgmtList'"></th:block>      
 <!-- productMgmtList.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <!-- ex) <link rel="stylesheet" th:href="@{/css/page/memberMgmt.css}" >-->
 </th:block>
-	<!-- productMgmtList.html 고유 스크립트 추가 -->
+	
 <th:block layout:fragment="script">
-    <!-- ex)  <script th:src="@{/js/page/productMgmtList.js}"></script>-->
 </th:block>
 
 <!-- Content -->
 <div layout:fragment="content">
 
 
-<!-- 
-<div class="table-div">
- <div class="row">
-        <li><div class="col-sm-6 col-md-3" style="max-width:250px;">
-          <div class="thumbnail">
-            <img src="http://placehold.it/240x200">
-            <div class="caption">
-              <h3><span th:text=>판매중인 제품 목록</span></h3>
-      
-              <p>...</p>
-              <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-            </div>
-          </div>
-        </div>
-       </div>
- </div>
- </div>
- -->
+		<div class="content">
+			<h1 class="page-header">판매중인 제품 목록 리스트</small></h1>
+			<div class="row products">
+             
+				<li><div class="scale col-sm-6 col-md-4">
+					<a class="thumbnail" href="/displayFile?filename=${imgLink}"><img src="${img}"></a>
+						<div class="caption">
+				  <tr style="text-align: center;">
+					<th>제목</th>
+					<th>제목</th>
+					</tr>
+				
+					<tr class="clickable-row" style="text-align: center;" th:each="product : ${productlists}" th:attr="data-href=@{/admin/productMgmtView?no={no}(no=${product.no})}">
+			        <td th:text="${product.name}"></td>
+			        <td th:text="${product.name}" style="text-align:left; width:60%;"></td>  
+							<p><a href="#" class="btn btn-primary" role="button">구입하기</a> 
+								<a href="#" class="btn btn-default" role="button">장바구니</a></p>
+						</div>
+					</div>
+				</li>
+			</div>
+          
+		</div>
+ 
+ 
 
 
 
@@ -100,9 +105,7 @@
 		            }
 		        });
 		    });
-		  
-		    
-		  
+
 	</script>
 </div>
 
