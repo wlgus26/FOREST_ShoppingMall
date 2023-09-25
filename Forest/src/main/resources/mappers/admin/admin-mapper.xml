@@ -7,6 +7,7 @@
 <mapper namespace="com.hm.forest.admin.model.mapper.AdminMapper">
 		<resultMap id="productResultMap" type="Product">
 		<id property="no" column="NO"/>
+		<result property="category" column="CATEGORY"/>
 		<result property="name" column="NAME"/>
 		<result property="price" column="PRICE"/>
 		<result property="content" column="CONTENT"/>
@@ -22,8 +23,14 @@
 	</resultMap>
 
 	<insert id="insertProduct" parameterType="Product">
-		INSERT INTO PRODUCT (
+
+	<selectKey resultType="_int" keyProperty="no" order="BEFORE">
+	SELECT SEQ_PD_NO.NEXTVAL FROM DUAL
+	</selectKey>
+	
+	INSERT INTO PRODUCT (
 			NO, 
+			CATEGORY,
 			NAME, 
 			PRICE, 
 			CONTENT, 
@@ -37,7 +44,8 @@
 			IMAGE, 
 			WISH
 		) VALUES (
-			SEQ_PD_NO.NEXTVAL, 
+			#{no},
+			#{category}, 
 			#{name}, 
 			#{price}, 
 			#{content}, 
@@ -53,14 +61,13 @@
 		)
 </insert>
 
-<delete id="deleteProduct" parameterType="_int">
-		DELETE 
-		FROM PRODUCT 
-		WHERE NO=#{no}
-</delete>
-	
+<select id="selectProductBoardCount" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT WHERE STATUS = 'Y'
+	</select>
+
 	<select id="selectAll" resultMap="productResultMap">
-		SELECT NO, 
+		SELECT NO,
+			   CATEGORY, 
 			   NAME, 
 			   PRICE, 
 			   CONTENT, 
@@ -74,7 +81,34 @@
                IMAGE,
                WISH
 		FROM PRODUCT
+		WHERE STATUS = 'Y'
 		ORDER BY NO DESC
 	</select>
+	
+	
+	 <select id="selectProductBoardByNo" parameterType="_int" resultMap="productResultMap">
+	 	SELECT NO,
+			   CATEGORY, 
+			   NAME, 
+			   PRICE, 
+			   CONTENT, 
+			   COLOR,
+               AMOUNT,
+               SIZE_SML,
+               STOCK,
+               COMPANY,
+               DISCOUNTRATE,
+               STATUS,
+               IMAGE,
+               WISH
+		FROM PRODUCT
+		WHERE STATUS = 'Y' AND NO = #{no}
+	 </select>
+
+	<delete id="deleteProduct" parameterType="_int">
+		DELETE 
+		FROM PRODUCT 
+		WHERE NO=#{no}
+</delete>
 
 </mapper>

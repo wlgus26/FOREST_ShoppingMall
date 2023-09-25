@@ -9,8 +9,13 @@
 <th:block layout:fragment="css">
 <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/producstMgmt.css}" >-->
 
+<!-- ckeditor 
+<link rel="stylesheet" th:href="@{/resources/static/css/ckeditor.css}" type="text/css">
+-->
+ 
 
 <script src="/js/ckeditor/ckeditor.js"></script>
+
 <script src="/js/jquery-3.7.0.min.js"></script>
 
 <style>
@@ -56,7 +61,7 @@
 	    <tr>
 	      <th scope="row">카테고리</th>
 	      <td>
-	      	<select id="pd_category" name="pd_category">
+	      	<select id="category" name="category">
 			    <option value="" selected>--- 선택 ---</option>
 			    <option value="kitchen">주방</option>
 			    <option value="option2">옵션 2</option>
@@ -93,7 +98,7 @@
 	    </tr>
 	    <tr>
 	      <th scope="row">설명</th>
-	      <td><textarea rows="3" cols="100" resize="none" id="editor" name="content"></textarea></td>
+	      <td><textarea rows="3" cols="100" resize="none" id="content" class="editor" name="content"></textarea></td>
 	    </tr>
 	    <tr>
 	      <th scope="row" id="image" name="image">대표이미지</th>
@@ -127,7 +132,8 @@
 </div>
 </form>
 
-<!-- CKEditor -->
+
+<!-- CKEditor 
 	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
 	<script>		
 	ClassicEditor
@@ -139,6 +145,9 @@
 		console.error(error);
 	});
 </script>
+ -->
+
+<script src="/js/ckeditor/script.js"></script>
 
 <!-- 등록버튼 누르면 ajax로 처리 -->
 <script>
@@ -161,5 +170,6 @@ $(document).ready(function() {
         });
     });
 </script>
+
 
 </html>

@@ -3,6 +3,7 @@ package com.hm.forest.admin.model.service;
 import java.util.List;
 
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.common.util.PageInfo;
 
 public interface AdminService {
 	
@@ -10,6 +11,13 @@ public interface AdminService {
 
 	int delete(Product product);
 
-	List<Product> getProductLists();
+	// 제품목록 리스트 
+	int getProductBoardCount();
+
+	List<Product> getProductBoardList(PageInfo pageInfo);
+
+	Product getProductBoardByNo(int no);
+
+	
 
 }

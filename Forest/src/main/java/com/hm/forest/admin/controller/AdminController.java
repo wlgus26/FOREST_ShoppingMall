@@ -1,18 +1,12 @@
 package com.hm.forest.admin.controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,13 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.common.util.PageInfo;
 
-import groovyjarjarpicocli.CommandLine.Model;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -99,53 +92,57 @@ public class AdminController {
 
 		    System.out.println(map);
 		    
-		    modelAndView.addObject("location", "page/admin/productMgmtList"); // 리다이렉트 URL 설정
-		    modelAndView.setViewName("page/admin/productMgmtList");
+		    modelAndView.addObject("pageName", "productMgmt"); // 리다이렉트 URL 설정
+		    modelAndView.setViewName("page/admin/productMgmt");
 
 		    return modelAndView;
 		}
 		
 		
-		//관리자페이지_제품목록
-//		@GetMapping("/productMgmtList")
-//		@ResponseBody
-//		public ModelAndView productList(ModelAndView modelAndView) {
-//			List<Product> productLists = adminService.getProductLists();
-//			
-//			modelAndView.addObject("productLists", productLists);
-//			modelAndView.setViewName("page/admin/productMgmtList");
-//			
-//			System.out.println("productLists");
-//			
-//			return modelAndView;
-//		}
+		// 관리자 페이지_제품목록 리스트
+		@GetMapping("/productMgmtList")
+		public ModelAndView list(ModelAndView modelAndView, 
+								 @RequestParam(defaultValue =  "1") int page) {
+			
+			int listCount = 0;
+			PageInfo pageInfo = null;
+			List<Product> productlists = null; // 한 페이지에 보여질 리스트들
+			
+			listCount = adminService.getProductBoardCount();
+			pageInfo = new PageInfo(page, 10, listCount, 10);
+			productlists = adminService.getProductBoardList(pageInfo);
+			
+			log.info("Page : {}", page);
+			log.info("ListCount : {}", listCount);
+
+			modelAndView.addObject("pageInfo", pageInfo);
+			modelAndView.addObject("productlists", productlists);
+			
+			System.out.println();
+			
+			modelAndView.setViewName("page/admin/productMgmtList");
+			
+			return modelAndView;
+		}
 		
+		
+		@GetMapping("/productMgmtView")
+		public ModelAndView view(ModelAndView modelAndView,
+								 @RequestParam("no") int no) {
+			
+			log.info("view() 호출 - {}", no);
+
+			Product product = null;
+			
+			product =adminService.getProductBoardByNo(no);
+			
+			modelAndView.addObject("pageName", "productMgmtView");
+			modelAndView.addObject("product", product);
+			modelAndView.setViewName("page/admin/ProductMgmtView");
+			
+			return modelAndView;	
+		}
 	
-
-		
-
-	
-
-		
-		// 관리자페이지_제품삭제
-//		@PostMapping("/productMgmt/insert")
-//		@ResponseBody
-//		public ModelAndView delete(ModelAndView modlAndView, Product product) {
-//
-//			System.out.println("getName :" + product.getName());
-//			System.out.println("getPrice :" + product.getPrice());
-//			System.out.println("getColor :" + product.getColor());
-//			System.out.println("amount :" + product.getAmount());
-//			
-//			adminService.delete(product);
-//			
-//			modlAndView.addObject("pageName", "productMgmt");
-//			modlAndView.setViewName("page/admin/productMgmt");
-//			
-//			return modlAndView;
-//
-//		}
-		
 
 		// 관리자페이지_제품등록(이미지 업로드)
 //		@PostMapping("/image/upload")
@@ -158,10 +155,11 @@ public class AdminController {
 //		        String originalFileName = uploadFile.getOriginalFilename();
 //		        String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
 //		        String newFileName = UUID.randomUUID().toString() + ext;
+//		        int maxSize = 10485760;
 //
-//		        String realPath = request.getServletContext().getRealPath("/");
-//		        String savePath = realPath + "/upload/upload/product_file/" + newFileName;
-//		        String uploadPath = "/upload/" + newFileName;
+//		        String realPath = request.getServletContext().getRealPath("/static/upload/main_file");
+//		        String savePath = realPath + "upload/" + newFileName;
+//		        String uploadPath = "./upload/" + newFileName;
 //
 //		        File file = new File(savePath);
 //		        uploadFile.transferTo(file);
