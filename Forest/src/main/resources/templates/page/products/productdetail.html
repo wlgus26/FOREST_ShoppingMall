@@ -17,11 +17,43 @@
 <!-- Content -->
 <div layout:fragment="content">
    <h5> 여기는 상품 상세보기 페이지 입니다. </h5>
-   <ul>
+   
+   <div class="table-div">
+	  <table class="table table table-hover">
+		  <thead>
+		    <tr class="border-bottom" >
+		      <th scope="col" colspan="5" class="th-custom-style" style="border-bottom-width: 3px; 
+				  border-bottom-color: #082f1c;
+				  color: #082f1c;">상품
+			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="redirectToWrite('productMgmt')">구매하기</button>
+			  </th>
+		    </tr>
+		  </thead>
+		  
+		  <tbody>
+		  	    <tr style="text-align: center;">
+					<th>번호</th>
+					<th>제목</th>
+				</tr>
+				<tr class="clickable-row" style="text-align: center;" th:each="product : ${productlists}" th:attr="data-href=@{/products/productMgmtView?no={no}(no=${product.no})}">
+			        <td th:text="${product.no}"></td>
+			        <td th:text="${product.name}" style="text-align:left; width:60%;"></td>   
+			    </tr>
+
+		  </tbody>
+	  </table>
+	</div>
+   
+   
+   
+   
+   
+   
+<!--  <ul>
    	<li th:text="${product.name}"></li>
    	<li th:text="${product.content}"></li>
    	<li th:text="${product.price}"></li>
    	<li th:text="${product.image}"></li>
-   </ul>
+   </ul>   -->  
 </div>
 </html>
