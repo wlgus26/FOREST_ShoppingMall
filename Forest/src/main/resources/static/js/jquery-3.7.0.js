@@ -91,15 +91,9 @@ var isWindow = function isWindow( obj ) {
 
 
 var document = window.document;
+	
 
-
-
-	var preservedScriptAttributes = {
-		type: true,
-		src: true,
-		nonce: true,
-		noModule: true
-	};
+	
 
 	function DOMEval( code, node, doc ) {
 		doc = doc || document;
