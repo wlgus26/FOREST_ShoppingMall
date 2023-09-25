@@ -9,11 +9,13 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Product {
 	
 	private int no;
+	
+	private String category;
 	
 	private String name;
 	
