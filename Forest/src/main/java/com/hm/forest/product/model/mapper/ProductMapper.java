@@ -14,8 +14,6 @@ public interface ProductMapper {
 
 	Products findById(int no);
 	
-//	int datailProduct(int no);
-	
 
 
 }
