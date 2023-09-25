@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hm.forest.board.model.service.BoardService;
 import com.hm.forest.board.model.vo.Board;
-import com.hm.forest.board.service.BoardService;
 import com.hm.forest.common.util.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -69,9 +69,21 @@ public class BoardController {
 		
 		// 자주묻는질문으로 이동
 		@GetMapping("/faq")
-		public ModelAndView faq (ModelAndView modelAndView) {
+		public ModelAndView faq (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
+			String type = "faq";
+			int listCount = 0;
+			PageInfo pageInfo = null;
+			List<Board> boardLists = null;
+
+			listCount = boardService.selectBoardCountByType(type);
+			pageInfo = new PageInfo(page, 10, listCount, 10);
+			boardLists = boardService.getBoardLists(type, pageInfo);
 			
+			log.info("{}", boardLists);
+
 			modelAndView.addObject("pageName", "faq");
+			modelAndView.addObject("boardLists", boardLists);
+
 			modelAndView.setViewName("page/board/faq");
 			
 			return modelAndView;
@@ -84,8 +96,8 @@ public class BoardController {
 			 
 		    String type = "community";
 			int listCount = 0;
-			 PageInfo pageInfo = null;
-			 List<Board> boardLists = null;
+			PageInfo pageInfo = null;
+			List<Board> boardLists = null;
 
 			 // 검색값이 있는 경우 
 			 if (searchType != null && !keyWord.trim().equals("")) {
@@ -113,6 +125,7 @@ public class BoardController {
 			 
 			 return modelAndView;
 		}
+		
 		// 실천인증으로 이동
 		@GetMapping("/act")
 		public ModelAndView act (ModelAndView modelAndView) {
@@ -172,8 +185,14 @@ public class BoardController {
 			result = boardService.save(board);
 			
 			if (result > 0) {
-				modelAndView.addObject("msg", "게시글 등록 성공");
-				modelAndView.addObject("location", "view?no=" + board.getNo());				
+				if (type.equals("faq")) {
+					modelAndView.addObject("msg", "게시글 등록 성공");
+					modelAndView.addObject("board", board);
+					modelAndView.addObject("location", board.getType());	
+				} else {
+					modelAndView.addObject("msg", "게시글 등록 성공");
+					modelAndView.addObject("location", "view?no=" + board.getNo());	
+				}	
 			} else {
 				modelAndView.addObject("msg", "게시글 등록 실패");
 				modelAndView.addObject("location", "write?type=" + board.getType());				

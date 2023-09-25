@@ -40,6 +40,9 @@ public interface BoardMapper {
 	// 게시글 조회수 업데이트
 	int updateReadCount(@Param("no") int no);
 
+	// faq 게시판 글 목록 조회
+	List<Board> selectFAQListsByType(@Param("type") String type);
+
 
 
 
