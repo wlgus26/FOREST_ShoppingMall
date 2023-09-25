@@ -57,7 +57,7 @@ public class ProductController {
 		return modelAndView;
 	}
 	
-	@GetMapping("/{productId}")
+	@GetMapping("/{productno}")
 	public ModelAndView viewProductDetails(Products products, ModelAndView modelAndView) {
 		
 		
