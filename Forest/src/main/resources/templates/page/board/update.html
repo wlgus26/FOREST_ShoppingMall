@@ -65,7 +65,7 @@
 			    <tr>
 			      <th scope="row">내용</th>
 			       <td>
-				       <textarea rows="3" cols="30" id="editor" name="content" style="display: none;"></textarea>
+				       <textarea rows="3" cols="30" class="editor" name="content" style="display: none;"></textarea>
 				       <div class="ck ck-reset ck-editor ck-rounded-corners" role="application" dir="ltr" lang="en" aria-labelledby="ck-editor__aria-label_e8eb826b9b3bcd0e876eed929174f0df2">
 					       <label class="ck ck-label ck-voice-label" id="ck-editor__aria-label_e8eb826b9b3bcd0e876eed929174f0df2">Rich Text Editor</label>
 					       <div class="ck ck-editor__top ck-reset_all" role="presentation">
@@ -97,6 +97,7 @@
 		 </div>
 	  </form>
 
+
     <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
 	<script>	
 		// 목록으로 버튼 클릭 시, 게시판 타입에 따라 해당 게시판 목록으로 이동
@@ -105,18 +106,19 @@
 		}
 	
 		// editor 스크립트
-		ClassicEditor
-		.create(document.querySelector('#editor'), {
-			ckfinder: {
-				uploadUrl : '/iamges/upload'
-			}
-		})
-		.then(editor => {
-			console.log('Editor was initialized');
-		})
-		.catch(error => {
-			console.error(error);
-		});
+		// ClassicEditor
+		//.create(document.querySelector('#editor'), {
+		//	ckfinder: {
+	//			uploadUrl : '/iamges/upload'
+	//		}
+	//	})
+	//	.then(editor => {
+	//		console.log('Editor was initialized');
+	//	})
+	//	.catch(error => {
+	//		console.error(error);
+	//	});
 	</script>
+	<script src="/js/ckeditor/script.js"></script>
 </div>
 </html>
