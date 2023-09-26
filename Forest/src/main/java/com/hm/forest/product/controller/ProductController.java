@@ -77,13 +77,13 @@ public class ProductController {
 
 	@GetMapping("/productdetail")
 	public ModelAndView productdetail(ModelAndView modelAndView) {
-		List<Products> productList = null;
+		List<Products> List = null;
 		PageInfo pageInfo = null;
 		
-		productList = productservice.getProductBoardList(pageInfo);
+		List = productservice.getProductList(pageInfo);
 		
 		modelAndView.addObject("pageInfo", pageInfo);
-		modelAndView.addObject("productList", productList);
+		modelAndView.addObject("List", List);
 		
 		System.out.println();
 		
@@ -91,22 +91,37 @@ public class ProductController {
 		
 		return modelAndView;
 	}
-	@GetMapping("/productdetailview")
-	public ModelAndView view(ModelAndView modelAndView, 
+	
+	@RequestMapping("/productdetailview/{no}")
+	public ModelAndView view(ModelAndView modelAndView,
 							 @RequestParam("no") int no) {
 		
-		log.info("view() 호출 - {}", no);
+		Products products = null;
 		
-		Products product = null;
+		products = productservice.getProductByNo(no);
 		
-		product = productservice.getProductBoardByNo(no);
-		
-		modelAndView.addObject("pageName", "productdetailview");
-		modelAndView.addObject("product", product);
-		modelAndView.setViewName("page/products/productdetailview");
+		modelAndView.addObject("pageName", products);
+		modelAndView.setViewName("page/products/productdetail");
 		
 		return modelAndView;
 	}
+	
+//	@GetMapping("/productdetailview")
+//	public ModelAndView view(ModelAndView modelAndView, 
+//							 @RequestParam("no") int no) {
+//		
+//		log.info("view() 호출 - {}", no);
+//		
+//		Products product = null;
+//		
+//		product = productservice.getProductByNo(no);
+//		
+//		modelAndView.addObject("pageName", "productdetailview");
+//		modelAndView.addObject("product", product);
+//		modelAndView.setViewName("page/products/productdetailview");
+//		
+//		return modelAndView;
+//	}	
 	
 	
 //	@GetMapping("/products/{productno}")
