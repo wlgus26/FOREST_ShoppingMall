@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hm.forest.product.model.vo.Products;
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.product.model.mapper.ProductMapper;
 
 @Service
@@ -22,21 +23,29 @@ public class ProductServiceImpl implements ProductService {
 		return productmapper.listProduct();
 	}
 
+//
+//	@Override
+//	public Products getProductsById(int no) {
+//
+//		return productmapper.findById(no);
+//	}
+
 
 	@Override
-	public List<Products> datailProduct() {
+	public List<Products> getProductBoardList(PageInfo pageInfo) {
+		
+		return productmapper.selectAll();
+	}
 
-		return null;
+
+	@Override
+	public Products getProductBoardByNo(int no) {
+		
+		return productmapper.selectProductBoardByNo(no);
 	}
 
 
 
-	@Override
-	public int datailProduct(Products products) {
-
-		return 0;
-	}
-	
 	
 
 }

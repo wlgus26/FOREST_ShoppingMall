@@ -121,5 +121,6 @@ public class PageInfo {
 		int endList = this.getStartList() + this.listLimit - 1;
 		
 		return endList > this.listCount ? this.listCount : endList;
+		
 	}
 }

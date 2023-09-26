@@ -1,4 +1,4 @@
-package com.hm.forest.board.service;
+package com.hm.forest.board.model.service;
 
 import java.util.List;
 
