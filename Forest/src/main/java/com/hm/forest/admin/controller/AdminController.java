@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.board.model.vo.Board;
 import com.hm.forest.common.util.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -137,6 +140,51 @@ public class AdminController {
 			
 			return modelAndView;	
 		}
+		
+		// 제품 상세 페이지에서 수정버튼 누르면 수정 페이지 요청
+		@GetMapping("/productMgmtUpdate")
+		public ModelAndView update (ModelAndView modelAndView, @RequestParam("no") int no) {
+			Product product = adminService.getProductBoardByNo(no);
+			
+			modelAndView.addObject("pageName", "productMgmtUpdate");
+			modelAndView.addObject("product", product);
+			modelAndView.setViewName("page/admin/productMgmtUpdate");
+			
+			return modelAndView;
+		}
+		
+		// 관리자페이지_제품 수정
+		 @PostMapping("/productMgmtUpdate")
+		 public ModelAndView update (ModelAndView modelAndView, 
+				 					 @RequestParam("no") int no,
+				 					 @RequestParam("name") String name, 
+				 					 @RequestParam("content") String content) {
+			 
+			 int result = 0;
+			 Product product = null;
+			 
+			 product = adminService.getProductBoardByNo(no);
+
+				
+			 product.setName(name);
+			 product.setContent(content);
+				 
+		     result = adminService.save(product);
+				 
+				 if ( result > 0 ) {
+					 modelAndView.addObject("msg", "게시글 수정 성공");
+					 modelAndView.addObject("location", "/admin/productMgmtView?no=" + product.getNo()); 
+				 } else {
+					 modelAndView.addObject("msg", "게시글 수정 실패");
+					 modelAndView.addObject("location", "/admin/productMgmtUpdate?no=" + product.getNo()); 		 
+				 }
+				 
+				 modelAndView.setViewName("page/common/msg");
+
+				return modelAndView;
+		 }
+		
+		
 	
 
 		// 관리자페이지_제품등록(이미지 업로드)

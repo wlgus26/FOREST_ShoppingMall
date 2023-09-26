@@ -17,34 +17,32 @@
 
 
 		<div class="content">
-			<h1 class="page-header">판매중인 제품 목록 리스트</small></h1>
+			<h1 class="page-header">판매중인 제품 목록 리스트</h1>
 			<div class="row products">
-             
 				<li><div class="scale col-sm-6 col-md-4">
+				<!-- 
 					<a class="thumbnail" href="/displayFile?filename=${imgLink}"><img src="${img}"></a>
-						<div class="caption">
+				 -->
+				    <div class="caption">
 				  <tr style="text-align: center;">
 					<th>제목</th>
-					<th>제목</th>
-					</tr>
+					<th>가격</th>
+				  </tr>
 				
-					<tr class="clickable-row" style="text-align: center;" th:each="product : ${productlists}" th:attr="data-href=@{/admin/productMgmtView?no={no}(no=${product.no})}">
-			        <td th:text="${product.name}"></td>
-			        <td th:text="${product.name}" style="text-align:left; width:60%;"></td>  
+				  <tr class="clickable-row" style="text-align: center;" th:each="product : ${productlists}" th:attr="data-href=@{/admin/productMgmtView?no={no}(no=${product.no})}">
+			        <td th:text="${product.no}"></td>
+			        <td th:text="${product.name}" style="text-align:left; width:60%;"></td>   
+			    </tr> 
+			     
 							<p><a href="#" class="btn btn-primary" role="button">구입하기</a> 
 								<a href="#" class="btn btn-default" role="button">장바구니</a></p>
+			       
 						</div>
 					</div>
 				</li>
 			</div>
           
 		</div>
- 
- 
-
-
-
-
 
   <div class="table-div">
 	  <table class="table table table-hover">
@@ -71,6 +69,7 @@
 		  </tbody>
 	  </table>
 	</div>
+
 
 	  
 	<!-- Pagination -->
