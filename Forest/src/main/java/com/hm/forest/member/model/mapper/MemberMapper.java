@@ -8,8 +8,11 @@ import com.hm.forest.member.model.vo.Member;
 @Mapper
 public interface MemberMapper {
 
-	int selectCount();
-	
 	Member selectMemberById(@Param("id") String id);
-
+	
+	int insertMember(Member member);
+	
+	int updateMember(Member member);
+	
+	int updateMemberStatus(@Param("status") String status, @Param("no") int no);
 }
