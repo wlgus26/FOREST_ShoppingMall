@@ -78,8 +78,6 @@ public class BoardController {
 			listCount = boardService.selectBoardCountByType(type);
 			pageInfo = new PageInfo(page, 10, listCount, 10);
 			boardLists = boardService.getBoardLists(type, pageInfo);
-			
-			log.info("{}", boardLists);
 
 			modelAndView.addObject("pageName", "faq");
 			modelAndView.addObject("boardLists", boardLists);
@@ -158,7 +156,7 @@ public class BoardController {
 				response.addCookie(readCookie);
 			} 
 			
-			modelAndView.addObject("pageName", "view");
+			modelAndView.addObject("pageName", "boardView");
 			modelAndView.addObject("board", board);
 			modelAndView.setViewName("page/board/view");
 			
@@ -168,7 +166,7 @@ public class BoardController {
 		// 게시글 작성 페이지 요청
 		@GetMapping("/write")
 		public ModelAndView write (ModelAndView modelAndView, @RequestParam("type") String type) {
-			modelAndView.addObject("pageName", "write");
+			modelAndView.addObject("pageName", "boardWrite");
 			modelAndView.addObject("type", type);
 			modelAndView.setViewName("page/board/write");
 			
@@ -186,15 +184,15 @@ public class BoardController {
 			
 			if (result > 0) {
 				if (type.equals("faq")) {
-					modelAndView.addObject("msg", "게시글 등록 성공");
+					modelAndView.addObject("msg", "게시글이 정상적으로 등록되었습니다.");
 					modelAndView.addObject("board", board);
 					modelAndView.addObject("location", board.getType());	
 				} else {
-					modelAndView.addObject("msg", "게시글 등록 성공");
+					modelAndView.addObject("msg", "게시글이 정상적으로 등록되었습니다.");
 					modelAndView.addObject("location", "view?no=" + board.getNo());	
 				}	
 			} else {
-				modelAndView.addObject("msg", "게시글 등록 실패");
+				modelAndView.addObject("msg", "게시글 등록에 실패하였습니다.");
 				modelAndView.addObject("location", "write?type=" + board.getType());				
 
 			}
@@ -208,7 +206,7 @@ public class BoardController {
 		public ModelAndView update (ModelAndView modelAndView, @RequestParam("no") int no) {
 			Board board = boardService.getBoardByNo(no);
 			
-			modelAndView.addObject("pageName", "update");
+			modelAndView.addObject("pageName", "boardUpdate");
 			modelAndView.addObject("board", board);
 			modelAndView.setViewName("page/board/update");
 			
@@ -223,18 +221,16 @@ public class BoardController {
 			Board board = null;
 			
 			board = boardService.getBoardByNo(no);
-			System.out.println(title);
 			board.setTitle(title);
-			System.out.println("★" + board.getTitle());
 			board.setContent(content);
 			
 			result = boardService.save(board);
 		
 			if (result > 0) {
-				modelAndView.addObject("msg", "게시글 수정 성공");
+				modelAndView.addObject("msg", "게시글이 성공적으로 수정되었습니다.");
 				modelAndView.addObject("location", "view?no=" + board.getNo());								
 			} else {
-				modelAndView.addObject("msg", "게시글 수정 실패");
+				modelAndView.addObject("msg", "게시글 수정에 실패하였습니다.");
 				modelAndView.addObject("location", "update?no=" + board.getNo());			
 			}
 	
@@ -256,7 +252,7 @@ public class BoardController {
 				
 				if (result > 0) {
 					modelAndView.addObject("msg", "게시글이 정상적으로 삭제되었습니다.");
-					modelAndView.addObject("location", board.getType());			
+					modelAndView.addObject("location", "/board/" + board.getType());			
 				} else {				
 					modelAndView.addObject("msg", "게시글 삭제에 실패하였습니다.");
 					modelAndView.addObject("location", "/board/view?no=" + board.getNo());				
