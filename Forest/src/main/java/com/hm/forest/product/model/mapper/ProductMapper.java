@@ -12,7 +12,7 @@ public interface ProductMapper {
 
 	List<Products> listProduct();
 
-	int datailProduct(Products products);
+	Products findById(int no);
 	
 
 

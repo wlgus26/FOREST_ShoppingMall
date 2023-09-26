@@ -1,4 +1,4 @@
-package com.hm.forest.board.service;
+package com.hm.forest.board.model.service;
 
 import java.util.List;
 
@@ -85,6 +85,7 @@ public class BoardServiceImpl implements BoardService {
 	public int updateReadCount(int no) {
 		return boardMapper.updateReadCount(no);
 	}
+
 
 
 

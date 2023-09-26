@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hm.forest.board.model.service.BoardService;
 import com.hm.forest.board.model.vo.Board;
-import com.hm.forest.board.service.BoardService;
 import com.hm.forest.common.util.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -69,9 +69,19 @@ public class BoardController {
 		
 		// 자주묻는질문으로 이동
 		@GetMapping("/faq")
-		public ModelAndView faq (ModelAndView modelAndView) {
-			
+		public ModelAndView faq (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
+			String type = "faq";
+			int listCount = 0;
+			PageInfo pageInfo = null;
+			List<Board> boardLists = null;
+
+			listCount = boardService.selectBoardCountByType(type);
+			pageInfo = new PageInfo(page, 10, listCount, 10);
+			boardLists = boardService.getBoardLists(type, pageInfo);
+
 			modelAndView.addObject("pageName", "faq");
+			modelAndView.addObject("boardLists", boardLists);
+
 			modelAndView.setViewName("page/board/faq");
 			
 			return modelAndView;
@@ -84,8 +94,8 @@ public class BoardController {
 			 
 		    String type = "community";
 			int listCount = 0;
-			 PageInfo pageInfo = null;
-			 List<Board> boardLists = null;
+			PageInfo pageInfo = null;
+			List<Board> boardLists = null;
 
 			 // 검색값이 있는 경우 
 			 if (searchType != null && !keyWord.trim().equals("")) {
@@ -113,6 +123,7 @@ public class BoardController {
 			 
 			 return modelAndView;
 		}
+		
 		// 실천인증으로 이동
 		@GetMapping("/act")
 		public ModelAndView act (ModelAndView modelAndView) {
@@ -145,7 +156,7 @@ public class BoardController {
 				response.addCookie(readCookie);
 			} 
 			
-			modelAndView.addObject("pageName", "view");
+			modelAndView.addObject("pageName", "boardView");
 			modelAndView.addObject("board", board);
 			modelAndView.setViewName("page/board/view");
 			
@@ -155,7 +166,7 @@ public class BoardController {
 		// 게시글 작성 페이지 요청
 		@GetMapping("/write")
 		public ModelAndView write (ModelAndView modelAndView, @RequestParam("type") String type) {
-			modelAndView.addObject("pageName", "write");
+			modelAndView.addObject("pageName", "boardWrite");
 			modelAndView.addObject("type", type);
 			modelAndView.setViewName("page/board/write");
 			
@@ -172,10 +183,16 @@ public class BoardController {
 			result = boardService.save(board);
 			
 			if (result > 0) {
-				modelAndView.addObject("msg", "게시글 등록 성공");
-				modelAndView.addObject("location", "view?no=" + board.getNo());				
+				if (type.equals("faq")) {
+					modelAndView.addObject("msg", "게시글이 정상적으로 등록되었습니다.");
+					modelAndView.addObject("board", board);
+					modelAndView.addObject("location", board.getType());	
+				} else {
+					modelAndView.addObject("msg", "게시글이 정상적으로 등록되었습니다.");
+					modelAndView.addObject("location", "view?no=" + board.getNo());	
+				}	
 			} else {
-				modelAndView.addObject("msg", "게시글 등록 실패");
+				modelAndView.addObject("msg", "게시글 등록에 실패하였습니다.");
 				modelAndView.addObject("location", "write?type=" + board.getType());				
 
 			}
@@ -189,7 +206,7 @@ public class BoardController {
 		public ModelAndView update (ModelAndView modelAndView, @RequestParam("no") int no) {
 			Board board = boardService.getBoardByNo(no);
 			
-			modelAndView.addObject("pageName", "update");
+			modelAndView.addObject("pageName", "boardUpdate");
 			modelAndView.addObject("board", board);
 			modelAndView.setViewName("page/board/update");
 			
@@ -204,18 +221,16 @@ public class BoardController {
 			Board board = null;
 			
 			board = boardService.getBoardByNo(no);
-			System.out.println(title);
 			board.setTitle(title);
-			System.out.println("★" + board.getTitle());
 			board.setContent(content);
 			
 			result = boardService.save(board);
 		
 			if (result > 0) {
-				modelAndView.addObject("msg", "게시글 수정 성공");
+				modelAndView.addObject("msg", "게시글이 성공적으로 수정되었습니다.");
 				modelAndView.addObject("location", "view?no=" + board.getNo());								
 			} else {
-				modelAndView.addObject("msg", "게시글 수정 실패");
+				modelAndView.addObject("msg", "게시글 수정에 실패하였습니다.");
 				modelAndView.addObject("location", "update?no=" + board.getNo());			
 			}
 	
@@ -237,7 +252,7 @@ public class BoardController {
 				
 				if (result > 0) {
 					modelAndView.addObject("msg", "게시글이 정상적으로 삭제되었습니다.");
-					modelAndView.addObject("location", board.getType());			
+					modelAndView.addObject("location", "/board/" + board.getType());			
 				} else {				
 					modelAndView.addObject("msg", "게시글 삭제에 실패하였습니다.");
 					modelAndView.addObject("location", "/board/view?no=" + board.getNo());				

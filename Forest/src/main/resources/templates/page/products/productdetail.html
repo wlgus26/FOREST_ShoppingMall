@@ -16,6 +16,12 @@
 
 <!-- Content -->
 <div layout:fragment="content">
-   <h5> productdetail.html > Content </h5>
+   <h5> 여기는 상품 상세보기 페이지 입니다. </h5>
+   <ul>
+   	<li th:text="${product.name}"></li>
+   	<li th:text="${product.content}"></li>
+   	<li th:text="${product.price}"></li>
+   	<li th:text="${product.image}"></li>
+   </ul>
 </div>
 </html>
