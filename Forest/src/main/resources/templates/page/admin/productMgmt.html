@@ -4,46 +4,44 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 
-<th:block th:with="pageName='productMgmt'"></th:block>      
-<!-- productMgmt.html 고유 CSS 추가 -->
-<th:block layout:fragment="css">
-<!-- ex)   <link rel="stylesheet" th:href="@{/css/page/producstMgmt.css}" >-->
-
-<!-- ckeditor 
-<link rel="stylesheet" th:href="@{/resources/static/css/ckeditor.css}" type="text/css">
--->
+<th:block th:with="pageName='productMgmt'"></th:block>
  
-
-<script src="/js/ckeditor/ckeditor.js"></script>
-
-<script src="/js/jquery-3.7.0.min.js"></script>
-
 <style>
+    
 	.table > th {
 		width: 25%;
 	}
-
+	.table > td {
+		width: 75%
+	}
+	
+	
 	.ck.ck-editor {
-		width: 650px;
-		max-width: px;
-		
+		width: 60%;
+		max-width: 650px;
 	}
 
 	.ck-editor__editable {
 		height: 50vh;
 	}
-
-
 </style>
+<!-- productMgmt.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+<!-- productMgmt.html 고유 스크립트 추가 -->
 
 </th:block>
-<!-- productMgmt.html 고유 스크립트 추가 -->
+
 <th:block layout:fragment="script">
-    <!-- ex)  <script th:src="@{/js/page/productMgmt.js}"></script>-->
+
+   <script th:src="@{/js/ckeditor/ckeditor.js}"></script>
+
 </th:block>
+
+
 
 <!-- Content -->
 <div layout:fragment="content">
+
 <form class="container" action="/admin/productMgmt/insert" method="post" th:action="@{/admin/productMgmt/insert}">
 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
@@ -64,8 +62,8 @@
 	      	<select id="category" name="category">
 			    <option value="" selected>--- 선택 ---</option>
 			    <option value="kitchen">주방</option>
-			    <option value="option2">옵션 2</option>
-			    <option value="option3">옵션 3</option>
+			    <option value="style">패션</option>
+			    <option value="kit">친환경키트</option>
 		    </select>
 		 </td>
 	    </tr>
@@ -89,7 +87,8 @@
 	      <th scope="row" id="sizeSml" name="sizeSml">제품사이즈</th>
 	      <td>
 	      	<select id="sizeSml" name="sizeSml" >
-			    <option value="" selected>--- 선택 ---</option>
+			    <option value="" selected>--- 선택 ---</option>			    
+			    <option value="F">F</option>
 			    <option value="S">S</option>
 			    <option value="M">M</option>
 			    <option value="L">L</option>
@@ -108,7 +107,8 @@
 	      <th scope="row" >상세이미지</th>
 	      <td><input type="file"></td>
 	    </tr>
-	   <th scope="row" id="status" name="status">판매상태</th>
+	    <tr>
+	   		<th scope="row" id="status" name="status">판매상태</th>
 	      <td>
 	      	<select id="status" name="status" >
 			    <option value="" selected>--- 선택 ---</option>
@@ -131,13 +131,11 @@
 
 </div>
 </form>
-
-
-<!-- CKEditor 
-	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
-	<script>		
+ 
+ 
+<script>		
 	ClassicEditor
-	.create(document.querySelector('#editor'))
+	.create(document.querySelector('.editor'))
 	.then(editor => {
 		console.log('Editor was initialized');
 	})
@@ -145,9 +143,29 @@
 		console.error(error);
 	});
 </script>
- -->
 
-<script src="/js/ckeditor/script.js"></script>
+
+<!-- 
+ <script src="/js/ckeditor/script.js"></script>
+  -->
+
+<!-- CKEditor 
+	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+	<script>		
+	ClassicEditor
+	.create(document.querySelector('.editor'))
+	.then(editor => {
+		console.log('Editor was initialized');
+	})
+	.catch(error => {
+		console.error(error);
+	});
+</script>
+-->
+
+
+
+
 
 <!-- 등록버튼 누르면 ajax로 처리 -->
 <script>
