@@ -71,9 +71,9 @@
         #camp > li > a > span {
             position:absolute; left:50%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0)
         }
-        #content1{margin-left: 360px;}
-        #content2{margin-left: 250px;}
-        #content3{margin-left: 200px;}
+        #content1{justify-content: center;}
+        #content2{}
+        #content3{}
         #content4{}
 		
 		/* Apply left padding to all li elements */
@@ -161,10 +161,10 @@
 
 
 <!-- Content -->
-<div layout:fragment="content">
+<div layout:fragment="content" style="width: 75%; margin: auto;">
    <div style="align-content: center;">
         <div id="content1">
-            <ul id="navi">
+            <ul id="navi" >
                 <li><a href="/program"><img src="../images/home1.PNG"><span>원데이 클래스</span></a></li>
                 <li><a href="/program"><img src="../images/home1.PNG"><span>참여형 클래스</span></a></li>
                 <li><a href="/products/kitchen"><img src="../images/home1.PNG"><span>제품보기</span></a></li>
@@ -194,7 +194,7 @@
                 
             </ul>
         </div>
-	<div class="swiper-container" style="background-color: lightyellow; padding-bottom: 20px;">
+	<div class="swiper-container" style="background-color: lightyellow; padding-bottom: 20px; width: 100%;">
     <h4 id="tt" style="color: rgb(5, 71, 5); margin-top: 150px; text-align: center; padding-top: 50px;">진행 중인 캠페인</h4>
     <p style="text-align: center;">건강한 지구를 만들기 위한 자원 순환 캠페인</p>
     <div class="swiper-wrapper" style="margin-top: 150px;">
@@ -273,8 +273,6 @@
         });
     });
 </script>
-
-
 
     </div>
 
