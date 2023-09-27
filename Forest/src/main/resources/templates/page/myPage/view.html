@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 
-<th:block th:with="pageName='boardView'"></th:block>      
+<th:block th:with="pageName='qnaView'"></th:block>      
 <style>
 tbody > tr {
 
@@ -32,10 +32,9 @@ tbody > tr {
 		      <th scope="col" colspan="6" class="th-custom-style" style="border-bottom-width: 3px; 
 				  border-bottom-color: #082f1c;
 				  color: #082f1c;">
-				  <span th:if="${board.type == 'notice'}">공지사항</span>
-	    		  <span th:if="${board.type == 'community'}">자유게시판</span>
+				  <span th:if="${board.type == 'qna'}">1:1문의하기</span>
 				 
-			  	<a class="btn btn-sm btn-outline-secondary" type="button" th:href="@{'/board/update?no=' + ${board.no}}">수정</a>
+			  	<a class="btn btn-sm btn-outline-secondary" type="button" th:href="@{'/myPage/update?no=' + ${board.no}}">수정</a>
 
 			  	<!-- 게시글 삭제 시, Button trigger modal 효과 적용  -->
 				<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -58,7 +57,7 @@ tbody > tr {
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-md btn-outline-secondary" data-bs-dismiss="modal">취소</button>
-				        <a type="button" class="btn btn-md btn-primary" th:href="@{'/board/delete?no=' + ${board.no}}">삭제</a>
+				        <a type="button" class="btn btn-md btn-primary" th:href="@{'/myPage/delete?no=' + ${board.no}}">삭제</a>
 			         </div>
 				    </div>
 				  </div>
@@ -69,8 +68,12 @@ tbody > tr {
 		  </thead>
 		  
 		  <tbody class="board-view">
+			    <tr style="text-align: center;">
+					<th>문의유형</th>
+					<td colspan="5" style="text-align: left;" th:text="${board.category}"></td>
+				</tr>
 				<tr style="text-align: center;">
-					<th >제목</th>
+					<th>제목</th>
 					<td colspan="5" style="text-align: left;" th:text="${board.title}"></td>
 				</tr>
 				<tr style="text-align: center;">
@@ -78,8 +81,10 @@ tbody > tr {
 					<td style="text-align: left;" th:text="${board.writerId}"></td>
 					<th>작성일</th>
 					 <td style="text-align: left;"  th:text="${#dates.format(board.createDate, 'yyyy-MM-dd hh:mm')}"></td>
-					<th>조회</th>
-					<td style="text-align: left;" th:text="${board.readCount}"></td>
+					<th>상태</th>
+					<td style="text-align: left;">
+					<a style="text-align: left;">답변대기</a>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="6" style="padding-left: 50px;" th:text="${board.content}"></td>
@@ -87,11 +92,8 @@ tbody > tr {
 				<tr style="text-align: center;">
 					<td colspan="6">
 					 <!-- 게시판 type에 따라 해당 게시판 목록으로 이동 -->
-				       <th:block th:if="${board.type eq 'notice'}">
-					        <input type="button" onclick="redirectToBoard('notice')" value="목록으로">
-					   </th:block>
-					   <th:block th:if="${board.type eq 'community'}">
-					        <input type="button" onclick="redirectToBoard('community')" value="목록으로">
+				       <th:block th:if="${board.type eq 'qna'}">
+					        <input type="button" onclick="redirectToBoard('qna')" value="목록으로">
 					   </th:block>
 					</td>
 				</tr>
@@ -102,7 +104,7 @@ tbody > tr {
 	<script>
 		// 목록으로 버튼 클릭 시, 게시판 타입에 따라 해당 게시판 목록으로 이동
 		function redirectToBoard(type){
-			window.location.href = '/board/' + type;
+			window.location.href = '/myPage/' + type;
 		}
 		
 		// 모달 창 

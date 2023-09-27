@@ -71,9 +71,9 @@
         #camp > li > a > span {
             position:absolute; left:50%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0)
         }
-        #content1{margin-left: 360px;}
-        #content2{margin-left: 250px;}
-        #content3{margin-left: 200px;}
+        #content1{justify-content: center;}
+        #content2{}
+        #content3{}
         #content4{}
 		
 		/* Apply left padding to all li elements */
@@ -122,6 +122,11 @@
 		
 		.swiper-pagination {
 		  color: white;
+		  text-align: center;
+		  transition: .3s opacity;
+		  transform: translate3d(0,0,0);
+		  position: relative;
+		  padding-top:30px; 
 		}
 		
 		.swiper-button-prev,
@@ -156,10 +161,10 @@
 
 
 <!-- Content -->
-<div layout:fragment="content">
+<div layout:fragment="content" style="width: 75%; margin: auto;">
    <div style="align-content: center;">
         <div id="content1">
-            <ul id="navi">
+            <ul id="navi" >
                 <li><a href="/program"><img src="../images/home1.PNG"><span>원데이 클래스</span></a></li>
                 <li><a href="/program"><img src="../images/home1.PNG"><span>참여형 클래스</span></a></li>
                 <li><a href="/products/kitchen"><img src="../images/home1.PNG"><span>제품보기</span></a></li>
@@ -189,63 +194,110 @@
                 
             </ul>
         </div>
-	
-		<div class="swiper">
-		    <div class="swiper-wrapper">
-		      <div class="swiper-slide">Slide 1</div>
-		      <div class="swiper-slide">Slide 2</div>
-		      <div class="swiper-slide">Slide 3</div>
-		      <div class="swiper-slide">Slide 4</div>
-		      <div class="swiper-slide">Slide 5</div>
-		    </div>
-		
-		    <div class="swiper-pagination"></div>
-		
-		    <div class="swiper-button-prev">
-		      <div class="material-icons"><-</div>
-		    </div>
-		    <div class="swiper-button-next">
-		      <div class="material-icons">-></div>
-		    </div>
-		 </div>
-		 <script>
-		 	$(document).ready(() => {
-		 		let swiper = new Swiper('.swiper', {
-		 			  autoplay: {
-		 			    delay: 5000
-		 			  },
-		 			  loop: true,
-		 			  slidesPerView: 3,
-		 			  spaceBetween: 10,
-		 			  centeredSlides: true,
-		 			  pagination: {
-		 			    el: '.swiper-pagination',
-		 			    clickable: true
-		 			  },
-		 			  navigation: {
-		 			    prevEl: '.swiper-button-prev',
-		 			    nextEl: '.swiper-button-next'
-		 			  }
-		 			})
-		 	});
-		 	
-		 </script>
-		
-        <div id="content4" style=" background-color: lightyellow; padding-bottom: 20px;">
-	        <div class="campaign-slider visual" style="margin-top: 150px;">
-	            <ul id="camp" class="campaign-list">
-	                <h4 id="tt" style="color: rgb(5, 71, 5); margin-top: 150px; padding-left: 200px; padding-top: 20px;">진행 중인 캠페인</h4>
-	                <p style="padding-left: 200px;">건강한 지구를 만들기 위한 자원 순환 캠페인</p>
-	                <li><a href="/campaign/aesop"><img src="../images/home14.PNG"><span style="bottom: -0.5px; text-align: center;">신세계인터내셔날 S.I 뷰티 캠페인 <br> 화장품 공병 수거 캠페인</span></a></li>
-	                <li><a href="/campaign/biotherm"><img src="../images/home15.PNG"><span style="bottom: -0.5px; text-align: center;">비오템 <br> 화장품 공병 재활용 캠페인</span></a></li>
-	                <li><a href="/campaign/brita"><img src="../images/home16.PNG"><span style="bottom: -0.5px; text-align: center;">브리타 그린 리프 멤버십 <br> 필터 재활용 프로그램</span></a></li>		                          
-	                <li><a href="/campaign/melixir"><img src="../images/melixir.PNG"><span style="bottom: -0.5px; text-align: center;">멜릭서 me:cycle 캠페인 <br> me:cycle</span></a></li>
-	                <li><a href="/campaign/boonbastick"><img src="../images/boonbastick.PNG"><span style="bottom: -0.5px; text-align: center;">빙그레 분타스틱 캠페인 <br> 빙그레 바나나맛우유</span></a></li>
-	                <li><a href="/campaign/mbci"><img src="../images/mbci.PNG"><span style="bottom: -0.5px; text-align: center;">가져와요 플라스틱, 지켜가요 우리바다 <br> Plastic Free Tomorrow </span></a></li>           
-	            </ul>
-	         </div>
-
+	<div class="swiper-container" style="background-color: lightyellow; padding-bottom: 20px; width: 100%;">
+    <h4 id="tt" style="color: rgb(5, 71, 5); margin-top: 150px; text-align: center; padding-top: 50px;">진행 중인 캠페인</h4>
+    <p style="text-align: center;">건강한 지구를 만들기 위한 자원 순환 캠페인</p>
+    <div class="swiper-wrapper" style="margin-top: 150px;">
+        <!-- Each set of 3 campaigns is a group -->
+        <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <a href="/campaign/aesop">
+                <span style="text-align: center;">신세계인터내셔날 S.I 뷰티 캠페인 <br> 화장품 공병 수거 캠페인</span><br>
+                <img src="../images/home14.PNG" style="width: 400px; height: 500px;">
+            </a>
         </div>
+        <!-- Add the additional slides with the provided content -->
+        <!-- Modify the following lines to add or remove slides as needed -->
+        <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <a href="/campaign/biotherm">
+                <span style="text-align: center;">비오템 <br> 화장품 공병 재활용 캠페인</span>
+                <img src="../images/home15.PNG" style="width: 400px; height: 500px;">
+            </a>
+        </div>
+        <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <a href="/campaign/brita">
+                <span style="text-align: center;">브리타 그린 리프 멤버십 <br> 필터 재활용 프로그램</span>
+                <img src="../images/home16.PNG" style="width: 400px; height: 500px;">
+            </a>
+        </div>
+ 	<!-- Add the additional slides with the provided content -->
+        <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <a href="/campaign/melixir">
+                <span style="text-align: center;">멜릭서 me:cycle <br> 캠페인 me:cycle</span>
+                <img src="../images/melixir.PNG" style="width: 400px; height: 500px;">
+            </a>
+        </div>
+        <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <a href="/campaign/boonbastick">
+                <span style="text-align: center;">빙그레 분타스틱 캠페인 <br> 빙그레 바나나맛우유</span>
+                <img src="../images/boonbastick.PNG" style="width: 400px; height: 500px;">
+            </a>
+        </div>
+        <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <a href="/campaign/mbci">
+                <span style="text-align: center;">가져와요 플라스틱, 지켜가요 우리바다 <br> Plastic Free Tomorrow </span>
+                <img src="../images/mbci.PNG" style="width: 400px; height: 500px;">
+            </a>
+        </div>
+        <!-- End of additional slides -->
+
+    </div>
+
+    <!-- Add more sets of 3 campaigns here as needed -->
+
+    <div class="swiper-pagination"></div>
+
+    <div class="swiper-button-prev">
+        <div class="material-icons"></div>
+    </div>
+    <div class="swiper-button-next">
+        <div class="material-icons"></div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+        let swiper = new Swiper('.swiper-container', {
+            autoplay: {
+                delay: 5000
+            },
+            loop: true,
+            slidesPerView: 3, // Display three slides per view
+            spaceBetween: 10,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            },
+            navigation: {
+                prevEl: '.swiper-button-prev',
+                nextEl: '.swiper-button-next'
+            }
+        });
+
+        // 슬라이드가 변경될 때
+        swiper.on('slideChange', function () {
+            // 현재 활성 슬라이드의 인덱스 가져오기
+            let currentIndex = swiper.activeIndex;
+
+            // 다음 세 슬라이드를 숨기고
+            for (let i = currentIndex + 3; i < currentIndex + 6; i++) {
+                let slideToHide = swiper.slides[i];
+                if (slideToHide) {
+                    slideToHide.style.display = 'none';
+                }
+            }
+
+            // 나머지 세 슬라이드를 다시 보이게 하기
+            for (let i = currentIndex; i < currentIndex + 3; i++) {
+                let slideToShow = swiper.slides[i];
+                if (slideToShow) {
+                    slideToShow.style.display = 'block';
+                }
+            }
+        });
+    });
+</script>
+
+
     </div>
 
 </div>
