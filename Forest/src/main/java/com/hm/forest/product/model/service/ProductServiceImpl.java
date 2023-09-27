@@ -32,16 +32,16 @@ public class ProductServiceImpl implements ProductService {
 
 
 	@Override
-	public List<Products> getProductBoardList(PageInfo pageInfo) {
+	public List<Products> getProductList(PageInfo pageInfo) {
 		
 		return productmapper.selectAll();
 	}
 
 
 	@Override
-	public Products getProductBoardByNo(int no) {
+	public Products getProductByNo(int no) {
 		
-		return productmapper.selectProductBoardByNo(no);
+		return productmapper.selectProductByNo(no);
 	}
 
 
