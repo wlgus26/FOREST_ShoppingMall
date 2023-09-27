@@ -4,41 +4,101 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.hm.security.member.model.mapper.MemberMapper">
+<mapper namespace="com.hm.forest.member.model.mapper.MemberMapper">
+	<sql id="selectMemberSql">
+		SELECT NO,
+			   ID,
+			   PASSWORD,
+			   NAME,
+			   EMAIL,
+			   PHONE,
+			   PCODE,
+			   ADDRESS1,
+			   ADDRESS2,
+			   CREATE_DATE,
+			   UPDATE_DATE
+		FROM MEMBER 
+	</sql>
 	
 	<resultMap id="memberResultMap" type="Member" >
 		<id property="no" column="NO"/>
 		<result property="id" column="ID"/>
 		<result property="password" column="PASSWORD"/>
-		<result property="role" column="ROLE"/>
 		<result property="name" column="NAME"/>
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
-		<result property="address" column="ADDRESS"/>
-		<result property="hobby" column="HOBBY"/>
+		<result property="pcode" column="PCODE"/>
+		<result property="address1" column="ADDRESS1"/>
+		<result property="address2" column="ADDRESS2"/>
 		<result property="status" column="STATUS"/>
-		<result property="enrollDate" column="ENROLL_DATE"/>
-		<result property="modifyDate" column="MODIFY_DATE"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="updateDate" column="UPDATE_DATE"/>
 	</resultMap>
-	
+
 	<select id="selectCount" resultType="_int">
 		SELECT COUNT(*) FROM MEMBER
 	</select>
 	
-	<select id="selectMemberById" parameterType="string" resultMap="memberResultMap">
-		SELECT NO,
-			   ID,
-			   PASSWORD,
-			   ROLE,
-			   NAME,
-			   EMAIL,
-			   PHONE,
-			   ADDRESS,
-			   HOBBY,
-			   STATUS,
-			   ENROLL_DATE,
-			   MODIFY_DATE
-		FROM MEMBER 
-		WHERE ID=#{id}
+	<select id="selectAll" resultMap="memberResultMap">
+		<include refid="selectMemberSql"/>
+		WHERE STATUS='Y'
+	</select>	
+	
+	<select id="selectMemberById" 
+			parameterType="string" resultMap="memberResultMap">
+		<include refid="selectMemberSql"/>
+		WHERE ID=#{id} AND STATUS='Y'	
 	</select>
+	
+	<insert id="insertMember" parameterType="Member"
+			useGeneratedKeys="true" keyColumn="NO" keyProperty="no">
+		INSERT INTO MEMBER (
+			NO,
+			ID,
+			PASSWORD,
+			NAME,
+			EMAIL,
+			PHONE,
+			PCODE,
+			ADDRESS1,
+			ADDRESS2
+		) VALUES (
+			MEMBER_SEQ.NEXTVAL,
+			#{id},
+			#{password},
+			#{name},
+			#{email},
+			#{phone},
+			#{pcode},
+			#{address1},
+			#{address2}
+		)
+	</insert>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE MEMBER 
+		SET 
+			NAME=#{name},
+			PHONE=#{phone},
+			EMAIL=#{email},
+			PCODE=#{pcode},
+			ADDRESS1=#{address1},
+			ADDRESS2=#{address2},
+			CREATE_DATE=SYSDATE
+		WHERE NO=#{no}
+	</update>
+	
+	<update id="updateMemberStatus" parameterType="map">
+		UPDATE MEMBER
+		SET
+			STATUS = #{status}
+		WHERE
+			NO = #{no}
+	</update>	
+	
+	<delete id="deleteMember" parameterType="_int">
+		DELETE 
+		FROM MEMBER
+		WHERE NO=#{no}
+	</delete>
 </mapper>
