@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
-import com.hm.forest.board.model.vo.Board;
 import com.hm.forest.common.util.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -44,12 +43,12 @@ public class AdminController {
 		
 		// 관리자페이지_제품관리로 이동
 		@GetMapping("/productMgmt")
-		public ModelAndView AdminMgmt (ModelAndView modlAndView) {
+		public ModelAndView AdminMgmt (ModelAndView modelAndView) {
 			
-			modlAndView.addObject("pageName", "productMgmt");
-			modlAndView.setViewName("page/admin/productMgmt");
+			modelAndView.addObject("pageName", "productMgmt");
+			modelAndView.setViewName("page/admin/productMgmt");
 			
-			return modlAndView;
+			return modelAndView;
 		}
 		
 		// 관리자페이지_제품등록
@@ -90,9 +89,13 @@ public class AdminController {
 
 		    System.out.println(map);
 		    
-		    modelAndView.addObject("pageName", "productMgmt"); // 리다이렉트 URL 설정
-		    modelAndView.setViewName("page/admin/productMgmt");
-
+//		    modelAndView.addObject("pageName", "productMgmtList"); // 리다이렉트 URL 설정
+//		    modelAndView.setViewName("page/admin/productMgmtList");
+//
+//		    return modelAndView;
+		    
+		    modelAndView.setViewName("redirect:/admin/productMgmtList");
+		    
 		    return modelAndView;
 		}
 		
@@ -153,23 +156,36 @@ public class AdminController {
 			return modelAndView;
 		}
 		
-		// 관리자페이지_제품 수정
+		
+		
+		 // ★★★ 관리자페이지_제품 수정
 		 @PostMapping("/productMgmtUpdate")
 		 public ModelAndView update (ModelAndView modelAndView, 
 				 					 @RequestParam("no") int no,
-				 					 @RequestParam("name") String name, 
+				 					 @RequestParam("name") String name,
+				 					 @RequestParam("price") int price,
+				 					 @RequestParam("color") String color,
+				 					 @RequestParam("amount") int amount,
+				 					 @RequestParam("sizeSml") String sizeSml,
 				 					 @RequestParam("content") String content) {
 			 
 			 int result = 0;
 			 Product product = null;
-			 
+	 
 			 product = adminService.getProductBoardByNo(no);
-
-				
+			 
 			 product.setName(name);
+			 product.setPrice(price);
+			 product.setColor(color);
+			 product.setAmount(amount);
+			 product.setSizeSml(sizeSml);
 			 product.setContent(content);
+		
+			 log.info("★ 보드 : {}", product);
 				 
 		     result = adminService.save(product);
+		     
+		
 				 
 				 if ( result > 0 ) {
 					 modelAndView.addObject("msg", "게시글 수정 성공");
@@ -183,6 +199,30 @@ public class AdminController {
 
 				return modelAndView;
 		 }
+		 
+		 // ★★★
+		 @GetMapping("/productMgmtDelete")
+		 public ModelAndView delete(ModelAndView modelAndView,
+				 					@RequestParam int no) {
+			 int result = 0;
+			 Product product = null;
+			 
+			 product = adminService.getProductBoardByNo(no);
+			 result = adminService.delete(product.getNo());
+			 
+			 if (result > 0) {
+					modelAndView.addObject("msg", "게시글이 정상적으로 삭제되었습니다.");
+					modelAndView.addObject("location", "/admin/productMgmtList");			
+				} else {				
+					modelAndView.addObject("msg", "게시글 삭제에 실패하였습니다.");
+					modelAndView.addObject("location", "/admin/productMgmtView?no=" + product.getNo());				
+				}
+			 
+			 modelAndView.setViewName("page/common/msg");
+				
+				return modelAndView;
+		 }
+	
 		
 		
 	

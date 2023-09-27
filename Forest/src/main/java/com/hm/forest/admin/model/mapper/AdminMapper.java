@@ -16,11 +16,13 @@ public interface AdminMapper {
 	int insertProduct(Product product);
 
 	int updateProduct(Product product);
-//	int deleteProduct(Product product);
+
 	
 	List<Product> selectAll(RowBounds bounds);
 	
 	Product selectProductBoardByNo(@Param("no") int no);
+
+	int updateProductStatus(@Param("no") int no, @Param("status") String status);
 
 
 }
