@@ -11,12 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class Member implements UserDetails{
@@ -25,13 +22,10 @@ public class Member implements UserDetails{
 	
 	private int no;
 	
-	@NonNull
 	private String id;
 	
-	@NonNull
 	private String password;
 	
-	@NonNull
 	private String name;
 	
 	private String phone;
@@ -51,7 +45,20 @@ public class Member implements UserDetails{
 	private Date updateDate;
 
 	private String role;
-
+	
+	@Override
+	public String getUsername() {
+		
+		return this.id;
+	}
+	
+	@Override
+	public String getPassword() {
+		
+		return this.password;
+	}
+	
+	// 계정의 권한의 목록을 리턴한다.
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();
@@ -62,32 +69,30 @@ public class Member implements UserDetails{
 	}
 
 	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
+	// 계정 만료 여부
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return true;
 	}
 
 	@Override
+	// 계정 잠김 여부
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
+
+		return true;
 	}
 
 	@Override
+	// 패스워드 만료 여부
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+
+		return true;
 	}
 
 	@Override
+	// 계정 활성화 여부
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+
+		return this.status.equals("Y");
 	}
 }

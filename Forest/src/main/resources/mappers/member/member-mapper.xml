@@ -33,6 +33,7 @@
 		<result property="status" column="STATUS"/>
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="updateDate" column="UPDATE_DATE"/>
+		<result property="role" column="ROLE"/>
 	</resultMap>
 
 	<select id="selectCount" resultType="_int">
@@ -53,7 +54,9 @@
 			   PHONE,
 			   PCODE,
 			   ADDRESS1,
-			   ADDRESS2
+			   ADDRESS2,
+			   STATUS,
+			   ROLE
 		FROM MEMBER 
 		WHERE ID=#{id}
 	</select>
@@ -69,7 +72,8 @@
 			PHONE,
 			PCODE,
 			ADDRESS1,
-			ADDRESS2
+			ADDRESS2,
+			ROLE
 		) VALUES (
 			MEMBER_SEQ.NEXTVAL,
 			#{id},
@@ -79,34 +83,8 @@
 			#{phone},
 			#{pcode},
 			#{address1},
-			#{address2}
+			#{address2},
+			#{role},			
 		)
 	</insert>
-	
-	<update id="updateMember" parameterType="Member">
-		UPDATE MEMBER 
-		SET 
-			NAME=#{name},
-			PHONE=#{phone},
-			EMAIL=#{email},
-			PCODE=#{pcode},
-			ADDRESS1=#{address1},
-			ADDRESS2=#{address2},
-			CREATE_DATE=SYSDATE
-		WHERE NO=#{no}
-	</update>
-	
-	<update id="updateMemberStatus" parameterType="map">
-		UPDATE MEMBER
-		SET
-			STATUS = #{status}
-		WHERE
-			NO = #{no}
-	</update>	
-	
-	<delete id="deleteMember" parameterType="_int">
-		DELETE 
-		FROM MEMBER
-		WHERE NO=#{no}
-	</delete>
 </mapper>
