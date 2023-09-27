@@ -17,13 +17,14 @@
 <!-- Content -->
 <div layout:fragment="content">
    <h5> 여기는 상품 상세보기 페이지 입니다. </h5>
+   <h6>productdetail.html</h6>
    
    <div class="table-div">
 	  <table class="table table table-hover">
 		  <thead>
 		    <tr class="border-bottom" >
 		      <th scope="col" colspan="5" class="th-custom-style">상품
-			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="redirectToWrite('productMgmt')">구매하기</button>
+			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="redirect('productdetail')">구매하기</button>
 			  </th>
 		    </tr>
 		  </thead>
@@ -32,7 +33,7 @@
 		  	    <tr style="text-align: center;">
 					<th>제목</th>
 				</tr>
-				<tr class="clickable-row" style="text-align: center;" th:each="product : ${productlists}" th:attr="data-href=@{/products/productMgmtView?no={no}(no=${product.no})}">
+				<tr class="clickable-row" style="text-align: center;" th:each="product : ${productlist}" th:attr="data-href=@{/products/productdetailview?no={no}(no=${product.no})}">
 			        <td th:text="${product.name}" style="text-align:left; width:60%;"></td>   
 			    </tr>
 

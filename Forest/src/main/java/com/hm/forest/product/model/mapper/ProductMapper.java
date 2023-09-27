@@ -16,7 +16,10 @@ public interface ProductMapper {
 
 	List<Products> selectAll();
 
-	Products selectProductByNo(int no);
+	static List<Products> selectProductByNo(int no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 
