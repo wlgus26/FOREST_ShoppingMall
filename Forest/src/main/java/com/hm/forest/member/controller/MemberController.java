@@ -48,19 +48,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/idCheck")
-	@ResponseBody
-	public Map<String, Boolean> checkDuplicateId(@RequestParam String userId) {
-        boolean isDuplicate = checkIfUserIdIsDuplicate(userId);
-
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("duplicate", isDuplicate);
-
-        return response;
-    }
-
-    private boolean checkIfUserIdIsDuplicate(String userId) {
-        return userId.equals("existingUserId");
-    }
+	public ResponseEntity<Map<String, Boolean>> idCheck(@RequestParam String userId) {
+		Map<String, Boolean> map = new HashMap<>();
+		
+		map.put("duplicate", service.isDuplicateId(userId));
+		
+		return ResponseEntity.ok()
+							 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+							 .body(map);
+	}
 	
 	// 회원 정보 수정
 	// 메소드의 리턴 타입이 void일 경우 Mapping URL을 유추해서 뷰를 찾는다.	

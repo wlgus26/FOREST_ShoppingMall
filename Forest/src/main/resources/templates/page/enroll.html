@@ -13,7 +13,7 @@
 <!-- enroll.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
     <!-- ex)  <script th:src="@{/js/page/enroll.js}"></script>-->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
@@ -54,10 +54,11 @@ function openZipSearch() {
 				        <div class="input-group-append">
 				            <button class="btn btn-outline-secondary" type="button" id="checkDuplicate">아이디 확인</button>
 				        </div>
-				    </div>
-				    <div class="invalid-feedback">
+				        <div class="invalid-feedback">
 				        아이디를 입력해주세요.
+				    	</div>
 				    </div>
+				    
 				</div>
           </div>
           
@@ -123,7 +124,7 @@ function openZipSearch() {
           </div>
           <hr class="mb-4">
           <div class="custom-control custom-checkbox">	
-		    <input type="checkbox" class="custom-control-input checkAll" id="aggrement-all" required>
+		    <input type="checkbox" class="custom-control-input checkAll" id="aggrement-all" value="forest" required>
 		    <label class="custom-control-label" for="aggrement-all" style="font-size:20px; font-weight:bold;">모두 확인하였으며 동의합니다.</label>
 		    <p style="margin-left : 20px; font-size:13px; color:gray;">
 		    전체 동의에는 필수 및 선택 정보에 대한 동의가 포함되어 있으며, 개별적으로 동의를 선택 하실 수 있습니다. 선택 항목에 대한 동의를 거부하시는 경우에도 서비스 이용이 가능합니다.
@@ -155,21 +156,21 @@ function openZipSearch() {
 		    <button type="button" class="icon" id="att4"><img alt="Modal" src="images/icon-right-arrow.png" style="width:20px; height:20px;"></button>
           	</div>
            	<div class="custom-control checkbox">
-		    <input type="checkbox" class="custom-control-input aggrement" id="aggrement6" required>
+		    <input type="checkbox" class="custom-control-input aggrement" id="aggrement6">
 		    <label class="custom-control-label" for="aggrement6">[선택] 마케팅 목적의 개인정보 수집 및 이용 동의</label>
 		    <button type="button" class="icon" id="att5"><img alt="Modal" src="images/icon-right-arrow.png" style="width:20px; height:20px;"></button>
           	</div>
           	<div class="custom-control checkbox">
-		    <input type="checkbox" class="custom-control-input aggrement" id="aggrement7" required>
+		    <input type="checkbox" class="custom-control-input aggrement" id="aggrement7">
 		    <label class="custom-control-label" for="aggrement7">[선택] 광고성 정보 수신 동의</label>
 		    <button type="button" class="icon" id="att6"><img alt="Modal" src="images/icon-right-arrow.png" style="width:20px; height:20px;"></button>
           	</div>
           	<div class="custom-control checkbox" style="margin-left:20px;">
-		    <input type="checkbox" class="custom-control-input aggrement" id="aggrement8" required>
+		    <input type="checkbox" class="custom-control-input aggrement" id="aggrement8">
 		    <label class="custom-control-label" for="aggrement8">[선택] 이메일 수신 동의</label>
           	</div>
-		    <div class="custom-control checkbox" style="margin-left:20px;">
-		    <input type="checkbox" class="custom-control-input aggrement" id="aggrement9" required>
+		    <div class="custom-control checkbox" style="margin-left:20px;"> 
+		    <input type="checkbox" class="custom-control-input aggrement" id="aggrement9">
 		    <label class="custom-control-label" for="aggrement9">[선택] SMS, SNS 수신 동의</label>
           	</div>
           </div>
@@ -1029,6 +1030,54 @@ function openZipSearch() {
 	        }
 	    });
 	});
+  
+  const idInput = document.getElementById('newId');
+  const invalidFeedback = document.querySelector('.invalid-feedback');
+  
+  idInput.addEventListener('input', function() {
+      const idValue = idInput.value.trim();
+      if (idValue.length < 6 || idValue.length > 20) {
+          idInput.classList.add('is-invalid');
+          invalidFeedback.style.display = 'block';
+      } else {
+          idInput.classList.remove('is-invalid');
+          invalidFeedback.style.display = 'none';
+      }
+  });
+  
+  const pass1Input = document.getElementById('pass1');
+  const pass2Input = document.getElementById('pass2');
+  const pass1Feedback = pass1Input.nextElementSibling;
+  const pass2Feedback = pass2Input.nextElementSibling;
+
+  // 비밀번호 유효성 검사 및 비교 함수
+  function validatePassword() {
+      const pass1Value = pass1Input.value.trim();
+      const pass2Value = pass2Input.value.trim();
+
+      // 비밀번호 필드가 비어 있는지 확인
+      if (pass1Value === '') {
+          pass1Input.classList.add('is-invalid');
+          pass1Feedback.style.display = 'block';
+      } else {
+          pass1Input.classList.remove('is-invalid');
+          pass1Feedback.style.display = 'none';
+      }
+
+      // 비밀번호 확인 필드와의 비교
+      if (pass1Value !== pass2Value) {
+          pass2Input.classList.add('is-invalid');
+          pass2Feedback.style.display = 'block';
+      } else {
+          pass2Input.classList.remove('is-invalid');
+          pass2Feedback.style.display = 'none';
+      }
+  }
+
+  // 비밀번호 유효성 검사 및 비교 이벤트 리스너 추가
+  pass1Input.addEventListener('input', validatePassword);
+  pass2Input.addEventListener('input', validatePassword);
+
   </script>
   
 </div>

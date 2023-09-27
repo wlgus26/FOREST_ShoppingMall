@@ -44,10 +44,18 @@
 		WHERE STATUS='Y'
 	</select>	
 	
-	<select id="selectMemberById" 
-			parameterType="string" resultMap="memberResultMap">
-		<include refid="selectMemberSql"/>
-		WHERE ID=#{id} AND STATUS='Y'	
+	<select id="selectMemberById" parameterType="string" resultMap="memberResultMap">
+		SELECT NO,
+			   ID,
+			   PASSWORD,
+			   NAME,
+			   EMAIL,
+			   PHONE,
+			   PCODE,
+			   ADDRESS1,
+			   ADDRESS2
+		FROM MEMBER 
+		WHERE ID=#{id}
 	</select>
 	
 	<insert id="insertMember" parameterType="Member"

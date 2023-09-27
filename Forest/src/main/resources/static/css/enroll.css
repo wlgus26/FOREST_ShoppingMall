@@ -83,3 +83,11 @@ body{
             text-align: left;
             padding: 8px;
         }
+        
+  	.invalid-feedback {
+            display: none; /* ÃÊ±â¿¡ ¼û±è */
+            color: red;
+        }
+        .is-invalid {
+            border-color: red;
+        }   
