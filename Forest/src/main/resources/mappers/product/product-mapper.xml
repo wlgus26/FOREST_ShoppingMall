@@ -40,39 +40,37 @@
 
 	<select id="selectAll" resultMap="productResultMap">
 		SELECT NO,
-			   CATEGORY, 
-			   NAME, 
-			   PRICE, 
-			   CONTENT, 
-			   COLOR,
-               AMOUNT,
-               SIZE_SML,
-               STOCK,
-               COMPANY,
-               DISCOUNTRATE,
-               STATUS,
-               IMAGE,
-               WISH
+		       NAME,
+		       PRICE,
+		       CONTENT,
+		       COLOR,
+		       AMOUNT,
+		       SIZE_SML,
+		       STOCK,
+		       COMPANY,
+		       DISCOUNTRATE,
+		       STATUS,
+		       IMAGE,
+		       WISH
 		FROM PRODUCT
 		WHERE STATUS = 'Y'
 		ORDER BY NO DESC
 	</select>
 	
-	 <select id="selectProductBoardByNo" parameterType="_int" resultMap="productResultMap">
+	 <select id="selectProductByNo" parameterType="_int" resultMap="productResultMap">
 	 	SELECT NO,
-			   CATEGORY, 
-			   NAME, 
-			   PRICE, 
-			   CONTENT, 
-			   COLOR,
-               AMOUNT,
-               SIZE_SML,
-               STOCK,
-               COMPANY,
-               DISCOUNTRATE,
-               STATUS,
-               IMAGE,
-               WISH
+		       NAME,
+		       PRICE,
+		       CONTENT,
+		       COLOR,
+		       AMOUNT,
+		       SIZE_SML,
+		       STOCK,
+		       COMPANY,
+		       DISCOUNTRATE,
+		       STATUS,
+		       IMAGE,
+		       WISH
 		FROM PRODUCT
 		WHERE STATUS = 'Y' AND NO = #{no}
 	 </select>
@@ -94,8 +92,6 @@
 	 FROM PRODUCT 
      WHERE NO = #{no}
 </select>
-
-
 
 
 
