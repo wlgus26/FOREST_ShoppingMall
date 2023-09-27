@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Products> selectProductByNo(int no) {
 		
-		return ProductMapper.selectProductByNo( no);
+		return productmapper.selectProductByNo();
 	}
 
 
