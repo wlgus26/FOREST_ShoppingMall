@@ -3,6 +3,7 @@ package com.hm.forest.board.model.service;
 import java.util.List;
 
 import com.hm.forest.board.model.vo.Board;
+import com.hm.forest.board.model.vo.Reply;
 import com.hm.forest.common.util.PageInfo;
 
 public interface BoardService {
@@ -30,6 +31,9 @@ public interface BoardService {
 
 	// 게시글 조회수 업데이트
 	int updateReadCount(int no);
+
+	// 댓글 등록
+	int save(Reply reply);
 
 
 

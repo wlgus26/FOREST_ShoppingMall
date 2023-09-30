@@ -1,0 +1,238 @@
+@charset "UTF-8";
+
+
+
+
+/* 댓글창 배경 */
+
+
+.cont_comment {
+    padding: 5px 0 29px 0;
+    background-color: #f8f8f8;
+}
+
+.comment_post{
+    padding-right: 100px;
+    padding-bottom: 10px;
+}
+
+.comment_date {
+   color: #959595;
+}
+
+.comment-writer {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.opt_more_g{
+	float: left;
+}    
+
+.btn_g_ico {
+	padding: 1px 0;
+	margin: 0;
+    cursor: pointer;
+    border: 0 none;
+    background-color: rgba(0,0,0,0);
+    vertical-align: top;
+}
+
+.btn_more_menu {
+	background-color: rgba(0,0,0,0);
+}
+
+.ico_bbs {
+	display: inline-block;
+    vertical-align: top;
+    text-indent: -9999px;
+    width: 18px;
+    height: 18px;
+}
+
+.ico_more {
+	background: url(//t1.daumcdn.net/cafe_image/cf_img4/skin/W01/18_more_default.svg);
+	width: 18px;
+    height: 18px;
+}
+
+.reply-text{
+    padding-top: 2.5px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* 댓글 작성란 */
+.CommentWriter {
+    margin: 12px 25px;
+    padding: 16px 10px 10px 18px;
+    border: 2px solid #c8cacc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background: var(--skinCommentWriterBg);
+    background-color: white;
+}
+
+.CommentWriter .comment_inbox {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.blind {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+}
+
+.CommentWriter .comment_inbox_name {
+    display: block;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+textarea.comment_inbox_text[data-v-afadf0bc] {
+    max-height: 500px;
+    border-color: white;
+    font-size: 14px;
+    width: 100%;
+    
+}
+
+.CommentWriter .comment_inbox_number {
+    position: absolute;
+    top: 1px;
+    right: 8px;
+    color: #c8cacc;   
+    font-size:11px;
+}
+
+.comment_inbox_text:focus {
+	outline: none;
+}
+
+.CommentWriter .comment_attach {
+    position: relative;
+    height: 35px;
+}
+
+.CommentWriter .attach_box {
+    float: left;
+    padding-top: 10px;
+}
+
+.CommentWriter .attach_box .button_file {
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 1px;
+    margin-right: 16px;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.CommentWriter .attach_box .button_file .ico-post-photo-323232 {
+    width: 18px;
+}
+.CommentWriter .attach_box .svg-icon {
+    height: 17px;
+    vertical-align: top;
+}
+.CommentWriter .comment_attach .svg-icon {
+    color: var(--skinText323232);
+}
+.svg-icon {
+    pointer-events: none;
+}
+
+svg:not(:root) {
+    overflow-clip-margin: content-box;
+    overflow: hidden;
+}
+
+.CommentWriter .attach_box .button_sticker {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.CommentWriter .attach_box .button_sticker .ico-post-sticker-323232 {
+    width: 17px;
+}
+.CommentWriter .attach_box .svg-icon {
+    height: 17px;
+    vertical-align: top;
+}
+.CommentWriter .comment_attach .svg-icon {
+    color: var(--skinText323232);
+}
+.svg-icon {
+    pointer-events: none;
+}
+
+svg:not(:root) {
+    overflow-clip-margin: content-box;
+    overflow: hidden;
+}
+
+.CommentWriter .register_box {
+    float: right;
+}
+
+.CommentWriter .register_box .button {
+    display: inline-block;
+    min-width: 46px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 13px;
+    color:  #0f5132;
+    border-radius: 6px;
+    padding-top: 0;
+    background-color: #e3f4e9;
+    box-sizing: border-box;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: top;
+}
+
+.comment_type{
+	text-align: center;
+	background-color: #fff;
+	border-radius: 3px;
+	font-size: 13.5px;
+	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.modify_comment, .delete_comment {
+	text-decoration: none;
+    padding: 7px 12px;
+   
+}
+.opt_container {
+	display:block;
+	padding-right: 18px;
+}
+
+.menu_item{
+	padding: 5px 0;
+}
+
+.menu_item > a:hover {
+	cursor: pointer;
+	background-color: #c0c0c0;
+    color: black;
+}
+
+.comment-img {
+	width: 35px;
+	height: 35px;
+	float: left;
+	margin-top: 13px;
+	margin-right: 8px;
+	border: 1px solid;
+	border-radius: 100%;
+}
+
+
+
+

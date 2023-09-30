@@ -1,24 +1,33 @@
 package com.hm.forest.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.board.model.service.BoardService;
 import com.hm.forest.board.model.vo.Board;
+import com.hm.forest.board.model.vo.Reply;
 import com.hm.forest.common.util.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 
 @Slf4j
@@ -33,7 +42,7 @@ public class BoardController {
 		 public ModelAndView FindAll(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,
 				 				 	 @RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String keyWord) {
 			 
-			 log.info("■검색 값: {}, {}", searchType, keyWord);
+			 // log.info("■검색 값: {}, {}", searchType, keyWord);
 			 
 			 String type = "notice";
 			 int listCount = 0;
@@ -265,6 +274,28 @@ public class BoardController {
 			modelAndView.setViewName("page/common/msg");
 			
 			return modelAndView;
+		}
+		
+		// 댓글 등록
+		@ResponseBody
+		@PostMapping("/reply/enroll")
+		public ResponseEntity<Map<String, Object>> enroll(@RequestBody Reply reply)  {
+			int result = 0;
+			
+			System.out.println(reply);
+			
+			
+			Map<String, Object> map = new HashMap<>();
+			
+			result = boardService.save(reply);
+			
+			map.put("resultCode", result);
+			map.put("reply", reply);
+			
+			log.info("■■결과 {}", result);
+			log.info("■■댓글 {}", reply);
+			
+			return ResponseEntity.ok(map);
 		}
 		
 }

@@ -4,6 +4,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 
+<meta th:name="_csrf_header" th:content="${_csrf.headerName}">
+<meta th:name="_csrf" th:content="${_csrf.token}">
+
 <th:block th:with="pageName='boardView'"></th:block>      
 <style>
 tbody > tr {
@@ -11,7 +14,7 @@ tbody > tr {
 }
 </style>
 <th:block layout:fragment="css">
-    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/view.css}" >-->
+    <link rel="stylesheet" th:href="@{/css/view.css}" >
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </th:block>
 <!-- view.html 고유 스크립트 추가 -->
@@ -81,11 +84,13 @@ tbody > tr {
 					<th>조회</th>
 					<td style="text-align: left;" th:text="${board.readCount}"></td>
 				</tr>
+				<!-- 댓글이 없는 페이지의 경우 출력 화면 -->
+				<th:block th:unless="${board.type == 'community' or board.type == 'qna'}">
 				<tr>
-					<td colspan="6" style="padding-left: 50px;" th:text="${board.content}"></td>
+					<td colspan="6" style="padding: 30px 50px; border-color: white;" th:utext="${board.content}"></td>
 				</tr>
 				<tr style="text-align: center;">
-					<td colspan="6">
+					<td colspan="6" style="border-color: white;">
 					 <!-- 게시판 type에 따라 해당 게시판 목록으로 이동 -->
 				       <th:block th:if="${board.type eq 'notice'}">
 					        <input type="button" onclick="redirectToBoard('notice')" value="목록으로">
@@ -95,12 +100,229 @@ tbody > tr {
 					   </th:block>
 					</td>
 				</tr>
+				</th:block>
+				
+				<!-- 댓글이 있는 페이지의 경우 출력 화면(자유게시판, 1:1문의게시판) -->
+				<th:block th:if="${board.type == 'community' or board.type == 'qna'}">
+				<tr>
+					<td colspan="6" style="padding: 30px 50px; border-color: white;" th:utext="${board.content}"></td>
+				</tr>
+				<tr>
+					<td colspan="6" style="padding-top: 40px;">
+						<div class="cont_recommendation area_btn_g">
+							<div class="area_l">
+							<button id="comment-btn" type="button" class="btn_g" style="font-size: 13px;">댓글<span class="txt_num">3</span></button>
+							<!-- todo: 추천된 상태일 때 ico_on 추가 -->
+							<button id="recommend-btn" type="button" class="btn_g" onclick="recommendBBS('1IHuH', 'Lp0T', '154811027', '0', true,  true, 'subdued20club', '%EC%9B%90%EB%9E%98+%EA%B5%AD%EB%AC%BC%EB%8B%AD%EB%B0%9C%EC%9D%80+%EC%A2%80+%EB%8B%A8%EB%A7%9B%EC%9D%B4+%EC%9E%88%EB%8A%94+%ED%8E%B8%EC%9D%B4%EC%95%BC%3F');" style="font-size: 13px;"><!--<span class="ico_bbs ico_heart"></span>-->추천해요<span class="txt_num">0</span></button>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+				<!-- 댓글조회 -->
+				<td style="padding:0; border-color: white;" colspan="6">
+				    <div id="comment-list" class="cont_comment">
+				        <div class="comment_view" id="comment_view">
+				            <ul class="list_comment">
+				            <li th:each="reply : ${board.replies}" style="position: relative;" >
+				            <a href="/ca-fe/cafes/29835300/members/THfl0mVpfhbkS01d638PeA" class="comment_thumb">
+						       <img src="/images/BasicProfile.png" alt="프로필 사진" class="comment-img">
+    						</a>
+						        <div class="comment_post" id="comment_post">
+						       		<!-- 댓글 작성자 Id -->
+						            <sub id="writerId" class="comment-writer" th:text="${reply.writerId}"></sub>
+						            <!-- 댓글 작성일시 <th:block th:if="${reply.modifyDate} == null"> -->
+						            
+						            <sub id="createDate" class="comment-date" th:text="${#dates.format(reply.createDate, 'yy/MM/dd hh:mm')}"></sub>
+						          
+						            <br>
+						            <!-- 댓글 내용 -->
+						            <span class="reply-text" th:text="${reply.content}"></span>
+						            <!-- 더보기 버튼 -->
+						            <div class="opt_more_g" style="position: absolute; top: 10px; right: 20px;">
+							            <div id="more-menu-container" class="opt_container" style="display: none; top: 1343.44px; left: 1052.27px;">
+											<div class="opt_more_g open_layer">
+												<div class="box_opt_menu comment_type" data-target-element-id="_cmt-7557883-39">
+													<div class="menu_item">
+														<a href="#" class="link_menu modify_comment">수정</a>
+													</div>
+													<div class="menu_item">
+														<a href="#" class="link_menu delete_comment">삭제</a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<button type="button" class="btn_g_ico btn_more_menu" data-target-element-id="_cmt-154812545-2" data-modifiable="true" data-removable="true" data-reportable="false" data-comment-rolecode="27" data-content-type="COMMENT"  onclick="toggleMoreMenu(this)">
+										<span class="ico_bbs ico_more">더보기</span>
+										</button>
+									</div>
+						        </div>
+						            <!--  
+						            <th:block th:if="${#authorization.expression('not empty loginMember && (loginMember.id == reply.writerId)')}">
+						                <button type="button" th:href="@{/board/update/reply(no=${reply.no})}">수정</button>
+						            </th:block>
+						            <th:block th:if="${#authorization.expression('not empty loginMember && (loginMember.id == reply.writerId || loginMember.id == ''admin'')')}">
+						                <button type="button" th:href="@{/board/delete/reply(no=${reply.no})}">삭제</button>
+						            </th:block>
+						            --> 
+						  	 </li>
+				              <!--   <li th:each="reply : ${board.replies}"  
+				                    th:class="${reply.hidden} ? 'hidden' : ''" 
+				                    th:attr="data-seq=${reply.seq}, data-parseq=${reply.parseq}, data-is-hidden=${reply.hidden}, data-nickname=${reply.nickname}, data-image-url=${reply.imageUrl}, data-image-size=${reply.imageSize}, data-is-emoticon=${reply.emoticon}">
+				                    <div class="comment_section">
+				                     프로필 있는 경우 
+				                        <div class="profile_thumb">
+				                            <img th:src="${reply.imageUrl}" alt="" width="36" height="36" class="img_thumb">
+				                        </div> 
+				                     
+				                        <div class="comment_info">
+				                            <div class="comment_post">
+				                                <div class="profile_info">
+				                                    <div class="opt_more_g">
+				                                        <img class="ico_role" th:src="${reply.roleIcon}" alt="">
+				                                        <a href="javascript:" th:data-grpid="${reply.grpid}" 
+				                                           th:data-rolecode="${reply.roleCode}" 
+				                                           th:data-nickname="${reply.nickname}" 
+				                                           th:data-is-mine="${reply.isMine}" 
+				                                           th:data-enc-userid="${reply.encryptedUserId}" 
+				                                           class="txt_name" th:text="${reply.nickname}">머머락우</a>
+				                                    </div>
+				                                    <span class="txt_date" tabindex="0" th:text="${#dates.format(reply.date, 'HH:mm')}">11:01</span>
+				                                    <span class="ico_bbs ico_new" tabindex="0" th:if="${reply.new}">새글</span>
+				                                </div>
+				                                <div class="box_post">
+				                                    <p class="desc_info">
+				                                        <span class="first_comment" tabindex="0" th:text="${reply.firstComment}">첫댓글</span>
+				                                        <span class="original_comment" tabindex="0" th:text="${reply.originalComment}">요즘은 다 떡볶이 국물 느낑이더라ㅇㅇ</span>
+				                                    </p>
+				                                </div>
+				                                <div th:id="'_cmt_button-' + ${reply.seq}" class="comment_more">
+				                                    <a href="javascript:" class="link_write">답글</a>
+				                                                                    
+				                                    <div class="opt_more_g">
+				                                        <button type="button" class="btn_g_ico btn_more_menu" 
+				                                                th:data-target-element-id="'_cmt-' + ${reply.seq}" 
+				                                                th:data-modifiable="false" 
+				                                                th:data-removable="false" 
+				                                                th:data-reportable="true" 
+				                                                th:data-comment-rolecode="${reply.commentRoleCode}" 
+				                                                th:data-content-type="COMMENT">
+				                                            <span class="ico_bbs ico_more">기능 더보기</span>
+				                                        </button>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </li> -->
+				            </ul> 
+				        </div>
+				        
+				        <!-- 댓글 등록  -->
+				        <form id="enrollForm">
+				        <!-- 댓글 입력 박스 -->
+				        <div data-v-afadf0bc="" class="CommentWriter">
+					        <div data-v-afadf0bc="" class="comment_inbox" >
+						        <strong data-v-afadf0bc="" class="blind">댓글을 입력하세요</strong>
+						        <em class="comment_inbox_name">로그인유저 아이디</em>
+						        <textarea data-v-afadf0bc="" id="commentTextarea" placeholder="댓글을 남겨보세요" rows="1" class="comment_inbox_text" style="overflow: hidden; overflow-wrap: break-word;"></textarea>
+					        	<div data-v-afadf0bc="" class="comment_inbox_number"><span data-v-afadf0bc="" class="blind">현재 입력한 글자수</span>
+						        	<strong data-v-afadf0bc="" class="inbox_count" min="0"></strong>
+						        	<span data-v-afadf0bc="" class="inbox_total">/</span>
+						        	<span data-v-afadf0bc="" class="blind">전체 입력 가능한 글자수</span>
+						        	<span data-v-afadf0bc="" class="inbox_total">2000</span>
+					        	</div>
+					      	</div>
+						
+						<!-- 댓글 사진 첨부 및 등록 버튼 -->
+				        <div data-v-afadf0bc="" class="comment_attach">
+					        <div data-v-afadf0bc="" class="attach_box">
+						        <label data-v-2ec5a274="" data-v-afadf0bc="" for="attach3" class="button_file">  
+						        <svg data-v-2ec5a274="" aria-label="사진첨부" class="svg-icon ico-post-photo-323232">
+						        <use data-v-2ec5a274="" xlink:href="#ico-post-photo-323232" aria-hidden="false"></use>
+						        </svg>
+						    </div> 
+							<div data-v-afadf0bc="" class="register_box">
+								 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+								 <input type="hidden"  th:value="${_csrf.headerName}" />
+ 								<input type="hidden" id="boardNo" th:value="${board.no}">
+ 								<input type="hidden" id="writerNo" th:value="${board.writerNo}">
+								<a data-v-afadf0bc="" type="button" id="btinReplyEnroll" class="button btn_register btn-custom1 btn-sm btn-outline-custom1">등록</a>
+							</div>
+						</div>
+						</div>
+						</form>
+				    </div>
+				</td>
+
+				<tr style="text-align: center;">
+					<td colspan="6" style="border-color: white;">
+					 <!-- 게시판 type에 따라 해당 게시판 목록으로 이동 -->
+				       <th:block th:if="${board.type eq 'notice'}">
+					        <input type="button" onclick="redirectToBoard('notice')" value="목록으로">
+					   </th:block>
+					   <th:block th:if="${board.type eq 'community'}">
+					        <input type="button" onclick="redirectToBoard('community')" value="목록으로">
+					   </th:block>
+					</td>
+				</tr>
+				
+				<!-- 댓글 조회 기존 사항 
+				<table id="tbl-comment">
+				    <tr th:each="reply : ${board.replies}">
+				        <td>
+				            <sub class="comment-writer" th:text="${reply.writerId}"></sub>
+				            <sub class="comment-date" th:text="${#dates.format(reply.createDate, 'yyyy-MM-dd hh:mm')}"></sub>
+				            <br>
+				            <span th:text="${reply.content}"></span>
+				        </td>
+				        <td>
+				            <button type="button">수정</button>
+				            <button type="button">삭제</button>-->
+				            <!--  
+				            <th:block th:if="${#authorization.expression('not empty loginMember && (loginMember.id == reply.writerId)')}">
+				                <button type="button" th:href="@{/board/update/reply(no=${reply.no})}">수정</button>
+				            </th:block>
+				            <th:block th:if="${#authorization.expression('not empty loginMember && (loginMember.id == reply.writerId || loginMember.id == ''admin'')')}">
+				                <button type="button" th:href="@{/board/delete/reply(no=${reply.no})}">삭제</button>
+				            </th:block>
+				            
+				        </td>
+				    </tr>
+				</table>-->
+				
+											
+				<!-- 댓글 작성 
+				<div id="comment-container">
+				    <div class="comment-editor">
+				        <form th:action="@{/board/reply}" method="POST">
+				            <input type="hidden" name="boardNo" th:value="${board.no}">
+				            <textarea name="content" id="replyContent" cols="55" rows="3"></textarea>
+				            <button type="submit" id="btn-insert">등록</button>
+				        </form>
+				    </div>
+				</div>
+				
+				
+				
+				<tr style="text-align: center;">
+					<td colspan="6">
+				       <th:block th:if="${board.type eq 'notice'}">
+					        <input type="button" onclick="redirectToBoard('notice')" value="목록으로">
+					   </th:block>
+					   <th:block th:if="${board.type eq 'community'}">
+					        <input type="button" onclick="redirectToBoard('community')" value="목록으로">
+					   </th:block>
+					</td>
+				</tr>-->
+				
+				
 		  </tbody>
 	  </table>
 	</div>
 	
+	<!-- 목록으로 버튼 클릭 시, 게시판 타입에 따라 이동 -->
 	<script>
-		// 목록으로 버튼 클릭 시, 게시판 타입에 따라 해당 게시판 목록으로 이동
 		function redirectToBoard(type){
 			window.location.href = '/board/' + type;
 		}
@@ -112,6 +334,161 @@ tbody > tr {
 		myModal.addEventListener('shown.bs.modal', function () {
 		  myInput.focus()
 		});
+		
+		 // textarea 엘리먼트에 id "commentTextarea"를 사용하여 참조
+	    var textarea = document.getElementById('commentTextarea');
+
+	    var handleResizeHeight = () => {
+	        textarea.style.height = 'auto'; // height 초기화
+	        textarea.style.height = textarea.scrollHeight + '10px';
+	    };
+
+	    // 초기 호출 및 입력 이벤트 리스너 추가
+	    handleResizeHeight();
+	    textarea.addEventListener('input', handleResizeHeight);
+	    
+	    
+	    
+	    // 더보기 버튼 클릭 시 메뉴를 토글하는 함수
+	    function toggleMoreMenu(button) {
+	        var moreMenuContainer = document.getElementById('more-menu-container');
+	        
+	        // 메뉴를 표시하거나 숨김
+	        if (moreMenuContainer.style.display === 'block') {
+	            moreMenuContainer.style.display = 'none';
+	        } else {
+	            // 버튼 위치에 따라 메뉴를 배치하고 표시
+	            var buttonRect = button.getBoundingClientRect();
+	            moreMenuContainer.style.top = buttonRect.bottom + '100px';
+	            moreMenuContainer.style.left = buttonRect.left + '10px';
+	            moreMenuContainer.style.display = 'block';
+	        }
+	    }
+
 	</script>
+	
+	<!-- textarea에 댓글 작성 시, 글자수 카운트해서 화면에 출력 -->
+    <script>
+	    // textarea id "commentTextarea"를 사용하여 참조
+	    var textarea = document.getElementById('commentTextarea');
+	    var inboxCountElement = document.querySelector('.inbox_count');
+	    
+	    var handleTextareaInput = function() {
+	        // textarea에 입력된 텍스트 길이 가져오기
+	        var textLength = textarea.value.length;
+	        
+	        // 텍스트 길이가 0인 경우에는 0으로 표시, 그 외에는 텍스트 길이로 업데이트
+	        inboxCountElement.textContent = (textLength === 0) ? '0' : textLength;
+	    };
+	
+	    // 초기 호출
+	    handleTextareaInput();
+	    
+	    // 입력 이벤트 리스너 추가
+	    textarea.addEventListener('input', handleTextareaInput);
+	</script>
+	
+	<!-- textarea에 입력되는 글자 수 제한(2000자) -->
+	<script>
+	// textarea id "commentTextarea"를 사용하여 참조
+	var textarea = document.getElementById('commentTextarea');
+
+	// 텍스트 입력 이벤트 리스너 추가
+	textarea.addEventListener('input', function () {
+	    // 입력된 텍스트 길이를 가져옴
+	    var textLength = textarea.value.length;
+	    
+	    // 최대 길이를 2000으로 설정
+	    var maxLength = 2000;
+
+	    // 현재 입력된 길이가 최대 길이를 초과하면 텍스트를 최대 길이까지 자릅니다.
+	    if (textLength > maxLength) {
+	        textarea.value = textarea.value.substring(0, maxLength);
+	        textLength = maxLength;
+	    }
+
+	    // 글자 수를 화면에 표시합니다.
+	    inboxCountElement.textContent = textLength;
+	});
+	</script>
+	
+	<!-- textarea 자동 높이 조절 -->
+	<script>
+		var textarea = document.getElementById('commentTextarea');
+		var defaultHeight = textarea.style.height; // 초기 높이 저장
+	
+		textarea.addEventListener('input', function () {
+		    var target = event.target;
+	
+		    // 현재 스크롤 높이 계산 & 설정
+		    target.style.height = defaultHeight; // 초기 높이로 리셋
+		    target.style.height = (target.scrollHeight) + 'px';
+		});
+	</script>
+	
+	<!-- 댓글 등록 시, 비동기 요청 Ajax 통신 -->
+	<script>
+		<!-- csrf 토큰을 JavaScript 변수로 저장 -->
+	    var csrfToken = '[[${_csrf.token}]]';
+	    var csrfHeader = '[[${_csrf.headerName}]]';
+    
+	    $(document).ready(function () {
+	        $('#btinReplyEnroll').click(function () {
+	            var boardNo = $('#boardNo').val();
+	            var writerNo = $('#writerNo').val();
+	            var content = $('#commentTextarea').val();
+	            var createDate = $('#createDate').val();
+	            var modifyDate = $('#modifyDate').val();
+	            
+	            // 댓글 객체 형성
+	            var reply = {
+	                boardNo,
+	                writerNo,
+	                content,
+	                createDate,
+	                modifyDate
+	            };
+	            
+	            // AJAX POST 요청
+	            $.ajax({
+	                type: 'POST',
+	                url: '/board/reply/enroll',
+	                contentType: 'application/json',
+	                data: JSON.stringify(reply),
+	                beforeSend: function(xhr) {
+		                // CSRF 토큰을 헤더에 설정
+		                xhr.setRequestHeader(csrfHeader, csrfToken);
+		            },
+	                success: function (obj) {
+	                	// 성공 시 처리할 내용
+	                    console.log('댓글이 성공적으로 제출되었습니다:', obj);
+	                	let reply = obj.reply;
+	                    
+	                    // 댓글 데이터를 화면에 추가
+	                    var newComment = '<li>' + 
+	                        '<sub class="comment-writer">' + reply.writerId + '</sub>' +
+	                        '<sub class="comment-date">' + reply.createDate + '</sub><br>' +
+	                        '<span>' + reply.content + '</span>' +
+	                        '<button type="button">수정</button>' +
+	                        '<button type="button">삭제</button>' +
+	                        '</li>';
+	                        
+	                   
+	                    
+	                    // 댓글 목록을 감싸는 ul 요소에 새로운 댓글을 추가
+	                    $('#comment_view ul').append(newComment);
+	                    
+	                    // 댓글 작성 후 텍스트 에어리어를 비워줍니다.
+	                    $('#commentTextarea').val('');
+	                },
+	                error: function (error) {
+	                    // 오류 시 처리할 내용
+	                    console.error('댓글 제출 중 오류 발생:', error);
+	                },
+	            });
+	        });
+	    });
+	</script>
+
 </div>
 </html>

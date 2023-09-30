@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.RowBounds;
 
 import com.hm.forest.board.model.vo.Board;
+import com.hm.forest.board.model.vo.Reply;
 import com.hm.forest.common.util.PageInfo;
 
 @Mapper
@@ -42,6 +43,9 @@ public interface BoardMapper {
 
 	// faq 게시판 글 목록 조회
 	List<Board> selectFAQListsByType(@Param("type") String type);
+
+	// 댓글 등록
+	int insertReply(Reply reply);
 
 
 
