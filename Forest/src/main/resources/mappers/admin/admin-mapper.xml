@@ -24,41 +24,42 @@
 
 	<insert id="insertProduct" parameterType="Product">
 
-	<selectKey resultType="_int" keyProperty="no" order="BEFORE">
-	SELECT SEQ_PD_NO.NEXTVAL FROM DUAL
-	</selectKey>
+
+	  <selectKey resultType="_int" keyProperty="no" order="BEFORE">
+	  SELECT SEQ_PD_NO.NEXTVAL FROM DUAL
+	  </selectKey>
 	
-	INSERT INTO PRODUCT (
-			NO, 
-			CATEGORY,
-			NAME, 
-			PRICE, 
-			CONTENT, 
-			COLOR, 
-			AMOUNT, 
-			SIZE_SML, 
-			STOCK, 
-			COMPANY, 
-			DISCOUNTRATE, 
-			STATUS, 
-			IMAGE, 
-			WISH
-		) VALUES (
-			#{no},
-			#{category}, 
-			#{name}, 
-			#{price}, 
-			#{content}, 
-			#{color}, 
-			#{amount}, 
-			#{sizeSml}, 
-			#{stock}, 
-			#{company}, 
-			#{discountrate}, 
-			#{status}, 
-			#{image}, 
-			#{wish}
-		)
+		INSERT INTO PRODUCT (
+				NO, 
+				CATEGORY,
+				NAME, 
+				PRICE, 
+				CONTENT, 
+				COLOR, 
+				AMOUNT, 
+				SIZE_SML, 
+				STOCK, 
+				COMPANY, 
+				DISCOUNTRATE, 
+				STATUS, 
+				IMAGE, 
+				WISH
+			) VALUES (
+				#{no},
+				#{category}, 
+				#{name}, 
+				#{price}, 
+				#{content}, 
+				#{color}, 
+				#{amount}, 
+				#{sizeSml}, 
+				#{stock}, 
+				#{company}, 
+				#{discountrate}, 
+				#{status}, 
+				#{image}, 
+				#{wish}
+			)
 </insert>
 
 <select id="selectProductBoardCount" resultType="_int">
@@ -105,31 +106,46 @@
 		WHERE STATUS = 'Y' AND NO = #{no}
 	 </select>
 	 
-	 
 	 <update id="updateProduct" parameterType="Product">
 		UPDATE PRODUCT
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="name != null">
-				Name=#{name},
+				NAME=#{name},
+			</if>
+			<if test="category != null">
+				CATEGORY=#{category},
+			</if>
+			<if test="price != null">
+				PRICE=#{price},
 			</if>
 			<if test="content != null">
 				CONTENT=#{content},
 			</if>
-			<if test="originalFilename != null">
-				ORIGINAL_FILENAME=#{originalFilename},			
+			<if test="color != null">
+				color=#{color},
 			</if>
-			<if test="renamedFilename != null">			
-				RENAMED_FILENAME=#{renamedFilename},
+			<if test="amount != null">
+				AMOUNT=#{amount},
+			</if>
+			<if test="sizeSml != null">
+				SIZE_SML=#{sizeSml},
+			</if>
+			<if test="stock != null">
+				STOCK=#{stock},
+			</if>
+			<if test="status != null">
+				STATUS=#{status},
 			</if>
 		</trim>			
 		WHERE NO=#{no}
 	</update>
 	
 
-	<delete id="deleteProduct" parameterType="_int">
-		DELETE 
-		FROM PRODUCT 
-		WHERE NO=#{no}
+	<delete id="updateProductStatus" parameterType="map">
+		UPDATE PRODUCT 
+		SET
+			STATUS = #{status}
+		WHERE NO = #{no}
 </delete>
 
 </mapper>

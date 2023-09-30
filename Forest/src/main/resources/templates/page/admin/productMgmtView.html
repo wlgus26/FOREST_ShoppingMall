@@ -35,29 +35,31 @@
 </th:block>
 
 <!-- Content -->
-<div layout:fragment="content">
 
-<form class="container">
+<div layout:fragment="content">
+<form>
 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
 
 <div class="table-div">
   <table class="table">
 	  <thead>
 	    <tr class="border-bottom" >
 	      <th scope="col" colspan="2" class="th-custom-style" style="border-bottom-width: 3px; 
-				border-bottom-color: #082f1c;
-				color: #082f1c;">제품 상세 보기</th>
+				border-bottom-color: #082f1c; color: #082f1c;">제품 상세 보기
+		  </th>
 	    </tr>
-	  </thead>
-	  
+	  </thead> 	
 	  <tbody>
-		  <th>카테고리</th>
-	      <tr th:block th:with="numValue=${product.category == 'kitchen' ? '주방' : 
-                                      (product.category == 'style' ? '패션' : 
-                                      (product.category == 3 ? '친환경키트' : ''))}">
-	      </tr>
-	      <td style="text-align: left;" th:text="${numValue}"></td>
-	    </tr>
+	    <tr>
+    		<th>카테고리</th>
+	    	<td style="text-align: left;">
+	        	<span th:if="${product.category == 'kitchen'}">주방</span>
+	        	<span th:if="${product.category == 'style'}">패션</span>
+	        	<span th:if="${product.category == 'kit'}">친환경키트</span>
+	    	</td>
+		</tr>
+	 
 	    <tr>
 	      <th>제품명</th>
 	      <td style="text-align: left;" th:text="${product.name}"></td>
@@ -80,7 +82,7 @@
 	    </tr>
 	    <tr>
 	      <th>설명</th>
-	      <td style="text-align: left;" th:utext="${product.content}"></td>
+	      <td  rows="3" cols="100" resize="none" class="editor" style="text-align: left;" th:utext="${product.content}"></td>
 	    </tr>
 	    <tr>
 	      <th>대표이미지</th>
@@ -90,15 +92,46 @@
 	      <th>상세이미지</th>
 	      <td></td>
 	    </tr>
-	    <th>판매상태</th>
-	      <td style="text-align: left;" th:text="${product.status}"></td>
-	    </tr>
+	    <!-- 
+	       <tr>
+    		<th>판매상태</th>
+	    	<td style="text-align: left;">
+	        	<span th:if="${product.status == 'Y'}">판매중</span>
+	        	<span th:if="${product.status == 'N'}">품절</span>
+	    	</td>
+		</tr>
+	     -->
 	    <tr>
 	      <th></th>
 	      <td>
 		      <a class="btn btn-sm btn-outline-secondary" type="button" th:href="@{'/admin/productMgmtUpdate?no=' + ${product.no}}">수정</a>
-			  <button type="button" id="btnDelete">삭제</button>
-		      <input type="reset" value="취소">
+			  
+			  <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				  삭제
+				</button>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">
+				       				</h5>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body text-center" style="height:100px;">
+					      <i id="remember-me-icon" class="far fa-check-circle"></i>
+							<br> 
+						  게시글을 삭제하시겠습니까?
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-md btn-outline-secondary" data-bs-dismiss="modal">취소</button>
+				        <a type="button" class="btn btn-md btn-primary" th:href="@{'/admin/productMgmtDelete?no=' + ${product.no}}">삭제</a>
+			         </div>
+				    </div>
+				  </div>
+				</div>
+		      <a class="btn btn-sm btn-outline-secondary" type="button" th:href="@{productMgmtList}">취소</a>
 	      </td>
 	      </tr>
 	  </tbody>
@@ -122,27 +155,6 @@
 	});
 </script>
 <script>
-  $('#btnInsert').click(function(e) {
-        e.preventDefault(); 
-
-        var formData = $('form').serialize();
-
-        $.ajax({
-            type: 'POST',
-            url: '/admin/productMgmt/insert',
-            data: formData,
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.error(error);
-            }
-        });
-    });
-
-</script>
-	
-	<script>
 		// 모달 창 
 		var myModal = document.getElementById('myModal')
 		var myInput = document.getElementById('myInput')

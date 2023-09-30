@@ -19,10 +19,6 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	@Transactional
 	public int save(Product product) {
-//		int result = 0;
-//		result = adminMapper.insertProduct(product);
-//		return result;
-		
 		int result = 0;
 		
 		if (product.getNo() > 0) {
@@ -36,20 +32,6 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
-//	@Override
-//	public int delete(Product product) {
-//		int result = 0;
-//		
-//		result = adminMapper.deleteProduct(product);
-//		return 0;
-//	}
-
-
-	@Override
-	public int delete(Product product) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int getProductBoardCount() {
@@ -71,6 +53,13 @@ public class AdminServiceImpl implements AdminService {
 	public Product getProductBoardByNo(int no) {
 		
 		return adminMapper.selectProductBoardByNo(no);
+	}
+
+
+	@Override
+	public int delete(int no) {
+		
+		return adminMapper.updateProductStatus(no, "N");
 	}
 
 

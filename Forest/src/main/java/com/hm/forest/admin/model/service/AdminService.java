@@ -9,7 +9,7 @@ public interface AdminService {
 	
 	int save(Product product);
 
-	int delete(Product product);
+	int delete(int no);
 
 	// 제품목록 리스트 
 	int getProductBoardCount();
@@ -17,6 +17,7 @@ public interface AdminService {
 	List<Product> getProductBoardList(PageInfo pageInfo);
 
 	Product getProductBoardByNo(int no);
+
 
 	
 
