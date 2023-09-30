@@ -19,11 +19,20 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	@Transactional
 	public int save(Product product) {
+//		int result = 0;
+//		result = adminMapper.insertProduct(product);
+//		return result;
+		
 		int result = 0;
 		
-		result = adminMapper.insertProduct(product);
+		if (product.getNo() > 0) {
+			// update
+			result = adminMapper.updateProduct(product);
+		} else {
+			// insert
+			result = adminMapper.insertProduct(product);
+		}
 
-		
 		return result;
 	}
 
@@ -63,9 +72,6 @@ public class AdminServiceImpl implements AdminService {
 		
 		return adminMapper.selectProductBoardByNo(no);
 	}
-
-	
-	
 
 
 }

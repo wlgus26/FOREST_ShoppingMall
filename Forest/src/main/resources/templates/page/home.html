@@ -71,9 +71,9 @@
         #camp > li > a > span {
             position:absolute; left:50%; color:#0e0d0d; line-height:1em; white-space:nowrap; transform:translate(-50%, 0)
         }
-        #content1{margin-left: 360px;}
-        #content2{margin-left: 250px;}
-        #content3{margin-left: 200px;}
+        #content1{justify-content: center;}
+        #content2{}
+        #content3{}
         #content4{}
 		
 		/* Apply left padding to all li elements */
@@ -161,10 +161,10 @@
 
 
 <!-- Content -->
-<div layout:fragment="content">
+<div layout:fragment="content" style="width: 75%; margin: auto;">
    <div style="align-content: center;">
         <div id="content1">
-            <ul id="navi">
+            <ul id="navi" >
                 <li><a href="/program"><img src="../images/home1.PNG"><span>원데이 클래스</span></a></li>
                 <li><a href="/program"><img src="../images/home1.PNG"><span>참여형 클래스</span></a></li>
                 <li><a href="/products/kitchen"><img src="../images/home1.PNG"><span>제품보기</span></a></li>
@@ -194,7 +194,7 @@
                 
             </ul>
         </div>
-	<div class="swiper-container" style="background-color: lightyellow; padding-bottom: 20px;">
+	<div class="swiper-container" style="background-color: lightyellow; padding-bottom: 20px; width: 100%;">
     <h4 id="tt" style="color: rgb(5, 71, 5); margin-top: 150px; text-align: center; padding-top: 50px;">진행 중인 캠페인</h4>
     <p style="text-align: center;">건강한 지구를 만들기 위한 자원 순환 캠페인</p>
     <div class="swiper-wrapper" style="margin-top: 150px;">
@@ -202,39 +202,40 @@
         <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/aesop">
                 <span style="text-align: center;">신세계인터내셔날 S.I 뷰티 캠페인 <br> 화장품 공병 수거 캠페인</span><br>
-                <img src="../images/home14.PNG" style="width: 500px; height: 500px;">
+                <img src="../images/home14.PNG" style="width: 400px; height: 500px;">
             </a>
         </div>
+        <!-- Add the additional slides with the provided content -->
+        <!-- Modify the following lines to add or remove slides as needed -->
         <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/biotherm">
                 <span style="text-align: center;">비오템 <br> 화장품 공병 재활용 캠페인</span>
-                <img src="../images/home15.PNG" style="width: 500px; height: 500px;">
+                <img src="../images/home15.PNG" style="width: 400px; height: 500px;">
             </a>
         </div>
         <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/brita">
                 <span style="text-align: center;">브리타 그린 리프 멤버십 <br> 필터 재활용 프로그램</span>
-                <img src="../images/home16.PNG" style="width: 500px; height: 500px;">
+                <img src="../images/home16.PNG" style="width: 400px; height: 500px;">
             </a>
         </div>
-
-        <!-- Add the additional slides with the provided content -->
+ 	<!-- Add the additional slides with the provided content -->
         <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/melixir">
-                <span style="text-align: center;">멜릭서 me:cycle 캠페인 <br> me:cycle</span>
-                <img src="../images/melixir.PNG" style="width: 500px; height: 500px;">
+                <span style="text-align: center;">멜릭서 me:cycle <br> 캠페인 me:cycle</span>
+                <img src="../images/melixir.PNG" style="width: 400px; height: 500px;">
             </a>
         </div>
         <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/boonbastick">
                 <span style="text-align: center;">빙그레 분타스틱 캠페인 <br> 빙그레 바나나맛우유</span>
-                <img src="../images/boonbastick.PNG" style="width: 500px; height: 500px;">
+                <img src="../images/boonbastick.PNG" style="width: 400px; height: 500px;">
             </a>
         </div>
         <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/mbci">
                 <span style="text-align: center;">가져와요 플라스틱, 지켜가요 우리바다 <br> Plastic Free Tomorrow </span>
-                <img src="../images/mbci.PNG" style="width: 500px; height: 500px;">
+                <img src="../images/mbci.PNG" style="width: 400px; height: 500px;">
             </a>
         </div>
         <!-- End of additional slides -->
@@ -271,9 +272,30 @@
                 nextEl: '.swiper-button-next'
             }
         });
+
+        // 슬라이드가 변경될 때
+        swiper.on('slideChange', function () {
+            // 현재 활성 슬라이드의 인덱스 가져오기
+            let currentIndex = swiper.activeIndex;
+
+            // 다음 세 슬라이드를 숨기고
+            for (let i = currentIndex + 3; i < currentIndex + 6; i++) {
+                let slideToHide = swiper.slides[i];
+                if (slideToHide) {
+                    slideToHide.style.display = 'none';
+                }
+            }
+
+            // 나머지 세 슬라이드를 다시 보이게 하기
+            for (let i = currentIndex; i < currentIndex + 3; i++) {
+                let slideToShow = swiper.slides[i];
+                if (slideToShow) {
+                    slideToShow.style.display = 'block';
+                }
+            }
+        });
     });
 </script>
-
 
 
     </div>

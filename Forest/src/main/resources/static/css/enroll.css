@@ -38,7 +38,7 @@ body{
  	}
  	
  	.btn-primary:hover {
- 		background-color : #81c147 !important;
+ 		background-color : #082f1c !important;
  		border: none !important;  
  	}
  	
@@ -83,3 +83,11 @@ body{
             text-align: left;
             padding: 8px;
         }
+        
+  	.invalid-feedback {
+            display: none; /* ÃÊ±â¿¡ ¼û±è */
+            color: red;
+        }
+        .is-invalid {
+            border-color: red;
+        }   

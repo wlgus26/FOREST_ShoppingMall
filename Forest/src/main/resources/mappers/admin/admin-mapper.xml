@@ -104,6 +104,27 @@
 		FROM PRODUCT
 		WHERE STATUS = 'Y' AND NO = #{no}
 	 </select>
+	 
+	 
+	 <update id="updateProduct" parameterType="Product">
+		UPDATE PRODUCT
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="name != null">
+				Name=#{name},
+			</if>
+			<if test="content != null">
+				CONTENT=#{content},
+			</if>
+			<if test="originalFilename != null">
+				ORIGINAL_FILENAME=#{originalFilename},			
+			</if>
+			<if test="renamedFilename != null">			
+				RENAMED_FILENAME=#{renamedFilename},
+			</if>
+		</trim>			
+		WHERE NO=#{no}
+	</update>
+	
 
 	<delete id="deleteProduct" parameterType="_int">
 		DELETE 

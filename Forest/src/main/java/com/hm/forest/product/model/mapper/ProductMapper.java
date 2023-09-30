@@ -13,6 +13,10 @@ public interface ProductMapper {
 	List<Products> listProduct();
 
 	Products findById(int no);
+
+	List<Products> selectAll();
+
+	Products selectProductByNo(int no);
 	
 
 
