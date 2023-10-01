@@ -22,7 +22,7 @@ public interface BoardMapper {
 	
 	// [검색값 o] 게시판 타입별 게시글 전체 개수
 	int selectBoardCountBySearchValue(@Param("type") String type, @Param("searchType") String searchType,@Param("keyWord") String keyWord);
-	
+	 
 	// [검색값 o] 게시판 타입별 게시글 전체 목록 조회
 	List<Board> selectBoardListsBySearchValue(@Param("type") String type, RowBounds bounds, @Param("searchType") String searchType, @Param("keyWord") String keyWord);
 
@@ -46,6 +46,12 @@ public interface BoardMapper {
 
 	// 댓글 등록
 	int insertReply(Reply reply);
+
+	// 댓글 리스트 조회
+	List<Reply> selectRepliesByBoardNo(@Param("boardNo") int boardNo);
+
+	// 댓글 수 
+	int selectReplyCountByBoardNo(@Param("boardNo") int boardNo);
 
 
 

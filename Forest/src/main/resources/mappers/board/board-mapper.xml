@@ -50,8 +50,8 @@
 		<id property="no" column="NO"/>
 		<result property="boardNo" column="BOARD_NO"/>
 		<result property="writerNo" column="WRITER_NO"/>
-		<result property="content" column="CONTENT"/>
 		<result property="writerId" column="ID"/>
+		<result property="content" column="CONTENT"/>
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
 	</resultMap>
@@ -228,4 +228,25 @@
 		)
 	</insert>
 	
+	<!-- 댓글 리스트 조회 -->
+	<select id="selectRepliesByBoardNo" parameterType="_int" resultMap="replyResultMap">
+		SELECT R.NO,
+               R.BOARD_NO,
+               R.WRITER_NO,
+               M.ID,
+               R.CONTENT,
+               R.STATUS,
+               R.CREATE_DATE,
+               R.MODIFY_DATE
+		FROM REPLY R
+		INNER JOIN MEMBER M ON (R.WRITER_NO = M.NO)
+		WHERE R.STATUS = 'Y' AND R.BOARD_NO = #{boardNo}
+	</select>
+	
+	<!-- 게시글별 댓글 수 -->
+	<select id="selectReplyCountByBoardNo" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPLY 
+		WHERE STATUS = 'Y' AND BOARD_NO = #{boardNo}
+	</select>
 </mapper>

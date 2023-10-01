@@ -35,6 +35,12 @@ public interface BoardService {
 	// 댓글 등록
 	int save(Reply reply);
 
+	// 댓글 조회
+	List<Reply> getRepliesByBoardNo(int boardNo);
+
+	// 댓글 수
+	int selectReplyCountByBoardNo(int boardNo);
+
 
 
 }
