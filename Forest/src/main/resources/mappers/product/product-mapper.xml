@@ -75,23 +75,6 @@
 		WHERE STATUS = 'Y' AND NO = #{no}
 	 </select>
 
-<select id="findById" parameterType="int" resultMap="productResultMap">
-	SELECT NO,
-	       NAME,
-	       PRICE,
-	       CONTENT,
-	       COLOR,
-	       AMOUNT,
-	       SIZE_SML,
-	       STOCK,
-	       COMPANY,
-	       DISCOUNTRATE,	
-	       STATUS,
-	       IMAGE,
-	       WISH
-	 FROM PRODUCT 
-     WHERE NO = #{no}
-</select>
 
 
 

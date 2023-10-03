@@ -28,7 +28,6 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productservice;
-	private AdminService adminService;
 	
 	@GetMapping("/kitchen")
 	private ModelAndView kitchen (ModelAndView modelAndView) {
@@ -76,35 +75,30 @@ public class ProductController {
 //	}
 
 	@GetMapping("/productdetail")
-	public ModelAndView productdetail(ModelAndView modelAndView) {
-		List<Products> List = null;
-		PageInfo pageInfo = null;
+	private ModelAndView productdetail(@RequestParam("no") int no , ModelAndView modelAndView) {
 		
-		List = productservice.getProductList(pageInfo);
-		
-		modelAndView.addObject("pageInfo", pageInfo);
-		modelAndView.addObject("List", List);
-		
-		System.out.println();
+		modelAndView.addObject("pageName", "productdetail");
 		
 		modelAndView.setViewName("page/products/productdetail");
+		
+		productservice.getProducts();
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping("/productdetailview/{no}")
-	public ModelAndView view(ModelAndView modelAndView,
-							 @RequestParam("no") int no) {
-		
-		Products products = null;
-		
-		products = productservice.getProductByNo(no);
-		
-		modelAndView.addObject("pageName", products);
-		modelAndView.setViewName("page/products/productdetail");
-		
-		return modelAndView;
-	}
+//	@GetMapping("/productdetailview")
+//	public ModelAndView view(ModelAndView modelAndView,
+//							 @RequestParam("no") int no) {
+//		
+//		Products products = null;
+//		
+//		products = productservice.getProductByNo(no);
+//		
+//		modelAndView.addObject("pageName", products);
+//		modelAndView.setViewName("page/products/productdetail");
+//		
+//		return modelAndView;
+//	}
 	
 //	@GetMapping("/productdetailview")
 //	public ModelAndView view(ModelAndView modelAndView, 

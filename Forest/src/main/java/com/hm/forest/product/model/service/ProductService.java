@@ -14,11 +14,12 @@ public interface ProductService {
 //	Products getProductsById(int no);
 	
 	List<Products> getProductList(PageInfo pageInfo);
-	
-	Products getProductByNo(int no);
+//	
+//	Products getProductByNo(int no);
 
-//	List<Products> datailProduct();
+	List<Products> datailProduct(int no);
 
+	List<Products> selectProductByNo(int no);
 
 //	int productdetail(int no);
 

@@ -16,8 +16,7 @@ public interface ProductMapper {
 
 	List<Products> selectAll();
 
-	Products selectProductByNo(int no);
-	
+	List<Products> selectProductByNo();
 
 
-}
+	}
