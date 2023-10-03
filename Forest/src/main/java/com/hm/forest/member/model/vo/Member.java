@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,9 +19,11 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class Member implements UserDetails{
+
 	
-	private static final long serialVersionUID = -6789046796860791311L;
-	
+	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(Member.class);
+
 	private int no;
 	
 	private String id;
@@ -62,6 +66,8 @@ public class Member implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();
+		
+		logger.info("Role: " + this.role);
 		
 		authorities.add(new SimpleGrantedAuthority(this.role));
 		

@@ -27,6 +27,12 @@ public class MemberDetailsService implements UserDetailsService {
 		
 		log.info("username : " + member.getId());
 		
-		return member;
-	}
+		String role = member.getRole(); // 예시: "USER" 또는 "ADMIN"
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(member.getId())
+                .password(member.getPassword())
+                .roles(role)
+                .build();
+    }
 }
