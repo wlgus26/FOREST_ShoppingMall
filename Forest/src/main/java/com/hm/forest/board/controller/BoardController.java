@@ -29,7 +29,6 @@ import com.hm.forest.common.util.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import oracle.jdbc.proxy.annotation.Post;
 
-
 @Slf4j
 @RestController
 @RequestMapping("/board")
@@ -41,8 +40,6 @@ public class BoardController {
 		 @GetMapping("/notice")
 		 public ModelAndView FindAll(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,
 				 				 	 @RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String keyWord) {
-			 
-			 // log.info("■검색 값: {}, {}", searchType, keyWord);
 			 
 			 String type = "notice";
 			 int listCount = 0;
@@ -275,27 +272,6 @@ public class BoardController {
 			
 			return modelAndView;
 		}
-		
-		// 댓글 등록
-		@ResponseBody
-		@PostMapping("/reply/enroll")
-		public ResponseEntity<Map<String, Object>> enroll(@RequestBody Reply reply)  {
-			int result = 0;
-			
-			System.out.println(reply);
-			
-			
-			Map<String, Object> map = new HashMap<>();
-			
-			result = boardService.save(reply);
-			
-			map.put("resultCode", result);
-			map.put("reply", reply);
-			
-			log.info("■■결과 {}", result);
-			log.info("■■댓글 {}", reply);
-			
-			return ResponseEntity.ok(map);
-		}
+
 		
 }

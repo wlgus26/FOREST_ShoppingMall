@@ -104,6 +104,18 @@ public class BoardServiceImpl implements BoardService {
 			return result;
 	}
 
+	// 댓글 리스트 조회
+	@Override
+	public List<Reply> getRepliesByBoardNo(int boardNo) {
+		return boardMapper.selectRepliesByBoardNo(boardNo);
+	}
+
+	// 게시글별 댓글 수 조회
+	@Override
+	public int selectReplyCountByBoardNo(int boardNo) {
+		return boardMapper.selectReplyCountByBoardNo(boardNo);
+	}
+
 
 
 

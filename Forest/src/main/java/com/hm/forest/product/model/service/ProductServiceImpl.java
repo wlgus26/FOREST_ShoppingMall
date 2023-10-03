@@ -23,12 +23,6 @@ public class ProductServiceImpl implements ProductService {
 		return productmapper.listProduct();
 	}
 
-//
-//	@Override
-//	public Products getProductsById(int no) {
-//
-//		return productmapper.findById(no);
-//	}
 
 
 	@Override
@@ -39,13 +33,31 @@ public class ProductServiceImpl implements ProductService {
 
 
 	@Override
-	public Products getProductByNo(int no) {
+	public List<Products> datailProduct(int no) {
 		
-		return productmapper.selectProductByNo(no);
+		return productmapper.listProduct();
+	}
+
+
+
+	@Override
+	public List<Products> selectProductByNo(int no) {
+		
+		return productmapper.selectProductByNo();
 	}
 
 
 
 	
+	
+	// ------------------------
+	
+
+//
+//	@Override
+//	public Products getProductsById(int no) {
+//
+//		return productmapper.findById(no);
+//	}
 
 }
