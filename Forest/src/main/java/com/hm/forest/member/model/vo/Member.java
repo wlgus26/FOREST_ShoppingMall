@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Member implements UserDetails{
 	
-	private static final long serialVersionUID = -6789046796860791311L;
+private static final long serialVersionUID = -6789046796860791311L;
 	
 	private int no;
 	
