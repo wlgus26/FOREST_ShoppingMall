@@ -84,92 +84,32 @@
 					<th>조회</th>
 					<td style="text-align: left;" th:text="${board.readCount}"></td>
 				</tr>
-				
-				<!-- 댓글이 없는 페이지의 경우 출력 화면 -->
-				<th:block th:unless="${board.type == 'community' or board.type == 'qna'}">
 				<tr>
 					<td colspan="6" style="padding: 30px 50px; border-color: white;" th:utext="${board.content}"></td>
 				</tr>
-				<tr style="text-align: center;">
-					<td colspan="6" style="border-color: white;">
-					 <!-- 게시판 type에 따라 해당 게시판 목록으로 이동 -->
-				       <th:block th:if="${board.type eq 'notice'}">
-					        <input type="button" onclick="redirectToBoard('notice')" value="목록으로">
-					   </th:block>
-					   <th:block th:if="${board.type eq 'community'}">
-					        <input type="button" onclick="redirectToBoard('community')" value="목록으로">
-					   </th:block>
-					</td>
-				</tr>
-				</th:block>
-				
+
 				<!-- 댓글이 있는 페이지의 경우 출력 화면(자유게시판, 1:1문의게시판) -->
 				<th:block th:if="${board.type == 'community' or board.type == 'qna'}">
-				<tr>
-					<td colspan="6" style="padding: 30px 50px; border-color: white;" th:utext="${board.content}"></td>
-				</tr>
 				<tr>
 					<td colspan="6" style="padding-top: 40px;">
 						<div class="cont_recommendation area_btn_g">
 							<div class="area_l">
-							<button id="comment-btn" type="button" class="btn_g comment-btn" style="font-size: 13px;">댓글<span class="ReplyListCount"></span></button>
+							<button id="comment-btn" type="button" class="btn-custom-reply comment-btn" style="font-size: 13px;">댓글 <span class="ReplyListCount"></span></button>
 							<!-- todo: 추천된 상태일 때 ico_on 추가 -->
-							<button id="recommend-btn" type="button" class="btn_g recommand-btn" onclick="recommendBBS('1IHuH', 'Lp0T', '154811027', '0', true,  true, 'subdued20club', '%EC%9B%90%EB%9E%98+%EA%B5%AD%EB%AC%BC%EB%8B%AD%EB%B0%9C%EC%9D%80+%EC%A2%80+%EB%8B%A8%EB%A7%9B%EC%9D%B4+%EC%9E%88%EB%8A%94+%ED%8E%B8%EC%9D%B4%EC%95%BC%3F');" style="font-size: 13px;"><!--<span class="ico_bbs ico_heart"></span>-->추천해요<span class="txt_num">0</span></button>
+							<button id="recommend-btn" type="button" class="btn-custom-reply recommand-btn" onclick="" style="font-size: 13px;">
+							<i class="fa-regular fa-heart" style="color: #0f5132;"></i>
+							좋아요 <span class="txt_num">0</span></button>
 							</div>
 						</div>
 					</td>
 				</tr>
 				<tr>
-				<!-- 댓글조회 -->
+				<!-- 댓글조회(비동기요청) -->
 				<td style="padding:0; border-color: white;" colspan="6">
 				    <div id="comment-list" class="cont_comment">
 				        <div class="comment_view" id="comment_view">
-				            <ul class="list_comment" id="comment-ul">
-				            <input type="hidden" id="boardNo" th:value="${board.no}" />
-				            <li  style="position: relative;" >
-				            <!-- 프로필 사진 -->
-					            <a href="/ca-fe/cafes/29835300/members/THfl0mVpfhbkS01d638PeA" class="comment_thumb">
-							       <img src="/images/BasicProfile.png" alt="프로필 사진" class="comment-img">
-	    						</a>
-							        <div class="comment_post" id="comment_post" >
-							       		<!-- 댓글 작성자 Id -->
-							            <sub id="writerId" class="comment-writer"></sub>
-							            <!-- 댓글 작성일시 <th:block th:if="${reply.modifyDate} == null"> -->
-							            
-							            <sub id="createDate" class="comment-date"></sub>
-							          
-							            <br>
-							            <!-- 댓글 내용 -->
-							            <span class="reply-text"></span>
-							            <!-- 더보기 버튼 -->
-							            <div class="opt_more_g" style="position: absolute; top: 10px; right: 20px;">
-								            <div id="more-menu-container"  class="opt_container" style=" top: 1343.44px; left: 1052.27px;">
-												<div class="opt_more_g open_layer">
-													<div class="box_opt_menu comment_type" data-target-element-id="_cmt-7557883-39">
-														<div class="menu_item">
-															<a href="#" class="link_menu modify_comment" >수정</a>
-														</div>
-														<div class="menu_item">
-															<a href="#" class="link_menu delete_comment">삭제</a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<button type="button" class="btn_g_ico btn_more_menu" data-target-element-id="_cmt-154812545-2" data-modifiable="true" data-removable="true" data-reportable="false" data-comment-rolecode="27" data-content-type="COMMENT"  onclick="toggleMoreMenu(this)">
-											<span class="ico_bbs ico_more">더보기</span>
-											</button>
-										</div>
-							        </div>
-							            <!--  
-							            <th:block th:if="${#authorization.expression('not empty loginMember && (loginMember.id == reply.writerId)')}">
-							                <button type="button" th:href="@{/board/update/reply(no=${reply.no})}">수정</button>
-							            </th:block>
-							            <th:block th:if="${#authorization.expression('not empty loginMember && (loginMember.id == reply.writerId || loginMember.id == ''admin'')')}">
-							                <button type="button" th:href="@{/board/delete/reply(no=${reply.no})}">삭제</button>
-							            </th:block>
-							            --> 
-						  	 </li>
-				            </ul> 
+ 							<input type="hidden" id="boardNo" th:value="${board.no}">
+				            <ul class="list_comment" id="comment-ul"></ul> 
 				        </div>
 				        
 				        <!-- 댓글 등록  -->
@@ -207,72 +147,58 @@
 						</form>
 				    </div>
 				</td>
-
+				</tr>
+				</th:block>
+				
+				<!-- 게시판 공통 -->
+				<!-- 게시판 type에 따라 해당 게시판 목록으로 이동 -->
 				<tr style="text-align: center;">
 					<td colspan="6" style="border-color: white;">
-					 <!-- 게시판 type에 따라 해당 게시판 목록으로 이동 -->
 				       <th:block th:if="${board.type eq 'notice'}">
-					        <input type="button" onclick="redirectToBoard('notice')" value="목록으로">
+					        <input type="button" class="btn btn-outline-secondary" onclick="redirectToBoard('notice')" value="목록으로">
 					   </th:block>
 					   <th:block th:if="${board.type eq 'community'}">
-					        <input type="button" onclick="redirectToBoard('community')" value="목록으로">
+					        <input type="button" class="btn btn-outline-secondary" onclick="redirectToBoard('community')" value="목록으로">
 					   </th:block>
 					</td>
 				</tr>
-				
-				<!-- 댓글 조회 기존 사항 
-				<table id="tbl-comment">
-				    <tr th:each="reply : ${board.replies}">
-				        <td>
-				            <sub class="comment-writer" th:text="${reply.writerId}"></sub>
-				            <sub class="comment-date" th:text="${#dates.format(reply.createDate, 'yyyy-MM-dd hh:mm')}"></sub>
-				            <br>
-				            <span th:text="${reply.content}"></span>
-				        </td>
-				        <td>
-				            <button type="button">수정</button>
-				            <button type="button">삭제</button>-->
-				            <!--  
-				            <th:block th:if="${#authorization.expression('not empty loginMember && (loginMember.id == reply.writerId)')}">
-				                <button type="button" th:href="@{/board/update/reply(no=${reply.no})}">수정</button>
-				            </th:block>
-				            <th:block th:if="${#authorization.expression('not empty loginMember && (loginMember.id == reply.writerId || loginMember.id == ''admin'')')}">
-				                <button type="button" th:href="@{/board/delete/reply(no=${reply.no})}">삭제</button>
-				            </th:block>
-				            
-				        </td>
-				    </tr>
-				</table>-->
-
 		  </tbody>
 	  </table>
 	</div>
 	
 	
+	<script>
+	// 좋아요 버튼 클릭 이벤트 처리
+	var recommendButton = document.getElementById('recommend-btn'); // 좋아요 버튼 요소 가져오기
+	var heartIcon = recommendButton.querySelector('i.fa-regular.fa-heart'); // 현재 아이콘 요소 가져오기
+	// var numSpan = recommendButton.querySelector('.txt_num'); // 좋아요 수를 표시하는 요소 가져오기
+
+	recommendButton.addEventListener('click', function() {
+	    // 현재 아이콘 클래스가 'fa-regular' 일 때
+	    if (heartIcon.classList.contains('fa-regular')) {
+	        // 아이콘 클래스를 'fa-solid'로 변경하여 하트 아이콘으로 바꿉니다.
+	        heartIcon.classList.remove('fa-regular');
+	        heartIcon.classList.add('fa-solid');
+	        // 좋아요 수를 1 증가시킵니다.
+	        // var currentCount = parseInt(numSpan.textContent, 10);
+	        numSpan.textContent = (currentCount + 1).toString();
+	    } else {
+	        // 현재 아이콘 클래스가 'fa-solid' 일 때
+	        // 아이콘 클래스를 'fa-regular'로 변경하여 비어있는 하트 아이콘으로 바꿉니다.
+	        heartIcon.classList.remove('fa-solid');
+	        heartIcon.classList.add('fa-regular');
+	        // 좋아요 수를 1 감소시킵니다.
+	       // var currentCount = parseInt(numSpan.textContent, 10);
+	      //  numSpan.textContent = (currentCount - 1).toString();
+	    }
+	});
+	</script>
 	
 	<!-- 수정/삭제 메뉴 토글 -->
     <script th:inline="javascript">
-    // 더보기 버튼 클릭 시 메뉴를 토글하는 함수
-    function toggleMoreMenu(button) {
-    	
-        var replyNo = button.getAttribute('data-reply-no');
-        var moreMenuContainer = document.getElementById('more-menu-container');
-        
-        console.log(replyNo);
-        console.log(moreMenuContainer);
-        
-        // 메뉴를 표시하거나 숨김
-        if (moreMenuContainer.style.display === 'block') {
-            moreMenuContainer.style.display = 'none';
-        } else {
-            // 버튼 위치에 따라 메뉴를 배치하고 표시
-            var buttonRect = button.getBoundingClientRect();
-            moreMenuContainer.style.top = buttonRect.bottom + 'px';
-            moreMenuContainer.style.left = buttonRect.left + 'px';
-            moreMenuContainer.style.display = 'block';
-        }
-    }
+  
     </script>	
+
 	
 	<!-- 게시판 타입에 따라 목록으로 이동 -->
 	<script>
@@ -327,6 +253,7 @@
 	<script>
 	// textarea id "commentTextarea"를 사용하여 참조
 	var textarea = document.getElementById('commentTextarea');
+	var defaultHeight = textarea.style.height; // 초기 높이 저장
 
 	// 텍스트 입력 이벤트 리스너 추가
 	textarea.addEventListener('input', function () {
@@ -362,13 +289,13 @@
 	</script>
 	
 
-	<!-- 댓글 조회 비동기 요청  -->
+	<!-- 댓글 조회 비동기 요청 -->
+	<!-- 수정/삭제 메뉴 토글 -->
 	<script>
-
-
-	// 댓글을 비동기로 가져오는 함수
+	// 댓글 목록 조회하는 함수
 	function fetchComments() {
 		var boardNo = $('#boardNo').val(); 
+		console.log(boardNo);
 		
 	    $.ajax({
 	        url: '/reply/' + boardNo, // 댓글을 가져올 API 엔드포인트 (boardNo를 동적으로 추가)
@@ -379,7 +306,7 @@
 	            updateCommentList(obj.replies); 
 	            // 성공 시 댓글 수를 가져와 버튼에 업데이트
 	            var commentCount = obj.listCount;
-	            $('.ReplyListCount').text(commentCount); // 버튼 내 숫자 업데이트
+	            $('.ReplyListCount').text(commentCount); // 댓글 수 버튼 내 숫자 업데이트
 	        },
 	        error: function (error) {
 	            console.error('댓글을 가져오는 중 오류 발생: ', error);
@@ -387,7 +314,7 @@
 	    });
 	}
 	
-	// 댓글 목록을 업데이트하는 함수
+	// 댓글 목록을 업데이트하는 함수 
 	function updateCommentList(replies) {
 	    var commentList = $('#comment-ul');
 	    commentList.empty(); // 기존 목록을 초기화
@@ -395,25 +322,66 @@
 	    // 가져온 댓글 데이터를 사용하여 목록에 추가
 	    replies.forEach(function (reply) {
 	        var listItem = $('<li></li>');
+	        var commentPost = $('<div>').addClass('comment_post');
 	        var profileImage = $('<img>').attr('src', '/images/BasicProfile.png').attr('alt', '프로필 사진').addClass('comment-img');
+
+	       // 더보기 버튼 관련 요소 생성
+	        var moreButtonContainer = $('<span/><div class="opt_more_g" style="position: absolute; top: 10px; right: 20px; border: 1px solid;"></div>');
+	        var moreMenuContainer = $('<div id="more-menu-container" class="opt_container" style="top: 1343.44px; left: 1052.27px; z-index: 1; display: none;"></div>'); // 수정/삭제 메뉴 컨테이너
+	        var moreMenu = $('<div class="opt_more_g open_layer"></div>');
+	        var moreButton = $('<button type="button" class="btn_g_ico btn_more_menu" onclick="toggleMoreMenu(this)"><span class="ico_bbs ico_more">더보기</span></button>');
+	        
+	        // 수정/삭제 메뉴 아이템 생성
+	        var menuItems = $('<div class="box_opt_menu comment_type"></div>');
+	        var modifyMenuItem = $('<div class="menu_item"><a class="link_menu modify_comment">수정</a></div>');
+	        var deleteMenuItem = $('<div class="menu_item"><a class="link_menu delete_comment">삭제</a></div>');
+
+	        // 메뉴 아이템(수정/삭제)을 메뉴 컨테이너에 추가
+	        menuItems.append(modifyMenuItem, deleteMenuItem);
+	        moreMenuContainer.append(menuItems);
+
+	        // 더보기버튼과 메뉴 컨테이너를 행에 추가
+	        moreButtonContainer.append(moreButton, moreMenuContainer);
+	        
+	        // 댓글 작성자
 	        var writerId = $('<sub></sub>').addClass('comment-writer').text(reply.writerId + ' ');
-	 	
-	        // reply.createDate 값을 JavaScript Date 객체로 파싱
-	        var datedata = new Date(reply.createDate);
-
-	        // Moment.js를 사용하여 날짜를 원하는 형식으로 포맷
-	        var formattedDate = moment(datedata).format("YY/MM/DD HH:mm");
-
-	        // 변경된 날짜 형식으로 createDate에 설정
-	        var createDate = $('<sub> </sub>').addClass('create-date').text(formattedDate);
-	        
+		 	
+	        // 댓글 작성 날짜
+		        // 1) reply.createDate 값을 JavaScript Date 객체로 파싱
+		        var datedata = new Date(reply.createDate);
+	
+		        // 2) Moment.js를 사용하여 날짜를 원하는 형식으로 포맷
+		        var formattedDate = moment(datedata).format("YY/MM/DD HH:mm");
+	
+		        // 3) 변경된 날짜 형식으로 createDate에 설정
+		        var createDate = $('<sub> </sub>').addClass('create-date').text(formattedDate);
+		   
+		    // 댓글 내용    
 	        var replyText = $('<p><span></span></p>').addClass('reply-text').text(reply.content);
+	        var commentPost = $('</div>').addClass('comment_post');
+	        var replyNoInput = $('<input type="hidden">').addClass('reply-no');
+
+	
+		     // commentPost에 replyNoInput을 추가
+	     	commentPost.append(replyNoInput);
 	        
-	        listItem.append(profileImage, writerId, createDate, replyText);
+	        // listItem에 위에서 생성한 요소들 추가
+	        listItem.append(profileImage, commentPost, moreButtonContainer, writerId, createDate, replyText);
+
+	        // commentList에 listItem 추가
 	        commentList.append(listItem);
 	    });
 	}
-
+	
+	// 더보기 버튼 클릭 시 수정/삭제 메뉴를 토글하는 함수
+	function toggleMoreMenu(buttonElement) {
+	    var listItem = $(buttonElement).closest('li'); // 현재 버튼이 속한 댓글 행을 찾고,
+	    var moreMenuContainer = listItem.find('.opt_container'); // 댓글 행 내의 메뉴 컨테이너를 찾음
+	
+	    // 메뉴를 표시하거나 숨김
+	    moreMenuContainer.toggle();
+	}
+	
 	// 페이지 로드 시 댓글을 가져오기 위해 초기 호출
 	fetchComments();
 	</script>
@@ -482,6 +450,7 @@
 	        });
 	    });
 	    
+	    
 	 // 새로운 댓글을 화면에 추가하는 함수
 	    function appendComment(reply) {
 	        var listItem = $('<li></li>');
@@ -493,7 +462,7 @@
 
 	        // Moment.js를 사용하여 날짜를 원하는 형식으로 포맷
 	        var formattedDate = moment(datedata).format("YY/MM/DD HH:mm");
-	        console.log(formattedDate);
+	        console.log("formattedDate: " + formattedDate);
 	        // 변경된 날짜 형식으로 createDate에 설정
 	        var createDate = $('<sub> </sub>').addClass('create-date').text(formattedDate);
 
@@ -508,37 +477,82 @@
 	        var inboxCountElement = document.querySelector('.inbox_count');
 	        inboxCountElement.textContent = '0';
 	    }
+	    
+	    
+	    
+
+		// '수정' 버튼 클릭 이벤트 처리
+		$(document).on('click', '.modify_comment', function (event) {
+		    event.preventDefault(); // 기본 동작 방지
+
+		    // 클릭한 '수정' 버튼이 속한 댓글의 내용을 가져옴
+		    var listItem = $(this).closest('li'); // 클릭한 버튼의 가장 가까운 li 요소를 선택
+		    var replyNo = listItem.find('reply-no').text(); // 댓글의 reply-no를 가져옴
+		    var replyText = listItem.find('.reply-text').text(); // 선택된 li 요소 내의 댓글 내용을 가져옴
+
+		    // 가져온 댓글 내용을 콘솔에 출력
+		    console.log("1댓글 내용:", replyText);
+		    console.log("1댓글 번호:", replyNo);
+		    console.log("1댓글 listItem:", listItem);
+		    
+		    // 수정 폼 표시
+            showModifyForm(replyNo);
+		});
+	    
+		// '수정' 버튼 클릭 시 수정 폼을 표시하는 함수
+		function showModifyForm(replyNo) {
+		    // 클릭한 '수정' 버튼이 속한 댓글의 내용을 가져옴
+		    var listItem = $('#reply-' + replyNo);
+		    console.log("2댓글수정 replyNo : " + replyNo);
+		    console.log("2댓글수정 listItem : " + listItem);
+		    var replyText = listItem.find('.reply-text').text();
+		    console.log("2댓글수정 replyText : " + replyText);
+
+		    // 댓글 내용을 수정 폼으로 교체
+		    var modifyForm = $('<form id="enrollForm"></form>');
+		    var commentTextarea = $('<textarea id="commentTextarea" placeholder="댓글을 남겨보세요" rows="1" class="comment_inbox_text"></textarea>');
+		    commentTextarea.val(replyText); // 댓글 내용을 폼에 설정
+		    var boardNoInput = $('<input type="hidden" id="boardNo" th:value="${board.no}">');
+		    var writerNoInput = $('<input type="hidden" id="writerNo" th:value="${board.writerNo}">');
+		    var replyNoInput = $('<input type="hidden" id="replyNo" value="' + replyNo + '">'); // reply.no를 폼에 추가
+
+		    // 수정 폼을 새로운 내용으로 교체
+		    listItem.empty().append(modifyForm);
+		    modifyForm.append(commentTextarea, boardNoInput, writerNoInput, replyNoInput);
+
+		    // 이후 수정한 내용을 서버로 전송하고 업데이트하는 로직을 구현해야 합니다.
+		}
+
 	</script>
 	
+	<!-- 댓글 수정 -->
 	<script>
-	$(document).ready(function () {
-	    // 초기에 댓글 수를 가져오고 버튼에 표시
-	    updateCommentCount();
 
-	    // 일정한 간격으로 댓글 수 업데이트
-	    setInterval(updateCommentCount, 10000); // 10초마다 업데이트
+	</script>
+	
+	
+		
+	<script>
+	// ul 요소를 가져옵니다.
+	var ulElement = document.querySelector('.list_comment');
 
-	    $('#btinReplyEnroll').click(function () {
-	        // 댓글을 등록한 후 댓글 수 업데이트
-	        updateCommentCount();
-	        // ...
-	    });
+	// 모든 이미지 요소를 가져옵니다.
+	var imgElements = ulElement.querySelectorAll('img');
+
+	// ul 요소의 현재 너비를 가져옵니다.
+	var ulWidth = ulElement.offsetWidth;
+
+	// 각 이미지 요소에 대해 처리합니다.
+	imgElements.forEach(function(imgElement) {
+	    // 이미지의 현재 너비를 가져옵니다.
+	    var imgWidth = imgElement.offsetWidth;
+
+	    // 이미지의 너비가 ul 요소의 너비보다 크다면
+	    if (imgWidth > ulWidth) {
+	        // 이미지의 너비를 100%로 설정하여 확장합니다.
+	        imgElement.style.width = '100%';
+	    }
 	});
-
-	function updateCommentCount() {
-	    $.ajax({
-	        type: 'GET',
-	        url: '/reply/count', // 댓글 수를 반환하는 API 엔드포인트
-	        success: function (data) {
-	            // 성공 시 댓글 수를 가져와 버튼에 업데이트
-	            var commentCount = data.count; // 예: 서버에서 반환한 댓글 수
-	            $('.txt_num').text(commentCount); // 버튼 내 숫자 업데이트
-	        },
-	        error: function (error) {
-	            console.error('댓글 수 업데이트 중 오류 발생:', error);
-	        },
-	    });
-	}
 	</script>
 	
 
