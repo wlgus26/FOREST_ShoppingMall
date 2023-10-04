@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hm.forest.product.model.vo.Products;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.product.dao.DAO;
 import com.hm.forest.product.model.mapper.ProductMapper;
 
 @Service
@@ -38,13 +39,37 @@ public class ProductServiceImpl implements ProductService {
 		return productmapper.listProduct();
 	}
 
-
-
 	@Override
 	public List<Products> selectProductByNo(int no) {
-		
-		return productmapper.selectProductByNo();
+		// TODO Auto-generated method stub
+		return null;
 	}
+	
+	
+	
+	
+	 @Autowired
+	    private DAO dao;
+
+	    @Override
+	    public List<Product> getAllProducts() {
+	        return dao.getAllProducts();
+	    }
+
+	    @Override
+	    public Product getProductById(int productId) {
+	        return dao.getProductByNo(productId);
+	    }
+	
+	
+	
+
+
+	
+//	public List<Products> selectProductByNo(int no) {
+//		
+//		return productmapper.selectProductByNo();
+//	}
 
 
 

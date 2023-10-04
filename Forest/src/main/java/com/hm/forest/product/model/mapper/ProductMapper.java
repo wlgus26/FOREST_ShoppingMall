@@ -16,7 +16,15 @@ public interface ProductMapper {
 
 	List<Products> selectAll();
 
-	List<Products> selectProductByNo();
+//	List<Products> selectProductByNo();
+	
+	Products selectProductByNo(int no);
+	//@Param("no") 
+
+//	static Products selectProductByNo() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 
 	}

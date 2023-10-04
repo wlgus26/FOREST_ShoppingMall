@@ -6,8 +6,30 @@
 
 <th:block th:with="pageName='productdetail'"></th:block>      
 <!-- community.html 고유 CSS 추가 -->
+
 <th:block layout:fragment="css">
     <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/productdetail.css}" >-->
+<style>
+	#btn1 {
+	background-color: green; 
+	color: white;
+	border: none;
+	border-radius: 6px;
+	padding: 3px 10px;
+	}
+	#btn1:hover {
+	background-color: #082f1c;
+	}
+	#btn2 {
+	background-color: white;
+	border: 1px solid black; 
+	border-radius: 6px;
+	padding: 3px 10px;
+	}
+	#btn2:hover {
+	background-color: #082f1c;
+	}
+</style>
 </th:block>
 <!-- community.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
@@ -24,17 +46,19 @@
 		  <thead>
 		    <tr class="border-bottom" >
 		      <th scope="col" colspan="5" class="th-custom-style">상품
-			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="redirect('productdetail')">구매하기</button>
+			  	<button id="btn1" type="button" onclick="redirect('productdetail')">구매하기</button>
+			  	<button id="btn2" type="button" >장바구니</button>
 			  </th>
 		    </tr>
 		  </thead>
 		  
 		  <tbody>
 		  	    <tr style="text-align: center;">
-					<th>제목</th>
+					<th>상세 설명</th>
 				</tr>
 				<tr class="clickable-row" style="text-align: center;" th:each="product : ${productlist}" th:attr="data-href=@{/products/productdetailview?no={no}(no=${product.no})}">
-			        <td th:text="${product.name}" style="text-align:left; width:60%;"></td>   
+			        <td th:text="${product.name}" style="text-align:left; width:60%;"></td> 
+			        <td th:text="${product.content}">설명</td> 
 			    </tr>
 
 		  </tbody>
