@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.RowBounds;
 
 import com.hm.forest.board.model.vo.Board;
+import com.hm.forest.board.model.vo.Reply;
 import com.hm.forest.common.util.PageInfo;
 
 @Mapper
@@ -21,7 +22,7 @@ public interface BoardMapper {
 	
 	// [검색값 o] 게시판 타입별 게시글 전체 개수
 	int selectBoardCountBySearchValue(@Param("type") String type, @Param("searchType") String searchType,@Param("keyWord") String keyWord);
-	
+	 
 	// [검색값 o] 게시판 타입별 게시글 전체 목록 조회
 	List<Board> selectBoardListsBySearchValue(@Param("type") String type, RowBounds bounds, @Param("searchType") String searchType, @Param("keyWord") String keyWord);
 
@@ -42,6 +43,15 @@ public interface BoardMapper {
 
 	// faq 게시판 글 목록 조회
 	List<Board> selectFAQListsByType(@Param("type") String type);
+
+	// 댓글 등록
+	int insertReply(Reply reply);
+
+	// 댓글 리스트 조회
+	List<Reply> selectRepliesByBoardNo(@Param("boardNo") int boardNo);
+
+	// 댓글 수 
+	int selectReplyCountByBoardNo(@Param("boardNo") int boardNo);
 
 
 

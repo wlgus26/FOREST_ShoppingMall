@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hm.forest.board.model.mapper.BoardMapper;
 import com.hm.forest.board.model.vo.Board;
+import com.hm.forest.board.model.vo.Reply;
 import com.hm.forest.common.util.PageInfo;
 
 @Service
@@ -84,6 +85,35 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public int updateReadCount(int no) {
 		return boardMapper.updateReadCount(no);
+	}
+
+	// 댓글 등록
+	@Override
+	@Transactional
+	public int save(Reply reply) {
+
+			int result = 0;
+			
+			if (reply.getNo() > 0) {
+				// update			
+			} else {
+				// insert
+				result = boardMapper.insertReply(reply);
+			}
+			
+			return result;
+	}
+
+	// 댓글 리스트 조회
+	@Override
+	public List<Reply> getRepliesByBoardNo(int boardNo) {
+		return boardMapper.selectRepliesByBoardNo(boardNo);
+	}
+
+	// 게시글별 댓글 수 조회
+	@Override
+	public int selectReplyCountByBoardNo(int boardNo) {
+		return boardMapper.selectReplyCountByBoardNo(boardNo);
 	}
 
 

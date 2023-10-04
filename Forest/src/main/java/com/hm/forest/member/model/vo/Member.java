@@ -11,22 +11,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Member implements UserDetails {
+@RequiredArgsConstructor
+public class Member implements UserDetails{
 	
-	private static final long serialVersionUID = -6789046796860791311L;
-
+private static final long serialVersionUID = -6789046796860791311L;
+	
 	private int no;
 	
 	private String id;
 	
 	private String password;
-	
-	private String role;
 	
 	private String name;
 	
@@ -34,16 +32,20 @@ public class Member implements UserDetails {
 	
 	private String email;
 	
-	private String address;
+	private String pcode;
+
+	private String address1;
 	
-	private String hobby;
+	private String address2;
 	
 	private String status;
 	
-	private Date enrollDate;
+	private Date createDate;
 	
-	private Date modifyDate;
+	private Date updateDate;
 
+	private String role;
+	
 	@Override
 	public String getUsername() {
 		

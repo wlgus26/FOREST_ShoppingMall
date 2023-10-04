@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.controller.AdminController;
+import com.hm.forest.admin.model.service.AdminService;
+import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.board.model.vo.Board;
 import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.product.model.service.ProductService;
@@ -62,16 +64,58 @@ public class ProductController {
 		return modelAndView;
 	}
 	
-	@GetMapping("/products/{no}")
-	public ModelAndView productdetail(@PathVariable int no, ModelAndView modelAndView) {
-		
-	    Products product = productservice.getProductsById(no);
-	    
-	    modelAndView.addObject("product", product);
-	    modelAndView.setViewName("page/products/productdetail");
-	    return modelAndView;
-	}
+//	@GetMapping("/products/{no}")
+//	public ModelAndView productdetail(@PathVariable int no, ModelAndView modelAndView) {
+//		
+//	    Products product = productservice.getProductsById(no);
+//	    
+//	    modelAndView.addObject("product", product);
+//	    modelAndView.setViewName("page/products/productdetail");
+//	    return modelAndView;
+//	}
 
+	@GetMapping("/productdetail")
+	private ModelAndView productdetail(@RequestParam("no") int no , ModelAndView modelAndView) {
+		
+		modelAndView.addObject("pageName", "productdetail");
+		
+		modelAndView.setViewName("page/products/productdetail");
+		
+		productservice.getProducts();
+		
+		return modelAndView;
+	}
+	
+//	@GetMapping("/productdetailview")
+//	public ModelAndView view(ModelAndView modelAndView,
+//							 @RequestParam("no") int no) {
+//		
+//		Products products = null;
+//		
+//		products = productservice.getProductByNo(no);
+//		
+//		modelAndView.addObject("pageName", products);
+//		modelAndView.setViewName("page/products/productdetail");
+//		
+//		return modelAndView;
+//	}
+	
+//	@GetMapping("/productdetailview")
+//	public ModelAndView view(ModelAndView modelAndView, 
+//							 @RequestParam("no") int no) {
+//		
+//		log.info("view() 호출 - {}", no);
+//		
+//		Products product = null;
+//		
+//		product = productservice.getProductByNo(no);
+//		
+//		modelAndView.addObject("pageName", "productdetailview");
+//		modelAndView.addObject("product", product);
+//		modelAndView.setViewName("page/products/productdetailview");
+//		
+//		return modelAndView;
+//	}	
 	
 	
 //	@GetMapping("/products/{productno}")
