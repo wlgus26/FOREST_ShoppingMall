@@ -15,6 +15,7 @@ import com.hm.forest.common.util.PageInfo;
 public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminMapper adminMapper;
+	
 
 	@Override
 	@Transactional
@@ -63,4 +64,24 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
+	
+
+
+
+
+//	@Override
+//	public Product imgInsert(Product product) throws Exception {
+//		
+//		String imgSrc = getImgScr(product.getContent());
+//		
+//		if(imgSrc != "") {
+//			product.setImage(imgSrc);
+//			
+//		}
+//		
+//
+//		return adminMapper.productImg(product.getImage(),imgSrc);
+//	}
+
+	
 }
