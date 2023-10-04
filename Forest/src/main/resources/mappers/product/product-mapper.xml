@@ -57,7 +57,7 @@
 		ORDER BY NO DESC
 	</select>
 	
-	 <select id="selectProductByNo" parameterType="_int" resultMap="productResultMap">
+	 <select id="selectProductByNo" parameterType="int" resultMap="productResultMap">
 	 	SELECT NO,
 		       NAME,
 		       PRICE,

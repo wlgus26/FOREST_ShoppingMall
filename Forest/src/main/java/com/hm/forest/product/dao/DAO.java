@@ -23,9 +23,9 @@ public class DAO {
 	        return products;
 	    }
 
-	    public Product getProductByNo(int productNo) {
+	    public Products getProductByNo(int no) {
 	        // 데이터베이스 쿼리 실행 및 결과를 Product 형태로 반환
-	        Product product = new Product(); // 적절한 방법으로 데이터를 조회하여 product에 할당
-	        return product;
+	        Products products = new Products(); // 적절한 방법으로 데이터를 조회하여 product에 할당
+	        return products;
 	    }
 }

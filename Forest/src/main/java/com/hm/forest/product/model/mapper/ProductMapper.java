@@ -18,13 +18,10 @@ public interface ProductMapper {
 
 //	List<Products> selectProductByNo();
 	
-	Products selectProductByNo(int no);
+	Products selectProductByNo(@Param("no") int no);
 	//@Param("no") 
 
-//	static Products selectProductByNo() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	Products getProductByNo(int no);
 
 
 	}

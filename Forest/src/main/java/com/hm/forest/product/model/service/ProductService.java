@@ -24,25 +24,24 @@ public interface ProductService {
 
 	List<Products> datailProduct(int no);
 
-	List<Products> selectProductByNo(int no);
+	Products selectProductByNo(int no);
+	
+	
+	
 
-
-	static List<Products> selectProductByNo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	
 	
 	List<Product> getAllProducts();
-	
-    Product getProductById(int productNo);
 
 
-	static Products getProductByNo(int productNo) {
+	static Products getProductByNo(int no) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	Products getProductByNo1(int no);
 
 //	int productdetail(int no);
 

@@ -79,48 +79,41 @@ public class ProductController {
 
 	
 	 @GetMapping("/productdetailview")
-	    public String productDetail(Model model) {
-//		 List<Products> products = null;
+	    public String productdetail(Model model, int no) {
+		 Products products = null;
 //		 
 //		 products = ProductService.selectProductByNo();
 //		 
 //		 modelAndView.addObject("products", products);
 //		 
 //		 modelAndView.setViewName("page/products/productdetail");
-//	        public String productDetail(Model model) {
-	        // 여기서 데이터베이스에서 상품 정보를 가져오는 로직을 수행
-		 List<Products> productList = productservice.selectProductByNo(4);
+
+		 // 여기서 데이터베이스에서 상품 정보를 가져오는 로직을 수행
+		 products = productservice.selectProductByNo(no);
 
 	        // 모델에 상품 정보를 추가
-	        model.addAttribute("product", productList);
+	        model.addAttribute("no",4);
+	        model.addAttribute("name","name");
+	        model.addAttribute("price",12000);
+	        model.addAttribute("content","ㅁㅁㅁㅁ");
+	        model.addAttribute("color","red");
+	        model.addAttribute("amount",1000);
+	        model.addAttribute("sizeSml","s");
 
 	        // Thymeleaf 템플릿을 렌더링할 뷰 이름 반환
 	        return "productdetail";
 	 }
 	 
 	 
-	   @GetMapping("/products/{id}")
-	    public String productDetail(@PathVariable("id") int productNo, Model model) {
-	        Products product = ProductService.getProductByNo(productNo);
-
-	        // 뷰에 데이터 전달 및 뷰 이름 반환
-	        return "productdetail";
-	    }
-	
-//	 @GetMapping("/productdetailview")
-//	 public String main(Model model) {
-//			model.addAttribute("no", 4);
-//			model.addAttribute("name", "name");
-//			model.addAttribute("price", 12000);
-//			model.addAttribute("content", "ㅁㅁㅁㅁ");
-//			model.addAttribute("color", "red");
-//			model.addAttribute("amount",1000);
-//			model.addAttribute("sizeSml", "s");
-//			model.addAttribute("stock", "aa");
-//			model.addAttribute("company", "회가");
-//			model.addAttribute("no", 4);
-//			return "productdetail";
-//		}
+//	   @GetMapping("/products/productdetail?no=4")
+//	    public String productdetail(@PathVariable("no") int no, Model model) {
+//		   
+//		   Products products = null;
+//		   products = productservice.getProductByNo(no);
+//
+//	        // 뷰에 데이터 전달 및 뷰 이름 반환
+//	        return "productdetail";
+//	    }
 	 
 	 
 	 

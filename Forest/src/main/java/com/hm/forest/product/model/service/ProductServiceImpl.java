@@ -38,12 +38,29 @@ public class ProductServiceImpl implements ProductService {
 		
 		return productmapper.listProduct();
 	}
-
+	
 	@Override
-	public List<Products> selectProductByNo(int no) {
+	public Products getProductByNo1(int no) {
 		// TODO Auto-generated method stub
-		return null;
+		return productmapper.selectProductByNo(no);
 	}
+	
+	
+	@Override
+	public Products selectProductByNo(int no) {
+		
+		return productmapper.selectProductByNo(no);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -56,10 +73,15 @@ public class ProductServiceImpl implements ProductService {
 	        return dao.getAllProducts();
 	    }
 
-	    @Override
-	    public Product getProductById(int productId) {
-	        return dao.getProductByNo(productId);
-	    }
+
+
+
+
+
+//	    @Override
+//	    public Products getProductByNo(int no) {
+//	        return dao.getProductByNo(no);
+//	    }
 	
 	
 	
