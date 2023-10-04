@@ -177,6 +177,7 @@ public class AdminController {
 		 // 관리자페이지_제품 수정
 		 @PostMapping("/productMgmtUpdate")
 		 public ModelAndView update (ModelAndView modelAndView, 
+				 					 @RequestParam("upfile") MultipartFile upfile,
 				 					 @RequestParam("no") int no,
 				 					 @RequestParam("name") String name,
 				 					 @RequestParam("price") int price,
@@ -190,6 +191,42 @@ public class AdminController {
 	 
 			 product = adminService.getProductBoardByNo(no);
 			 
+			 
+			 if (upfile != null && !upfile.isEmpty()) {
+					 String location = null;
+					 String renamedFileName = null;
+					 
+					 try {
+						location = resourceLoader.getResource("classpath:/static/upload/product/")
+						 						  .getFile()
+						 						  .getPath();
+						
+						// 이전에 업로드된 첨부파일 삭제
+						if (product.getImage() != null) {
+							MultipartFileUtil.delete(location + "/" + product.getImage());
+							log.info(location + "★삭제된 후 location★");
+							
+						}
+						location = resourceLoader.getResource("classpath:/static/upload/product/")
+		 						  .getFile()
+		 						  .getPath();
+							
+						// 수정된 첨부파일을 저장한다.
+						renamedFileName = MultipartFileUtil.save(upfile, location);
+						
+						System.out.println(upfile + "★upfile★");
+						System.out.println(location + "★첨부파일 저장 후 location★");
+						
+						if (renamedFileName != null) {
+						
+							product.setImage(renamedFileName);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }
+			
+
 			 product.setName(name);
 			 product.setPrice(price);
 			 product.setColor(color);
@@ -200,9 +237,7 @@ public class AdminController {
 			 log.info("★ 보드 : {}", product);
 				 
 		     result = adminService.save(product);
-		     
-		
-				 
+		 
 				 if ( result > 0 ) {
 					 modelAndView.addObject("msg", "게시글 수정 성공");
 					 modelAndView.addObject("location", "/admin/productMgmtView?no=" + product.getNo()); 
