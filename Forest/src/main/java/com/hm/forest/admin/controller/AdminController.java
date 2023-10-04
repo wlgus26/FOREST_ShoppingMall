@@ -1,34 +1,39 @@
 package com.hm.forest.admin.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.common.util.MultipartFileUtil;
 import com.hm.forest.common.util.PageInfo;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	private final ResourceLoader resourceLoader;
 	
 	
 	// 관리자페이지_매출관리로 이동
@@ -50,41 +55,51 @@ public class AdminController {
 			
 			return modelAndView;
 		}
-		
-		// 관리자페이지_제품등록
-//		@PostMapping("/productMgmt/insert")
-//		@ResponseBody
-//		public String insert (Product  product) {
-//
-//			System.out.println("getName :" + product.getName());
-//			System.out.println("getPrice :" + product.getPrice());
-//			System.out.println("getColor :" + product.getColor());
-//			
-//			adminService.save(product);
-//
-//			return "redirect:/productMgmtList";
-//		}
-//		
 	
-        // 관리자페이지_제품등록(map으로 가져와서 리스트 페이지로 포워딩까지)
+	
+        // 관리자페이지_제품등록
 		@PostMapping("/productMgmt/insert")
-		public ModelAndView insert(@ModelAttribute("Product") Product product) {
+		public ModelAndView insert(ModelAndView modelAndView,
+								   Product product,
+								   @RequestParam("upfile") MultipartFile upfile) {
+			
+			
 		    int result = 0;
 		    Map<String, Object> map = new HashMap<>();
+		    
+		    if (upfile != null && !upfile.isEmpty()) {
+				String location = null;
+				String renamedFileName = null;
+				
+				try {
+					location = resourceLoader.getResource("classpath:/static/upload/product").getFile().getPath();
 
+					renamedFileName = MultipartFileUtil.save(upfile, location);
+					
+					if (renamedFileName != null) {
+						
+						product.setImage(renamedFileName);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				System.out.println(location + "★★★★★★★");
+			}
+		    
+	
 		    result = adminService.save(product);
 
 		    map.put("resultCode", result);
 		    map.put("product", product);
 
-		    ModelAndView modelAndView = new ModelAndView();
 
 		    if (result > 0) {
 		        // Insert 성공
-		        modelAndView.addObject("msg", "제품이 등록되었습니다.");
+		    	modelAndView.addObject("msg", "제품이 등록되었습니다.");
 		    } else {
 		        // Insert 실패
-		        modelAndView.addObject("msg", "등록에 실패하였습니다.");
+		    	modelAndView.addObject("msg", "등록에 실패하였습니다.");
 		    }
 
 		    System.out.println(map);
@@ -98,6 +113,7 @@ public class AdminController {
 		    
 		    return modelAndView;
 		}
+		
 		
 		
 		// 관리자 페이지_제품목록 리스트
@@ -144,7 +160,7 @@ public class AdminController {
 			return modelAndView;	
 		}
 		
-		// 제품 상세 페이지에서 수정버튼 누르면 수정 페이지 요청
+		//  제품 상세 페이지에서 (수정버튼 누르면 )수정 페이지 요청
 		@GetMapping("/productMgmtUpdate")
 		public ModelAndView update (ModelAndView modelAndView, @RequestParam("no") int no) {
 			Product product = adminService.getProductBoardByNo(no);
@@ -158,7 +174,7 @@ public class AdminController {
 		
 		
 		
-		 // ★★★ 관리자페이지_제품 수정
+		 // 관리자페이지_제품 수정
 		 @PostMapping("/productMgmtUpdate")
 		 public ModelAndView update (ModelAndView modelAndView, 
 				 					 @RequestParam("no") int no,
@@ -200,7 +216,7 @@ public class AdminController {
 				return modelAndView;
 		 }
 		 
-		 // ★★★
+		 
 		 @GetMapping("/productMgmtDelete")
 		 public ModelAndView delete(ModelAndView modelAndView,
 				 					@RequestParam int no) {
@@ -222,7 +238,24 @@ public class AdminController {
 				
 				return modelAndView;
 		 }
-	
+		 
+		// 첫번째 사진 썸네일로 지정
+//			public String getImgSrc(String content) {
+//				  Pattern nonValidPattern = Pattern
+//					  		.compile("(?i)< *[IMG][^\\>]*[src] *= *[\"\']{0,1}([^\"\'\\ >]*)");
+//					  		int imgCnt = 0;
+//					  		String img = "";
+//					  		Matcher matcher = nonValidPattern.matcher(content);
+//					  		while (matcher.find()) {
+//					  			img = matcher.group(1);
+//					  			imgCnt++;
+//					  			if(imgCnt == 1){
+//					  		        break;                                  
+//					  		    }
+//					  		}
+//					  		return img;
+//			}
+//	
 		
 		
 	

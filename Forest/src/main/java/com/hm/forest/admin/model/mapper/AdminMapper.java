@@ -24,5 +24,9 @@ public interface AdminMapper {
 
 	int updateProductStatus(@Param("no") int no, @Param("status") String status);
 
+	
+
+	
+
 
 }
