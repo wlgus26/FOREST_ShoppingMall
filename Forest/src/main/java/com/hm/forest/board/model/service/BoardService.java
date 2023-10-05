@@ -41,6 +41,13 @@ public interface BoardService {
 	// 댓글 수
 	int selectReplyCountByBoardNo(int boardNo);
 
+	// 특정 댓글 조회
+	Reply getReplyByNo(int no);
+
+	// 댓글 삭제
+	int deleteReply(int no);
+
+
 
 
 }

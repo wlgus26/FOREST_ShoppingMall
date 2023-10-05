@@ -128,7 +128,19 @@ public class HomeController {
 	public ModelAndView myPage (ModelAndView modlAndView) {
 		
 		modlAndView.addObject("pageName", "myPage");
-		modlAndView.setViewName("page/myPage");
+		modlAndView.setViewName("page/products/myPage");
+		
+		return modlAndView;
+	}
+
+
+
+	// 마이페이지로 이동 
+	@GetMapping("/kitchen")
+	public ModelAndView products (ModelAndView modlAndView) {
+		
+		modlAndView.addObject("pageName", "kitchen");
+		modlAndView.setViewName("page/products/kitchen");
 		
 		return modlAndView;
 	}

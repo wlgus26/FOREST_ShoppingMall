@@ -41,7 +41,6 @@
 				STOCK, 
 				COMPANY, 
 				DISCOUNTRATE, 
-				STATUS, 
 				IMAGE, 
 				WISH
 			) VALUES (
@@ -56,7 +55,6 @@
 				#{stock}, 
 				#{company}, 
 				#{discountrate}, 
-				#{status}, 
 				#{image}, 
 				#{wish}
 			)
