@@ -16,6 +16,66 @@
 
 <!-- Content -->
 <div layout:fragment="content">
+
+<div class="container" style="width: 70%">
+		
+		<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;">${productInfo.productName}</h1>
+			<input type="hidden" value=id="productId">
+		</div>
+		<div class="row" style="float: left; text-align: center; width:35%;">
+			<img >
+		</div>
+
+		<div class="row productInfo" style="width: 40%; float: right;" >
+			<div class="form-group" style="text-align: center;">
+				<h3 class="page-header"><span>${productInfo.productName}</span><br><small>${productInfo.productInfo}</small></h3>
+			</div>
+			<div class="form-group" style="text-align: left;">
+				<label>가격 : </label><span>&nbsp;<fmt:formatNumber value="" type="number"/></span><span>&nbsp;원</span>
+				<input type="hidden" value="${productInfo.price}" id="price">
+			</div>
+			<div class="form-group" style="text-align: left;">
+				<label>배송비 : </label><span>&nbsp;2500원</span>
+				<p>도서산간지역 배송비 5000원 / 3만원 이상 결제시 무료배송</p>
+			</div>
+			<div class="form-group" style="text-align: left;">
+				<label>적립금 : </label><span><fmt:parseNumber var="test" value="${productInfo.price / 100}" integerOnly="true"/> ${test}&nbsp;원</span>
+			</div>
+
+			<c:choose>
+				<c:when test="${productInfo.productDist != 'acc' && productInfo.productDist != 'bag'}">
+					<div class="form-horizontal" style="text-align: left;">
+						<label>옵션 : </label> 
+						<select class="form-control opt_select" name="selectedOpt">
+							<option value="S">S</option>
+							<option value="M">M</option>
+							<option value="L">L</option>
+						</select>
+					</div>
+				</c:when>
+				<c:otherwise></c:otherwise>
+			</c:choose>		
+			<div class="form-horizontal" style="text-align: left;">
+				<label>구매수량 : </label> 
+				<select class="form-control" id="select_count">
+				<c:forEach begin="1" end="${productInfo.stock}" var="count">
+					<option>${count}</option></c:forEach>
+				</select>
+			</div>	
+			<hr>
+			
+			<div class="row">
+				<div class="selected_option" style="text-align: right;">
+				</div>
+				<div style="text-align: center;">
+					<button class="btn btn-default">주문하기</button>
+					<button class="btn btn-default">장바구니</button>
+					<button class="btn btn-default">위시리스트</button>
+				</div>
+			</div>
+			<hr>	
+		</div>
+	</div>
    <h5> templates > page > programMgmt.html > Content </h5>
 </div>
 </html>

@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+<<<<<<< HEAD
+=======
+import com.hm.forest.admin.model.service.AdminService;
+import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.common.util.PageInfo;
+>>>>>>> 06a49d1f52ba0c1426d0c9372fd7200ebfa2421a
 import com.hm.forest.product.model.service.ProductService;
-import com.hm.forest.product.model.vo.Products;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,18 +25,36 @@ public class ProductController {
 	@Autowired
 	private ProductService productservice;
 	
-	@GetMapping("/kitchen")
-	private ModelAndView kitchen (ModelAndView modelAndView) {
-		
-		modelAndView.addObject("pageName", "kitchen");
-		modelAndView.setViewName("page/products/kitchen");
-		
-		productservice.getProducts();
-		
-		return modelAndView;
-	}
 	
-
+	@Autowired
+	private AdminService adminService;
+	
+	@GetMapping("/kitchen")
+		public ModelAndView list(ModelAndView modelAndView, 
+				 				@RequestParam(defaultValue =  "1") int page) {
+			
+			int listCount = 0;
+			PageInfo pageInfo = null;
+			List<Product> productlists = null; 
+			
+			listCount = adminService.getProductBoardCount();
+			pageInfo = new PageInfo(page, 10, listCount, 10);
+			productlists = adminService.getProductBoardList(pageInfo);
+			
+			log.info("Page : {}", page);
+			log.info("ListCount : {}", listCount);
+			
+			modelAndView.addObject("pageInfo", pageInfo);
+			modelAndView.addObject("productlists", productlists);
+			
+			System.out.println();
+			
+			modelAndView.setViewName("page/products/kitchen");
+			
+			return modelAndView;
+	}
+		
+	
 	
 	@GetMapping("/style")
 	private ModelAndView style (ModelAndView modelAndView) {
@@ -55,6 +78,7 @@ public class ProductController {
 		return modelAndView;
 	}
 	
+<<<<<<< HEAD
 //	@GetMapping("/products/{no}")
 //	public ModelAndView productdetail(@PathVariable int no, ModelAndView modelAndView) {
 //		
@@ -67,6 +91,11 @@ public class ProductController {
 	
 	@GetMapping("/products/productDetail")
 	private ModelAndView detail (ModelAndView modelAndView) {
+=======
+
+	@GetMapping("/productdetail")
+	private ModelAndView productdetail(@RequestParam("no") int no , ModelAndView modelAndView) {
+>>>>>>> 06a49d1f52ba0c1426d0c9372fd7200ebfa2421a
 		
 		modelAndView.addObject("PageName", "productDetail");
 		modelAndView.setViewName("page/products/productDetail");
@@ -75,6 +104,13 @@ public class ProductController {
 		
 		return modelAndView;
 	}
+<<<<<<< HEAD
+=======
+	
+
+	
+	
+>>>>>>> 06a49d1f52ba0c1426d0c9372fd7200ebfa2421a
 
 	
 	 @GetMapping("/productdetail/{no}")

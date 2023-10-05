@@ -179,7 +179,7 @@ public class AdminController {
 			return modelAndView;	
 		}
 		
-		//  제품 상세 페이지에서 (수정버튼 누르면 )수정 페이지 요청
+		// 관리자페이지_제품 상세 페이지에서 (수정버튼 누르면)수정 페이지 요청
 		@GetMapping("/productMgmtUpdate")
 		public ModelAndView update (ModelAndView modelAndView, @RequestParam("no") int no) {
 			Product product = adminService.getProductBoardByNo(no);
@@ -196,6 +196,7 @@ public class AdminController {
 		 // 관리자페이지_제품 수정
 		 @PostMapping("/productMgmtUpdate")
 		 public ModelAndView update (ModelAndView modelAndView, 
+				 					 @RequestParam("upfile") MultipartFile upfile,
 				 					 @RequestParam("no") int no,
 				 					 @RequestParam("name") String name,
 				 					 @RequestParam("price") int price,
@@ -209,6 +210,42 @@ public class AdminController {
 	 
 			 product = adminService.getProductBoardByNo(no);
 			 
+			 
+			 if (upfile != null && !upfile.isEmpty()) {
+					 String location = null;
+					 String renamedFileName = null;
+					 
+					 try {
+						location = resourceLoader.getResource("classpath:/static/upload/product/")
+						 						  .getFile()
+						 						  .getPath();
+						
+						// 이전에 업로드된 첨부파일 삭제
+						if (product.getImage() != null) {
+							MultipartFileUtil.delete(location + "/" + product.getImage());
+							log.info(location + "★삭제된 후 location★");
+							
+						}
+						location = resourceLoader.getResource("classpath:/static/upload/product/")
+		 						  .getFile()
+		 						  .getPath();
+							
+						// 수정된 첨부파일을 저장한다.
+						renamedFileName = MultipartFileUtil.save(upfile, location);
+						
+						System.out.println(upfile + "★upfile★");
+						System.out.println(location + "★첨부파일 저장 후 location★");
+						
+						if (renamedFileName != null) {
+						
+							product.setImage(renamedFileName);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }
+			
+
 			 product.setName(name);
 			 product.setPrice(price);
 			 product.setColor(color);
@@ -219,9 +256,7 @@ public class AdminController {
 			 log.info("★ 보드 : {}", product);
 				 
 		     result = adminService.save(product);
-		     
-		
-				 
+		 
 				 if ( result > 0 ) {
 					 modelAndView.addObject("msg", "게시글 수정 성공");
 					 modelAndView.addObject("location", "/admin/productMgmtView?no=" + product.getNo()); 
@@ -258,58 +293,6 @@ public class AdminController {
 				return modelAndView;
 		 }
 		 
-		// 첫번째 사진 썸네일로 지정
-//			public String getImgSrc(String content) {
-//				  Pattern nonValidPattern = Pattern
-//					  		.compile("(?i)< *[IMG][^\\>]*[src] *= *[\"\']{0,1}([^\"\'\\ >]*)");
-//					  		int imgCnt = 0;
-//					  		String img = "";
-//					  		Matcher matcher = nonValidPattern.matcher(content);
-//					  		while (matcher.find()) {
-//					  			img = matcher.group(1);
-//					  			imgCnt++;
-//					  			if(imgCnt == 1){
-//					  		        break;                                  
-//					  		    }
-//					  		}
-//					  		return img;
-//			}
-//	
-		
-		
-	
-
-		// 관리자페이지_제품등록(이미지 업로드)
-//		@PostMapping("/image/upload")
-//		@ResponseBody
-//		public Map<String, Object> image(MultipartHttpServletRequest request) throws Exception {
-//		    Map<String, Object> response = new HashMap<>();
-//
-//		    try {
-//		        MultipartFile uploadFile = request.getFile("upload");
-//		        String originalFileName = uploadFile.getOriginalFilename();
-//		        String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
-//		        String newFileName = UUID.randomUUID().toString() + ext;
-//		        int maxSize = 10485760;
-//
-//		        String realPath = request.getServletContext().getRealPath("/static/upload/main_file");
-//		        String savePath = realPath + "upload/" + newFileName;
-//		        String uploadPath = "./upload/" + newFileName;
-//
-//		        File file = new File(savePath);
-//		        uploadFile.transferTo(file);
-//
-//		        // JSON 응답 생성
-//		        response.put("uploaded", true);
-//		        response.put("url", uploadPath);
-//		    } catch (Exception e) {
-//		        response.put("uploaded", false);
-//		        response.put("error", "파일 업로드에 실패했습니다.");
-//		        e.printStackTrace();
-//		    }
-//
-//		    return response;
-//		}
 
 		
 		// 관리자페이지_프로그램관리로 이동

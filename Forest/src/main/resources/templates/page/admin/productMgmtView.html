@@ -91,7 +91,9 @@
 	    </tr>
 	    <tr>
 	      <th>대표이미지</th>
-	      <td style="text-align: left;" th:text="${product.image}"></td>
+	      <td>
+	        <img th:src="@{/upload/product/} + ${product.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
+	      </td>
 	    </tr>
 	    <tr>
 	      <th>상세이미지</th>
