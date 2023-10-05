@@ -1,5 +1,7 @@
 package com.hm.forest.product.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,12 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-<<<<<<< HEAD
-=======
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
->>>>>>> 06a49d1f52ba0c1426d0c9372fd7200ebfa2421a
 import com.hm.forest.product.model.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -78,7 +77,6 @@ public class ProductController {
 		return modelAndView;
 	}
 	
-<<<<<<< HEAD
 //	@GetMapping("/products/{no}")
 //	public ModelAndView productdetail(@PathVariable int no, ModelAndView modelAndView) {
 //		
@@ -89,13 +87,9 @@ public class ProductController {
 //	    return modelAndView;
 //	}
 	
-	@GetMapping("/products/productDetail")
-	private ModelAndView detail (ModelAndView modelAndView) {
-=======
 
 	@GetMapping("/productdetail")
 	private ModelAndView productdetail(@RequestParam("no") int no , ModelAndView modelAndView) {
->>>>>>> 06a49d1f52ba0c1426d0c9372fd7200ebfa2421a
 		
 		modelAndView.addObject("PageName", "productDetail");
 		modelAndView.setViewName("page/products/productDetail");
@@ -104,14 +98,10 @@ public class ProductController {
 		
 		return modelAndView;
 	}
-<<<<<<< HEAD
-=======
 	
 
 	
 	
->>>>>>> 06a49d1f52ba0c1426d0c9372fd7200ebfa2421a
-
 	
 	 @GetMapping("/productdetail/{no}")
 	    public ModelAndView productdetail(ModelAndView modelAndView, @RequestParam(name = "no" , required = true) int no) {

@@ -65,10 +65,6 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
-<<<<<<< HEAD
-	
-
-
 
 
 //	@Override
@@ -86,13 +82,10 @@ public class AdminServiceImpl implements AdminService {
 //	}
 
 	
-=======
 	@Override
 	public int save(Program program) {
 
 		return 0;
 	}
 
-
->>>>>>> f2e2bdfdaedb200b88b920184079d6a448badcfd
 }

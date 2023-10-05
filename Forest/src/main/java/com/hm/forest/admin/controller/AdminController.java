@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,11 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
-<<<<<<< HEAD
 import com.hm.forest.common.util.MultipartFileUtil;
-=======
 import com.hm.forest.admin.model.vo.Program;
->>>>>>> f2e2bdfdaedb200b88b920184079d6a448badcfd
 import com.hm.forest.common.util.PageInfo;
 
 import lombok.RequiredArgsConstructor;
@@ -51,7 +49,6 @@ public class AdminController {
 			return modlAndView;
 		}
 		
-<<<<<<< HEAD
 		// 관리자페이지_제품관리로 이동
 		@GetMapping("/productMgmt")
 		public ModelAndView AdminMgmt (ModelAndView modelAndView) {
@@ -61,8 +58,6 @@ public class AdminController {
 			
 			return modelAndView;
 		}
-=======
-
 		
 		// 관리자페이지_제품등록
 //		@PostMapping("/productMgmt/insert")
@@ -78,7 +73,6 @@ public class AdminController {
 //			return "redirect:/productMgmtList";
 //		}
 //		
->>>>>>> d7d904b1cbf72e5dda4074eb8d404fd53f651b35
 	
 	
         // 관리자페이지_제품등록
