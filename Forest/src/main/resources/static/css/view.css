@@ -7,7 +7,8 @@
 
 
 .cont_comment {
-    padding: 5px 0 29px 0;
+	padding-top: 10px;
+    padding-bottom: 29px;
     background-color: #f8f8f8;
 }
 
@@ -21,7 +22,7 @@
 }
 
 .comment-writer {
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: 500;
 }
 
@@ -82,7 +83,7 @@
 
 .reply-text{
     padding: 0 43px;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.6;
      word-break: break-all; /* 긴 단어를 강제로 줄 바꿈 */
 }
@@ -125,6 +126,12 @@
     width: 100%;
     overflow: hidden;
     overflow-wrap: break-word;
+    text-decoration: none;
+    color: #5e5d5e;
+}
+
+.comment_inbox_text:hover {
+	color: #5e5d5e;
 }
 
 .CommentWriter .comment_inbox_number {

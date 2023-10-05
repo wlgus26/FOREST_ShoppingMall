@@ -203,7 +203,7 @@ h6, .h6 {
 }
 
 p {
-  margin-top: 0;
+  margin-top: 5px;
   margin-bottom: 1rem;
 }
 
@@ -277,7 +277,7 @@ mark, .mark {
 sub,
 sup {
   position: relative;
-  font-size: 0.75em;
+  font-size: 0.8em;
   line-height: 0;
   vertical-align: baseline;
 }
@@ -2226,6 +2226,13 @@ progress {
 
 .form-board {
 	width: 70%;
+}
+
+.board-list-none {
+	height: 300px;
+	vertical-align: middle;
+	--bs-table-hover-bg: none;
+	cursor: auto;
 }
 
 textarea.form-control {

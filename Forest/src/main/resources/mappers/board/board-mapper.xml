@@ -215,16 +215,12 @@
 	    	NO,
 	    	BOARD_NO,
 	    	WRITER_NO,
-	    	CONTENT,
-	    	CREATE_DATE,
-	    	MODIFY_DATE
+	    	CONTENT
 	    ) VALUES(
 	    	#{no},
 	    	#{boardNo},
 			#{writerNo},
-			#{content},
-			#{createDate},
-			#{modifyDate}
+			#{content}
 		)
 	</insert>
 	

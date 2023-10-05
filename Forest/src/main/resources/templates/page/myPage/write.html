@@ -33,6 +33,7 @@
 	<form class="container" action="/myPage/write" method="POST">
 	 <!-- csrf토큰과 type값을 hidden 속성으로 넘겨준다. -->
 	 <input type="hidden" th:name="type" th:value="${type}"/>
+	 <input type="hidden" th:name="writerNo" th:value="${loginMember.no}"/>
 	 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 		<div class="table-div">
 		  <table class="table">
