@@ -115,32 +115,32 @@
 				        <!-- 댓글 등록  -->
 				        <form id="enrollForm">
 				        <!-- 댓글 입력 박스 -->
-				        <div data-v-afadf0bc="" class="CommentWriter">
-					        <div data-v-afadf0bc="" class="comment_inbox" >
-						        <strong data-v-afadf0bc="" class="blind">댓글을 입력하세요</strong>
+				        <div class="CommentWriter">
+					        <div class="comment_inbox" >
+						        <strong class="blind">댓글을 입력하세요</strong>
 						        <em class="comment_inbox_name">로그인유저 아이디</em>
-						        <textarea data-v-afadf0bc="" id="commentTextarea" placeholder="댓글을 남겨보세요" rows="1" class="comment_inbox_text" style="overflow: hidden; overflow-wrap: break-word;"></textarea>
-					        	<div data-v-afadf0bc="" class="comment_inbox_number"><span data-v-afadf0bc="" class="blind">현재 입력한 글자수</span>
-						        	<strong data-v-afadf0bc="" class="inbox_count"></strong>
-						        	<span data-v-afadf0bc="" class="inbox_total">/</span>
-						        	<span data-v-afadf0bc="" class="blind">전체 입력 가능한 글자수</span>
-						        	<span data-v-afadf0bc="" class="inbox_total">2000</span>
+						        <textarea id="commentTextarea" placeholder="댓글을 남겨보세요" rows="1" class="comment_inbox_text"></textarea>
+					        	<div class="comment_inbox_number"><span class="blind">현재 입력한 글자수</span>
+						        	<strong class="inbox_count"></strong>
+						        	<span class="inbox_total">/</span>
+						        	<span class="blind">전체 입력 가능한 글자수</span>
+						        	<span class="inbox_total">800</span>
 					        	</div>
 					      	</div>
 						
 						<!-- 댓글 사진 첨부 및 등록 버튼 -->
-				        <div data-v-afadf0bc="" class="comment_attach">
-					        <div data-v-afadf0bc="" class="attach_box">
-						        <label data-v-2ec5a274="" data-v-afadf0bc="" for="attach3" class="button_file"> 
+				        <div class="comment_attach">
+					        <div class="attach_box">
+						        <label for="attach3" class="button_file"> 
 						        <i class="fa-solid fa-camera"></i>
 						        </label> 
 						    </div> 
-							<div data-v-afadf0bc="" class="register_box">
+							<div class="register_box">
 								 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 								 <input type="hidden"  th:value="${_csrf.headerName}" />
- 								<input type="hidden" id="boardNo" th:value="${board.no}">
- 								<input type="hidden" id="writerNo" th:value="${board.writerNo}">
-								<a data-v-afadf0bc="" type="button" id="btinReplyEnroll" class="button btn_register btn-custom1 btn-sm btn-outline-custom1">등록</a>
+									<input type="hidden" id="boardNo" th:value="${board.no}">
+									<input type="hidden" id="writerNo" th:value="${board.writerNo}">
+								<a type="button" id="btinReplyEnroll" class="button btn_register btn-sm">등록</a>
 							</div>
 						</div>
 						</div>
@@ -228,66 +228,6 @@
 	</script>
 	
 	
-	<!-- textarea에 댓글 작성 시, 글자수 카운트해서 화면에 출력 --> 
-    <script>
-	    // textarea id "commentTextarea"를 사용하여 참조
-	    var textarea = document.getElementById('commentTextarea');
-	    var inboxCountElement = document.querySelector('.inbox_count');
-	    
-	    var handleTextareaInput = function() {
-	        // textarea에 입력된 텍스트 길이 가져오기
-	        var textLength = textarea.value.length;
-	        
-	        // 텍스트 길이가 0인 경우에는 0으로 표시, 그 외에는 텍스트 길이로 업데이트
-	        inboxCountElement.textContent = (textLength === 0) ? '0' : textLength;
-	    };
-	
-	    // 초기 호출
-	    handleTextareaInput();
-	    
-	    // 입력 이벤트 리스너 추가
-	    textarea.addEventListener('input', handleTextareaInput);
-	</script>
-	
-	<!-- textarea에 입력되는 글자 수 제한(2000자) -->
-	<script>
-	// textarea id "commentTextarea"를 사용하여 참조
-	var textarea = document.getElementById('commentTextarea');
-	var defaultHeight = textarea.style.height; // 초기 높이 저장
-
-	// 텍스트 입력 이벤트 리스너 추가
-	textarea.addEventListener('input', function () {
-	    // 입력된 텍스트 길이를 가져옴
-	    var textLength = textarea.value.length;
-	    
-	    // 최대 길이를 2000으로 설정
-	    var maxLength = 2000;
-
-	    // 현재 입력된 길이가 최대 길이를 초과하면 텍스트를 최대 길이까지 자릅니다.
-	    if (textLength > maxLength) {
-	        textarea.value = textarea.value.substring(0, maxLength);
-	        textLength = maxLength;
-	    }
-
-	    // 글자 수를 화면에 표시합니다.
-	    inboxCountElement.textContent = textLength;
-	});
-	</script>
-	
-	<!-- textarea 높이 자동 조절 -->
-	<script>
-		var textarea = document.getElementById('commentTextarea');
-		var defaultHeight = textarea.style.height; // 초기 높이 저장
-	
-		textarea.addEventListener('input', function () {
-		    var target = event.target;
-	
-		    // 현재 스크롤 높이 계산 & 설정
-		    target.style.height = defaultHeight; // 초기 높이로 리셋
-		    target.style.height = (target.scrollHeight) + 'px';
-		});
-	</script>
-	
 
 	<!-- 댓글 조회 비동기 요청 -->
 	<!-- 수정/삭제 메뉴 토글 -->
@@ -324,6 +264,9 @@
 	        var listItem = $('<li></li>');
 	        var commentPost = $('<div>').addClass('comment_post');
 	        var profileImage = $('<img>').attr('src', '/images/BasicProfile.png').attr('alt', '프로필 사진').addClass('comment-img');
+	        
+	        //  댓글 번호는 hidden
+	        var replyNo = $('<span></span>').addClass('reply-no').text(reply.no);
 
 	       // 더보기 버튼 관련 요소 생성
 	        var moreButtonContainer = $('<span/><div class="opt_more_g" style="position: absolute; top: 10px; right: 20px; border: 1px solid;"></div>');
@@ -359,14 +302,13 @@
 		    // 댓글 내용    
 	        var replyText = $('<p><span></span></p>').addClass('reply-text').text(reply.content);
 	        var commentPost = $('</div>').addClass('comment_post');
-	        var replyNoInput = $('<input type="hidden">').addClass('reply-no');
-
+	       
 	
 		     // commentPost에 replyNoInput을 추가
-	     	commentPost.append(replyNoInput);
+	     	commentPost.append(replyNo);
 	        
 	        // listItem에 위에서 생성한 요소들 추가
-	        listItem.append(profileImage, commentPost, moreButtonContainer, writerId, createDate, replyText);
+	        listItem.append(profileImage, commentPost, replyNo, moreButtonContainer, writerId, createDate, replyText);
 
 	        // commentList에 listItem 추가
 	        commentList.append(listItem);
@@ -386,7 +328,7 @@
 	fetchComments();
 	</script>
 	
-	<!-- 댓글 등록 비동기 요청 -->
+	<!-- 댓글 등록, 수정, 삭제 -->
 	<script>
 		<!-- csrf 토큰을 JavaScript 변수로 저장 -->
 	    var csrfToken = '[[${_csrf.token}]]';
@@ -398,6 +340,13 @@
 	            var writerNo = $('#writerNo').val();
 	            var content = $('#commentTextarea').val();
 	            
+	            // 내용이 공백인지 확인
+			    if (content.trim() === '') {
+			        alert("내용을 입력해주세요"); // 공백이면 알림 띄우고, 
+			        commentTextarea.focus(); // textarea 에 focus 준 후 함수 종료
+			        return;
+			    }
+			   
 	            var createDate = new Date();
 	            var modifyDate = new Date(); 
 	            
@@ -435,12 +384,12 @@
 
 	                   // 댓글 작성 후 텍스트 에어리어를 비워줍니다.
 	                    $('#commentTextarea').val('');
-
-	                   // 텍스트 영역 입력 길이를 0으로 설정
-	                    handleTextareaInput();
 	                   
 	                    // 댓글 제출 후 새로운 댓글 목록을 불러온다.(작성자 id, 작성일시, 프로필 등)
 	                    fetchComments();  
+
+	                   // 텍스트 영역 입력 길이를 0으로 설정
+	                    handleTextareaInput();
 	                },
 	                error: function (error) {
 	                    // 오류 시 처리할 내용
@@ -451,7 +400,7 @@
 	    });
 	    
 	    
-	 // 새로운 댓글을 화면에 추가하는 함수
+	 // 새로운 댓글을 목록에 추가하는 함수
 	    function appendComment(reply) {
 	        var listItem = $('<li></li>');
 	        var profileImage = $('<img>').attr('src', '/images/BasicProfile.png').attr('alt', '프로필 사진').addClass('comment-img');
@@ -472,66 +421,217 @@
 	        $('#comment-ul').append(listItem);
 	    }
 	 
-	    // 텍스트 영역의 길이를 0으로 설정하는 함수
+	  // 텍스트 영역의 길이를 0으로 설정하는 함수
 	    function handleTextareaInput() {
 	        var inboxCountElement = document.querySelector('.inbox_count');
 	        inboxCountElement.textContent = '0';
 	    }
 	    
 	    
-	    
+	 // 댓글 삭제 이벤트
+		$(document).on('click', '.delete_comment', function (event) {
+		    event.preventDefault(); // 기본 동작 방지
 
-		// '수정' 버튼 클릭 이벤트 처리
+		    if(confirm("댓글을 삭제하시겠습니까?")) {
+			    // 클릭한 '수정' 버튼이 속한 댓글의 내용을 가져옴
+			    var listItem = $(this).closest('li'); // 클릭한 버튼의 가장 가까운 li 요소를 선택
+			    var replyNo = listItem.find('.reply-no').text(); // 댓글의 reply-no를 가져옴
+	
+			    // 댓글 삭제 요청
+			    deleteComment(replyNo);
+		    }
+		});
+		
+
+	 // 댓글 삭제 요청을 서버로 전송
+		function deleteComment(replyNo) {
+		    $.ajax({
+		        type: 'GET',
+		        url: '/reply/delete/' + replyNo, // API 엔드포인트
+		        dataType: 'json',
+		        success: function (obj) {
+		            // 서버에서 반환한 JSON 데이터 처리
+		            if (obj.message === "성공") {
+		                // 댓글 삭제 성공시 알림 메세지를 띄운 후 댓글 목록 업데이트
+		               alert("댓글이 성공적으로 삭제되었습니다.");
+		               fetchComments(); // 댓글 목록 업데이트
+		            } else {
+		                // 댓글 삭제 실패시
+		                alert("댓글 삭제에 실패하였습니다.");
+		            }
+		        },
+		        error: function (error) {
+		            console.error('댓글 삭제 중 오류가 발생하였습니다 :', error);
+		        },
+		    });
+		}
+	 
+	 
+	 // 변수를 선언하여 이전 댓글의 내용을 저장
+	    var previousReply = null;
+		
+	 // 댓글 수정 이벤트
 		$(document).on('click', '.modify_comment', function (event) {
 		    event.preventDefault(); // 기본 동작 방지
 
 		    // 클릭한 '수정' 버튼이 속한 댓글의 내용을 가져옴
 		    var listItem = $(this).closest('li'); // 클릭한 버튼의 가장 가까운 li 요소를 선택
-		    var replyNo = listItem.find('reply-no').text(); // 댓글의 reply-no를 가져옴
-		    var replyText = listItem.find('.reply-text').text(); // 선택된 li 요소 내의 댓글 내용을 가져옴
+		    var replyNo = listItem.find('.reply-no').text(); // 댓글의 reply-no를 가져옴
+		    var writerId = listItem.find('.comment-writer').text(); 
+		    var replyText = listItem.find('.reply-text').text(); // 댓글의 reply-text 가져옴
+		    
+		    // 이전 댓글 내용 저장
+		    previousReply = {
+		        listItem: listItem,
+		        writerId: writerId,
+		        replyNo: replyNo,
+		        replyText: replyText
+		    };
 
-		    // 가져온 댓글 내용을 콘솔에 출력
-		    console.log("1댓글 내용:", replyText);
-		    console.log("1댓글 번호:", replyNo);
-		    console.log("1댓글 listItem:", listItem);
+		    console.log(previousReply);
+		    listItem.empty();
 		    
 		    // 수정 폼 표시
-            showModifyForm(replyNo);
+            showModifyForm(listItem, writerId, replyNo, replyText);
 		});
 	    
 		// '수정' 버튼 클릭 시 수정 폼을 표시하는 함수
-		function showModifyForm(replyNo) {
+		// 댓글 수정 요청을 서버로 전송
+		function showModifyForm(listItem, writerId, replyNo, replyText) {
 		    // 클릭한 '수정' 버튼이 속한 댓글의 내용을 가져옴
-		    var listItem = $('#reply-' + replyNo);
-		    console.log("2댓글수정 replyNo : " + replyNo);
-		    console.log("2댓글수정 listItem : " + listItem);
-		    var replyText = listItem.find('.reply-text').text();
-		    console.log("2댓글수정 replyText : " + replyText);
-
+		    console.log("replyNo : " + replyNo);
+		    console.log("replyText : " + replyText);
+		    console.log("writerId : " + writerId);
+		    
 		    // 댓글 내용을 수정 폼으로 교체
 		    var modifyForm = $('<form id="enrollForm"></form>');
-		    var commentTextarea = $('<textarea id="commentTextarea" placeholder="댓글을 남겨보세요" rows="1" class="comment_inbox_text"></textarea>');
-		    commentTextarea.val(replyText); // 댓글 내용을 폼에 설정
-		    var boardNoInput = $('<input type="hidden" id="boardNo" th:value="${board.no}">');
-		    var writerNoInput = $('<input type="hidden" id="writerNo" th:value="${board.writerNo}">');
-		    var replyNoInput = $('<input type="hidden" id="replyNo" value="' + replyNo + '">'); // reply.no를 폼에 추가
+		    var commentWriter = $('<div class="CommentWriter"></div>'); 
+		    var comment_inbox = $('<div class="comment_inbox"></div>');
+			    var comment_inbox_name = $('<strong class="blind">댓글을 입력하세요</strong><em class="comment_inbox_name">로그인유저 아이디</em>');
+			    var commentTextarea = $('<textarea id="commentTextarea" placeholder="댓글을 남겨보세요" rows="1" class="comment_inbox_text"></textarea>');
+			    commentTextarea.val(replyText); // 댓글 내용을 폼에 설정
+			    // var content = $('#commentTextarea').val(); // 수정된 댓글 내용 
+			    
+			    var comment_inbox_number = $('<div class="comment_inbox_number"><span data-v-afadf0bc="" class="blind">현재 입력한 글자수</span><strong class="inbox_count"></strong><span class="inbox_total">/</span><span class="blind">전체 입력 가능한 글자수</span><span class="inbox_total">800</span>');
+			var comment_attach = $('<div class="comment_attach"></div>');
+			var attach_box = $('<div class="attach_box"><label for="attach3" class="button_file"><i class="fa-solid fa-camera"></i></label></div>');
+			var register_box = $('<div class="register_box"><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/><input type="hidden"  th:value="${_csrf.headerName}"/><input type="hidden" id="boardNo" th:value="${board.no}"><input type="hidden" id="writerNo" th:value="${board.writerNo}"><a type="button" id="btinReplyModifyCancel" class="btn_cancel btn-sm">취소</a><a type="button" id="btinReplyModifyEnroll" class="button btn-sm">등록</a></div>');
+			
+		// 수정 폼을 새로운 내용으로 교체
+		   listItem.empty().append(modifyForm);
+		   modifyForm.append(commentWriter);
+		   commentWriter.append(comment_inbox, comment_attach);
+		   comment_inbox.append(comment_inbox_name, commentTextarea, comment_inbox_number);
+		   comment_attach.append(attach_box, register_box);
+		
 
-		    // 수정 폼을 새로운 내용으로 교체
-		    listItem.empty().append(modifyForm);
-		    modifyForm.append(commentTextarea, boardNoInput, writerNoInput, replyNoInput);
 
-		    // 이후 수정한 내용을 서버로 전송하고 업데이트하는 로직을 구현해야 합니다.
+		// 	수정 폼 내의 등록 버튼 클릭 시 
+		 var btinReplyModifyEnroll = register_box.find('#btinReplyModifyEnroll');
+			 btinReplyModifyEnroll.on('click', function () {
+				 
+				 var modifiedContent = commentTextarea.val();
+				 console.log("컨텐츠내용 : "  + modifiedContent);
+				 
+				   // 내용이 공백인지 확인
+				    if (modifiedContent.trim() === '') {
+				        alert("내용을 입력해주세요"); // 공백이면 알림 띄우고, 
+				        commentTextarea.focus(); // textarea 에 focus 준 후 함수 종료
+				        return;
+				    }
+				   
+		         // AJAX 통해서 수정 내용을 서버로 전송
+				 $.ajax({
+				        type: 'POST',
+				        url: '/reply/update', // API 엔드포인트
+				        data: {
+				        	replyNo,
+				        	content: modifiedContent
+				        },
+				        dataType: 'json',
+				        beforeSend: function(xhr) {
+			                // 요청을 보내기 전, CSRF 토큰을 헤더에 설정
+			                xhr.setRequestHeader(csrfHeader, csrfToken);
+			            },
+				        success: function (obj) {
+				            // 서버에서 반환한 JSON 데이터 처리
+				            if (obj.message === "성공") {
+				                // 댓글 삭제 성공시 알림 메세지를 띄운 후 댓글 목록 업데이트
+				               alert("댓글이 성공적으로 수정되었습니다.");
+				               fetchComments(); // 댓글 목록 업데이트
+				            } else {
+				                // 댓글 삭제 실패시
+				                alert("댓글 수정에 실패하였습니다.");
+				            }
+				        },
+				        error: function (error) {
+				            console.error('댓글 수정 중 오류가 발생하였습니다 :', error);
+				        },
+				    });
+		        });
+			 
+		 
+		// 취소 버튼 클릭 시 이전 댓글을 복원
+		    var btinReplyModifyCancel = register_box.find('#btinReplyModifyCancel');
+		    btinReplyModifyCancel.on('click', function () {
+		    	fetchComments(); // 댓글 목록 업데이트 
+		       
+		    });
+		
+			function getReplyByNo(replyNo) {
+			    $.ajax({
+			        type: 'GET',
+			        url: '/reply/search/' + replyNo, // API 엔드포인트
+			        dataType: 'json',
+			        success: function (obj) {
+			        	var reply = obj;
+			        	   // 서버에서 반환한 JSON 데이터 처리
+			            listItem.empty().append(previousReply.listItem.contents()); // 이전 댓글 내용을 다시 추가
+			            console.log(reply);
+			        },
+			        error: function (error) {
+			            console.error('댓글 조회 중 오류가 발생했습니다. :', error);
+			        },
+			    });
+			}
+		   
+		   
+		   // textarea 최대 입력 길이, 글자수 업데이트, 높이 자동 조절 
+			    var textarea = document.getElementById('commentTextarea');
+			    var inboxCountElement = document.querySelector('.inbox_count');
+			    var defaultHeight = textarea.style.height; // 초기 높이 저장
+			    var maxLength = 800; // 최대 입력 길이를 800으로 설정
+	
+			    var handleTextareaInput = function () {
+			        var textLength = textarea.value.length;   // textarea에 입력된 텍스트 길이 가져오기
+			        inboxCountElement.textContent = (textLength === 0) ? '0' : textLength;  // 텍스트 길이가 0인 경우에는 0으로 표시, 그 외에는 텍스트 길이로 업데이트
+	
+			        // 텍스트 길이가 최대 입력 길이를 초과 시 maxLength가 되도록 설정
+			        if (textLength > maxLength) {
+			            textarea.value = textarea.value.substring(0, maxLength);
+			            textLength = maxLength;
+			        }
+			        // 글자 수를 화면에 표시
+				    inboxCountElement.textContent = textLength;
+			    };
+	
+			    // 높이 자동 조절
+			    textarea.addEventListener('input', function () {
+			        var target = event.target;
+			        target.style.height = defaultHeight; // 초기 높이로 설정
+			        target.style.height = (target.scrollHeight) + 'px';
+			    });
+	
+			    handleTextareaInput();
+			 	
+			    // 입력 이벤트 리스너 추가
+			    textarea.addEventListener('input', handleTextareaInput);
+
 		}
 
 	</script>
-	
-	<!-- 댓글 수정 -->
-	<script>
 
-	</script>
 	
-	
-		
 	<script>
 	// ul 요소를 가져옵니다.
 	var ulElement = document.querySelector('.list_comment');
@@ -554,6 +654,38 @@
 	    }
 	});
 	</script>
+	
+	<script>
+    var textarea = document.getElementById('commentTextarea');
+    var inboxCountElement = document.querySelector('.inbox_count');
+    var defaultHeight = textarea.style.height; // 초기 높이 저장
+    var maxLength = 800; // 최대 입력 길이를 800으로 설정
+
+    var handleTextareaInput = function () {
+        var textLength = textarea.value.length;   // textarea에 입력된 텍스트 길이 가져오기
+        inboxCountElement.textContent = (textLength === 0) ? '0' : textLength;  // 텍스트 길이가 0인 경우에는 0으로 표시, 그 외에는 텍스트 길이로 업데이트
+
+        if (textLength > maxLength) {
+            textarea.value = textarea.value.substring(0, maxLength);
+            textLength = maxLength;
+        }
+        // 글자 수를 화면에 표시
+	    inboxCountElement.textContent = textLength;
+    };
+
+    textarea.addEventListener('input', function () {
+        var target = event.target;
+        target.style.height = defaultHeight;
+        target.style.height = (target.scrollHeight) + 'px';
+    });
+
+    handleTextareaInput();
+ 	
+    // 입력 이벤트 리스너 추가
+    textarea.addEventListener('input', handleTextareaInput);
+</script>
+	
+
 	
 
 </div>

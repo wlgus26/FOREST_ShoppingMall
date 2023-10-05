@@ -57,7 +57,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.selectBoardByNo(no);
 	}
 
-	// 게시글 등록
+	// 게시글 등록, 게시글 수정
 	@Override
 	@Transactional
 	public int save(Board board) {
@@ -87,7 +87,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.updateReadCount(no);
 	}
 
-	// 댓글 등록
+	// 댓글 등록, 댓글 수정
 	@Override
 	@Transactional
 	public int save(Reply reply) {
@@ -95,7 +95,8 @@ public class BoardServiceImpl implements BoardService {
 			int result = 0;
 			
 			if (reply.getNo() > 0) {
-				// update			
+				// update		
+				result = boardMapper.updateReply(reply);
 			} else {
 				// insert
 				result = boardMapper.insertReply(reply);
@@ -114,6 +115,19 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int selectReplyCountByBoardNo(int boardNo) {
 		return boardMapper.selectReplyCountByBoardNo(boardNo);
+	}
+
+	// 특정 댓글 조회
+	@Override
+	public Reply getReplyByNo(int no) {
+		return boardMapper.selectReplyByNo(no);
+	}
+
+	// 댓글 삭제
+	@Override
+	@Transactional
+	public int deleteReply(int no) {
+		return boardMapper.updateReplyStatus(no, "N");
 	}
 
 

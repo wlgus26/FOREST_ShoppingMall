@@ -29,9 +29,9 @@ public class ReplyController {
 	private BoardService boardService;
 
 	// 비동기 통신 응답
-	// 댓글 조회
+	// 게시글에 달린 댓글 목록 조회
 	@GetMapping("/{boardNo}")
-	public ResponseEntity<Map<String, Object>> professor(@PathVariable("boardNo") int boardNo) {
+	public ResponseEntity<Map<String, Object>> getRepliesByBoardNo(@PathVariable("boardNo") int boardNo) {
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("listCount", boardService.selectReplyCountByBoardNo(boardNo));
@@ -40,6 +40,17 @@ public class ReplyController {
 		return ResponseEntity.ok(map);
 	}
 			
+	// 특정 댓글 조회
+	@GetMapping("/search/{replyNo}")
+	@ResponseBody
+	public Map<String, Object> getReplyByNo(@PathVariable("replyNo") int replyNo) {
+		Map<String, Object> map = new HashMap<>();
+
+		map.put("reply", boardService.getReplyByNo(replyNo));
+			
+		return map;
+	}
+	
 	
 	// 댓글 등록
 	@PostMapping("/enroll")
@@ -62,15 +73,27 @@ public class ReplyController {
 	
 	// 댓글 수정
 		@PostMapping("/update")
-		public ResponseEntity<Map<String, Object>> update(@RequestBody Reply reply)  {
-			int result = 0;
-			
-			System.out.println(reply);
-			
+		public ResponseEntity<Map<String, Object>> update(@RequestParam("replyNo") int replyNo, @RequestParam("content") String content)  {
 			Map<String, Object> map = new HashMap<>();
+			int result = 0;
+			Reply reply = null;
+			System.out.println(replyNo);
+			System.out.println(content);
+			
+			reply = boardService.getReplyByNo(replyNo);
+			
+			reply.setContent(content);
 			
 			result = boardService.save(reply);
 			
+			 if (result > 0) {
+		            map.put("message", "성공");
+		     } else {
+		            map.put("message", "실패");
+		     }
+			
+			
+			 
 			map.put("resultCode", result);
 			map.put("reply", reply);
 		
@@ -87,4 +110,30 @@ public class ReplyController {
 			
 			return modelAndView;
 		}
+		
+		@GetMapping("/delete/{replyNo}")
+		@ResponseBody
+		public Map<String, Object> delete(@PathVariable("replyNo") int replyNo) {
+		    Map<String, Object> map = new HashMap<>();
+		    int result = 0;
+		    Reply reply = boardService.getReplyByNo(replyNo);
+		    
+		    if (reply != null) {
+		        // 해당 댓글이 존재하면 삭제
+		        result = boardService.deleteReply(reply.getNo());
+
+		        if (result > 0) {
+		            map.put("message", "성공");
+		        } else {
+		            map.put("message", "실패");
+		        }
+		    } else {
+		        map.put("message", "댓글을 찾을 수 없습니다.");
+		    }
+		    
+		    map.put("location", "/board/view?no=" + reply.getBoardNo());
+		    
+		    return map;
+		}
+
 }
