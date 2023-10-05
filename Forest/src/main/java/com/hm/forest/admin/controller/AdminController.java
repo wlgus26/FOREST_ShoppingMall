@@ -41,15 +41,7 @@ public class AdminController {
 			return modlAndView;
 		}
 		
-		// 관리자페이지_제품관리로 이동
-		@GetMapping("/productMgmt")
-		public ModelAndView AdminMgmt (ModelAndView modelAndView) {
-			
-			modelAndView.addObject("pageName", "productMgmt");
-			modelAndView.setViewName("page/admin/productMgmt");
-			
-			return modelAndView;
-		}
+
 		
 		// 관리자페이지_제품등록
 //		@PostMapping("/productMgmt/insert")
@@ -260,7 +252,7 @@ public class AdminController {
 //		}
 
 		
-		// 관리자페이지_클래스관리로 이동
+		// 관리자페이지_프로그램관리로 이동
 		@GetMapping("/programMgmt")
 		public ModelAndView programMgmt (ModelAndView modlAndView) {
 			
@@ -269,6 +261,9 @@ public class AdminController {
 			
 			return modlAndView;
 		}
+		
+		// 관리자 페이지_프로그램 등록
+		
 		
 		// 관리자페이지_회원관리로 이동
 		@GetMapping("/memberMgmt")
