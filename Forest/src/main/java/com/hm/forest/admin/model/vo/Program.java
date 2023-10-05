@@ -18,6 +18,8 @@ public class Program {
 	
 	private String thumb;
 	
+	private int price;
+	
 	private String category;
 	
 	private String content;

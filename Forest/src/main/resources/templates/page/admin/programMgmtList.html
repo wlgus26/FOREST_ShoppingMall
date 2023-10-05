@@ -16,35 +16,9 @@
 <div layout:fragment="content">
 
 
-		<div class="content">
-			<h1 class="page-header">판매중인 제품 목록 리스트</h1>
-			<div class="row products">
-				<li><div class="scale col-sm-6 col-md-4">
-				<!-- 
-					<a class="thumbnail" href="/displayFile?filename=${imgLink}"><img src="${img}"></a>
-				 -->
-				    <div class="caption">
-				  <tr style="text-align: center;">
-					<th>제목</th>
-					<th>가격</th>
-				  </tr>
-				
-				  <tr class="clickable-row" style="text-align: center;" th:each="program : ${programlists}" th:attr="data-href=@{/admin/programMgmtView?no={no}(no=${program.no})}">
-			        <td th:text="${program.no}"></td>
-			        <td th:text="${program.name}" style="text-align:left; width:60%;"></td>   
-			    </tr> 
-			     
-							<p><a href="#" class="btn btn-primary" role="button">구입하기</a> 
-								<a href="#" class="btn btn-default" role="button">장바구니</a></p>
-			       
-						</div>
-					</div>
-				</li>
-			</div>
-          
-		</div>
+		<div layout:fragment="content">
 
-  <div class="table-div">
+ <div class="table-div">
 	  <table class="table table table-hover">
 		  <thead>
 		    <tr class="border-bottom" >
@@ -62,8 +36,10 @@
 					<th>제목</th>
 				</tr>
 				<tr class="clickable-row" style="text-align: center;" th:each="program : ${programlists}" th:attr="data-href=@{/admin/programMgmtView?no={no}(no=${program.no})}">
-			        <td th:text="${program.no}"></td>
-			        <td th:text="${program.name}" style="text-align:left; width:60%;"></td>   
+			        <td>
+			        <img th:src="@{/upload/program/} + ${program.thumb}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
+			        </td>
+			        <td th:text="${program.title}" style="text-align:left; width:60%;"></td>   
 			    </tr>
 
 		  </tbody>
@@ -78,7 +54,7 @@
 		  
 		    <!-- 이전 페이지로 -->
 		    <i class="fa-sharp fa-regular fa-angle-left" style="color: #0f5132;"></i>
-		    <a class="a-pagination-move" th:href="@{/admin/productMgmtList(page=${pageInfo.prevPage})}" th:text="'&lt;'" style="color: #082f1c;"></a>
+		    <a class="a-pagination-move" th:href="@{/admin/programMgmtList(page=${pageInfo.prevPage})}" th:text="'&lt;'" style="color: #082f1c;"></a>
 
 		    <!-- 10개 페이지 목록 -->
 			<span th:each="pageNumber : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
@@ -104,8 +80,13 @@
 		            }
 		        });
 		    });
+		    
+		    function redirectToWrite() {
+				   window.location.href = '/admin/programMgmt';
+				  };
 
 	</script>
 </div>
 
+</div>
 </html>

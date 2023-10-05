@@ -306,16 +306,36 @@ public class AdminController {
 		
 		// 관리자 페이지_프로그램 등록
 		@PostMapping("/programMgmt/insert")
-		public ModelAndView insert(@ModelAttribute("Program") Program program) {
+		public ModelAndView insert(ModelAndView modelAndView, Program program, @RequestParam("upfile") MultipartFile upfile) {
+			
 			int result = 0;
 			Map<String, Object> map = new HashMap<>();
+			
+			 if (upfile != null && !upfile.isEmpty()) {
+					String location = null;
+					String renamedFileName = null;
+					
+					try {
+						location = resourceLoader.getResource("classpath:/static/upload/program").getFile().getPath();
+
+						renamedFileName = MultipartFileUtil.save(upfile, location);
+						
+						if (renamedFileName != null) {
+							
+							program.setThumb(renamedFileName);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					System.out.println(location + "★★★★★★★");
+				}
 			
 			result = adminService.save(program);
 			
 			map.put("resultCode", result);
 			map.put("program", program);
 			
-			ModelAndView modelAndView = new ModelAndView();
 			
 			if (result > 0) {
 				// insert 성공
@@ -327,11 +347,38 @@ public class AdminController {
 			
 			System.out.println(map);
 			
-			modelAndView.addObject("pageName", "programMgmtList");
 			modelAndView.setViewName("redirect:/admin/programMgmtList");
 			
 			return modelAndView;
 		}
+		
+		// 관리자 페이지_프로그램목록 리스트
+		@GetMapping("programMgmtList")
+		public ModelAndView programlist(ModelAndView modelAndView, 
+								 @RequestParam(defaultValue =  "1") int page) {
+			
+			int listCount = 0;
+			PageInfo pageInfo = null;
+			List<Program> programlists = null;
+			
+			listCount = adminService.getProgramBoardCount();
+			pageInfo = new PageInfo(page, 10, listCount, 10);
+			programlists = adminService.getProgramBoardList(pageInfo);
+			
+			log.info("Page : {}", page);
+			log.info("ListCount : {}", listCount);
+			
+			modelAndView.addObject("pageInfo", pageInfo);
+			modelAndView.addObject("programlists", programlists);
+			
+			System.out.println();
+			
+			modelAndView.setViewName("page/admin/programMgmtList");
+			
+			return modelAndView;
+		}
+		
+		
 		
 		// 관리자페이지_회원관리로 이동
 		@GetMapping("/memberMgmt")

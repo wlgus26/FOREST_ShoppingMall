@@ -83,9 +83,43 @@ public class AdminServiceImpl implements AdminService {
 
 	
 	@Override
+	@Transactional
 	public int save(Program program) {
+		
+		int result = 0;
+		
+		if (program.getNo() > 0) {
+			result = adminMapper.updateProgram(program);
+		} else {
+			result = adminMapper.insertProgram(program);
+		}
+		
+		return result;
+	}
 
-		return 0;
+
+	@Override
+	public int getProgramBoardCount() {
+
+		return adminMapper.selectProgramBoardCount();
+	}
+
+
+	@Override
+	public List<Program> getProgramBoardList(PageInfo pageInfo) {
+
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return adminMapper.SelectAll(rowBounds);
+	}
+
+
+	@Override
+	public Program getProgramBoardByNo(int no) {
+
+		return adminMapper.selectProgramBoardByNo(no);
 	}
 
 }

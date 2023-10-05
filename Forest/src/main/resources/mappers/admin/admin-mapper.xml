@@ -155,6 +155,7 @@
 	<id property="no" column="NO"/>
 	<result property="title" column="TITLE"/>
 	<result property="thumb" column="THUMB"/>
+	<result property="price" column="PRICE"/>
 	<result property="category" column="CATEGORY"/>
 	<result property="content" column="CONTENT"/>
 	<result property="address" column="ADDRESS"/>
@@ -175,6 +176,7 @@
 					NO,
 					TITLE,
 					THUMB,
+					PRICE,
 					CATEGORY,
 					CONTENT,
 					ADDRESS,
@@ -187,6 +189,7 @@
 					#{no},
 					#{title},
 					#{thumb},
+					#{price},
 					#{category},
 					#{content},
 					#{address},
@@ -194,9 +197,53 @@
 					#{maximum},
 					#{status},
 					#{startDate},
-					#{expiteDate},
+					#{expireDate},
 			)	
 	</insert>
+	
+	<select id="selectProgramBoardCount" resultType="_int">
+			SELECT COUNT(*) FROM PROGRAM WHERE STATUS = 'Y'
+	</select>	
+		
+	<select id="SelectAll" resultMap="programResultMap">
+	SELECT NO,
+	       TITLE,
+	       THUMB,
+	       PRICE,
+	       CATEGORY,
+	       CONTENT,
+	       ADDRESS,
+	       APPLICATIONS,
+	       MAXIMUM,
+	       STATUS,
+	       START_DATE,
+	       EXPIRE_DATE
+	FROM  PROGRAM
+	WHERE STATUS = 'Y'
+	ORDER BY NO DESC
+	</select>	
+	
+	<select id="selsctProgramBoardByNo" parameterType="_int" resultMap="programResultMap">
+		SELECT NO,
+		       TITLE,
+		       THUMB,
+		       PRICE,
+		       CATEGORY,
+		       CONTENT,
+		       ADDRESS,
+		       APPLICATIONS,
+		       MAXIMUM,
+		       STATUS,
+		       START_DATE,
+		       EXPIRE_DATE
+		FROM  PROGRAM
+		WHERE STATUS = 'Y' AND NO = #{no}
+	</select>
+	
+	<select id="updateProgram" parameterType="Program">
+		
+	</select>
+	
 </mapper>
 
 
