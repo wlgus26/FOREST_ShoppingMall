@@ -46,6 +46,7 @@ public class AdminController {
 			return modlAndView;
 		}
 		
+<<<<<<< HEAD
 		// 관리자페이지_제품관리로 이동
 		@GetMapping("/productMgmt")
 		public ModelAndView AdminMgmt (ModelAndView modelAndView) {
@@ -55,6 +56,24 @@ public class AdminController {
 			
 			return modelAndView;
 		}
+=======
+
+		
+		// 관리자페이지_제품등록
+//		@PostMapping("/productMgmt/insert")
+//		@ResponseBody
+//		public String insert (Product  product) {
+//
+//			System.out.println("getName :" + product.getName());
+//			System.out.println("getPrice :" + product.getPrice());
+//			System.out.println("getColor :" + product.getColor());
+//			
+//			adminService.save(product);
+//
+//			return "redirect:/productMgmtList";
+//		}
+//		
+>>>>>>> d7d904b1cbf72e5dda4074eb8d404fd53f651b35
 	
 	
         // 관리자페이지_제품등록
@@ -293,7 +312,7 @@ public class AdminController {
 //		}
 
 		
-		// 관리자페이지_클래스관리로 이동
+		// 관리자페이지_프로그램관리로 이동
 		@GetMapping("/programMgmt")
 		public ModelAndView programMgmt (ModelAndView modlAndView) {
 			
@@ -302,6 +321,9 @@ public class AdminController {
 			
 			return modlAndView;
 		}
+		
+		// 관리자 페이지_프로그램 등록
+		
 		
 		// 관리자페이지_회원관리로 이동
 		@GetMapping("/memberMgmt")

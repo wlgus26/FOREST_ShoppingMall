@@ -56,8 +56,8 @@
 <div layout:fragment="content" style="aspect-ratio: 16 / 9 ">
 	<div id="content1">
 		<ul id="kitchen1">
-			<p>여기는 주방 상품 코너입니다.  </p>
-			<li><a href="/products/productdetail?no=4"><img src="../images/product_ki1.PNG"><span> <b>담비 주방장갑(1p)1</b> <br><br> &nbsp; &nbsp; 14,000원 </span></a></li>
+			<p>여기는 주방 상품 코너입니다.</p>
+			<li><a th:href="@{/products/productDetail}"><img src="../images/product_ki1.PNG"><span> <b>담비 주방장갑(1p)1</b> <br><br> &nbsp; &nbsp; 14,000원 </span></a></li>
 			<li><a href="#"><img src="../images/product_ki1.PNG"><span> <b>담비 주방장갑(1p)2</b> <br><br> &nbsp; &nbsp; 14,000원 </span></a></li>
 			<li><a href="#"><img src="../images/product_ki1.PNG"><span> <b>담비 주방장갑(1p)3</b> <br><br> &nbsp; &nbsp; 14,000원 </span></a></li>
 			<li><a href="#"><img src="../images/product_ki1.PNG"><span> <b>담비 주방장갑(1p)4</b> <br><br> &nbsp; &nbsp; 14,000원 </span></a></li>
@@ -77,4 +77,16 @@
 <br><br><br><br><br><br>
    <h5> kitchen.html > Content </h5>
 </div>
+
+<script>
+		var rows = document.querySelectorAll(".clickable-row");
+		rows.forEach(function(row) {
+		    row.addEventListener("click", function() {
+		        var href = row.getAttribute("data-href");
+		        if (href) {
+		            window.location.href = href;
+		        }
+		    });
+		});
+	</script>
 </html>
