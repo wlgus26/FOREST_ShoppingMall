@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.admin.model.vo.Program;
 
 @Mapper
 public interface AdminMapper {
@@ -25,8 +26,13 @@ public interface AdminMapper {
 	int updateProductStatus(@Param("no") int no, @Param("status") String status);
 
 	
+<<<<<<< HEAD
 
 	
 
 
+=======
+	
+	int insertProgram(Program program);
+>>>>>>> f2e2bdfdaedb200b88b920184079d6a448badcfd
 }
