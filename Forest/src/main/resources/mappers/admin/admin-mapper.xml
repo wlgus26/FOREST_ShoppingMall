@@ -134,6 +134,10 @@
 			<if test="status != null">
 				STATUS=#{status},
 			</if>
+			<if test="image != null">
+				IMAGE=#{image},
+			</if>
+		
 		</trim>			
 		WHERE NO=#{no}
 	</update>
@@ -146,4 +150,69 @@
 		WHERE NO = #{no}
 </delete>
 
+
+	<resultMap id="programResultMap" type="Program">
+	<id property="no" column="NO"/>
+	<result property="title" column="TITLE"/>
+	<result property="thumb" column="THUMB"/>
+	<result property="category" column="CATEGORY"/>
+	<result property="content" column="CONTENT"/>
+	<result property="address" column="ADDRESS"/>
+	<result property="applications" column="APPLICATIONS"/>
+	<result property="maximum" column="MAXIMUM"/>
+	<result property="status" column="STATUS"/>
+	<result property="startDate" column="START_DATE"/>
+	<result property="expiteDate" column="EXPIRE_DATE"/>
+	</resultMap>
+	
+	<insert id="insertProgram" parameterType="Program">
+	
+	<selectKey resultType="_int" keyProperty="no" order="BEFORE">
+	  SELECT SEQ_PG_NO.NEXTVAL FROM DUAL
+	</selectKey>
+	
+		INSERT INTO PROGRAM (
+					NO,
+					TITLE,
+					THUMB,
+					CATEGORY,
+					CONTENT,
+					ADDRESS,
+					APPLICATIONS,
+					MAXIMUM,
+					STATUS,
+					START_DATE,
+					EXPIRE_DATE
+			)VALUES(
+					#{no},
+					#{title},
+					#{thumb},
+					#{category},
+					#{content},
+					#{address},
+					#{applications},
+					#{maximum},
+					#{status},
+					#{startDate},
+					#{expiteDate},
+			)	
+	</insert>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
