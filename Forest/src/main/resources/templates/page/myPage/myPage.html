@@ -2,21 +2,113 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/default_layout}">
+<head>
+    <th:block th:with="pageName='myPage'"></th:block>
 
-<th:block th:with="pageName='myPage'"></th:block>      
-<!-- myPage.html 고유 CSS 추가 -->
-<th:block layout:fragment="css">
-    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/myPage.css}" >-->
-</th:block>
-<!-- myPage.html 고유 스크립트 추가 -->
-<th:block layout:fragment="script">
-    <!-- ex)  <script th:src="@{/js/page/myPage.js}"></script>-->
-</th:block>
+    <!-- myPage.html 고유 CSS 추가 -->
+    <th:block layout:fragment="css">
+        <!-- 예시: <link rel="stylesheet" th:href="@{/css/page/myPage.css}" > -->
+        <style>
+            /* 표 스타일 */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
 
-<!-- Content -->
-<div layout:fragment="content">
-    <h1>개인 정보 수정</h1>
-    
-</div>
+            tr {
+                height: 40px; /* 행 높이 조절 */
+            }
+
+            table, th, td {
+                border: 1px solid #ccc;
+            }
+
+            /* 표 안의 셀 텍스트 세로 가운데 정렬 */
+            th, td {
+                vertical-align: middle;
+                padding: 10px;
+                text-align: center;
+            }
+            
+            th {
+            	background-color:
+            }
+
+            /* 표의 전체 레이아웃 */
+            .container {
+                text-align: center; /* 표 및 버튼 가로 가운데 정렬 */
+                margin-top: 20px;
+            }
+
+            /* 버튼 스타일 */
+            .btn-primary {
+                background-color: #007bff;
+                color: #fff;
+                font-weight: bold;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+    <!-- Content -->
+    <div layout:fragment="content">
+        <div style="width:60%; margin:0 auto;">
+            <h3 style="color:#0f5132; font-weight:bold;">개인 정보 수정</h3>
+            <hr style="border-width:1px 0 0 0; border-color:#ccc;">
+        </div>
+
+        <form class="validation-form" th:action="@{/update}" method="POST" style="width:50%; margin: 0 auto;">
+            <div style="margin:0 auto;">
+                <table>
+                    <tr>
+                        <th>아이디</th>
+                        <td><span sec:authentication="principal.id"></span></td>
+                    </tr>
+                    <tr>
+                        <th>이름</th>
+                        <td><span sec:authentication="principal.name"></span></td>
+                    </tr>
+                     <tr>
+                        <th>이메일</th>
+                        <td><span sec:authentication="principal.email"></span></td>
+                    </tr>
+                    <tr>
+                        <th rowspan="3">비밀번호 변경</th>
+                        <td><input type="password" class="form-control" placeholder="새 비밀번호"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="password" class="form-control" placeholder="새 비밀번호 확인"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="password" class="form-control" placeholder="현재 비밀번호"></td>
+                    </tr>
+                    <tr>
+                        <th rowspan="3">주소</th>
+                        <td><input type="text" class="form-control" th:value="${#authentication.principal.pcode}" placeholder="우편번호"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-control" th:value="${#authentication.principal.address1}" placeholder="주소1"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-control" th:value="${#authentication.principal.address2}" placeholder="주소2"></td>
+                    </tr>
+                    <tr>
+                        <th rowspan="2">수신설정</th>
+                        <td><input type="checkbox"> 수신 동의</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"> 추가 수신 동의</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="container">
+                <button class="btn btn-primary btn-lg" type="submit">탈퇴하기</button>
+                <button class="btn btn-primary btn-lg" type="submit">회원정보수정</button>
+            </div>
+        </form>
+    </div>
+</body>
 </html>

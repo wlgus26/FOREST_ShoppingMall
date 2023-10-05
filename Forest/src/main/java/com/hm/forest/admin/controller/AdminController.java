@@ -11,13 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
+<<<<<<< HEAD
 import com.hm.forest.common.util.MultipartFileUtil;
+=======
+import com.hm.forest.admin.model.vo.Program;
+>>>>>>> f2e2bdfdaedb200b88b920184079d6a448badcfd
 import com.hm.forest.common.util.PageInfo;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +51,7 @@ public class AdminController {
 			return modlAndView;
 		}
 		
+<<<<<<< HEAD
 		// 관리자페이지_제품관리로 이동
 		@GetMapping("/productMgmt")
 		public ModelAndView AdminMgmt (ModelAndView modelAndView) {
@@ -55,6 +61,24 @@ public class AdminController {
 			
 			return modelAndView;
 		}
+=======
+
+		
+		// 관리자페이지_제품등록
+//		@PostMapping("/productMgmt/insert")
+//		@ResponseBody
+//		public String insert (Product  product) {
+//
+//			System.out.println("getName :" + product.getName());
+//			System.out.println("getPrice :" + product.getPrice());
+//			System.out.println("getColor :" + product.getColor());
+//			
+//			adminService.save(product);
+//
+//			return "redirect:/productMgmtList";
+//		}
+//		
+>>>>>>> d7d904b1cbf72e5dda4074eb8d404fd53f651b35
 	
 	
         // 관리자페이지_제품등록
@@ -160,7 +184,7 @@ public class AdminController {
 			return modelAndView;	
 		}
 		
-		//  제품 상세 페이지에서 (수정버튼 누르면 )수정 페이지 요청
+		// 관리자페이지_제품 상세 페이지에서 (수정버튼 누르면)수정 페이지 요청
 		@GetMapping("/productMgmtUpdate")
 		public ModelAndView update (ModelAndView modelAndView, @RequestParam("no") int no) {
 			Product product = adminService.getProductBoardByNo(no);
@@ -177,6 +201,7 @@ public class AdminController {
 		 // 관리자페이지_제품 수정
 		 @PostMapping("/productMgmtUpdate")
 		 public ModelAndView update (ModelAndView modelAndView, 
+				 					 @RequestParam("upfile") MultipartFile upfile,
 				 					 @RequestParam("no") int no,
 				 					 @RequestParam("name") String name,
 				 					 @RequestParam("price") int price,
@@ -190,6 +215,42 @@ public class AdminController {
 	 
 			 product = adminService.getProductBoardByNo(no);
 			 
+			 
+			 if (upfile != null && !upfile.isEmpty()) {
+					 String location = null;
+					 String renamedFileName = null;
+					 
+					 try {
+						location = resourceLoader.getResource("classpath:/static/upload/product/")
+						 						  .getFile()
+						 						  .getPath();
+						
+						// 이전에 업로드된 첨부파일 삭제
+						if (product.getImage() != null) {
+							MultipartFileUtil.delete(location + "/" + product.getImage());
+							log.info(location + "★삭제된 후 location★");
+							
+						}
+						location = resourceLoader.getResource("classpath:/static/upload/product/")
+		 						  .getFile()
+		 						  .getPath();
+							
+						// 수정된 첨부파일을 저장한다.
+						renamedFileName = MultipartFileUtil.save(upfile, location);
+						
+						System.out.println(upfile + "★upfile★");
+						System.out.println(location + "★첨부파일 저장 후 location★");
+						
+						if (renamedFileName != null) {
+						
+							product.setImage(renamedFileName);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }
+			
+
 			 product.setName(name);
 			 product.setPrice(price);
 			 product.setColor(color);
@@ -200,9 +261,7 @@ public class AdminController {
 			 log.info("★ 보드 : {}", product);
 				 
 		     result = adminService.save(product);
-		     
-		
-				 
+		 
 				 if ( result > 0 ) {
 					 modelAndView.addObject("msg", "게시글 수정 성공");
 					 modelAndView.addObject("location", "/admin/productMgmtView?no=" + product.getNo()); 
@@ -239,61 +298,9 @@ public class AdminController {
 				return modelAndView;
 		 }
 		 
-		// 첫번째 사진 썸네일로 지정
-//			public String getImgSrc(String content) {
-//				  Pattern nonValidPattern = Pattern
-//					  		.compile("(?i)< *[IMG][^\\>]*[src] *= *[\"\']{0,1}([^\"\'\\ >]*)");
-//					  		int imgCnt = 0;
-//					  		String img = "";
-//					  		Matcher matcher = nonValidPattern.matcher(content);
-//					  		while (matcher.find()) {
-//					  			img = matcher.group(1);
-//					  			imgCnt++;
-//					  			if(imgCnt == 1){
-//					  		        break;                                  
-//					  		    }
-//					  		}
-//					  		return img;
-//			}
-//	
-		
-		
-	
-
-		// 관리자페이지_제품등록(이미지 업로드)
-//		@PostMapping("/image/upload")
-//		@ResponseBody
-//		public Map<String, Object> image(MultipartHttpServletRequest request) throws Exception {
-//		    Map<String, Object> response = new HashMap<>();
-//
-//		    try {
-//		        MultipartFile uploadFile = request.getFile("upload");
-//		        String originalFileName = uploadFile.getOriginalFilename();
-//		        String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
-//		        String newFileName = UUID.randomUUID().toString() + ext;
-//		        int maxSize = 10485760;
-//
-//		        String realPath = request.getServletContext().getRealPath("/static/upload/main_file");
-//		        String savePath = realPath + "upload/" + newFileName;
-//		        String uploadPath = "./upload/" + newFileName;
-//
-//		        File file = new File(savePath);
-//		        uploadFile.transferTo(file);
-//
-//		        // JSON 응답 생성
-//		        response.put("uploaded", true);
-//		        response.put("url", uploadPath);
-//		    } catch (Exception e) {
-//		        response.put("uploaded", false);
-//		        response.put("error", "파일 업로드에 실패했습니다.");
-//		        e.printStackTrace();
-//		    }
-//
-//		    return response;
-//		}
 
 		
-		// 관리자페이지_클래스관리로 이동
+		// 관리자페이지_프로그램관리로 이동
 		@GetMapping("/programMgmt")
 		public ModelAndView programMgmt (ModelAndView modlAndView) {
 			
@@ -301,6 +308,35 @@ public class AdminController {
 			modlAndView.setViewName("page/admin/programMgmt");
 			
 			return modlAndView;
+		}
+		
+		// 관리자 페이지_프로그램 등록
+		@PostMapping("/programMgmt/insert")
+		public ModelAndView insert(@ModelAttribute("Program") Program program) {
+			int result = 0;
+			Map<String, Object> map = new HashMap<>();
+			
+			result = adminService.save(program);
+			
+			map.put("resultCode", result);
+			map.put("program", program);
+			
+			ModelAndView modelAndView = new ModelAndView();
+			
+			if (result > 0) {
+				// insert 성공
+				modelAndView.addObject("msg", "프로그램 등록을 성공했습니다.");
+			} else {
+				//insert 실패
+				modelAndView.addObject("msg", "프로그램 등록을 실패하였습니다.");
+			}
+			
+			System.out.println(map);
+			
+			modelAndView.addObject("pageName", "programMgmtList");
+			modelAndView.setViewName("redirect:/admin/programMgmtList");
+			
+			return modelAndView;
 		}
 		
 		// 관리자페이지_회원관리로 이동

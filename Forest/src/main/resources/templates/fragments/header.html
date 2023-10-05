@@ -1,4 +1,4 @@
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!--headerFragment 선언-->
 <div th:fragment="headerFragment">
@@ -66,11 +66,9 @@
 								    </button>
 								    </li>
 								    <li class="nav-item" >
-								    <a class="nav-link"  href="/myPage/myPage"
-								    th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a>
+								    <a class="nav-link" href="/myPage/myPage" sec:authorize="hasRole('USER')"> 마이페이지</a>
 								    
-								    <a class="nav-link"  href="/admin/salesMgmt"
-								    th:if="${#authorization.expression('hasRole(''ADMIN'')')}">관리자페이지</a>
+								    <a class="nav-link" href="/admin/salesMgmt" sec:authorize="hasRole('ADMIN')">관리자페이지</a>
 								    </li>
 				            	</ul>
 						    	</form>
@@ -96,9 +94,9 @@
                         <li class="nav-item"><a class="nav-link" href="/board/notice">소통하기</a></li>
                         
                         <li class="nav-item"><a class="nav-link" href="/myPage/myPage"
-                        th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a></li>
+                        sec:authorize="hasRole('USER')">마이페이지</a></li>
  
-                       <li class="nav-item dropdown"  th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                       <li class="nav-item dropdown"  sec:authorize="hasRole('ADMIN')">
 						    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">관리자페이지</a>
 						    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 						        <li><a class="dropdown-item" href="/admin/salesMgmt">매출관리</a></li>
