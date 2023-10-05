@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.board.model.vo.Board;
 import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.product.model.service.ProductService;
 
@@ -20,18 +21,15 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/products")
 public class ProductController {
-	
-	@Autowired
-	private ProductService productservice;
-	
-	
+		
 	@Autowired
 	private AdminService adminService;
 	
 	@GetMapping("/kitchen")
-		public ModelAndView list(ModelAndView modelAndView, 
+		public ModelAndView kitchen(ModelAndView modelAndView, 
 				 				@RequestParam(defaultValue =  "1") int page) {
 			
+		    String category = "kitchen";
 			int listCount = 0;
 			PageInfo pageInfo = null;
 			List<Product> productlists = null; 
@@ -43,7 +41,7 @@ public class ProductController {
 			log.info("Page : {}", page);
 			log.info("ListCount : {}", listCount);
 			
-			modelAndView.addObject("pageInfo", pageInfo);
+			modelAndView.addObject("pageInfo", "kitchen");
 			modelAndView.addObject("productlists", productlists);
 			
 			System.out.println();
@@ -52,8 +50,7 @@ public class ProductController {
 			
 			return modelAndView;
 	}
-		
-	
+
 	
 	@GetMapping("/style")
 	private ModelAndView style (ModelAndView modelAndView) {
@@ -61,7 +58,7 @@ public class ProductController {
 		modelAndView.addObject("PageName", "style");
 		modelAndView.setViewName("page/products/style");
 		
-		productservice.getProducts();
+		
 		
 		return modelAndView;
 	}
@@ -72,7 +69,7 @@ public class ProductController {
 		modelAndView.addObject("PageName", "eco");
 		modelAndView.setViewName("page/products/eco");
 		
-		productservice.getProducts();
+		
 		
 		return modelAndView;
 	}
@@ -85,7 +82,7 @@ public class ProductController {
 		
 		modelAndView.setViewName("page/products/productdetail");
 		
-		productservice.getProducts();
+	
 		
 		return modelAndView;
 	}
