@@ -57,7 +57,7 @@
 		ORDER BY NO DESC
 	</select>
 	
-	 <select id="selectProductByNo" parameterType="_int" resultMap="productResultMap">
+	 <select id="selectProductByNo" parameterType="int" resultMap="productResultMap">
 	 	SELECT NO,
 		       NAME,
 		       PRICE,
@@ -75,7 +75,23 @@
 		WHERE STATUS = 'Y' AND NO = #{no}
 	 </select>
 
-
+	<select id="getProductByNo" parameterType="int" resultMap="productResultMap">
+		SELECT NO,
+		       NAME,
+		       PRICE,
+		       CONTENT,
+		       COLOR,
+		       AMOUNT,
+		       SIZE_SML,
+		       STOCK,
+		       COMPANY,
+		       DISCOUNTRATE,
+		       STATUS,
+		       IMAGE,
+		       WISH
+		FROM PRODUCT
+		WHERE STATUS = 'Y' AND NO = #{no}
+	</select>
 
 
 
