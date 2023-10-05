@@ -2,12 +2,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/default_layout}">
-
+      
 <th:block th:with="pageName='myPage'"></th:block>      
 <!-- myPage.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
     <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/myPage.css}" >-->
+    
+<style>
+/* 표 스타일 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center; /* 표 안의 셀 텍스트 가로 가운데 정렬 */
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+/* 표 안의 셀 텍스트 세로 가운데 정렬 */
+th, td {
+  vertical-align: middle;
+  padding: 8px;
+}
+
+/* 표의 전체 레이아웃 */
+.container {
+  text-align: center; /* 표 및 버튼 가로 가운데 정렬 */
+}
+</style>
 </th:block>
 <!-- myPage.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
@@ -16,7 +41,55 @@
 
 <!-- Content -->
 <div layout:fragment="content">
-    <h1>개인 정보 수정</h1>
-    
+	<div style="width:60%; margin:0 auto;">
+	    <h3 style="color:#0f5132; font-weight:bold;">개인 정보 수정</h3>
+	    <hr style="border-width:1px 0 0 0; border-color:#000;">
+	</div>
+	
+<form class="validation-form" th:action="@{/update}" method="POST" style="width:50%; margin: 0 auto;">
+    <div style="margin:0 auto;">
+        <table>
+            <tr>
+                <th>아이디</th>
+                <td><span sec:authentication="principal.id"></span></td>
+            </tr>
+            <tr>
+                <td>이름</td>
+                <td><span sec:authentication="principal.name"></span></td>
+            </tr>
+            <tr>
+                <td rowspan="3">비밀번호 변경</td>
+                <td><input type="password"></td>
+            </tr>
+            <tr>                
+                <td><input type="password"></td>
+            </tr>
+            <tr>
+                <td><input type="password"></td>
+            </tr>
+            <tr>
+                <td rowspan="3">주소</td>
+                <td><input type="text" th:value="${#authentication.principal.pcode}"></td>
+            </tr>
+            <tr>
+                <td><input type="text" th:value="${#authentication.principal.address1}"></td>
+            </tr>
+            <tr>
+                <td><input type="text" th:value="${#authentication.principal.address2}"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">수신설정</td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="container text-center">
+        <button class="btn-primary btn-lg btn-block btn" type="submit">탈퇴하기</button>
+        <button class="btn-primary btn-lg btn-block btn" type="submit">회원정보수정</button>
+    </div>
+</form>
 </div>
 </html>

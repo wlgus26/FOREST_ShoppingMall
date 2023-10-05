@@ -86,4 +86,30 @@
 			#{address2}			
 		)
 	</insert>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE MEMBER 
+		SET 
+			ID=#{id},
+			PASSWORD=#{password},
+			NAME=#{name},
+			EMAIL=#{email},
+			PHONE=#{phone},
+			PCODE=#{pcode},
+			NAME=#{name},
+			PHONE=#{phone},
+			EMAIL=#{email},
+			ADDRESS1=#{address1},
+			ADDRESS2=#{address2},
+			UPDATE_DATE=SYSDATE
+		WHERE NO=#{no}
+	</update>
+	
+	<update id="updateMemberStatus" parameterType="map">
+		UPDATE MEMBER
+		SET
+			STATUS = #{status}
+		WHERE
+			NO = #{no}
+	</update>
 </mapper>

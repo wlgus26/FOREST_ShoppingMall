@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class MemberDetailsService implements UserDetailsService {
+	
 	@Autowired
 	private MemberMapper mapper;
 
@@ -26,13 +27,8 @@ public class MemberDetailsService implements UserDetailsService {
 		}
 		
 		log.info("username : " + member.getId());
-		
-		String role = member.getRole(); // 예시: "USER" 또는 "ADMIN"
+		log.info("role : " + member.getRole());
 
-        return org.springframework.security.core.userdetails.User
-                .withUsername(member.getId())
-                .password(member.getPassword())
-                .roles(role)
-                .build();
+        return member;
     }
 }

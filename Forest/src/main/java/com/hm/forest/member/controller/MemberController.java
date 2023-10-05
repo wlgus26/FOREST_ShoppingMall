@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,7 +59,7 @@ public class MemberController {
 	
 	// 회원 정보 수정
 	// 메소드의 리턴 타입이 void일 경우 Mapping URL을 유추해서 뷰를 찾는다.	
-	@PostMapping("/member/update")
+	@PostMapping("/myPage")
 	public ModelAndView update(ModelAndView modelAndView,
 							   @SessionAttribute("loginMember") Member loginMember,
 						 	   Member member) {
@@ -78,7 +77,7 @@ public class MemberController {
 			modelAndView.addObject("msg", "회원 정보 수정 실패");
 		}
 		
-		modelAndView.addObject("location", "/member/myPage");			
+		modelAndView.addObject("location", "/myPage/myPage");			
 		modelAndView.setViewName("common/msg");
 		
 		return modelAndView;
