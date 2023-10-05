@@ -65,11 +65,6 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
-<<<<<<< HEAD
-	
-
-
-
 
 //	@Override
 //	public Product imgInsert(Product product) throws Exception {
@@ -85,14 +80,10 @@ public class AdminServiceImpl implements AdminService {
 //		return adminMapper.productImg(product.getImage(),imgSrc);
 //	}
 
-	
-=======
+
 	@Override
 	public int save(Program program) {
 
 		return 0;
 	}
-
-
->>>>>>> f2e2bdfdaedb200b88b920184079d6a448badcfd
 }

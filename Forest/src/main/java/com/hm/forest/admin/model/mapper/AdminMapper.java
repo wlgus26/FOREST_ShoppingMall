@@ -24,15 +24,6 @@ public interface AdminMapper {
 	Product selectProductBoardByNo(@Param("no") int no);
 
 	int updateProductStatus(@Param("no") int no, @Param("status") String status);
-
-	
-<<<<<<< HEAD
-
-	
-
-
-=======
 	
 	int insertProgram(Program program);
->>>>>>> f2e2bdfdaedb200b88b920184079d6a448badcfd
 }
