@@ -3,6 +3,7 @@ package com.hm.forest.admin.model.service;
 import java.util.List;
 
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.admin.model.vo.Program;
 import com.hm.forest.common.util.PageInfo;
 
 public interface AdminService {
@@ -19,6 +20,6 @@ public interface AdminService {
 	Product getProductBoardByNo(int no);
 
 
-	
+	int save(Program program);
 
 }

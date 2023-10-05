@@ -11,11 +11,61 @@
 </th:block>
 <!-- programMgmt.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
+
+	 <script th:src="@{/js/ckeditor/ckeditor.js}"></script>
     <!-- ex)  <script th:src="@{/js/page/programMgmt.js}"></script>-->
 </th:block>
 
 <!-- Content -->
 <div layout:fragment="content">
+
+<form class="container" action="/admin/programMgmt/insert" method="post" th:action="@{/admin/programMgmt/imsert}">
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+<div class="table-div">
+	<table class="table">
+		<thead>
+			<tr class="border-bottom">
+				<th scope="col" colspan="2" class="th-custom-style">제품등록</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr>
+				<th scope="row">카테고리</th>
+				<td>
+					<select id="category" name="category">
+						<option value="" selected>-- 선택 --</option>
+						<option value="oneday">원데이클래스</option>
+						<option value="join">참여형클래스</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+			
+			</tr>
+		</tbody>
+	</table>
+</div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    <h5> templates > page > programMgmt.html > Content </h5>
 </div>
 </html>

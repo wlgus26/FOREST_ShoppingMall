@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.admin.model.vo.Program;
 import com.hm.forest.common.util.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -263,7 +265,33 @@ public class AdminController {
 		}
 		
 		// 관리자 페이지_프로그램 등록
-		
+		@PostMapping("/programMgmt/insert")
+		public ModelAndView insert(@ModelAttribute("Program") Program program) {
+			int result = 0;
+			Map<String, Object> map = new HashMap<>();
+			
+			result = adminService.save(program);
+			
+			map.put("resultCode", result);
+			map.put("program", program);
+			
+			ModelAndView modelAndView = new ModelAndView();
+			
+			if (result > 0) {
+				// insert 성공
+				modelAndView.addObject("msg", "프로그램 등록을 성공했습니다.");
+			} else {
+				//insert 실패
+				modelAndView.addObject("msg", "프로그램 등록을 실패하였습니다.");
+			}
+			
+			System.out.println(map);
+			
+			modelAndView.addObject("pageName", "programMgmtList");
+			modelAndView.setViewName("redirect:/admin/programMgmtList");
+			
+			return modelAndView;
+		}
 		
 		// 관리자페이지_회원관리로 이동
 		@GetMapping("/memberMgmt")

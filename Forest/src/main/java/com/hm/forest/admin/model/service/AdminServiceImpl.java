@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hm.forest.admin.model.mapper.AdminMapper;
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.admin.model.vo.Program;
 import com.hm.forest.common.util.PageInfo;
 
 @Service
@@ -60,6 +61,13 @@ public class AdminServiceImpl implements AdminService {
 	public int delete(int no) {
 		
 		return adminMapper.updateProductStatus(no, "N");
+	}
+
+
+	@Override
+	public int save(Program program) {
+
+		return 0;
 	}
 
 
