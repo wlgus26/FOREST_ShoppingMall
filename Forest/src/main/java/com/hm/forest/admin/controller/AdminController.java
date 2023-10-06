@@ -8,20 +8,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
-import com.hm.forest.common.util.MultipartFileUtil;
 import com.hm.forest.admin.model.vo.Program;
+import com.hm.forest.common.util.MultipartFileUtil;
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.service.MemberService;
+import com.hm.forest.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -382,13 +382,35 @@ public class AdminController {
 		
 		// 관리자페이지_회원관리로 이동
 		@GetMapping("/memberMgmt")
-		public ModelAndView memberMgmt (ModelAndView modlAndView) {
+		public ModelAndView memberMgmt (ModelAndView modlAndView, @RequestParam(defaultValue = "1") int page,
+										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String keyWord) {
+			
+			String status = "memberMgmt";
+			int listCount = 0;
+			PageInfo pageInfo = null;
+			List<Member> memberlists = null;
+			
+			if (searchType != null && ! keyWord.trim().equals("")) {
+				listCount = MemberService.selectMemberCountBySearchValue(status, searchType, keyWord);
+				pageInfo = new PageInfo(page, 10, listCount, 10);
+				memberlists = MemberService.getMemberlistsBySearchValue(status, pageInfo, searchType, keyWord);
+				
+			
+			}
+			
+			listCount = MemberService.selectMemberCountByStatus(status);
+			pageInfo = new PageInfo(page, 10, listCount, 10);
+			memberlists = MemberService.getMemberlists(status, pageInfo);
 			
 			modlAndView.addObject("pageName", "memberMgmt");
+			modlAndView.addObject("pageInfo", pageInfo);
+			modlAndView.addObject("memberlists", memberlists);
 			modlAndView.setViewName("page/admin/memberMgmt");
 			
 			return modlAndView;
 		}
+		
+
 		
 		// 관리자페이지_게시판관리로 이동
 		@GetMapping("/boardMgmt")

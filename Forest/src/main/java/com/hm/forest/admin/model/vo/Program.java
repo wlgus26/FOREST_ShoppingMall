@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@lombok.ToString
 public class Program {
 	
 	private int no;

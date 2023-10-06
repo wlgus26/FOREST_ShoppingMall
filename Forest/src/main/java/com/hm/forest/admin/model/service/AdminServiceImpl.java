@@ -11,6 +11,7 @@ import com.hm.forest.admin.model.mapper.AdminMapper;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.admin.model.vo.Program;
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.vo.Member;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -83,43 +84,16 @@ public class AdminServiceImpl implements AdminService {
 
 	
 	@Override
-	@Transactional
-	public int save(Program program) {
-		
-		int result = 0;
-		
-		if (program.getNo() > 0) {
-			result = adminMapper.updateProgram(program);
-		} else {
-			result = adminMapper.insertProgram(program);
-		}
-		
-		return result;
+	public List<Member> getMemberlists(String id, PageInfo pageInfo) {
+
+		return null;
 	}
 
 
 	@Override
-	public int getProgramBoardCount() {
+	public int findMemberById(String id) {
 
-		return adminMapper.selectProgramBoardCount();
-	}
-
-
-	@Override
-	public List<Program> getProgramBoardList(PageInfo pageInfo) {
-
-		int limit = pageInfo.getListLimit();
-		int offset = (pageInfo.getCurrentPage() - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return adminMapper.SelectAll(rowBounds);
-	}
-
-
-	@Override
-	public Program getProgramBoardByNo(int no) {
-
-		return adminMapper.selectProgramBoardByNo(no);
+		return 0;
 	}
 
 }

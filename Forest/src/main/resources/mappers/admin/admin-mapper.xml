@@ -206,21 +206,21 @@
 	</select>	
 		
 	<select id="SelectAll" resultMap="programResultMap">
-	SELECT NO,
-	       TITLE,
-	       THUMB,
-	       PRICE,
-	       CATEGORY,
-	       CONTENT,
-	       ADDRESS,
-	       APPLICATIONS,
-	       MAXIMUM,
-	       STATUS,
-	       START_DATE,
-	       EXPIRE_DATE
-	FROM  PROGRAM
-	WHERE STATUS = 'Y'
-	ORDER BY NO DESC
+		SELECT NO,
+		       TITLE,
+		       THUMB,
+		       PRICE,
+		       CATEGORY,
+		       CONTENT,
+		       ADDRESS,
+		       APPLICATIONS,
+		       MAXIMUM,
+		       STATUS,
+		       START_DATE,
+		       EXPIRE_DATE
+		FROM  PROGRAM
+		WHERE STATUS = 'Y'
+		ORDER BY NO DESC
 	</select>	
 	
 	<select id="selsctProgramBoardByNo" parameterType="_int" resultMap="programResultMap">

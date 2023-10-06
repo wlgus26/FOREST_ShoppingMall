@@ -5,6 +5,7 @@ import java.util.List;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.admin.model.vo.Program;
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.vo.Member;
 
 public interface AdminService {
 	
@@ -18,14 +19,8 @@ public interface AdminService {
 	List<Product> getProductBoardList(PageInfo pageInfo);
 
 	Product getProductBoardByNo(int no);
-
-
-	int save(Program program);
 	
-	int getProgramBoardCount();
-	
-	List<Program> getProgramBoardList(PageInfo pageInfo);
-	
-	Program getProgramBoardByNo(int no);
+	List<Member> getMemberlists(String id, PageInfo pageInfo);
 
+	int findMemberById(String id);
 }
