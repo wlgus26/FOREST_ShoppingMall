@@ -29,7 +29,7 @@ public class ProductController {
 		public ModelAndView kitchen(ModelAndView modelAndView, 
 				 				@RequestParam(defaultValue =  "1") int page) {
 			
-		    String category = "kitchen";
+//		    String category = "kitchen";
 			int listCount = 0;
 			PageInfo pageInfo = null;
 			List<Product> productlists = null; 
