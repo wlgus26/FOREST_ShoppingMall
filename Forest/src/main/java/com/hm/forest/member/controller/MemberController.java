@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 // Model 객체에 loginMember라는 키값으로 Attribute가 추가되면 
 // 해당 Attribute를 세션 영역에 추가하는 어노테이션이다.
-@SessionAttributes("loginMember")
 public class MemberController {
 
 	@Autowired

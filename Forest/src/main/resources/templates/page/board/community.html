@@ -20,7 +20,9 @@
 		      <th scope="col" colspan="2" class="th-custom-style" style="border-bottom-width: 3px; 
 				border-bottom-color: #082f1c;
 				color: #082f1c;">자유게시판 
-			  <button class="btn btn-sm btn-outline-secondary" type="button" onclick="redirectToWrite('community')">글쓰기</button>
+				<th:block th:if="${loginMember != null}">
+			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="redirectToWrite('community')">글쓰기</button>
+			  	</th:block>
 			</th>
 		  	   <!-- 검색 바 -->
 			   <td style="padding:8px 2px 8px 8px; border-bottom-width: 3px; 
