@@ -304,111 +304,38 @@ public class AdminController {
 			return modlAndView;
 		}
 		
-		// 관리자 페이지_프로그램 등록
-		@PostMapping("/programMgmt/insert")
-		public ModelAndView insert(ModelAndView modelAndView, Program program, @RequestParam("upfile") MultipartFile upfile) {
-			
-			int result = 0;
-			Map<String, Object> map = new HashMap<>();
-			
-			 if (upfile != null && !upfile.isEmpty()) {
-					String location = null;
-					String renamedFileName = null;
-					
-					try {
-						location = resourceLoader.getResource("classpath:/static/upload/program").getFile().getPath();
-
-						renamedFileName = MultipartFileUtil.save(upfile, location);
-						
-						if (renamedFileName != null) {
-							
-							program.setThumb(renamedFileName);
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					
-					System.out.println(location + "★★★★★★★");
-				}
-			
-			result = adminService.save(program);
-			
-			map.put("resultCode", result);
-			map.put("program", program);
-			
-			
-			if (result > 0) {
-				// insert 성공
-				modelAndView.addObject("msg", "프로그램 등록을 성공했습니다.");
-			} else {
-				//insert 실패
-				modelAndView.addObject("msg", "프로그램 등록을 실패하였습니다.");
-			}
-			
-			System.out.println(map);
-			
-			modelAndView.setViewName("redirect:/admin/programMgmtList");
-			
-			return modelAndView;
-		}
-		
-		// 관리자 페이지_프로그램목록 리스트
-		@GetMapping("programMgmtList")
-		public ModelAndView programlist(ModelAndView modelAndView, 
-								 @RequestParam(defaultValue =  "1") int page) {
-			
-			int listCount = 0;
-			PageInfo pageInfo = null;
-			List<Program> programlists = null;
-			
-			listCount = adminService.getProgramBoardCount();
-			pageInfo = new PageInfo(page, 10, listCount, 10);
-			programlists = adminService.getProgramBoardList(pageInfo);
-			
-			log.info("Page : {}", page);
-			log.info("ListCount : {}", listCount);
-			
-			modelAndView.addObject("pageInfo", pageInfo);
-			modelAndView.addObject("programlists", programlists);
-			
-			System.out.println();
-			
-			modelAndView.setViewName("page/admin/programMgmtList");
-			
-			return modelAndView;
-		}
 		
 		
 		
-		// 관리자페이지_회원관리로 이동
-		@GetMapping("/memberMgmt")
-		public ModelAndView memberMgmt (ModelAndView modlAndView, @RequestParam(defaultValue = "1") int page,
-										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String keyWord) {
-			
-			String status = "memberMgmt";
-			int listCount = 0;
-			PageInfo pageInfo = null;
-			List<Member> memberlists = null;
-			
-			if (searchType != null && ! keyWord.trim().equals("")) {
-				listCount = MemberService.selectMemberCountBySearchValue(status, searchType, keyWord);
-				pageInfo = new PageInfo(page, 10, listCount, 10);
-				memberlists = MemberService.getMemberlistsBySearchValue(status, pageInfo, searchType, keyWord);
-				
-			
-			}
-			
-			listCount = MemberService.selectMemberCountByStatus(status);
-			pageInfo = new PageInfo(page, 10, listCount, 10);
-			memberlists = MemberService.getMemberlists(status, pageInfo);
-			
-			modlAndView.addObject("pageName", "memberMgmt");
-			modlAndView.addObject("pageInfo", pageInfo);
-			modlAndView.addObject("memberlists", memberlists);
-			modlAndView.setViewName("page/admin/memberMgmt");
-			
-			return modlAndView;
-		}
+//		// 관리자페이지_회원관리로 이동
+//		@GetMapping("/memberMgmt")
+//		public ModelAndView memberMgmt (ModelAndView modlAndView, @RequestParam(defaultValue = "1") int page,
+//										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String keyWord) {
+//			
+//			String status = "memberMgmt";
+//			int listCount = 0;
+//			PageInfo pageInfo = null;
+//			List<Member> memberlists = null;
+//			
+//			if (searchType != null && ! keyWord.trim().equals("")) {
+//				listCount = MemberService.selectMemberCountBySearchValue(status, searchType, keyWord);
+//				pageInfo = new PageInfo(page, 10, listCount, 10);
+//				memberlists = MemberService.getMemberlistsBySearchValue(status, pageInfo, searchType, keyWord);
+//				
+//			
+//			}
+//			
+//			listCount = MemberService.selectMemberCountByStatus(status);
+//			pageInfo = new PageInfo(page, 10, listCount, 10);
+//			memberlists = MemberService.getMemberlists(status, pageInfo);
+//			
+//			modlAndView.addObject("pageName", "memberMgmt");
+//			modlAndView.addObject("pageInfo", pageInfo);
+//			modlAndView.addObject("memberlists", memberlists);
+//			modlAndView.setViewName("page/admin/memberMgmt");
+//			
+//			return modlAndView;
+//		}
 		
 
 		
