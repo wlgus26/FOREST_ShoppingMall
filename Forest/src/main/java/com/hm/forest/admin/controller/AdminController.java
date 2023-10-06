@@ -11,18 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
-<<<<<<< HEAD
 import com.hm.forest.common.util.MultipartFileUtil;
-=======
-import com.hm.forest.admin.model.vo.Program;
->>>>>>> f2e2bdfdaedb200b88b920184079d6a448badcfd
 import com.hm.forest.common.util.PageInfo;
 
 import lombok.RequiredArgsConstructor;
@@ -51,7 +46,6 @@ public class AdminController {
 			return modlAndView;
 		}
 		
-<<<<<<< HEAD
 		// 관리자페이지_제품관리로 이동
 		@GetMapping("/productMgmt")
 		public ModelAndView AdminMgmt (ModelAndView modelAndView) {
@@ -61,7 +55,6 @@ public class AdminController {
 			
 			return modelAndView;
 		}
-=======
 
 		
 		// 관리자페이지_제품등록
@@ -78,7 +71,6 @@ public class AdminController {
 //			return "redirect:/productMgmtList";
 //		}
 //		
->>>>>>> d7d904b1cbf72e5dda4074eb8d404fd53f651b35
 	
 	
         // 관리자페이지_제품등록
@@ -310,34 +302,6 @@ public class AdminController {
 			return modlAndView;
 		}
 		
-		// 관리자 페이지_프로그램 등록
-		@PostMapping("/programMgmt/insert")
-		public ModelAndView insert(@ModelAttribute("Program") Program program) {
-			int result = 0;
-			Map<String, Object> map = new HashMap<>();
-			
-			result = adminService.save(program);
-			
-			map.put("resultCode", result);
-			map.put("program", program);
-			
-			ModelAndView modelAndView = new ModelAndView();
-			
-			if (result > 0) {
-				// insert 성공
-				modelAndView.addObject("msg", "프로그램 등록을 성공했습니다.");
-			} else {
-				//insert 실패
-				modelAndView.addObject("msg", "프로그램 등록을 실패하였습니다.");
-			}
-			
-			System.out.println(map);
-			
-			modelAndView.addObject("pageName", "programMgmtList");
-			modelAndView.setViewName("redirect:/admin/programMgmtList");
-			
-			return modelAndView;
-		}
 		
 		// 관리자페이지_회원관리로 이동
 		@GetMapping("/memberMgmt")
@@ -359,7 +323,5 @@ public class AdminController {
 			return modlAndView;
 		}
 	
-
-
 
 }

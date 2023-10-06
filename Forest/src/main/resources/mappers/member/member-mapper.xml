@@ -112,4 +112,10 @@
 		WHERE
 			NO = #{no}
 	</update>
+	
+	<select id="selectMemberCountByStatus" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FORM MEMBER
+		WHERE STATUS
+	</select>
 </mapper>

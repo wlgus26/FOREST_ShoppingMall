@@ -26,13 +26,7 @@ public interface AdminMapper {
 	int updateProductStatus(@Param("no") int no, @Param("status") String status);
 
 	
-<<<<<<< HEAD
 
-	
-
-
-=======
 	
 	int insertProgram(Program program);
->>>>>>> f2e2bdfdaedb200b88b920184079d6a448badcfd
 }
