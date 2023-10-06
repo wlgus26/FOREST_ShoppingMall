@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
-import com.hm.forest.admin.model.vo.Program;
 import com.hm.forest.common.util.MultipartFileUtil;
 import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.service.MemberService;
@@ -295,15 +294,14 @@ public class AdminController {
 
 		
 		// 관리자페이지_프로그램관리로 이동
-		@GetMapping("/programMgmt")
-		public ModelAndView programMgmt (ModelAndView modlAndView) {
+		@GetMapping("/memberMgmt")
+		public ModelAndView memberMgmt (ModelAndView modlAndView) {
 			
-			modlAndView.addObject("pageName", "programMgmt");
-			modlAndView.setViewName("page/admin/programMgmt");
+			modlAndView.addObject("pageName", "memberMgmt");
+			modlAndView.setViewName("page/admin/memberMgmt");
 			
 			return modlAndView;
 		}
-		
 		
 		
 		

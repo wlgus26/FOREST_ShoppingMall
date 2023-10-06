@@ -1,8 +1,5 @@
 package com.hm.forest.member.model.service;
 
-import java.util.List;
-
-import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.vo.Member;
 
 public interface MemberService {
