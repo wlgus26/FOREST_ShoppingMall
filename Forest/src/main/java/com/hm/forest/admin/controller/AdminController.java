@@ -107,11 +107,6 @@ public class AdminController {
 
 		    System.out.println(map);
 		    
-//		    modelAndView.addObject("pageName", "productMgmtList"); // 리다이렉트 URL 설정
-//		    modelAndView.setViewName("page/admin/productMgmtList");
-//
-//		    return modelAndView;
-		    
 		    modelAndView.setViewName("redirect:/admin/productMgmtList");
 		    
 		    return modelAndView;

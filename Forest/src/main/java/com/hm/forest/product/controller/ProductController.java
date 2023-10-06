@@ -11,9 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
-import com.hm.forest.board.model.vo.Board;
 import com.hm.forest.common.util.PageInfo;
-import com.hm.forest.product.model.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,29 +24,28 @@ public class ProductController {
 	private AdminService adminService;
 	
 	@GetMapping("/kitchen")
-		public ModelAndView kitchen(ModelAndView modelAndView, 
-				 				@RequestParam(defaultValue =  "1") int page) {
-			
-//		    String category = "kitchen";
-			int listCount = 0;
-			PageInfo pageInfo = null;
-			List<Product> productlists = null; 
-			
-			listCount = adminService.getProductBoardCount();
-			pageInfo = new PageInfo(page, 10, listCount, 10);
-			productlists = adminService.getProductBoardList(pageInfo);
-			
-			log.info("Page : {}", page);
-			log.info("ListCount : {}", listCount);
-			
-			modelAndView.addObject("pageInfo", "kitchen");
-			modelAndView.addObject("productlists", productlists);
-			
-			System.out.println();
-			
-			modelAndView.setViewName("page/products/kitchen");
-			
-			return modelAndView;
+	public ModelAndView kitchen(ModelAndView modelAndView, 
+							 @RequestParam(defaultValue =  "1") int page) {
+		
+		int listCount = 0;
+		PageInfo pageInfo = null;
+		List<Product> productlists = null; 
+		
+		listCount = adminService.getProductBoardCount();
+		pageInfo = new PageInfo(page, 8, listCount, 10);
+		productlists = adminService.getProductBoardList(pageInfo);
+		
+		log.info("Page : {}", page);
+		log.info("ListCount : {}", listCount);
+
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("productlists", productlists);
+		
+		System.out.println();
+		
+		modelAndView.setViewName("page/products/kitchen");
+		
+		return modelAndView;
 	}
 
 	
