@@ -23,14 +23,15 @@ public interface AdminMapper {
 	
 	Product selectProductBoardByNo(@Param("no") int no);
 
+	// 관리자_제품 삭제
 	int updateProductStatus(@Param("no") int no, @Param("status") String status);
 	
-	// 카테고리 별 제품 리스트 전체 목록 조회
+	// 카테고리 별 제품 전체 목록 조회
 	List<Product> selectProductListByCategory(@Param("category") String category, RowBounds bounds);
 
-	
+	// 카테고리 별 제품 목록 전체 개수
+	int selectProductCountByCategory(String category);
 
-	
 
 
 }

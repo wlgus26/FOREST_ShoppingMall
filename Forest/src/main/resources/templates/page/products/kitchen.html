@@ -19,27 +19,18 @@
 
 <!-- test nav -->
 <div class="nav-scroller py-1 mb-2">
-	<nav class="nav d-flex justify-content-betwwen">
-		<a class="p-2 text-muted" href="/products?category='kitchen'">주방</a>
-		<a class="p-2 text-muted" href="/products?category='style'">패션</a>
-		<a class="p-2 text-muted" href="/products?category='kit'">친환경키트</a>
-
-	</nav>
+	
 
 </div>
 
-
-
-
-
  <div class="table-div">
 	  <div class="py-5" >
-            <div class="container px-3 px-lg-4 mt-4" style="text-align: center;" >
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-lg-4 justify-content-center"> 
+            <div class="container px-4 px-lg-5 mt-5" style="text-align: center;" >
+               <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-lg-4  justify-content-center"> 
                 
-                <span th:if="${category == 'kitchen'}">주방</span>
-	    		  <span th:if="${category == 'kit'}">친환경키트</span>
-	    		   <span th:if="${category == 'style'}">패션</span>
+                 <span th:if="${category == 'kitchen'}">주방</span>
+	    		 <span th:if="${category == 'kit'}">친환경키트</span>
+	    		 <span th:if="${category == 'style'}">패션</span>
 	    		  
                     <div class="col mb-3" th:each="products,  iterStat : ${productlists}" th:attr="data-href=@{/products/kitchenView?no={no}(no=${products.no})}" th:limit="8">
                     
@@ -103,15 +94,6 @@
 		        });
 		    });
 		    
-		    function kitchen() {
-				   window.location.href = '/products/kitchen';
-				  };
-		    function style() {
-				   window.location.href = '/products/style';
-				  };
-		    function kit() {
-				   window.location.href = '/products/kit';
-				  };
 
 	</script>
 </div>

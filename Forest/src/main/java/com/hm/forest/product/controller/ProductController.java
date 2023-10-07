@@ -34,7 +34,8 @@ public class ProductController {
 		PageInfo pageInfo = null;
 		List<Product> productlists = null; 
 		
-		listCount = adminService.getProductBoardCount();
+//		listCount = adminService.getProductBoardCount(); // 모든 제품 개수 가져오기
+		listCount = adminService.getProductBoardCountByCategory(category);  // 카테고리별 제품 개수 가져오기
 		pageInfo = new PageInfo(page, 10, listCount, 8);
 		productlists = adminService.getProductBoardList(category, pageInfo);
 		
@@ -62,7 +63,7 @@ public class ProductController {
 		PageInfo pageInfo = null;
 		List<Product> productlists = null; 
 		
-		listCount = adminService.getProductBoardCount();
+		listCount = adminService.getProductBoardCountByCategory(category);
 		pageInfo = new PageInfo(page, 10, listCount, 8);
 		productlists = adminService.getProductBoardList(category, pageInfo);
 		
@@ -89,7 +90,7 @@ public class ProductController {
 		PageInfo pageInfo = null;
 		List<Product> productlists = null; 
 		
-		listCount = adminService.getProductBoardCount();
+		listCount = adminService.getProductBoardCountByCategory(category);
 		pageInfo = new PageInfo(page, 10, listCount, 8);
 		productlists = adminService.getProductBoardList(category, pageInfo);
 		
@@ -108,14 +109,5 @@ public class ProductController {
 	}
 	
 
-
-	
-
-	
-	
-
-	
-	
-	
 
 }

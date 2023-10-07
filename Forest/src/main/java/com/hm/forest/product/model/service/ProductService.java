@@ -10,9 +10,6 @@ public interface ProductService {
 
 	List<Products> getProducts();
 	
-
-//	Products getProductsById(int no);
-	
 	List<Products> getProductList(PageInfo pageInfo);
 //	
 //	Products getProductByNo(int no);
