@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.board.model.vo.Board;
 
 @Mapper
 public interface AdminMapper {
@@ -23,6 +24,9 @@ public interface AdminMapper {
 	Product selectProductBoardByNo(@Param("no") int no);
 
 	int updateProductStatus(@Param("no") int no, @Param("status") String status);
+	
+	// 카테고리 별 제품 리스트 전체 목록 조회
+	List<Product> selectProductListByCategory(@Param("category") String category, RowBounds bounds);
 
 	
 

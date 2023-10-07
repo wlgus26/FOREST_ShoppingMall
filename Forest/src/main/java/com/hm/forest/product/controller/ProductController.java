@@ -13,10 +13,12 @@ import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/products")
 public class ProductController {
 		
@@ -27,17 +29,19 @@ public class ProductController {
 	public ModelAndView kitchen(ModelAndView modelAndView, 
 							 @RequestParam(defaultValue =  "1") int page) {
 		
+		String category = "kitchen";
 		int listCount = 0;
 		PageInfo pageInfo = null;
 		List<Product> productlists = null; 
 		
 		listCount = adminService.getProductBoardCount();
-		pageInfo = new PageInfo(page, 8, listCount, 10);
-		productlists = adminService.getProductBoardList(pageInfo);
+		pageInfo = new PageInfo(page, 10, listCount, 8);
+		productlists = adminService.getProductBoardList(category, pageInfo);
 		
 		log.info("Page : {}", page);
 		log.info("ListCount : {}", listCount);
 
+		modelAndView.addObject("pageName", "kitchen");
 		modelAndView.addObject("pageInfo", pageInfo);
 		modelAndView.addObject("productlists", productlists);
 		
@@ -50,39 +54,61 @@ public class ProductController {
 
 	
 	@GetMapping("/style")
-	private ModelAndView style (ModelAndView modelAndView) {
+	private ModelAndView style (ModelAndView modelAndView, 
+			 @RequestParam(defaultValue =  "1") int page) {
 		
-		modelAndView.addObject("PageName", "style");
+		String category = "style";
+		int listCount = 0;
+		PageInfo pageInfo = null;
+		List<Product> productlists = null; 
+		
+		listCount = adminService.getProductBoardCount();
+		pageInfo = new PageInfo(page, 10, listCount, 8);
+		productlists = adminService.getProductBoardList(category, pageInfo);
+		
+		log.info("Page : {}", page);
+		log.info("ListCount : {}", listCount);
+
+		modelAndView.addObject("pageName", "style");
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("productlists", productlists);
+		
+		System.out.println();
+		
 		modelAndView.setViewName("page/products/style");
-		
-		
 		
 		return modelAndView;
 	}
 	
-	@GetMapping("/eco")
-	private ModelAndView eco (ModelAndView modelAndView) {
+	@GetMapping("/kit")
+	private ModelAndView kit (ModelAndView modelAndView, 
+			 @RequestParam(defaultValue =  "1") int page) {
 		
-		modelAndView.addObject("PageName", "eco");
-		modelAndView.setViewName("page/products/eco");
+		String category = "kit";
+		int listCount = 0;
+		PageInfo pageInfo = null;
+		List<Product> productlists = null; 
 		
+		listCount = adminService.getProductBoardCount();
+		pageInfo = new PageInfo(page, 10, listCount, 8);
+		productlists = adminService.getProductBoardList(category, pageInfo);
 		
+		log.info("Page : {}", page);
+		log.info("ListCount : {}", listCount);
+
+		modelAndView.addObject("pageName", "kit");
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("productlists", productlists);
+		
+		System.out.println();
+		
+		modelAndView.setViewName("page/products/kit");
 		
 		return modelAndView;
 	}
 	
 
-	@GetMapping("/productdetail")
-	private ModelAndView productdetail(@RequestParam("no") int no , ModelAndView modelAndView) {
-		
-		modelAndView.addObject("pageName", "productdetail");
-		
-		modelAndView.setViewName("page/products/productdetail");
-		
-	
-		
-		return modelAndView;
-	}
+
 	
 
 	

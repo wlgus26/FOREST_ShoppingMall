@@ -64,24 +64,17 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
-	
+	@Override
+	public List<Product> getProductBoardList(String category, PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return adminMapper.selectProductListByCategory(category ,rowBounds);
+		
+	}
 
 
-
-
-//	@Override
-//	public Product imgInsert(Product product) throws Exception {
-//		
-//		String imgSrc = getImgScr(product.getContent());
-//		
-//		if(imgSrc != "") {
-//			product.setImage(imgSrc);
-//			
-//		}
-//		
-//
-//		return adminMapper.productImg(product.getImage(),imgSrc);
-//	}
 
 	
 }

@@ -24,6 +24,9 @@ public interface AdminService {
 	// 제품
 	Product getProductBoardByNo(int no);
 
+	// 제품 리스트 카테고리별로 전체 목록 조회
+	List<Product> getProductBoardList(String category, PageInfo pageInfo);
+
 
 	
 
