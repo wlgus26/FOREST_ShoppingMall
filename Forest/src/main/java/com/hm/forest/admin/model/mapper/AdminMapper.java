@@ -21,6 +21,7 @@ public interface AdminMapper {
 	
 	List<Product> selectAll(RowBounds bounds);
 	
+	// 관리자_특정 제품 조회(view)
 	Product selectProductBoardByNo(@Param("no") int no);
 
 	// 관리자_제품 삭제

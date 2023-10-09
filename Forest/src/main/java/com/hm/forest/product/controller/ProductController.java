@@ -81,11 +81,11 @@ public class ProductController {
 		return modelAndView;
 	}
 	
-	@GetMapping("/kit")
+	@GetMapping("/eco")
 	private ModelAndView kit (ModelAndView modelAndView, 
 			 @RequestParam(defaultValue =  "1") int page) {
 		
-		String category = "kit";
+		String category = "eco";
 		int listCount = 0;
 		PageInfo pageInfo = null;
 		List<Product> productlists = null; 
@@ -97,15 +97,34 @@ public class ProductController {
 		log.info("Page : {}", page);
 		log.info("ListCount : {}", listCount);
 
-		modelAndView.addObject("pageName", "kit");
+		modelAndView.addObject("pageName", "eco");
 		modelAndView.addObject("pageInfo", pageInfo);
 		modelAndView.addObject("productlists", productlists);
 		
 		System.out.println();
 		
-		modelAndView.setViewName("page/products/kit");
+		modelAndView.setViewName("page/products/eco");
 		
 		return modelAndView;
+	}
+	
+	
+	
+	@GetMapping("/view")
+	public ModelAndView view(ModelAndView modelAndView,
+							 @RequestParam("no") int no) {
+		
+		log.info("view() 호출 - {}", no);
+
+		Product product = null;
+		
+		product =adminService.getProductBoardByNo(no);
+		
+		modelAndView.addObject("pageName", "view");
+		modelAndView.addObject("products", product);
+		modelAndView.setViewName("page/products/view");
+		
+		return modelAndView;	
 	}
 	
 

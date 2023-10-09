@@ -29,10 +29,10 @@
                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-lg-4  justify-content-center"> 
                 
                  <span th:if="${category == 'kitchen'}">주방</span>
-	    		 <span th:if="${category == 'kit'}">친환경키트</span>
+	    		 <span th:if="${category == 'eco'}">친환경키트</span>
 	    		 <span th:if="${category == 'style'}">패션</span>
 	    		  
-                    <div class="col mb-3" th:each="products,  iterStat : ${productlists}" th:attr="data-href=@{/products/kitchenView?no={no}(no=${products.no})}" th:limit="8">
+                    <div class="clickable-row" th:each="products,  iterStat : ${productlists}" th:attr="data-href=@{/products/view?no={no}(no=${products.no})}" th:limit="8">
                     
                         <div th:if="${iterStat.index} &lt; 8" class="card h-100">
                             <!-- Product image-->
@@ -84,17 +84,16 @@
 	
 	
 	<script> 
-		    var rows = document.querySelectorAll(".clickable-row");
-		    rows.forEach(function(row) {
-		        row.addEventListener("click", function() {
-		            var href = row.getAttribute("data-href");
-		            if (href) {
-		                window.location.href = href;
-		            }
-		        });
-		    });
-		    
-
+	   // 각 행을 클릭할 때 해당 게시글 view 페이지로 이동
+	   var rows = document.querySelectorAll(".clickable-row");
+	    rows.forEach(function(row) {
+	        row.addEventListener("click", function() {
+	            var href = row.getAttribute("data-href");
+	            if (href) {
+	                window.location.href = href;
+	            }
+	        });
+	    });
 	</script>
 </div>
 
