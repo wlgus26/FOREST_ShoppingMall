@@ -22,8 +22,6 @@ public interface AdminService {
 	// 관리자_특정 제품 조회
 	Product getProductBoardByNo(int no);
 
-<<<<<<< HEAD
-=======
 	
     // < 메인 제품보기 >
 	
@@ -33,8 +31,4 @@ public interface AdminService {
 	// 제품 목록 카테고리별 리스트 전체 개수
 	int getProductBoardCountByCategory(String category);
 
-
-	
-
->>>>>>> 52b0ce8228b5656162e0013a9f299b7d701d4bab
 }
