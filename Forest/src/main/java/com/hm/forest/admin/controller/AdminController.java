@@ -45,6 +45,7 @@ public class AdminController {
 		@GetMapping("/salesMgmt")
 		public ModelAndView salesMgmt (ModelAndView modlAndView) {
 			
+
 			modlAndView.addObject("pageName", "salesMgmt");
 			modlAndView.setViewName("page/admin/salesMgmt");
 			
@@ -93,7 +94,9 @@ public class AdminController {
 				String renamedFileName = null;
 				
 				try {
-					location = resourceLoader.getResource("classpath:/static/upload/product").getFile().getPath();
+
+
+					location = resourceLoader.getResource("/static/upload/product").getFile().getPath();
 
 					renamedFileName = MultipartFileUtil.save(upfile, location);
 					
@@ -124,11 +127,6 @@ public class AdminController {
 		    }
 
 		    System.out.println(map);
-		    
-//		    modelAndView.addObject("pageName", "productMgmtList"); // 리다이렉트 URL 설정
-//		    modelAndView.setViewName("page/admin/productMgmtList");
-//
-//		    return modelAndView;
 		    
 		    modelAndView.setViewName("redirect:/admin/productMgmtList");
 		    
@@ -218,7 +216,7 @@ public class AdminController {
 					 String renamedFileName = null;
 					 
 					 try {
-						location = resourceLoader.getResource("classpath:/static/upload/product/")
+						location = resourceLoader.getResource("/static/upload/product/")
 						 						  .getFile()
 						 						  .getPath();
 						
@@ -228,7 +226,7 @@ public class AdminController {
 							log.info(location + "★삭제된 후 location★");
 							
 						}
-						location = resourceLoader.getResource("classpath:/static/upload/product/")
+						location = resourceLoader.getResource("/static/upload/product/")
 		 						  .getFile()
 		 						  .getPath();
 							

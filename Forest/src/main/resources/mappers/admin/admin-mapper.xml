@@ -5,6 +5,28 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
   
 <mapper namespace="com.hm.forest.admin.model.mapper.AdminMapper">
+
+	<sql id="productListSql">
+	   SELECT  NO, 
+			   CATEGORY, 
+			   NAME,
+			   PRICE, 
+			   CONTENT,
+			   COLOR, 
+			   AMOUNT, 
+			   SIZE_SML, 
+			   STOCK, 
+			   COMPANY, 
+			   DISCOUNTRATE, 
+			   STATUS, 
+			   IMAGE, 
+			   WISH
+		FROM PRODUCT
+		WHERE STATUS = 'Y' 
+		</sql>
+
+
+
 		<resultMap id="productResultMap" type="Product">
 		<id property="no" column="NO"/>
 		<result property="category" column="CATEGORY"/>
@@ -22,12 +44,12 @@
 		<result property="wish" column="WISH"/>
 	</resultMap>
 
-	<insert id="insertProduct" parameterType="Product">
+		<insert id="insertProduct" parameterType="Product">
 
 
-	  <selectKey resultType="_int" keyProperty="no" order="BEFORE">
-	  SELECT SEQ_PD_NO.NEXTVAL FROM DUAL
-	  </selectKey>
+	  	<selectKey resultType="_int" keyProperty="no" order="BEFORE">
+	  	SELECT SEQ_PD_NO.NEXTVAL FROM DUAL
+	  	</selectKey>
 	
 		INSERT INTO PRODUCT (
 				NO, 
@@ -58,9 +80,9 @@
 				#{image}, 
 				#{wish}
 			)
-</insert>
+	</insert>
 
-<select id="selectProductBoardCount" resultType="_int">
+	<select id="selectProductBoardCount" resultType="_int">
 		SELECT COUNT(*) FROM PRODUCT WHERE STATUS = 'Y'
 	</select>
 
@@ -148,7 +170,23 @@
 		SET
 			STATUS = #{status}
 		WHERE NO = #{no}
-</delete>
+    </delete>
+
+
+    <!-- 카테고리별 제품 전체 리스트 조회 -->
+	<select id="selectProductListByCategory" parameterType="string" resultMap="productResultMap">
+		<include refid="productListSql" /> 
+		AND CATEGORY = #{category}
+		ORDER BY NO DESC
+	</select>
+	
+	<!-- 카테고리별 제품 전체 개수 -->
+	<select id="selectProductCountByCategory" resultType="_int">
+		SELECT COUNT(*) 
+		FROM PRODUCT 
+		WHERE STATUS = 'Y' AND CATEGORY =#{category}
+	</select>
+	
 
 
 </mapper>

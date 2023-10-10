@@ -34,11 +34,8 @@
 				</tr>
 				<tr class="clickable-row" style="text-align: center;" th:each="product : ${productlists}" th:attr="data-href=@{/admin/productMgmtView?no={no}(no=${product.no})}">
 			        <td>
-			        <img th:src="@{/upload/product/} + ${product.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
+			        <img th:src="@{/static/upload/product/} + ${product.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
 			        </td>
-			        <!-- 
-			        <td th:text="${product.no}"></td>
-			         -->
 			        <td th:text="${product.name}" style="text-align:left; width:60%;"></td>   
 			    </tr>
 

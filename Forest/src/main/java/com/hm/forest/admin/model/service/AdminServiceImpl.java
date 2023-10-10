@@ -18,6 +18,7 @@ public class AdminServiceImpl implements AdminService {
 	private AdminMapper adminMapper;
 	
 
+	// 관리자_제품 등록, 수정
 	@Override
 	@Transactional
 	public int save(Product product) {
@@ -35,6 +36,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
+	// 관리자_제품목록 리스트 
 	@Override
 	public int getProductBoardCount() {
 		
@@ -42,6 +44,8 @@ public class AdminServiceImpl implements AdminService {
 		return adminMapper.selectProductBoardCount();
 	}
 
+	
+	// 관리자_제품 전체 목록 조회
 	@Override
 	public List<Product> getProductBoardList(PageInfo pageInfo) {
 		int limit = pageInfo.getListLimit();
@@ -51,6 +55,7 @@ public class AdminServiceImpl implements AdminService {
 		return adminMapper.selectAll(rowBounds);
 	}
 
+	// 관리자_특정 제품 조회
 	@Override
 	public Product getProductBoardByNo(int no) {
 		
@@ -58,10 +63,32 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
+	// 관리자_제품삭제
 	@Override
 	public int delete(int no) {
 		
 		return adminMapper.updateProductStatus(no, "N");
+	}
+
+
+
+	// 제품 리스트 카테고리별로 전체 목록 조회
+	@Override
+	public List<Product> getProductBoardList(String category, PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return adminMapper.selectProductListByCategory(category ,rowBounds);
+		
+	}
+
+    
+	// 제품 목록 카테고리별 리스트 전체 개수
+	@Override
+	public int getProductBoardCountByCategory(String category) {
+		
+		return adminMapper.selectProductCountByCategory(category);
 	}
 
 

@@ -39,9 +39,19 @@ public class MyPageController {
 		
 		return modelAndView;
 	}
+
+	// 장바구니 페이지 요청
+	@GetMapping("/cart")
+	public ModelAndView cart (ModelAndView modelAndView) {
+		
+		modelAndView.addObject("pageName", "cart");
+		modelAndView.setViewName("page/myPage/cart");
+		
+		return modelAndView;
+	}
 			
 
-	// 게시물 전체 목록 조회(검색 기능 포함)
+	// 1:1문의페이지 이동. 게시물 전체 목록 조회(검색 기능 포함)
 	 @GetMapping("/qna")
 	 public ModelAndView FindAll(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,  @AuthenticationPrincipal Member loginMember) {
 		

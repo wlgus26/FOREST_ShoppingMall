@@ -43,7 +43,7 @@
 <!-- Content -->
 <div layout:fragment="content">
 
-<form class="container" action="/admin/productMgmtUpdate" method="POST">
+<form class="container" action="/admin/productMgmtUpdate" method="POST" enctype="multipart/form-data">
 	 <!-- csrf토큰과 no값을 hidden 속성으로 넘겨준다. -->
 	 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 	 <input type="hidden" th:name="no" th:value="${product.no}"/>
@@ -65,7 +65,7 @@
 	      <td style="text-align: left;">
 	        <span th:if="${product.category == 'kitchen'}">주방</span>
 	        <span th:if="${product.category == 'style'}">패션</span>
-	        <span th:if="${product.category == 'kit'}">친환경키트</span>
+	        <span th:if="${product.category == 'eco'}">친환경키트</span>
 	      </td>
 		</tr>
 	    <tr>
@@ -98,11 +98,14 @@
 	    </tr>
 	    <tr>
 	      <th>설명</th>
-	      <td><textarea rows="3" cols="100" resize="none" class="editor" name="content" th:utext="${product.content}"></textarea></td>  
+	      <td><textarea rows="3" cols="100" resize="none" class="editor" name="content" style="text-align: left; max-width:100%; height:auto;" th:utext="${product.content}"></textarea></td>  
 	    </tr>
 	    <tr>
 	      <th>대표이미지</th>
-	      <td><input type="text" name="image" th:value="${product.image}"></td>    
+	      <td>
+	        <img th:src="@{/static/upload/product/} + ${product.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
+	      	<input type="file" id="image" name="upfile">
+	      </td>    
 	    </tr>
 	    <!-- 
 	    <tr>
