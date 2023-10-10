@@ -33,10 +33,11 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+	
 	private final ResourceLoader resourceLoader;
 	
 	
-	// 관리자페이지_매출관리로 이동
+		// 관리자페이지_매출관리로 이동
 		@GetMapping("/salesMgmt")
 		public ModelAndView salesMgmt (ModelAndView modlAndView) {
 			
@@ -57,21 +58,6 @@ public class AdminController {
 			return modelAndView;
 		}
 
-		
-		// 관리자페이지_제품등록
-//		@PostMapping("/productMgmt/insert")
-//		@ResponseBody
-//		public String insert (Product  product) {
-//
-//			System.out.println("getName :" + product.getName());
-//			System.out.println("getPrice :" + product.getPrice());
-//			System.out.println("getColor :" + product.getColor());
-//			
-//			adminService.save(product);
-//
-//			return "redirect:/productMgmtList";
-//		}
-//		
 	
 	
         // 관리자페이지_제품등록
@@ -196,9 +182,11 @@ public class AdminController {
 				 					 @RequestParam("name") String name,
 				 					 @RequestParam("price") int price,
 				 					 @RequestParam("color") String color,
-				 					 @RequestParam("amount") int amount,
+//				 					 @RequestParam("amount") int amount,
+				 					 @RequestParam("stock") int stock,
 				 					 @RequestParam("sizeSml") String sizeSml,
-				 					 @RequestParam("content") String content) {
+				 					 @RequestParam("content") String content,
+				 					 @RequestParam("selling") String selling) {
 			 
 			 int result = 0;
 			 Product product = null;
@@ -244,9 +232,11 @@ public class AdminController {
 			 product.setName(name);
 			 product.setPrice(price);
 			 product.setColor(color);
-			 product.setAmount(amount);
+//			 product.setAmount(amount);
+			 product.setStock(stock);
 			 product.setSizeSml(sizeSml);
 			 product.setContent(content);
+			 product.setSelling(selling);
 		
 			 log.info("★ 보드 : {}", product);
 				 

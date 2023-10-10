@@ -17,7 +17,8 @@
 			   SIZE_SML, 
 			   STOCK, 
 			   COMPANY, 
-			   DISCOUNTRATE, 
+			   DISCOUNTRATE,
+			   SELLING, 
 			   STATUS, 
 			   IMAGE, 
 			   WISH
@@ -39,13 +40,13 @@
 		<result property="stock" column="STOCK"/>
 		<result property="company" column="COMPANY"/>
 		<result property="discountrate" column="DISCOUNTRATE"/>
+		<result property="selling" column="SELLING"/>
 		<result property="status" column="STATUS"/>
 		<result property="image" column="IMAGE"/>
 		<result property="wish" column="WISH"/>
 	</resultMap>
 
 		<insert id="insertProduct" parameterType="Product">
-
 
 	  	<selectKey resultType="_int" keyProperty="no" order="BEFORE">
 	  	SELECT SEQ_PD_NO.NEXTVAL FROM DUAL
@@ -63,6 +64,7 @@
 				STOCK, 
 				COMPANY, 
 				DISCOUNTRATE, 
+				SELLING,
 				IMAGE, 
 				WISH
 			) VALUES (
@@ -77,6 +79,7 @@
 				#{stock}, 
 				#{company}, 
 				#{discountrate}, 
+				#{selling},
 				#{image}, 
 				#{wish}
 			)
@@ -98,6 +101,7 @@
                STOCK,
                COMPANY,
                DISCOUNTRATE,
+               SELLING,
                STATUS,
                IMAGE,
                WISH
@@ -119,6 +123,7 @@
                STOCK,
                COMPANY,
                DISCOUNTRATE,
+               SELLING,
                STATUS,
                IMAGE,
                WISH
@@ -155,6 +160,9 @@
 			</if>
 			<if test="status != null">
 				STATUS=#{status},
+			</if>
+			<if test="selling != null">
+				selling=#{selling},
 			</if>
 			<if test="image != null">
 				IMAGE=#{image},
