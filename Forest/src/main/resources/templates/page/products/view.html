@@ -54,8 +54,8 @@
 
 <div class="container" style="width: 70%">
 		
-		<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;" th:text="${products.name}"></h1>
-			<input type="hidden" value="${productInfo.productId}" id="productId">
+		<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;" th:text="${products.no}"></h1>
+			<input type="hidden" value="${products.no}" id="productNo">
 		</div>
 		<div class="row" style="float: left; text-align: center; width:35%;">
 			<img th:src="@{/static/upload/product/} + ${products.image}" style="width: 500px; height: 500px; overflow: hidden; object-fit: cover;">
@@ -92,11 +92,8 @@
 			</div>
 		
 			<div class="form-horizontal" style="text-align: left;">
-				 <label for="select_count">구매수량 : </label>
-				 <select class="form-control" id="select_count">
-				 	<option>${count}</option>
-				     <!-- JavaScript로 옵션을 동적으로 생성 -->
-				    </select>
+			    <label for="select_count">구매수량 : </label>
+			    <input type="number" class="form-control" id="select_count" name="orderQuantity" min="1">
 			</div>
 			<hr>
 			
@@ -104,9 +101,9 @@
 				<div class="selected_option" style="text-align: right;">
 				</div>
 				<div style="text-align: center;">
-					<button class="btn btn-default">주문하기</button>
-					<button class="btn btn-default">장바구니</button>
-				</div>
+					<button class="btn btn-default" >주문하기</button>
+					<button class="btn btn-default" onclick="addToCart()">장바구니</button>
+	  		</div>
 			</div>
 			<hr>	
 		</div>
@@ -294,5 +291,15 @@
 </script>
 
 
+<script>
+    function addToCart() {
+        var productNo = document.getElementById("productNo").value;
+        var selectedOpt = document.querySelector(".opt_select").value;
+        var orderQuantity = document.getElementById("select_count").value;
+        var url = "/myPage/cart?productNo=" + productNo + "&selectedOpt=" + selectedOpt + "&orderQuantity=" + orderQuantity;
+        window.location.href = url;
+    }
+</script>
+			
 </div>
 </html>
