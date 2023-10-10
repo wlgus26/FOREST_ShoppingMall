@@ -1,10 +1,14 @@
 package com.hm.forest.member.model.service;
 
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.mapper.MemberMapper;
 import com.hm.forest.member.model.vo.Member;
 
@@ -62,4 +66,27 @@ public class MemberServiceImpl implements MemberService {
 
 		return mapper.updateMemberStatus("N", no);
 	}
+
+
+	
+	
+//	@Override
+//	public int selectMemberCountByStatus(String status) {
+//
+//		return mapper.selectMemberCountByStatus(status);
+//	}
+//	
+//	@Override
+//	public List<Member> getMemberlists(String status, PageInfo pageInfo) {
+//		int limit = pageInfo.getListLimit();
+//		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+//		
+//		RowBounds bounds = new RowBounds(offset, limit);
+//		
+//		
+//		return mapper.selectMemberlistsByStatus(status,bounds);
+//	}
+
+
+
 }
