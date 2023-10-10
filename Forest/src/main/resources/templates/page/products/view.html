@@ -8,6 +8,7 @@
 <th:block th:with="pageName='view'"></th:block>      
 
 <th:block layout:fragment="css">
+    <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
 	<style>
 	.table > th {
 		width: 25%;
@@ -25,6 +26,42 @@
 	.editor img {
 		max-width: 650px;
 		height: auto;
+	}
+	
+	/* 서브메뉴바 */
+	.sub-menu1 {
+	  background-color: #f0f0f0;
+	  /* padding: 1px; */
+	  margin-top: 15px;
+	}
+	
+	.sub-menu1 ul {
+	  list-style: none;
+	  padding: 10px;
+	  display: flex; /* Flexbox 사용 */
+	  justify-content: space-around; /* 각 항목을 가능한 넓게 펼치기 */
+	}
+	
+	.sub-menu1 li {
+	  font-weight: bold;
+	}
+	
+	.sub-menu1 a {
+	  flex: 1; /* 너비를 같게 설정 */
+	  text-align: center;
+	  padding: 1px; /* 내부 여백 설정 */
+	  text-decoration: none; /* 링크 밑줄 제거 */
+	  color: #333; /* 링크 텍스트 색상 설정 */
+	}
+	
+	.sub-menu1 a:last-child {
+	  border-right: none; /* 마지막 항목의 구분선 제거 */
+	}
+	
+	/* 페이지에 맞게 메뉴바 text bold 활성화 */
+	.sub-menu1 a.active-menu {
+	    font-weight: bold;
+	    text-decoration: underline;
 	}
 	</style>
 
@@ -49,16 +86,16 @@
 
 
 
-<div class="container" style="width: 70%">
+<div class="container" style="width: 80%">
 		
-		<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;" th:text="${products.name}"></h1>
-			<input type="hidden" value="${productInfo.productId}" id="productId">
+		<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;" th:text="${products.no}"></h1>
+			<input type="hidden" value="${products.no}" id="productNo">
 		</div>
 		<div class="row" style="float: left; text-align: center; width:35%;">
-			<img th:src="@{/static/upload/product/} + ${products.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
+			<img th:src="@{/static/upload/product/} + ${products.image}" style="width: 500px; height: 500px; overflow: hidden; object-fit: cover;">
 		</div>
 
-		<div class="row productInfo" style="width: 40%; float: right;" >
+		<div class="row productInfo" style="width: 40%;" >
 			<div class="form-group" style="text-align: center;">
 				<h3 class="page-header" style="text-align: left;" th:text="${products.name}"></h3>
 			</div>
@@ -89,11 +126,8 @@
 			</div>
 		
 			<div class="form-horizontal" style="text-align: left;">
-				 <label for="select_count">구매수량 : </label>
-				 <select class="form-control" id="select_count">
-				 	<option>${count}</option>
-				     <!-- JavaScript로 옵션을 동적으로 생성 -->
-				    </select>
+			    <label for="select_count">구매수량 : </label>
+			    <input type="number" class="form-control" id="select_count" name="orderQuantity" min="1">
 			</div>
 			<hr>
 			
@@ -101,55 +135,31 @@
 				<div class="selected_option" style="text-align: right;">
 				</div>
 				<div style="text-align: center;">
-					<button class="btn btn-default">주문하기</button>
-					<button class="btn btn-default">장바구니</button>
-				</div>
+					<button class="btn btn-default" >주문하기</button>
+					<button class="btn btn-default" onclick="addToCart()">장바구니</button>
+	  		</div>
 			</div>
 			<hr>	
 		</div>
 	</div>
+</form>	
+
 	
-	<div class="container">
-		<div class="row nav">
-			<nav id="middle_nav">
-				<ul class="nav nav-tabs nav-justified">
-					<li id="about">상품상세</li>
-					<li id="review">리뷰</li>
-					<li id="qna">상품문의</li>
-				</ul>
-			</nav>
-		</div>
-		
-		<div class="row" style="margin: 50px 0;">
-			<h1 class="jumbotron">
-				<div class="container">
-					<h1>Hello world</h1>
-					<small>This is product page.</small>
-				</div>
-			</h1>
-		</div>
-		
-		<div class="row about_product" style="text-align: center;">
-			<h1 class="page-header">상품 상세</h1>
-
-		</div>
-		<div class="row reviews" style="text-align: center; margin: 80px 0;">
-			<h1 class="page-header" style="margin-bottom: 50px;">Review</h1>
-			<c:forEach begin="1" end="5">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Panel title</h3>
-				</div>
-				<div class="panel-body">Panel content</div>
-			</div>
-			</c:forEach>
+		<br><br><br><br>
+		<br><br><br><br>
+		<br><br><br><br>
+		<br><br><br><br>
+		<br><br><br><br>
+		<br><br><br><br>
+		<!-- With this -->
+		<div class="sub-menu1">
+		    <ul>
+		        <li><a href="#">상품상세</a></li>
+		        <li><a href="#">리뷰</a></li>
+		        <li><a href="#">상품문의</a></li>
+		    </ul>
 		</div>
 
-		<div class="row qnas" style="text-align: center; height: 700px;">
-			<h1 class="page-header">상품 Q&A</h1>
-            /* Q&A 테이블 */
-		</div>
-	</div>
 
 
 
@@ -315,5 +325,15 @@
 </script>
 
 
-</div>
+<script>
+    function addToCart() {
+        var productNo = document.getElementById("productNo").value;
+        var selectedOpt = document.querySelector(".opt_select").value;
+        var orderQuantity = document.getElementById("select_count").value;
+        var url = "/myPage/cart?productNo=" + productNo + "&selectedOpt=" + selectedOpt + "&orderQuantity=" + orderQuantity;
+        window.location.href = url;
+    }
+</script>
+			
+
 </html>
