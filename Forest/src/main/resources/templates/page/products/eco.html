@@ -25,7 +25,7 @@
 
  <div class="table-div">
 	  <div class="py-5" >
-            <div class="container px-3 px-lg-4 mt-4" style="text-align: center;" >
+            <div class="container px-4 px-lg-5 mt-5" style="text-align: center;" >
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-lg-4 justify-content-center"> 
                 
                 <span th:if="${category == 'kitchen'}">주방</span>
@@ -35,7 +35,7 @@
 	    		  <!-- 
                     <div class="col mb-3" th:each="products,  iterStat : ${productlists}" th:attr="data-href=@{/products/view?no={no}(no=${products.no})}" th:limit="8">
 	    		   -->
-                    <div class="clickable-row" th:each="products,  iterStat : ${productlists}" th:attr="data-href=@{/products/view?no={no}(no=${products.no})}" th:limit="8">
+                    <div class="col mb-3" id="clickable-row" th:each="products,  iterStat : ${productlists}" th:attr="data-href=@{/products/view?no={no}(no=${products.no})}" th:limit="8">
                     
                         <div th:if="${iterStat.index} &lt; 8" class="card h-100">
                             <!-- Product image-->
@@ -85,7 +85,7 @@
 	</div>
 
 	
-	
+	<!-- 
 	<script> 
 	   // 각 행을 클릭할 때 해당 게시글 view 페이지로 이동
 	   var rows = document.querySelectorAll(".clickable-row");
@@ -97,9 +97,24 @@
 	            }
 	        });
 	    });
-		    
 
 	</script>
+	 -->
+	 
+	 <script>
+    // 아이디를 사용하여 요소 선택
+    var row = document.getElementById("clickable-row");
+
+    if (row) {
+        row.addEventListener("click", function() {
+            var href = row.getAttribute("data-href");
+            if (href) {
+                window.location.href = href;
+            }
+        });
+    }
+</script>
+
 </div>
 
 </html>
