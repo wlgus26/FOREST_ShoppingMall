@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hm.forest.board.model.service.BoardService;
 import com.hm.forest.board.model.vo.Board;
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,27 +39,45 @@ public class MyPageController {
 		
 		return modelAndView;
 	}
+
+	// 장바구니 페이지 요청
+	@GetMapping("/cart")
+	public ModelAndView cart (ModelAndView modelAndView) {
+		
+		modelAndView.addObject("pageName", "cart");
+		modelAndView.setViewName("page/myPage/cart");
+		
+		return modelAndView;
+	}
 			
 
-	// 게시물 전체 목록 조회(검색 기능 포함)
+	// 1:1문의페이지 이동. 게시물 전체 목록 조회(검색 기능 포함)
 	 @GetMapping("/qna")
-	 public ModelAndView FindAll(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
-
-		String type = "qna";
-		int listCount = 0;
-		PageInfo pageInfo = null;
-		List<Board> boardLists = null;
-
-		listCount = boardService.selectBoardCountByType(type);
-		pageInfo = new PageInfo(page, 10, listCount, 10);
-		boardLists = boardService.getBoardLists(type, pageInfo);
+	 public ModelAndView FindAll(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,  @AuthenticationPrincipal Member loginMember) {
 		
-		modelAndView.addObject("pageName", "qna");
-		modelAndView.addObject("pageInfo", pageInfo);
-		modelAndView.addObject("boardLists", boardLists);
-	
- 		modelAndView.setViewName("page/myPage/qna");
-		 
+		if (loginMember != null) {
+			String type = "qna";
+			int listCount = 0;
+			PageInfo pageInfo = null;
+			List<Board> boardLists = null;
+			
+			listCount = boardService.selectBoardCountByType(type);
+			pageInfo = new PageInfo(page, 10, listCount, 10);
+			boardLists = boardService.getBoardLists(type, pageInfo);
+			
+			modelAndView.addObject("pageName", "qna");
+			modelAndView.addObject("pageInfo", pageInfo);
+			modelAndView.addObject("boardLists", boardLists);
+			modelAndView.addObject("loginMember", loginMember);
+			
+			modelAndView.setViewName("page/myPage/qna");
+		} else {
+			modelAndView.addObject("msg", "잘못된 접근 입니다.");
+			modelAndView.addObject("location", "/");	
+			
+			modelAndView.setViewName("page/common/msg");
+		}
+		
 		return modelAndView;
 	}
 	 
@@ -93,9 +113,10 @@ public class MyPageController {
 
 	// 게시글 작성 페이지 요청
 	@GetMapping("/write")
-	public ModelAndView write (ModelAndView modelAndView, @RequestParam("type") String type) {
+	public ModelAndView write (ModelAndView modelAndView, @RequestParam("type") String type, @AuthenticationPrincipal Member loginMember) {
 		modelAndView.addObject("pageName", "qnaWrite");
 		modelAndView.addObject("type", type);
+		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.setViewName("page/myPage/write");
 		
 		return modelAndView;
@@ -103,10 +124,10 @@ public class MyPageController {
 	
 	// 게시글 작성(등록)
 	@PostMapping("/write")
-	public ModelAndView save (ModelAndView modelAndView, @RequestParam("type") String type, Board board) {
+	public ModelAndView save (ModelAndView modelAndView, @RequestParam("type") String type, @RequestParam("writerNo") int writerNo, Board board) {
 		int result = 0;
 		board.setType(type);
-		board.setWriterNo(2);
+		board.setWriterNo(writerNo);
 		
 		result = boardService.save(board);
 		

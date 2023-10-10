@@ -4,92 +4,132 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/default_layout}">
-      
-<th:block th:with="pageName='myPage'"></th:block>      
-<!-- myPage.html 고유 CSS 추가 -->
-<th:block layout:fragment="css">
-    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/myPage.css}" >-->
+<head>
+    <th:block th:with="pageName='myPage'"></th:block>
+    <!-- myPage.html 고유 CSS 추가 -->
+    <th:block layout:fragment="css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script>
+	function openZipSearch() {
+	    new daum.Postcode({
+	    	oncomplete: function(data) {     
+			var addr = ''; 
+			if (data.userSelectedType === 'R') { 
+				addr = data.roadAddress;
+			} else {
+				addr = data.jibunAddress;
+			}
+
+			$("#zip_code").val(data.zonecode);
+			$("#addr").val(addr);
+			$("#addr_dtl").val("");
+			$("#addr_dtl").focus();
+	        }
+	    }).open();
+	}
+	</script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    </th:block>
+</head>
+<body>
+    <!-- Content -->
+    <div layout:fragment="content">
+        <div class="header" style="text-align: center;">
+            <h3 style="color: #0f5132; font-weight: bold;">개인 정보 수정</h3>
+            <hr style="border-width: 1px 0 0 0; border-color: #ccc;">
+        </div>
+
+        <form class="validation-form" th:action="@{/myPage}" method="POST" style="width: 50%; margin: 0 auto;">
+            <div style="justify-content: center;display: flex;text-align: center;margin: 0 auto;">
+                <table class="table">
+                    <tr>
+                        <th>아이디</th>
+                        <td><span sec:authentication="principal.id"></span></td>
+                    </tr>
+                    <tr>
+                        <th>이름</th>
+                        <td><span sec:authentication="principal.name"></span></td>
+                    </tr>
+                     <tr>
+                        <th>이메일</th>
+                        <td><span sec:authentication="principal.email"></span></td>
+                    </tr>
+                    <tr>
+					 	<th rowspan="3">비밀번호 변경</th>
+					    <td><input type="password" name="password" id="newPwd" class="form-control" placeholder="새 비밀번호" required></td>
+					</tr>
+					<tr>
+					    <td><input type="password" id="checkPwd" class="form-control" placeholder="새 비밀번호 확인" required></td>
+					</tr>
+					<tr>
+					    <td><input type="password" id="oldPwd" class="form-control" placeholder="현재 비밀번호" required></td>
+					</tr>
+                    <tr>
+                        <th rowspan="3">주소</th>
+                        <td><input type="text" class="form-control"  id="zip_code" name="pcode" onclick="openZipSearch();" th:value="${#authentication.principal.pcode}" readonly="readonly" placeholder="우편번호" required></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-control" id="addr" name="address1" onclick="openZipSearch();" th:value="${#authentication.principal.address1}" readonly="readonly" placeholder="주소" required></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-control" name="address2" th:value="${#authentication.principal.address2}" placeholder="상세주소" required></td>
+                    </tr>
+                    <tr>
+                        <th rowspan="2">수신설정</th>
+                        <td><input type="checkbox"> 수신 동의</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"> 추가 수신 동의</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="container" style="text-align: center;">
+                <input type="button" id="btnDelete" class="btn btn-primary btn-lg" value="탈퇴하기">
+                <button class="btn btn-primary btn-lg" type="submit">회원정보수정</button>
+            </div>
+			 <div class="modal fade" id="myModal">
+			  <div class="modal-dialog modal-dialog-centered">
+			    <div class="modal-content">
+			      <!-- 모달 헤더 -->
+			      <div class="modal-header" style="text-align: center; display: block;">
+			        <h4 class="modal-title" style="font-weight:bolder;">탈퇴하시겠습니까?</h4>
+			      </div>
+			
+			      <!-- 모달 본문 -->
+			      <div class="modal-body" style="text-align: center; display: block; color:black; font-weight:bolder;">
+			        <h5>회원님의 개인 정보는 영구 삭제되며<br>복구할 수 없습니다.</h5>
+			      </div>
+			
+			      <!-- 모달 하단 -->
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">취소</button>
+			        <button type="button" id="confirmDelete" class="btn btn-primary">탈퇴</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+        </form>
+    </div>
     
-<style>
-/* 표 스타일 */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: center; /* 표 안의 셀 텍스트 가로 가운데 정렬 */
-}
-
-table, th, td {
-  border: 1px solid black;
-}
-
-/* 표 안의 셀 텍스트 세로 가운데 정렬 */
-th, td {
-  vertical-align: middle;
-  padding: 8px;
-}
-
-/* 표의 전체 레이아웃 */
-.container {
-  text-align: center; /* 표 및 버튼 가로 가운데 정렬 */
-}
-</style>
-</th:block>
-<!-- myPage.html 고유 스크립트 추가 -->
-<th:block layout:fragment="script">
-    <!-- ex)  <script th:src="@{/js/page/myPage.js}"></script>-->
-</th:block>
-
-<!-- Content -->
-<div layout:fragment="content">
-	<div style="width:60%; margin:0 auto;">
-	    <h3 style="color:#0f5132; font-weight:bold;">개인 정보 수정</h3>
-	    <hr style="border-width:1px 0 0 0; border-color:#000;">
-	</div>
-	
-<form class="validation-form" th:action="@{/update}" method="POST" style="width:50%; margin: 0 auto;">
-    <div style="margin:0 auto;">
-        <table>
-            <tr>
-                <th>아이디</th>
-                <td><span sec:authentication="principal.id"></span></td>
-            </tr>
-            <tr>
-                <td>이름</td>
-                <td><span sec:authentication="principal.name"></span></td>
-            </tr>
-            <tr>
-                <td rowspan="3">비밀번호 변경</td>
-                <td><input type="password"></td>
-            </tr>
-            <tr>                
-                <td><input type="password"></td>
-            </tr>
-            <tr>
-                <td><input type="password"></td>
-            </tr>
-            <tr>
-                <td rowspan="3">주소</td>
-                <td><input type="text" th:value="${#authentication.principal.pcode}"></td>
-            </tr>
-            <tr>
-                <td><input type="text" th:value="${#authentication.principal.address1}"></td>
-            </tr>
-            <tr>
-                <td><input type="text" th:value="${#authentication.principal.address2}"></td>
-            </tr>
-            <tr>
-                <td rowspan="2">수신설정</td>
-                <td><input type="checkbox"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-            </tr>
-        </table>
-    </div>
-    <div class="container text-center">
-        <button class="btn-primary btn-lg btn-block btn" type="submit">탈퇴하기</button>
-        <button class="btn-primary btn-lg btn-block btn" type="submit">회원정보수정</button>
-    </div>
-</form>
-</div>
+</body>
 </html>
+<script>
+$(document).ready(() => {
+    // 탈퇴 버튼을 클릭하면 모달 창을 보이도록 설정
+    $('#btnDelete').on('click', () => {
+        $('#myModal').modal('show');
+    });
+
+    // 모달 창의 확인 버튼을 클릭하면 /delete 페이지로 이동
+    $('#confirmDelete').on('click', () => {
+        location.replace('/delete');
+    });
+
+    // 모달 창의 닫기 버튼을 누르거나 모달 외부를 클릭하면 모달을 숨깁니다.
+    $('.closeModal').on('click', () => {
+        $('#myModal').modal('hide');
+    });
+});
+</script>

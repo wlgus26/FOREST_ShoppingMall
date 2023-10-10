@@ -90,15 +90,8 @@
 	<update id="updateMember" parameterType="Member">
 		UPDATE MEMBER 
 		SET 
-			ID=#{id},
 			PASSWORD=#{password},
-			NAME=#{name},
-			EMAIL=#{email},
-			PHONE=#{phone},
 			PCODE=#{pcode},
-			NAME=#{name},
-			PHONE=#{phone},
-			EMAIL=#{email},
 			ADDRESS1=#{address1},
 			ADDRESS2=#{address2},
 			UPDATE_DATE=SYSDATE
@@ -112,4 +105,10 @@
 		WHERE
 			NO = #{no}
 	</update>
+	
+	<select id="selectMemberCountByStatus" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FORM MEMBER
+		WHERE STATUS
+	</select>
 </mapper>

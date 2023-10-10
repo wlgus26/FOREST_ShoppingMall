@@ -19,8 +19,6 @@ import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.MultipartFileUtil;
 import com.hm.forest.common.util.PageInfo;
-import com.hm.forest.member.model.service.MemberService;
-import com.hm.forest.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +32,6 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
-	private MemberService memberService;
 	
 	private final ResourceLoader resourceLoader;
 	
@@ -43,6 +40,7 @@ public class AdminController {
 		@GetMapping("/salesMgmt")
 		public ModelAndView salesMgmt (ModelAndView modlAndView) {
 			
+
 			modlAndView.addObject("pageName", "salesMgmt");
 			modlAndView.setViewName("page/admin/salesMgmt");
 			
@@ -58,6 +56,7 @@ public class AdminController {
 			
 			return modelAndView;
 		}
+
 		
 		// 관리자페이지_제품등록
 //		@PostMapping("/productMgmt/insert")
@@ -90,7 +89,9 @@ public class AdminController {
 				String renamedFileName = null;
 				
 				try {
-					location = resourceLoader.getResource("classpath:/static/upload/product").getFile().getPath();
+
+
+					location = resourceLoader.getResource("/static/upload/product").getFile().getPath();
 
 					renamedFileName = MultipartFileUtil.save(upfile, location);
 					
@@ -121,11 +122,6 @@ public class AdminController {
 		    }
 
 		    System.out.println(map);
-		    
-//		    modelAndView.addObject("pageName", "productMgmtList"); // 리다이렉트 URL 설정
-//		    modelAndView.setViewName("page/admin/productMgmtList");
-//
-//		    return modelAndView;
 		    
 		    modelAndView.setViewName("redirect:/admin/productMgmtList");
 		    
@@ -215,7 +211,7 @@ public class AdminController {
 					 String renamedFileName = null;
 					 
 					 try {
-						location = resourceLoader.getResource("classpath:/static/upload/product/")
+						location = resourceLoader.getResource("/static/upload/product/")
 						 						  .getFile()
 						 						  .getPath();
 						
@@ -225,7 +221,7 @@ public class AdminController {
 							log.info(location + "★삭제된 후 location★");
 							
 						}
-						location = resourceLoader.getResource("classpath:/static/upload/product/")
+						location = resourceLoader.getResource("/static/upload/product/")
 		 						  .getFile()
 		 						  .getPath();
 							
@@ -294,63 +290,26 @@ public class AdminController {
 		 
 
 		
-//		// 관리자페이지_프로그램관리로 이동
-//		@GetMapping("/memberMgmt")
-//		public ModelAndView programMgmt (ModelAndView modlAndView) {
-//			
-//			List<Member> list = memberService.lists();
-//			modlAndView.addObject("list", list);
-//			
-//			modlAndView.addObject("pageName", "memberMgmt");
-//			modlAndView.setViewName("page/admin/memberMgmt");
-//			
-//			return modlAndView;
-//		}
-		
-		@GetMapping("/memberMgmy")
-		public Map<String , List<Member>> members (@RequestParam String status) {
+		// 관리자페이지_프로그램관리로 이동
+		@GetMapping("/programMgmt")
+		public ModelAndView programMgmt (ModelAndView modlAndView) {
 			
-			Map<String, List<Member>> map  new HashMap<>();
+			modlAndView.addObject("pageName", "programMgmt");
+			modlAndView.setViewName("page/admin/programMgmt");
 			
-			map.put("status", MemberService.selectMemberCountByStatus();
-			
-			return map;
+			return modlAndView;
 		}
 		
 		
-		
-		
-//		// 관리자페이지_회원관리로 이동
-//		@GetMapping("/memberMgmt")
-//		public ModelAndView memberMgmt (ModelAndView modlAndView, @RequestParam(defaultValue = "1") int page,
-//										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String keyWord) {
-//			
-//			String status = "memberMgmt";
-//			int listCount = 0;
-//			PageInfo pageInfo = null;
-//			List<Member> memberlists = null;
-//			
-//			if (searchType != null && ! keyWord.trim().equals("")) {
-//				listCount = MemberService.selectMemberCountBySearchValue(status, searchType, keyWord);
-//				pageInfo = new PageInfo(page, 10, listCount, 10);
-//				memberlists = MemberService.selectMemberlistsByStatus(status, pageInfo, searchType, keyWord);
-//				
-//			
-//			}
-//			
-//			listCount = MemberService.selectMemberCountByStatus(status);
-//			pageInfo = new PageInfo(page, 10, listCount, 10);
-//			memberlists = MemberService.getMemberlists(status, pageInfo);
-//			
-//			modlAndView.addObject("pageName", "memberMgmt");
-//			modlAndView.addObject("pageInfo", pageInfo);
-//			modlAndView.addObject("memberlists", memberlists);
-//			modlAndView.setViewName("page/admin/memberMgmt");
-//			
-//			return modlAndView;
-//		}
-		
-
+		// 관리자페이지_회원관리로 이동
+		@GetMapping("/memberMgmt")
+		public ModelAndView memberMgmt (ModelAndView modlAndView) {
+			
+			modlAndView.addObject("pageName", "memberMgmt");
+			modlAndView.setViewName("page/admin/memberMgmt");
+			
+			return modlAndView;
+		}
 		
 		// 관리자페이지_게시판관리로 이동
 		@GetMapping("/boardMgmt")
@@ -362,7 +321,5 @@ public class AdminController {
 			return modlAndView;
 		}
 	
-
-
 
 }
