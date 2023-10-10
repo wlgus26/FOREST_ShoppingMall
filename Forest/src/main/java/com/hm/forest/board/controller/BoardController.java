@@ -64,6 +64,8 @@ public class BoardController {
 				modelAndView.addObject("pageName", "notice");
 				modelAndView.addObject("pageInfo", pageInfo);
 				modelAndView.addObject("boardLists", boardLists);
+			
+		      // log.info("boardLists : {}", boardLists);
 			}
 			 modelAndView.addObject("loginMember", loginMember);
 			 modelAndView.setViewName("page/board/notice");
