@@ -21,7 +21,9 @@
 		      <th scope="col" colspan="6" class="th-custom-style" style="border-bottom-width: 3px; 
 				  border-bottom-color: #082f1c;
 				  color: #082f1c;">1:1문의하기
+				<th:block th:if="${loginMember != null}">
 			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="redirectToWrite('qna')">글쓰기</button>
+			  	</th:block>
 			  </th>
 		    </tr>
 	 	  </thead>
@@ -29,15 +31,15 @@
 		  
 		  <tbody>
 		  	    <tr style="text-align: center;">
-					<th>번호</th>
 					<th>문의유형</th>
 					<th>제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
 					<th>상태</th>
 				</tr>
-				<tr class="viewPage" style="text-align: center;" th:each="board : ${boardLists}"  th:attr="data-href=@{/myPage/view?no={no}(no=${board.no})}">
-			        <td th:text="${board.rowNum}"></td>
+				<!-- 본인이 작성한 게시글만 확인 가능 -->
+   				<th:block th:each="board : ${boardLists}" th:attr="data-href=@{/myPage/view?no={no}(no=${board.no})}"  th:if="${loginMember.id == board.writerId}">
+				<tr class="viewPage" style="text-align: center;">
 			        <td th:text="${board.category}"></td>
 			        <td th:text="${board.title}" style="text-align:left; width:55%;"></td>
 			        <td th:text="${board.writerId}"></td>
@@ -49,7 +51,12 @@
 			         -->
 			        </td>
 			    </tr>
-
+			    </th:block>
+			    <th:block th:if="${boardLists.isEmpty()}">
+			    <tr class="viewPage" style="text-align: center;">
+				    <td colspan="6" class="board-list-none" style="cursor: auto;">문의 내역이 존재하지 않습니다.</td> 
+			    </tr>				    
+				</th:block>
 		  </tbody>
 	  </table>
 	</div>

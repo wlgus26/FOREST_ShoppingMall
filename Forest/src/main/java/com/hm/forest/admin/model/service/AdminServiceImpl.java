@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hm.forest.admin.model.mapper.AdminMapper;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
-import com.hm.forest.member.model.vo.Member;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -64,35 +63,5 @@ public class AdminServiceImpl implements AdminService {
 		return adminMapper.updateProductStatus(no, "N");
 	}
 
-
-
-
-//	@Override
-//	public Product imgInsert(Product product) throws Exception {
-//		
-//		String imgSrc = getImgScr(product.getContent());
-//		
-//		if(imgSrc != "") {
-//			product.setImage(imgSrc);
-//			
-//		}
-//		
-//
-//		return adminMapper.productImg(product.getImage(),imgSrc);
-//	}
-
-	
-	@Override
-	public List<Member> getMemberlists(String id, PageInfo pageInfo) {
-
-		return null;
-	}
-
-
-	@Override
-	public int findMemberById(String id) {
-
-		return 0;
-	}
 
 }
