@@ -67,6 +67,18 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.updateMemberStatus("N", no);
 	}
 
+	@Override
+	public List<Member> lists(String status, PageInfo pageInfo) {
+
+		return null;
+	}
+
+	@Override
+	public List<Member> lists() {
+
+		return null;
+	}
+
 
 	
 	

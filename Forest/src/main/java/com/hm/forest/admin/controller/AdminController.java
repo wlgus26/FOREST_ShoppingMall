@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
-import com.hm.forest.admin.model.vo.Program;
 import com.hm.forest.common.util.MultipartFileUtil;
 import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.service.MemberService;
@@ -35,6 +34,7 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
+	private MemberService memberService;
 	
 	private final ResourceLoader resourceLoader;
 	
@@ -294,14 +294,27 @@ public class AdminController {
 		 
 
 		
-		// 관리자페이지_프로그램관리로 이동
-		@GetMapping("/programMgmt")
-		public ModelAndView programMgmt (ModelAndView modlAndView) {
+//		// 관리자페이지_프로그램관리로 이동
+//		@GetMapping("/memberMgmt")
+//		public ModelAndView programMgmt (ModelAndView modlAndView) {
+//			
+//			List<Member> list = memberService.lists();
+//			modlAndView.addObject("list", list);
+//			
+//			modlAndView.addObject("pageName", "memberMgmt");
+//			modlAndView.setViewName("page/admin/memberMgmt");
+//			
+//			return modlAndView;
+//		}
+		
+		@GetMapping("/memberMgmy")
+		public Map<String , List<Member>> members (@RequestParam String status) {
 			
-			modlAndView.addObject("pageName", "programMgmt");
-			modlAndView.setViewName("page/admin/programMgmt");
+			Map<String, List<Member>> map  new HashMap<>();
 			
-			return modlAndView;
+			map.put("status", MemberService.selectMemberCountByStatus();
+			
+			return map;
 		}
 		
 		
@@ -320,7 +333,7 @@ public class AdminController {
 //			if (searchType != null && ! keyWord.trim().equals("")) {
 //				listCount = MemberService.selectMemberCountBySearchValue(status, searchType, keyWord);
 //				pageInfo = new PageInfo(page, 10, listCount, 10);
-//				memberlists = MemberService.getMemberlistsBySearchValue(status, pageInfo, searchType, keyWord);
+//				memberlists = MemberService.selectMemberlistsByStatus(status, pageInfo, searchType, keyWord);
 //				
 //			
 //			}
