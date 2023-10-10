@@ -70,8 +70,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
-<<<<<<< HEAD
-=======
+
 	// 제품 리스트 카테고리별로 전체 목록 조회
 	@Override
 	public List<Product> getProductBoardList(String category, PageInfo pageInfo) {
@@ -92,7 +91,4 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
-
-	
->>>>>>> 52b0ce8228b5656162e0013a9f299b7d701d4bab
 }

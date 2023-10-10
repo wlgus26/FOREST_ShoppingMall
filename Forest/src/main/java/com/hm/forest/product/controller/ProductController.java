@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequiredArgsConstructor
+
 @RequestMapping("/products")
 public class ProductController {
 		
@@ -107,9 +107,7 @@ public class ProductController {
 		
 		return modelAndView;
 	}
-<<<<<<< HEAD
 
-=======
 	
 	
 	
@@ -131,6 +129,6 @@ public class ProductController {
 	}
 	
 
->>>>>>> 52b0ce8228b5656162e0013a9f299b7d701d4bab
+
 
 }

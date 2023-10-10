@@ -27,8 +27,7 @@ public interface AdminMapper {
 
 	// 관리자_제품 삭제
 	int updateProductStatus(@Param("no") int no, @Param("status") String status);
-<<<<<<< HEAD
-=======
+
 	
 	// 카테고리 별 제품 전체 목록 조회
 	List<Product> selectProductListByCategory(@Param("category") String category, RowBounds bounds);
@@ -36,7 +35,7 @@ public interface AdminMapper {
 	// 카테고리 별 제품 목록 전체 개수
 	int selectProductCountByCategory(String category);
 
->>>>>>> 52b0ce8228b5656162e0013a9f299b7d701d4bab
+
 
 
 }
