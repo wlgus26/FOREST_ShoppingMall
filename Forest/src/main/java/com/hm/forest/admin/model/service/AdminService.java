@@ -3,6 +3,7 @@ package com.hm.forest.admin.model.service;
 import java.util.List;
 
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.admin.model.vo.Program;
 import com.hm.forest.common.util.PageInfo;
 
 public interface AdminService {
@@ -30,5 +31,14 @@ public interface AdminService {
 	
 	// 제품 목록 카테고리별 리스트 전체 개수
 	int getProductBoardCountByCategory(String category);
+
+	// 관리자_클래스 등록
+	int programSave(Program program);
+
+	// 관리자_클래스 리스트
+	int getProgramBoardCount();
+
+	// 관리자_클래스 리스트
+	List<Program> getProgramBoardList(PageInfo pageInfo);
 
 }
