@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.mapper.MemberMapper;
 import com.hm.forest.member.model.vo.Member;
@@ -67,8 +68,37 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.updateMemberStatus("N", no);
 	}
 
-
+//	@Override
+//	public List<Member> getmemberlists(String status, PageInfo pageInfo) {
+//		int limit = pageInfo.getListLimit();
+//		int offset = (pageInfo.getCurrentPage()-1) * limit;
+//		
+//		RowBounds rowBounds = new RowBounds(offset, limit);
+//
+//		return mapper.getmemberlists(status, rowBounds );
+//	}
+//
+//	@Override
+//	public int selectmembercount(String status) {
+//
+//		return mapper.selectmembercount(status);
+//	}
+	@Override
+	public List<Member> getmemberlists(PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage()-1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return mapper.getmemberlists(rowBounds);
+	}
 	
+	@Override
+	public int selectmembercount() {
+		
+		return mapper.selectmembercount();
+	}
+
 	
 //	@Override
 //	public int selectMemberCountByStatus(String status) {

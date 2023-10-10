@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hm.forest.admin.model.mapper.AdminMapper;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.mapper.MemberMapper;
 
 @Service
 public class AdminServiceImpl implements AdminService {

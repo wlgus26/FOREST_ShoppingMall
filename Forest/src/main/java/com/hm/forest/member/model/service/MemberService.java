@@ -14,6 +14,13 @@ public interface MemberService {
 	Member findMemberById(String id);
 
 	int delete(int no);
+
+	// 수정2
+	int selectmembercount();
+
+	List<Member> getmemberlists(PageInfo pageInfo);
+
+
 	
 	
 	

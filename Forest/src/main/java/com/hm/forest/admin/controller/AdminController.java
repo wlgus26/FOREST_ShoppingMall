@@ -19,6 +19,8 @@ import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.MultipartFileUtil;
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.service.MemberService;
+import com.hm.forest.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,9 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	private final ResourceLoader resourceLoader;
 	
@@ -303,16 +308,42 @@ public class AdminController {
 		}
 		
 		
-		// 관리자페이지_회원관리로 이동
-		@GetMapping("/memberMgmt")
-		public ModelAndView memberMgmt (ModelAndView modlAndView) {
-			
-			modlAndView.addObject("pageName", "memberMgmt");
-			modlAndView.setViewName("page/admin/memberMgmt");
-			
-			return modlAndView;
-		}
 		
+//		// 관리자페이지_회원관리로 이동
+//		@GetMapping("/memberMgmt")
+//		public ModelAndView memberMgmt (ModelAndView modlAndView) {
+//			
+//			modlAndView.addObject("pageName", "memberMgmt");
+//			modlAndView.setViewName("page/admin/memberMgmt");
+//			
+//			return modlAndView;
+//		}
+		
+		
+		@GetMapping("/memberMgmt")
+		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
+			
+			int listcount = 0;
+			PageInfo pageInfo = null;
+			List<Member> memberlists = null;
+			
+			listcount = memberService.selectmembercount();
+			pageInfo = new PageInfo(page, 30, listcount, 15);
+			memberlists = memberService.getmemberlists(pageInfo);
+			
+			log.info("Page : {}", page);
+			log.info("ListCount : {}", listcount);
+			
+			modelAndView.addObject("pageName", "memberMgmt");
+			modelAndView.addObject("pageInfo", pageInfo);
+			modelAndView.addObject("memberlists", memberlists);
+			
+			modelAndView.setViewName("page/admin/memberMgmt");
+			
+			return modelAndView;
+		}
+
+	
 		// 관리자페이지_게시판관리로 이동
 		@GetMapping("/boardMgmt")
 		public ModelAndView boardMgmt (ModelAndView modlAndView) {
