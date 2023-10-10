@@ -22,22 +22,6 @@ import com.hm.forest.member.model.service.MemberDetailsService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-    // 인메모리 사용자를 위한 사용자 서비스 빈 설정
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user = User.withUsername("user")
-//        		.password(bCryptPasswordEncoder().encode("1234"))
-//                .roles("USER")
-//                .build();
-//
-//        UserDetails admin = User.withUsername("admin")
-//        		.password(bCryptPasswordEncoder().encode("1234"))
-//                .roles("ADMIN")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
 	
 	@Autowired
     private MemberDetailsService memberDetailsService;
@@ -46,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
+            	.antMatchers("/myPage/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/home").authenticated()
                 .anyRequest().permitAll()

@@ -215,16 +215,12 @@
 	    	NO,
 	    	BOARD_NO,
 	    	WRITER_NO,
-	    	CONTENT,
-	    	CREATE_DATE,
-	    	MODIFY_DATE
+	    	CONTENT
 	    ) VALUES(
 	    	#{no},
 	    	#{boardNo},
 			#{writerNo},
-			#{content},
-			#{createDate},
-			#{modifyDate}
+			#{content}
 		)
 	</insert>
 	
@@ -249,4 +245,40 @@
 		FROM REPLY 
 		WHERE STATUS = 'Y' AND BOARD_NO = #{boardNo}
 	</select>
+	
+	<!-- 특정 댓글 조회 -->
+	<select id="selectReplyByNo" parameterType="_int" resultMap="replyResultMap">
+	  SELECT R.NO,
+             R.BOARD_NO,
+             R.WRITER_NO,
+             M.ID,
+             R.CONTENT,
+             R.STATUS,
+             R.CREATE_DATE,
+             R.MODIFY_DATE
+      FROM REPLY R
+	  INNER JOIN MEMBER M ON (R.WRITER_NO = M.NO)
+	  WHERE R.STATUS = 'Y' AND R.NO = #{no}
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateReply" parameterType="Reply">
+		UPDATE REPLY 
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="content != null">
+				CONTENT=#{content},
+			</if>
+			MODIFY_DATE=SYSDATE 
+		</trim>			
+		WHERE NO=#{no}
+	</update>
+	
+	<!-- 댓글 삭제(상태값 변경) -->
+	<update id="updateReplyStatus" parameterType="map">
+		UPDATE REPLY
+		SET STATUS = #{status}
+		WHERE NO = #{no}
+	</update>
+	
+	
 </mapper>

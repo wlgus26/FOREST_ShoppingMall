@@ -7,7 +7,8 @@
 
 
 .cont_comment {
-    padding: 5px 0 29px 0;
+	padding-top: 10px;
+    padding-bottom: 29px;
     background-color: #f8f8f8;
 }
 
@@ -21,7 +22,7 @@
 }
 
 .comment-writer {
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: 500;
 }
 
@@ -43,6 +44,29 @@
 	background-color: rgba(0,0,0,0);
 }
 
+.btn_cancel {
+	display: inline-block;
+    min-width: 46px;
+    height: 36px;
+    padding-top: 0;
+	margin-right: 5px;
+    line-height: 36px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: top;
+    background-color: #fff;
+    border: 1px solid #c8cacc;
+    color: #6c757d;
+}
+
+.btn_cancle:hover {
+	color:#082f1c;
+}
+
 .ico_bbs {
 	display: inline-block;
     vertical-align: top;
@@ -59,7 +83,7 @@
 
 .reply-text{
     padding: 0 43px;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.6;
      word-break: break-all; /* 긴 단어를 강제로 줄 바꿈 */
 }
@@ -95,12 +119,19 @@
     font-size: 13px;
 }
 
-textarea.comment_inbox_text[data-v-afadf0bc] {
+.comment_inbox_text {
     max-height: 500px;
     border-color: white;
     font-size: 14px;
     width: 100%;
-    
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-decoration: none;
+    color: #5e5d5e;
+}
+
+.comment_inbox_text:hover {
+	color: #5e5d5e;
 }
 
 .CommentWriter .comment_inbox_number {
@@ -189,6 +220,7 @@ svg:not(:root) {
     font-size: 13px;
     color:  #0f5132;
     border-radius: 6px;
+    text-decoration: none;
     padding-top: 0;
     background-color: #e3f4e9;
     box-sizing: border-box;

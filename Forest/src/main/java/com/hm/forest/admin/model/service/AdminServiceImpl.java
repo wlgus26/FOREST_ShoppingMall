@@ -64,24 +64,4 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
-	
-
-
-
-
-//	@Override
-//	public Product imgInsert(Product product) throws Exception {
-//		
-//		String imgSrc = getImgScr(product.getContent());
-//		
-//		if(imgSrc != "") {
-//			product.setImage(imgSrc);
-//			
-//		}
-//		
-//
-//		return adminMapper.productImg(product.getImage(),imgSrc);
-//	}
-
-	
 }

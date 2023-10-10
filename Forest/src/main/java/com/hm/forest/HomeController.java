@@ -124,7 +124,6 @@ public class HomeController {
 		return modlAndView;
 	}
 	
-	// 마이페이지로 이동 
 	@GetMapping("/myPage")
 	public ModelAndView myPage (ModelAndView modlAndView) {
 		

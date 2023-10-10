@@ -4,13 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.hm.forest.product.model.vo.Products;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
-import com.hm.forest.product.dao.DAO;
 import com.hm.forest.product.model.mapper.ProductMapper;
+import com.hm.forest.product.model.vo.Products;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -51,27 +49,17 @@ public class ProductServiceImpl implements ProductService {
 		
 		return productmapper.selectProductByNo(no);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	 @Autowired
-	    private DAO dao;
 
-	    @Override
-	    public List<Product> getAllProducts() {
-	        return dao.getAllProducts();
-	    }
+
+
+	@Override
+	public List<Product> getAllProducts() {
+		// TODO Auto-generated method stub
+		return productmapper.getAllProducts();
+	}	
+	
+	
+	
 
 
 

@@ -2,8 +2,6 @@ package com.hm.forest.admin.model.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
 
@@ -19,8 +17,5 @@ public interface AdminService {
 	List<Product> getProductBoardList(PageInfo pageInfo);
 
 	Product getProductBoardByNo(int no);
-
-
-	
 
 }

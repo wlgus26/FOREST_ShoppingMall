@@ -86,4 +86,29 @@
 			#{address2}			
 		)
 	</insert>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE MEMBER 
+		SET 
+			PASSWORD=#{password},
+			PCODE=#{pcode},
+			ADDRESS1=#{address1},
+			ADDRESS2=#{address2},
+			UPDATE_DATE=SYSDATE
+		WHERE NO=#{no}
+	</update>
+	
+	<update id="updateMemberStatus" parameterType="map">
+		UPDATE MEMBER
+		SET
+			STATUS = #{status}
+		WHERE
+			NO = #{no}
+	</update>
+	
+	<select id="selectMemberCountByStatus" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FORM MEMBER
+		WHERE STATUS
+	</select>
 </mapper>

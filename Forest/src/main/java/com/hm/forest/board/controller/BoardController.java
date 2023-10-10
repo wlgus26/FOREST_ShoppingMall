@@ -1,33 +1,30 @@
 package com.hm.forest.board.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.board.model.service.BoardService;
 import com.hm.forest.board.model.vo.Board;
-import com.hm.forest.board.model.vo.Reply;
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
-import oracle.jdbc.proxy.annotation.Post;
 
 @Slf4j
 @RestController
@@ -39,7 +36,7 @@ public class BoardController {
 		// 게시물 전체 목록 조회(검색 기능 포함)
 		 @GetMapping("/notice")
 		 public ModelAndView FindAll(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,
-				 				 	 @RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String keyWord) {
+				 				 	 @RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String keyWord, @AuthenticationPrincipal Member loginMember) {
 			 
 			 String type = "notice";
 			 int listCount = 0;
@@ -68,6 +65,7 @@ public class BoardController {
 				modelAndView.addObject("pageInfo", pageInfo);
 				modelAndView.addObject("boardLists", boardLists);
 			}
+			 modelAndView.addObject("loginMember", loginMember);
 			 modelAndView.setViewName("page/board/notice");
 			 
 			 return modelAndView;
@@ -96,7 +94,7 @@ public class BoardController {
 		// 자유게시판으로 이동
 		@GetMapping("/community")
 		public ModelAndView communityFindAll (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,
-			 	 @RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String keyWord) {
+			 	 @RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String keyWord, @AuthenticationPrincipal Member loginMember) {
 			 
 		    String type = "community";
 			int listCount = 0;
@@ -125,6 +123,8 @@ public class BoardController {
 				modelAndView.addObject("pageInfo", pageInfo);
 				modelAndView.addObject("boardLists", boardLists);
 			}
+
+			 modelAndView.addObject("loginMember", loginMember);
 			 modelAndView.setViewName("page/board/community");
 			 
 			 return modelAndView;
@@ -142,7 +142,7 @@ public class BoardController {
 		
 		// 특정 게시글 보기(& 조회수 업데이트 & 쿠키 정보로 조회수 중복 방지)
 		@GetMapping("/view")
-		public ModelAndView view (ModelAndView modelAndView, @RequestParam("no") int no, HttpSession session, HttpServletResponse response) {
+		public ModelAndView view (ModelAndView modelAndView, @RequestParam("no") int no,  @AuthenticationPrincipal Member loginMember, HttpSession session, HttpServletResponse response) {
 			Board board = boardService.getBoardByNo(no);
 			
 			String sessionKey = no + ":cookie";
@@ -150,7 +150,7 @@ public class BoardController {
 			// 세션이 세션키를 가지고 있는지 확인
 			if (session.getAttribute(sessionKey) == null) {
 				// 1. 세션 키가 없으면 조회수 업데이트(+1)
-				int updateCount = boardService.updateReadCount(no);
+				boardService.updateReadCount(no);
 				board.setReadCount(board.getReadCount() + 1);
 				
 				// 2. 세션에 세션 키 추가
@@ -164,6 +164,7 @@ public class BoardController {
 			
 			modelAndView.addObject("pageName", "boardView");
 			modelAndView.addObject("board", board);
+			modelAndView.addObject("loginMember", loginMember);
 			modelAndView.setViewName("page/board/view");
 			
 			return modelAndView;
@@ -171,8 +172,9 @@ public class BoardController {
 		
 		// 게시글 작성 페이지 요청
 		@GetMapping("/write")
-		public ModelAndView write (ModelAndView modelAndView, @RequestParam("type") String type) {
+		public ModelAndView write (ModelAndView modelAndView, @RequestParam("type") String type, @AuthenticationPrincipal Member loginMember) {
 			modelAndView.addObject("pageName", "boardWrite");
+			modelAndView.addObject("loginMember", loginMember);
 			modelAndView.addObject("type", type);
 			modelAndView.setViewName("page/board/write");
 			
@@ -181,10 +183,13 @@ public class BoardController {
 		
 		// 게시글 작성(등록)
 		@PostMapping("/write")
-		public ModelAndView save (ModelAndView modelAndView, @RequestParam("type") String type, Board board) {
+		public ModelAndView save (ModelAndView modelAndView, @RequestParam("type") String type, @RequestParam("writerNo") int writerNo,Board board) {
 			int result = 0;
+			System.out.println(board);
 			board.setType(type);
-			board.setWriterNo(1);
+			board.setWriterNo(writerNo);
+			
+			System.out.println(board);
 			
 			result = boardService.save(board);
 			

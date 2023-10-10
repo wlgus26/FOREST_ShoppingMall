@@ -53,6 +53,15 @@ public interface BoardMapper {
 	// 댓글 수 
 	int selectReplyCountByBoardNo(@Param("boardNo") int boardNo);
 
+	// 특정 댓글 조회
+	Reply selectReplyByNo(@Param("no") int no);
+
+	// 댓글 삭제
+	int updateReplyStatus(@Param("no") int no, @Param("status") String status);
+
+	// 댓글 수정
+	int updateReply(Reply reply);
+
 
 
 
