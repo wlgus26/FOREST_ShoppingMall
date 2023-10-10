@@ -67,20 +67,24 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.updateMemberStatus("N", no);
 	}
 
-	@Override
-	public List<Member> lists(String status, PageInfo pageInfo) {
-
-		return null;
-	}
-
-	@Override
-	public List<Member> lists() {
-
-		return null;
-	}
-
 
 	
+	@Override
+	public List<Member> getmemberlists(PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage()-1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return mapper.getmemberlists(rowBounds);
+	}
+	
+	@Override
+	public int selectmembercount() {
+		
+		return mapper.selectmembercount();
+	}
+
 	
 //	@Override
 //	public int selectMemberCountByStatus(String status) {
