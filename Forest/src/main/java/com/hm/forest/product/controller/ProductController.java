@@ -12,70 +12,125 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
-import com.hm.forest.product.model.service.ProductService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/products")
 public class ProductController {
-	
-	@Autowired
-	private ProductService productservice;
-	
-	
+		
 	@Autowired
 	private AdminService adminService;
 	
 	@GetMapping("/kitchen")
-		public ModelAndView list(ModelAndView modelAndView, 
-				 				@RequestParam(defaultValue =  "1") int page) {
-			
-			int listCount = 0;
-			PageInfo pageInfo = null;
-			List<Product> productlists = null; 
-			
-			listCount = adminService.getProductBoardCount();
-			pageInfo = new PageInfo(page, 10, listCount, 10);
-			productlists = adminService.getProductBoardList(pageInfo);
-			
-			log.info("Page : {}", page);
-			log.info("ListCount : {}", listCount);
-			
-			modelAndView.addObject("pageInfo", pageInfo);
-			modelAndView.addObject("productlists", productlists);
-			
-			System.out.println();
-			
-			modelAndView.setViewName("page/products/kitchen");
-			
-			return modelAndView;
-	}
+	public ModelAndView kitchen(ModelAndView modelAndView, 
+							 @RequestParam(defaultValue =  "1") int page) {
 		
-	
+		String category = "kitchen";
+		int listCount = 0;
+		PageInfo pageInfo = null;
+		List<Product> productlists = null; 
+		
+//		listCount = adminService.getProductBoardCount(); // 모든 제품 개수 가져오기
+		listCount = adminService.getProductBoardCountByCategory(category);  // 카테고리별 제품 개수 가져오기
+		pageInfo = new PageInfo(page, 10, listCount, 8);
+		productlists = adminService.getProductBoardList(category, pageInfo);
+		
+		log.info("Page : {}", page);
+		log.info("ListCount : {}", listCount);
+
+		modelAndView.addObject("pageName", "kitchen");
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("productlists", productlists);
+		
+		System.out.println();
+		
+		modelAndView.setViewName("page/products/kitchen");
+		
+		return modelAndView;
+	}
+
 	
 	@GetMapping("/style")
-	private ModelAndView style (ModelAndView modelAndView) {
+	private ModelAndView style (ModelAndView modelAndView, 
+			 @RequestParam(defaultValue =  "1") int page) {
 		
-		modelAndView.addObject("PageName", "style");
+		String category = "style";
+		int listCount = 0;
+		PageInfo pageInfo = null;
+		List<Product> productlists = null; 
+		
+		listCount = adminService.getProductBoardCountByCategory(category);
+		pageInfo = new PageInfo(page, 10, listCount, 8);
+		productlists = adminService.getProductBoardList(category, pageInfo);
+		
+		log.info("Page : {}", page);
+		log.info("ListCount : {}", listCount);
+
+		modelAndView.addObject("pageName", "style");
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("productlists", productlists);
+		
+		System.out.println();
+		
 		modelAndView.setViewName("page/products/style");
-		
-		productservice.getProducts();
 		
 		return modelAndView;
 	}
 	
 	@GetMapping("/eco")
-	private ModelAndView eco (ModelAndView modelAndView) {
+	private ModelAndView kit (ModelAndView modelAndView, 
+			 @RequestParam(defaultValue =  "1") int page) {
 		
-		modelAndView.addObject("PageName", "eco");
+		String category = "eco";
+		int listCount = 0;
+		PageInfo pageInfo = null;
+		List<Product> productlists = null; 
+		
+		listCount = adminService.getProductBoardCountByCategory(category);
+		pageInfo = new PageInfo(page, 10, listCount, 8);
+		productlists = adminService.getProductBoardList(category, pageInfo);
+		
+		log.info("Page : {}", page);
+		log.info("ListCount : {}", listCount);
+
+		modelAndView.addObject("pageName", "eco");
+		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("productlists", productlists);
+		
+		System.out.println();
+		
 		modelAndView.setViewName("page/products/eco");
-		
-		productservice.getProducts();
 		
 		return modelAndView;
 	}
+<<<<<<< HEAD
 
+=======
+	
+	
+	
+	@GetMapping("/view")
+	public ModelAndView view(ModelAndView modelAndView,
+							 @RequestParam("no") int no) {
+		
+		log.info("view() 호출 - {}", no);
+
+		Product product = null;
+		
+		product =adminService.getProductBoardByNo(no);
+		
+		modelAndView.addObject("pageName", "view");
+		modelAndView.addObject("products", product);
+		modelAndView.setViewName("page/products/view");
+		
+		return modelAndView;	
+	}
+	
+
+>>>>>>> 52b0ce8228b5656162e0013a9f299b7d701d4bab
 
 }

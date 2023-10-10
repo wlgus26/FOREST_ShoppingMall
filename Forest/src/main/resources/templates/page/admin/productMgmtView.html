@@ -61,7 +61,7 @@
 	    	<td style="text-align: left;">
 	        	<span th:if="${product.category == 'kitchen'}">주방</span>
 	        	<span th:if="${product.category == 'style'}">패션</span>
-	        	<span th:if="${product.category == 'kit'}">친환경키트</span>
+	        	<span th:if="${product.category == 'eco'}">친환경키트</span>
 	    	</td>
 		</tr>
 	 
@@ -87,12 +87,16 @@
 	    </tr>
 	    <tr>
 	      <th>설명</th>
-	      <td  rows="3" cols="100" resize="none" class="editor" style="text-align: left;" th:utext="${product.content}"></td>
+	      <td  rows="3" cols="100" resize="none" class="editor" style="text-align: left; max-width:100%; height:auto;" th:utext="${product.content}"></td>
 	    </tr>
 	    <tr>
 	      <th>대표이미지</th>
 	      <td>
+<<<<<<< HEAD
 	      
+=======
+	        <img th:src="@{/static/upload/product/} + ${product.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
+>>>>>>> 52b0ce8228b5656162e0013a9f299b7d701d4bab
 	      </td>
 	    </tr>
 	    <tr>
