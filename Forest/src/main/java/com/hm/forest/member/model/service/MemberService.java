@@ -3,6 +3,7 @@ package com.hm.forest.member.model.service;
 import java.util.List;
 
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.vo.Cart;
 import com.hm.forest.member.model.vo.Member;
 
 public interface MemberService {
@@ -19,6 +20,9 @@ public interface MemberService {
 	int selectmembercount();
 
 	List<Member> getmemberlists(PageInfo pageInfo);
+
+	// 장바구니 제품 담기
+	int save(Cart cart);
 
 
 	

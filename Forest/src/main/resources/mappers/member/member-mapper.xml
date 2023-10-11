@@ -110,7 +110,6 @@
 		SELECT COUNT(*)
 		FORM MEMBER
 		WHERE STATUS
-	</select>
 	
 	<select id="selectmembercount" resultType="_int">
 	<!-- 
@@ -138,4 +137,29 @@
 			   ROLE
 		FROM MEMBER 
 	</select>
+	
+	<!-- 장바구니 제품 추가 -->
+	<insert id="insertIntoCart" parameterType="Cart">
+	<selectKey resultType="_int" keyProperty="no" order="BEFORE">
+		SELECT SEQ_CART_NO.NEXTVAL FROM DUAL
+	</selectKey>
+		INSERT INTO CART(
+			NO,
+			MB_NO,
+		    PD_NO,
+		    COLOR,
+		    QUANTITY,
+		    SIZE_SML
+		) VALUES(
+			#{no},
+			#{memberNo},
+			#{productNo},
+			#{color},
+			#{quantity},
+			#{size}
+		)
+	</insert>
+	
+
+	
 </mapper>
