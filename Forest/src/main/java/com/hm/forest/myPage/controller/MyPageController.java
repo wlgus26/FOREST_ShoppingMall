@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,8 +55,15 @@ public class MyPageController {
 	// 장바구니 페이지 요청
 	@GetMapping("/cart")
 	public ModelAndView cart (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {
+		List<Cart> cartLists = null;
 		
+		int memberNo = loginMember.getNo();
+		
+		cartLists = memberService.getCartListsByMemberNo(memberNo);
+		
+		log.info("{} : ", cartLists);
 		modelAndView.addObject("pageName", "cart");
+		modelAndView.addObject("cartLists", cartLists);
 		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.setViewName("page/myPage/cart");
 		
@@ -85,6 +93,32 @@ public class MyPageController {
 		
 		return ResponseEntity.ok(map);
 	}
+	
+	
+	@PostMapping("/cart/delete")
+	public ResponseEntity<Map<String, Object>> cart(@AuthenticationPrincipal Member loginMember, @RequestBody String cartNo)  {
+		int result = 0;
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		System.out.println("@@@@@@@" + cartNo);
+		log.info("{}", cartNo);
+
+		result = memberService.delete(cartNo);
+		 
+		if (result > 0) {
+	            map.put("message", "성공");
+	     } else {
+	            map.put("message", "실패");
+	     }
+		
+		map.put("result", result);
+		
+		return ResponseEntity.ok(map);
+	}
+	
+	
+	
 
 	// 1:1문의페이지 이동. 게시물 전체 목록 조회(검색 기능 포함)
 	 @GetMapping("/qna")

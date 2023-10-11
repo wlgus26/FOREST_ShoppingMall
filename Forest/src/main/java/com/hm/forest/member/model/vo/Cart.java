@@ -19,4 +19,17 @@ public class Cart {
 	private String color;
 	
 	private String size;
+
+	private int price;
+	
+	private String image;
+
+	private String category;	
+
+	private String name;
+	
+	private int discountrate;
+	
+	private String status;
+
 }

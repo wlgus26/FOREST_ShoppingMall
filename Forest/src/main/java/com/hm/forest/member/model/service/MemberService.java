@@ -24,6 +24,12 @@ public interface MemberService {
 	// 장바구니 제품 담기
 	int save(Cart cart);
 
+	// 장바구니 제품 목록 조회
+	List<Cart> getCartListsByMemberNo(int memberNo);
+
+	// 장바구니 제품 목록 삭제
+	int delete(String cartNo);
+
 
 	
 	

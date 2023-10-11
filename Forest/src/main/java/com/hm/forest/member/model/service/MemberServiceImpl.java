@@ -93,6 +93,19 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.insertIntoCart(cart);
 	}
 
+	// 장바구니 제품 목록 조회
+	@Override
+	public List<Cart> getCartListsByMemberNo(int memberNo) {
+		return memberMapper.selectCartLists(memberNo);
+	}
+
+	// 장바구니 제품 목록 삭제
+	@Override
+	@Transactional
+	public int delete(String cartNo) {
+		return memberMapper.deleteSelectedCartList(cartNo);
+	}
+
 
 	
 //	@Override

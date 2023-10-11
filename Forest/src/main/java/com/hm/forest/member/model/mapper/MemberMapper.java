@@ -35,4 +35,10 @@ public interface MemberMapper {
 
 	// 장바구니 상품 담기
 	int insertIntoCart(Cart cart);
+
+	// 장바구니 제품 목록 조회
+	List<Cart> selectCartLists(int memberNo);
+
+	// 장바구니 제품 목록 삭제
+	int deleteSelectedCartList(String cartNo);
 }
