@@ -44,6 +44,8 @@
 		<result property="stock" column="STOCK"/>
 	</resultMap>
 	
+
+	
 	
 	<insert id="insertProduct" parameterType="Product">
 		 <selectKey resultType="_int" keyProperty="no" order="BEFORE">
@@ -109,6 +111,7 @@
 	    PD.STOCK
 		FROM PRODUCT P
 		JOIN PRODUCTDETAIL PD ON P.NO = PD.NO
+		WHERE P.STATUS = 'Y'
 		ORDER BY NO DESC
 	</select>
 	
@@ -134,8 +137,10 @@
 		WHERE P.STATUS = 'Y' AND P.NO = #{no}
 	 </select>
 	 
-	 <update id="updateProduct" parameterType="Product">
-		UPDATE PRODUCT
+	 
+	 <!-- 제품 수정 -->
+	<update id="updateProduct" parameterType="Product">
+    UPDATE PRODUCT
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="name != null">
 				NAME=#{name},
@@ -149,18 +154,8 @@
 			<if test="content != null">
 				CONTENT=#{content},
 			</if>
-			<if test="color != null">
-				color=#{color},
-			</if>
-			<if test="amount != null">
-				AMOUNT=#{amount},
-			</if>
-			<if test="sizeSml != null">
-				SIZE_SML=#{sizeSml},
-			</if>
-			<if test="stock != null">
-				STOCK=#{stock},
-			</if>
+			
+			
 			<if test="status != null">
 				STATUS=#{status},
 			</if>
@@ -170,11 +165,12 @@
 			<if test="image != null">
 				IMAGE=#{image},
 			</if>
-		
 		</trim>			
 		WHERE NO=#{no}
 	</update>
 	
+
+
 
 	<delete id="updateProductStatus" parameterType="map">
 		UPDATE PRODUCT 

@@ -31,17 +31,14 @@
 		  	    <tr style="text-align: center;">
 					<th>번호</th>
 					<th>제목</th>
-					<th>판매상태</th>
+				
 				</tr>
 				<tr class="clickable-row" style="text-align: center;" th:each="product : ${productlists}" th:attr="data-href=@{/admin/productMgmtView?no={no}(no=${product.no})}">
 			        <td>
 			        <img th:src="@{/static/upload/product/} + ${product.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
 			        </td>
 			        <td th:text="${product.name}" style="text-align:left; width:60%;"></td>   
-			        <td>
-			        <span th:if="${product.selling == 'Y'}">판매중</span>
-	        	    <span th:if="${product.selling == 'N'}">일시품절</span>  
-			        </td>
+			        
 			    </tr>
 
 		  </tbody>

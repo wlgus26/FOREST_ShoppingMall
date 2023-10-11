@@ -126,6 +126,8 @@ public class AdminController {
 			
 			log.info("Page : {}", page);
 			log.info("ListCount : {}", listCount);
+			log.info("productlists : {}", productlists);
+			
 
 			modelAndView.addObject("pageInfo", pageInfo);
 			modelAndView.addObject("productlists", productlists);
@@ -155,6 +157,7 @@ public class AdminController {
 			return modelAndView;	
 		}
 		
+		
 		// 관리자페이지_제품 상세 페이지에서 (수정버튼 누르면)수정 페이지 요청
 		@GetMapping("/productMgmtUpdate")
 		public ModelAndView update (ModelAndView modelAndView, @RequestParam("no") int no) {
@@ -175,9 +178,11 @@ public class AdminController {
 				 					 @RequestParam("upfile") MultipartFile upfile,
 				 					 @RequestParam("no") int no,
 				 					 @RequestParam("name") String name,
+				 					 @RequestParam("color") String color,
 				 					 @RequestParam("price") int price,
-				 					 @RequestParam("content") String content,
-				 					 @RequestParam("selling") String selling) {
+				 					 @RequestParam("stock") int stock,
+				 					 @RequestParam("sizeSml") String sizeSml,
+				 					 @RequestParam("content") String content) {
 			 
 			 int result = 0;
 			 Product product = null;
@@ -222,8 +227,11 @@ public class AdminController {
 
 			 product.setName(name);
 			 product.setPrice(price);
+			 product.setColor(color);
+			 product.setStock(stock);
+			 product.setSizeSml(sizeSml);
 			 product.setContent(content);
-			 product.setSelling(selling);
+
 		
 			 log.info("★ 보드 : {}", product);
 				 
