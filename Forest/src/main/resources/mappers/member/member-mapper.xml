@@ -111,4 +111,31 @@
 		FORM MEMBER
 		WHERE STATUS
 	</select>
+	
+	<select id="selectmembercount" resultType="_int">
+	<!-- 
+		<include refid="selectMemberSql"/>
+	 -->
+		SELECT COUNT(*) FROM MEMBER
+	</select>
+	
+	<select id="getmemberlists" resultMap="memberResultMap">
+	<!-- 
+		<include refid="selectMemberSql"/>
+	 -->
+		SELECT NO,
+			   ID,
+			   PASSWORD,
+			   NAME,
+			   EMAIL,
+			   PHONE,
+			   PCODE,
+			   ADDRESS1,
+			   ADDRESS2,
+			   STATUS,
+			   CREATE_DATE,
+			   UPDATE_DATE,
+			   ROLE
+		FROM MEMBER 
+	</select>
 </mapper>

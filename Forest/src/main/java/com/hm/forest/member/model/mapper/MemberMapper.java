@@ -25,4 +25,10 @@ public interface MemberMapper {
 	int selectMemberCountByStatus(@Param("status") String status);
 	
 	List<Member> selectMemberlistsByStatus(@Param("status") String status, RowBounds bounds);
+
+	// 관리자_멤버 (민지)
+	
+	List<Member> getmemberlists (RowBounds rowBounds);
+
+	int selectmembercount();
 }
