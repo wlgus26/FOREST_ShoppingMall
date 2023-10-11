@@ -30,11 +30,12 @@ public class MyPageController {
 	@Autowired
 	private BoardService boardService;
 	
-	// ? 이동
+	// myPage 이동
 	@GetMapping("/myPage")
-	public ModelAndView myPage (ModelAndView modelAndView) {
+	public ModelAndView myPage (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {
 		
 		modelAndView.addObject("pageName", "myPage");
+		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.setViewName("page/myPage/myPage");
 		
 		return modelAndView;
@@ -42,9 +43,10 @@ public class MyPageController {
 
 	// 장바구니 페이지 요청
 	@GetMapping("/cart")
-	public ModelAndView cart (ModelAndView modelAndView) {
+	public ModelAndView cart (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {
 		
 		modelAndView.addObject("pageName", "cart");
+		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.setViewName("page/myPage/cart");
 		
 		return modelAndView;

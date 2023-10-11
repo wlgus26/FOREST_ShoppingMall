@@ -75,7 +75,7 @@ public class BoardController {
 		
 		// 자주묻는질문으로 이동
 		@GetMapping("/faq")
-		public ModelAndView faq (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
+		public ModelAndView faq (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, @AuthenticationPrincipal Member loginMember) {
 			String type = "faq";
 			int listCount = 0;
 			PageInfo pageInfo = null;
@@ -87,7 +87,7 @@ public class BoardController {
 
 			modelAndView.addObject("pageName", "faq");
 			modelAndView.addObject("boardLists", boardLists);
-
+			modelAndView.addObject("loginMember", loginMember);
 			modelAndView.setViewName("page/board/faq");
 			
 			return modelAndView;

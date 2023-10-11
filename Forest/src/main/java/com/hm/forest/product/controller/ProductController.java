@@ -28,7 +28,7 @@ public class ProductController {
 	
 	@GetMapping("/kitchen")
 	public ModelAndView kitchen(ModelAndView modelAndView, 
-							 @RequestParam(defaultValue =  "1") int page) {
+							 @RequestParam(defaultValue =  "1") int page, @AuthenticationPrincipal Member loginMember) {
 		
 		String category = "kitchen";
 		int listCount = 0;
@@ -45,6 +45,7 @@ public class ProductController {
 
 		modelAndView.addObject("pageName", "kitchen");
 		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.addObject("productlists", productlists);
 		
 		System.out.println();
@@ -57,7 +58,7 @@ public class ProductController {
 	
 	@GetMapping("/style")
 	private ModelAndView style (ModelAndView modelAndView, 
-			 @RequestParam(defaultValue =  "1") int page) {
+			 @RequestParam(defaultValue =  "1") int page, @AuthenticationPrincipal Member loginMember) {
 		
 		String category = "style";
 		int listCount = 0;
@@ -73,6 +74,7 @@ public class ProductController {
 
 		modelAndView.addObject("pageName", "style");
 		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.addObject("productlists", productlists);
 		
 		System.out.println();
@@ -84,7 +86,7 @@ public class ProductController {
 	
 	@GetMapping("/eco")
 	private ModelAndView kit (ModelAndView modelAndView, 
-			 @RequestParam(defaultValue =  "1") int page) {
+			 @RequestParam(defaultValue =  "1") int page, @AuthenticationPrincipal Member loginMember) {
 		
 		String category = "eco";
 		int listCount = 0;
@@ -100,6 +102,7 @@ public class ProductController {
 
 		modelAndView.addObject("pageName", "eco");
 		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.addObject("productlists", productlists);
 		
 		System.out.println();
