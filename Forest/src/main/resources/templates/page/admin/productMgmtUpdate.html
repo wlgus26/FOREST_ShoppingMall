@@ -81,8 +81,8 @@
 	      <td><input type="text" name="color" th:value="${product.color}"></td>
 	    </tr>
 	    <tr>
-	      <th>제품수량</th>
-	      <td><input type="text" name="amount" th:value="${product.amount}"></td>    
+	      <th>재고량</th>
+	      <td><input type="text" name="stock" th:value="${product.stock}"></td>    
 	    </tr>
 	     <tr>
 	      <th scope="row" id="sizeSml" name="sizeSml">제품사이즈</th>
@@ -93,6 +93,17 @@
 			    <option value="S">S</option>
 			    <option value="M">M</option>
 			    <option value="L">L</option>
+		    </select>
+		  </td>
+	    </tr>
+	     <tr>
+	      <th scope="row" id="selling" name="selling">판매상태</th>
+	      <td>
+	      	<select id="selling" name="selling" >
+			    <option value="" selected>--- 선택 ---</option>			    
+			    <option value="Y">판매중</option>
+			    <option value="N">일시품절</option>
+
 		    </select>
 		  </td>
 	    </tr>
@@ -107,18 +118,6 @@
 	      	<input type="file" id="image" name="upfile">
 	      </td>    
 	    </tr>
-	    <!-- 
-	    <tr>
-	   	  <th scope="row" name="status">판매상태</th>
-	      <td>
-	      	<select id="status" name="status">
-			    <option value="" selected>--- 선택 ---</option>
-			    <option value="Y">판매중</option>
-			    <option value="N">품절</option>
-		    </select>
-		  </td>
-	    </tr>
-	     -->
 	    <tr>
 	      <th></th>
 	      <td>

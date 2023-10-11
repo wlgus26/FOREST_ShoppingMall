@@ -17,10 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.admin.model.vo.Program;
 import com.hm.forest.common.util.MultipartFileUtil;
 import com.hm.forest.common.util.PageInfo;
-import com.hm.forest.member.model.service.MemberService;
-import com.hm.forest.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,13 +34,11 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@Autowired
-	private MemberService memberService;
 	
 	private final ResourceLoader resourceLoader;
 	
 	
-	// 관리자페이지_매출관리로 이동
+		// 관리자페이지_매출관리로 이동
 		@GetMapping("/salesMgmt")
 		public ModelAndView salesMgmt (ModelAndView modlAndView) {
 			
@@ -62,21 +59,6 @@ public class AdminController {
 			return modelAndView;
 		}
 
-		
-		// 관리자페이지_제품등록
-//		@PostMapping("/productMgmt/insert")
-//		@ResponseBody
-//		public String insert (Product  product) {
-//
-//			System.out.println("getName :" + product.getName());
-//			System.out.println("getPrice :" + product.getPrice());
-//			System.out.println("getColor :" + product.getColor());
-//			
-//			adminService.save(product);
-//
-//			return "redirect:/productMgmtList";
-//		}
-//		
 	
 	
         // 관리자페이지_제품등록
@@ -94,8 +76,6 @@ public class AdminController {
 				String renamedFileName = null;
 				
 				try {
-
-
 					location = resourceLoader.getResource("/static/upload/product").getFile().getPath();
 
 					renamedFileName = MultipartFileUtil.save(upfile, location);
@@ -111,12 +91,10 @@ public class AdminController {
 				System.out.println(location + "★★★★★★★");
 			}
 		    
-	
 		    result = adminService.save(product);
 
 		    map.put("resultCode", result);
 		    map.put("product", product);
-
 
 		    if (result > 0) {
 		        // Insert 성공
@@ -129,7 +107,6 @@ public class AdminController {
 		    System.out.println(map);
 		    
 		    modelAndView.setViewName("redirect:/admin/productMgmtList");
-		    
 		    return modelAndView;
 		}
 		
@@ -201,9 +178,11 @@ public class AdminController {
 				 					 @RequestParam("name") String name,
 				 					 @RequestParam("price") int price,
 				 					 @RequestParam("color") String color,
-				 					 @RequestParam("amount") int amount,
+//				 					 @RequestParam("amount") int amount,
+				 					 @RequestParam("stock") int stock,
 				 					 @RequestParam("sizeSml") String sizeSml,
-				 					 @RequestParam("content") String content) {
+				 					 @RequestParam("content") String content,
+				 					 @RequestParam("selling") String selling) {
 			 
 			 int result = 0;
 			 Product product = null;
@@ -249,9 +228,11 @@ public class AdminController {
 			 product.setName(name);
 			 product.setPrice(price);
 			 product.setColor(color);
-			 product.setAmount(amount);
+//			 product.setAmount(amount);
+			 product.setStock(stock);
 			 product.setSizeSml(sizeSml);
 			 product.setContent(content);
+			 product.setSelling(selling);
 		
 			 log.info("★ 보드 : {}", product);
 				 
@@ -307,41 +288,98 @@ public class AdminController {
 		
 		
 		
-//		// 관리자페이지_회원관리로 이동
-//		@GetMapping("/memberMgmt")
-//		public ModelAndView memberMgmt (ModelAndView modlAndView) {
-//			
-//			modlAndView.addObject("pageName", "memberMgmt");
-//			modlAndView.setViewName("page/admin/memberMgmt");
-//			
-//			return modlAndView;
-//		}
-		
-		
-		@GetMapping("/memberMgmt")
-		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page) {
+		 // 관리자페이지_프로그램 등록 ★★★
+		@PostMapping("/programMgmt/insert")
+		public ModelAndView programInsert(ModelAndView modelAndView,
+								   Program program,
+								   @RequestParam("upfile") MultipartFile upfile) {
 			
-			int listcount = 0;
+			
+		    int result = 0;
+		    Map<String, Object> map = new HashMap<>();
+		    
+		    if (upfile != null && !upfile.isEmpty()) {
+				String location = null;
+				String renamedFileName = null;
+				
+				try {
+					location = resourceLoader.getResource("/static/upload/program/").getFile().getPath();
+
+					renamedFileName = MultipartFileUtil.save(upfile, location);
+					
+					if (renamedFileName != null) {
+						program.setOriginalFilename(upfile.getOriginalFilename());
+						program.setRenamedFilename(renamedFileName);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		    
+	
+		    result = adminService.programSave(program);
+
+		    map.put("resultCode", result);
+		    map.put("program", program);
+
+
+		    if (result > 0) {
+		        // Insert 성공
+		    	modelAndView.addObject("msg", "클래스가 등록되었습니다.");
+		    } else {
+		        // Insert 실패
+		    	modelAndView.addObject("msg", "클래스 등록에 실패하였습니다.");
+		    }
+
+		    System.out.println(map);
+		    
+		    modelAndView.setViewName("redirect:/admin/programMgmtList");
+		    
+		    return modelAndView;
+		}
+		
+		
+		//// 관리자 페이지_제품목록 리스트
+		@GetMapping("/programMgmtList")
+		public ModelAndView programList(ModelAndView modelAndView, 
+								 @RequestParam(defaultValue =  "1") int page) {
+			
+			int listCount = 0;
 			PageInfo pageInfo = null;
-			List<Member> memberlists = null;
+			List<Program> programlists = null; 
 			
-			listcount = memberService.selectmembercount();
-			pageInfo = new PageInfo(page, 30, listcount, 15);
-			memberlists = memberService.getmemberlists(pageInfo);
+			listCount = adminService.getProgramBoardCount();
+			pageInfo = new PageInfo(page, 10, listCount, 10);
+			programlists = adminService.getProgramBoardList(pageInfo);
 			
 			log.info("Page : {}", page);
-			log.info("ListCount : {}", listcount);
-			
-			modelAndView.addObject("pageName", "memberMgmt");
+			log.info("ListCount : {}", listCount);
+
 			modelAndView.addObject("pageInfo", pageInfo);
-			modelAndView.addObject("memberlists", memberlists);
+			modelAndView.addObject("programlists", programlists);
 			
-			modelAndView.setViewName("page/admin/memberMgmt");
+			System.out.println();
+			
+			modelAndView.setViewName("page/admin/programMgmtList");
 			
 			return modelAndView;
 		}
+		
+		
 
-	
+		
+		
+		// 관리자페이지_회원관리로 이동
+		@GetMapping("/memberMgmt")
+		public ModelAndView memberMgmt (ModelAndView modlAndView) {
+			
+			modlAndView.addObject("pageName", "memberMgmt");
+			modlAndView.setViewName("page/admin/memberMgmt");
+			
+			return modlAndView;
+		}
+		
 		// 관리자페이지_게시판관리로 이동
 		@GetMapping("/boardMgmt")
 		public ModelAndView boardMgmt (ModelAndView modlAndView) {

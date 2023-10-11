@@ -31,6 +31,8 @@ public class Product {
 	
 	private int discountrate;
 	
+	private String selling;
+	
 	private String status;
 	
 	private String image;

@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 
-<th:block th:with="pageName='productMgmtList'"></th:block>      
+<th:block th:with="pageName='programMgmtList'"></th:block>      
 <!-- productMgmtList.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
 </th:block>
@@ -21,8 +21,8 @@
 		    <tr class="border-bottom" >
 		      <th scope="col" colspan="5" class="th-custom-style" style="border-bottom-width: 3px; 
 				  border-bottom-color: #082f1c;
-				  color: #082f1c;">등록한 제품 목록
-			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="redirectToWrite('productMgmt')">글쓰기</button>
+				  color: #082f1c;">등록한 클래스 목록
+			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="redirectToWrite('programMgmt')">글쓰기</button>
 			  </th>
 		    </tr>
 		  </thead>
@@ -30,18 +30,14 @@
 		  <tbody>
 		  	    <tr style="text-align: center;">
 					<th>번호</th>
-					<th>제목</th>
-					<th>판매상태</th>
+					<th>클래스제목</th>
+					
 				</tr>
-				<tr class="clickable-row" style="text-align: center;" th:each="product : ${productlists}" th:attr="data-href=@{/admin/productMgmtView?no={no}(no=${product.no})}">
+				<tr class="clickable-row" style="text-align: center;" th:each="program : ${programlists}" th:attr="data-href=@{/admin/programMgmtView?no={no}(no=${program.no})}">
 			        <td>
-			        <img th:src="@{/static/upload/product/} + ${product.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
+			        <img th:src="@{/static/upload/program/} + ${program.renamedFilename}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
 			        </td>
-			        <td th:text="${product.name}" style="text-align:left; width:60%;"></td>   
-			        <td>
-			        <span th:if="${product.selling == 'Y'}">판매중</span>
-	        	    <span th:if="${product.selling == 'N'}">일시품절</span>  
-			        </td>
+			        <td th:text="${program.title}" style="text-align:left; width:60%;"></td>   
 			    </tr>
 
 		  </tbody>
@@ -56,16 +52,16 @@
 		  
 		    <!-- 이전 페이지로 -->
 		    <i class="fa-sharp fa-regular fa-angle-left" style="color: #0f5132;"></i>
-		    <a class="a-pagination-move" th:href="@{/admin/productMgmtList(page=${pageInfo.prevPage})}" th:text="'&lt;'" style="color: #082f1c;"></a>
+		    <a class="a-pagination-move" th:href="@{/admin/programMgmtList(page=${pageInfo.prevPage})}" th:text="'&lt;'" style="color: #082f1c;"></a>
 
 		    <!-- 10개 페이지 목록 -->
 			<span th:each="pageNumber : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
 			    <a class="a-pagination current-page" th:if="${pageNumber == pageInfo.currentPage}" disabled="disabled" th:text="${pageNumber}"></a>
-			    <a class="a-pagination" th:unless="${pageNumber == pageInfo.currentPage}" th:href="@{/admin/productMgmtList(page=${pageNumber})}" th:text="${pageNumber}"></a>
+			    <a class="a-pagination" th:unless="${pageNumber == pageInfo.currentPage}" th:href="@{/admin/programMgmtList(page=${pageNumber})}" th:text="${pageNumber}"></a>
 			</span>
 		
 		    <!-- 다음 페이지로 -->
-		    <a class="a-pagination-move" th:href="@{/admin/productMgmtList(page=${pageInfo.nextPage})}" th:text="'&gt;'" style="color: #082f1c;"></a>
+		    <a class="a-pagination-move" th:href="@{/admin/programMgmtList(page=${pageInfo.nextPage})}" th:text="'&gt;'" style="color: #082f1c;"></a>
 		   
 		</div>
 	</div>
@@ -84,7 +80,7 @@
 		    });
 		    
 		    function redirectToWrite() {
-				   window.location.href = '/admin/productMgmt';
+				   window.location.href = '/admin/programMgmt';
 				  };
 
 	</script>
