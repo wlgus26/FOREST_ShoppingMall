@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hm.forest.admin.model.mapper.AdminMapper;
-import com.hm.forest.admin.model.mapper.ProgramMapper;
 import com.hm.forest.admin.model.vo.Product;
-import com.hm.forest.admin.model.vo.Program;
 import com.hm.forest.common.util.PageInfo;
 
 @Service
@@ -18,9 +16,6 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private AdminMapper adminMapper;
-	
-	@Autowired
-	private ProgramMapper programMapper;
 	
 
 	// 관리자_제품 등록, 수정
@@ -95,45 +90,5 @@ public class AdminServiceImpl implements AdminService {
 		
 		return adminMapper.selectProductCountByCategory(category);
 	}
-
-
-	// 관리자_클래스 등록, 수정
-	@Override
-	@Transactional
-	public int programSave(Program program) {
-		int result = 0;
-		
-		if (program.getNo() > 0) {
-			// update
-			result = programMapper.updateProgram(program);
-		} else {
-			// insert
-			result = programMapper.insertProgram(program);
-		}
-
-		return result;
-	}
-
-
-	// 관리자_클래스 리스트
-	@Override
-	public int getProgramBoardCount() {
-		
-		return programMapper.selectProgramBoardCount();
-	}
-
-
-	// 관리자_클래스 리스트
-	@Override
-	public List<Program> getProgramBoardList(PageInfo pageInfo) {
-		int limit = pageInfo.getListLimit();
-		int offset = (pageInfo.getCurrentPage() - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return programMapper.selectAll(rowBounds);
-	}
-	
-	
-
 
 }
