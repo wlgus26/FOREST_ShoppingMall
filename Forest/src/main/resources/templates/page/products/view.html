@@ -3,7 +3,11 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
+      
 
+<!-- csrf 토큰을 비동기통신으로 넘기기 위한 설정 -->
+<meta th:name="_csrf_header" th:content="${_csrf.headerName}">
+<meta th:name="_csrf" th:content="${_csrf.token}">
 
 <th:block th:with="pageName='productView'"></th:block>      
 
@@ -109,10 +113,19 @@
 					<label>적립금 : </label><span><fmt:parseNumber var="test" value="${productInfo.price / 100}" integerOnly="true"/> ${test}&nbsp;원</span>
 				</div>
 				 -->
-	
 				<div class="form-horizontal" style="text-align: left;">
-				    <label>옵션 : </label>
-				    <select id="selectedOpt" class="form-control opt_select" name="selectedOpt">
+				    <label>색상 : </label>
+				    <select id="selectedColor" class="form-control opt_select" name="selectedColor">
+				    	<option value="" selected>--- 선택 ---</option>
+				        <option value="yellow">yellow</option>
+				        <option value="green">green</option>
+				        <option value="orange">orange</option>
+				    </select>
+				</div>
+				
+				<div class="form-horizontal" style="text-align: left;">
+				    <label>사이즈 : </label>
+				    <select id="selectedSize" class="form-control opt_select" name="selectedSize">
 				    	<option value="" selected>--- 선택 ---</option>
 				        <option value="F">F</option>
 				        <option value="S">S</option>
@@ -123,7 +136,7 @@
 			
 				<div class="form-horizontal" style="text-align: left;">
 				    <label for="select_count">구매수량 : </label>
-				    <input type="number" class="form-control" id="select_count" name="orderQuantity" min="1" value="1">
+				    <input type="number" class="form-control" id="orderQuantity" name="orderQuantity" min="1" value="1">
 				</div>
 				<hr>
 				<div class="row">
@@ -154,29 +167,69 @@
 
 <!-- 장바구니, 주문하기 버튼 관련 함수-->
 <script th:inline="javascript"> 
+	<!-- csrf 토큰을 JavaScript 변수로 저장 -->
+	var csrfToken = [[${_csrf.token}]];
+	var csrfHeader = [[${_csrf.headerName}]];
 
 	var loginMember = [[${loginMember}]];
-	var select = document.getElementById("selectedOpt");
+	var product = [[${products}]];
+	var selectedSize = document.getElementById("selectedSize");
+	var selectedColor = document.getElementById("selectedColor");
 	
-	// 장바구니 버튼
+	// 장바구니 버튼 
     $('#btnCart').on('click', (event) => {
-        event.preventDefault(); // 버튼의 기본 동작 중지 
+    	event.preventDefault(); // 버튼의 기본 동작 중지 
 		
-		var selectedOpt = select.options[select.selectedIndex].value; // 옵션 값 저장
-        
-        // 장바구니 버튼 클릭 시, 로그인 여부 체크 
-        if(loginMember != null){
-        	// 옵션 선택 여부 체크
-        	if(selectedOpt == ""){
-        		
+		var productNo = product.no; // 상품 번호
+		var quantity = document.getElementById("orderQuantity").value; // 주문 수량 저장
+		var color = selectedColor.options[selectedColor.selectedIndex].value; // 색상 값 저장
+		var size = selectedSize.options[selectedSize.selectedIndex].value; // 사이즈 값 저장
+		
+        // 1. 장바구니 버튼 클릭 시, 로그인 여부 체크 
+        if(loginMember != null){        	
+        	if(size == "" || color == ""){
+        	 	// 2. 옵션[색상/사이즈] 선택 여부 체크
         		alert('옵션을 선택해 주세요');
-        	} else if(selectedOpt != "") {
-        		// cart테이블에 insert 로직 수행
-        		// insert 성공시
+        	} else  {
+        		// 3. 장바구니 테이블(CART)에 insert 작업
+        		var cart = {
+       				productNo,
+		        	quantity,				        
+		        	color,
+		        	size
+        		};
+        		$.ajax({
+    				url: '/myPage/cart/add', // API 엔드포인트 
+   		         	type: 'POST',
+		            contentType: 'application/json;charset=UTF-8',
+		            data: JSON.stringify(cart), 
+		            dataType: 'json', // 응답 데이터 형식
+    		        beforeSend: function(xhr) {
+		                // 요청을 보내기 전, CSRF 토큰을 헤더에 설정
+    		           xhr.setRequestHeader(csrfHeader, csrfToken);
+		            },
+			        success: function (obj) {
+			            // 서버에서 반환한 JSON 데이터 처리
+			           if (obj.message === "성공") {
+				           // 4. 장바구니 추가 성공 시 메세지 & 장바구니 페이지 이동
+				           if (confirm('장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?')) {
+			                   window.location.href = '/myPage/cart';
+			               }   
+			           } else {
+			          	  // 4. 장바구니 추가 실패 시 메세지
+			               alert("제품을 장바구니에 추가하는 도중 오류가 발생했습니다.");
+			           };
+			              // 
+			          //  } else {
+			                // 4. 장바구니 추가 실패 시 메세지
+			          //      alert("제품을 장바구니에 추가하는 도중 오류가 발생했습니다.");
+			          //  }
+			        },
+			        error: function (error) {
+			            console.error('장바구니 작업 중 오류가 발생하였습니다 :', error);
+			        },
+    			}); 
         		
-        		if (confirm('장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?')) {
-                window.location.href = '/myPage/cart';
-            	}        		
         	}     	 
         } else {
 			if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {

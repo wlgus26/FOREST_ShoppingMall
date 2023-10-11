@@ -1,15 +1,19 @@
 package com.hm.forest.myPage.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.board.model.service.BoardService;
 import com.hm.forest.board.model.vo.Board;
+import com.hm.forest.board.model.vo.Reply;
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.service.MemberService;
+import com.hm.forest.member.model.vo.Cart;
 import com.hm.forest.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +36,9 @@ public class MyPageController {
 
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	// myPage 이동
 	@GetMapping("/myPage")
@@ -51,7 +61,30 @@ public class MyPageController {
 		
 		return modelAndView;
 	}
-			
+	
+	// 장바구니 상품 담기 요청
+	@PostMapping("/cart/add")	
+	public ResponseEntity<Map<String, Object>> cart(@AuthenticationPrincipal Member loginMember, @RequestBody Cart cart)  {
+		int result = 0;
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		// 장바구니에 로그인멤버의 정보 설정
+		cart.setMemberNo(loginMember.getNo());
+		
+		result = memberService.save(cart);
+		 
+		if (result > 0) {
+	            map.put("message", "성공");
+	     } else {
+	            map.put("message", "실패");
+	     }
+		
+		map.put("result", result);
+		map.put("cart", cart);
+		
+		return ResponseEntity.ok(map);
+	}
 
 	// 1:1문의페이지 이동. 게시물 전체 목록 조회(검색 기능 포함)
 	 @GetMapping("/qna")
