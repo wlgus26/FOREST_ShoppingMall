@@ -31,7 +31,7 @@ public interface MemberMapper {
 	
 	List<Member> getmemberlists(@Param("searchType") String searchType, @Param("pageInfo") PageInfo pageInfo);
 	
-	List<Member> getmemberlists (@Param("status") String status, @Param("type") String type,@Param("searchType") String searchType, RowBounds rowBounds);
+//	List<Member> getmemberlists (@Param("status") String status, @Param("type") String type,@Param("searchType") String searchType, RowBounds rowBounds);
 
 	int selectmembercount(@Param("status") String status, @Param("type") String type,@Param("searchType") String searchType);
 	

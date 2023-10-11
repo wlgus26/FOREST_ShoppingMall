@@ -18,7 +18,9 @@ public interface MemberService {
 	// 수정2
 	int selectmembercount(String type, String searchType, String status);
 
-	List<Member> getmemberlists(String status, String searchType, String type, PageInfo pageInfo);
+	List<Member> getmemberlists(String searchType, PageInfo pageInfo);
+	
+//	List<Member> getmemberlists(String status, String searchType, String type, PageInfo pageInfo);
 
 	int updatememberstatus(String status, int no);
 	
