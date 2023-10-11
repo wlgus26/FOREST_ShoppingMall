@@ -78,8 +78,8 @@
 	      <td style="text-align: left;" th:text="${product.color}"></td>
 	    </tr>
 	    <tr>
-	      <th>제품수량</th>
-	      <td style="text-align: left;" th:text="${product.amount}"></td>
+	      <th>재고</th>
+	      <td style="text-align: left;" th:text="${product.stock}"></td>
 	    </tr>
 	    <tr>
 	      <th>제품사이즈</th>
@@ -87,29 +87,16 @@
 	    </tr>
 	    <tr>
 	      <th>설명</th>
-	      <td  rows="3" cols="100" resize="none" class="editor" style="text-align: left; max-width:100%; height:auto;" th:utext="${product.content}"></td>
+	      <td  rows="3" cols="100" resize="none" class="editor" style="text-align: left; max-width:100%; height:50vh;" th:utext="${product.content}"></td>
 	    </tr>
 	    <tr>
 	      <th>대표이미지</th>
 	      <td>
-
 	        <img th:src="@{/static/upload/product/} + ${product.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
 
 	      </td>
 	    </tr>
-	    <tr>
-	      <th>상세이미지</th>
-	      <td></td>
-	    </tr>
-	    <!-- 
-	       <tr>
-    		<th>판매상태</th>
-	    	<td style="text-align: left;">
-	        	<span th:if="${product.status == 'Y'}">판매중</span>
-	        	<span th:if="${product.status == 'N'}">품절</span>
-	    	</td>
-		</tr>
-	     -->
+	  
 	    <tr>
 	      <th></th>
 	      <td>
@@ -152,17 +139,17 @@
 	<!-- CKEditor  -->
 	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
 	<script>		
-	ClassicEditor
-	.create(document.querySelector('.editor'))
-	.then(editor => {
-		console.log('Editor was initialized');
-		
-		
-	})
-	.catch(error => {
-		console.error(error);
-	});
-</script>
+		ClassicEditor
+		.create(document.querySelector('.editor'))
+		.then(editor => {
+			console.log('Editor was initialized');
+			
+			
+		})
+		.catch(error => {
+			console.error(error);
+		});
+	</script>
 <script>
 		// 모달 창 
 		var myModal = document.getElementById('myModal')
