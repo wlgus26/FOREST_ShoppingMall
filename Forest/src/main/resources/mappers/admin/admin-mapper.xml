@@ -43,9 +43,7 @@
 		<result property="sizeSml" column="SIZE_SML"/>
 		<result property="stock" column="STOCK"/>
 	</resultMap>
-	
 
-	
 	
 	<insert id="insertProduct" parameterType="Product">
 		 <selectKey resultType="_int" keyProperty="no" order="BEFORE">
@@ -139,36 +137,24 @@
 	 
 	 
 	 <!-- 제품 수정 -->
-	<update id="updateProduct" parameterType="Product">
-    UPDATE PRODUCT
-		<trim prefix="SET" suffixOverrides=",">
-			<if test="name != null">
-				NAME=#{name},
-			</if>
-			<if test="category != null">
-				CATEGORY=#{category},
-			</if>
-			<if test="price != null">
-				PRICE=#{price},
-			</if>
-			<if test="content != null">
-				CONTENT=#{content},
-			</if>
-			
-			
-			<if test="status != null">
-				STATUS=#{status},
-			</if>
-			<if test="selling != null">
-				selling=#{selling},
-			</if>
-			<if test="image != null">
-				IMAGE=#{image},
-			</if>
-		</trim>			
-		WHERE NO=#{no}
-	</update>
-	
+<update id="updateProduct" parameterType="Product">
+    UPDATE PRODUCT P
+    SET P.NAME = #{name},
+        P.PRICE = #{price},
+        P.CONTENT = #{content},
+        P.IMAGE = #{image}
+    WHERE P.NO = #{no}
+    AND EXISTS (
+        SELECT *
+        FROM PRODUCTDETAIL PD
+        WHERE PD.NO = P.NO
+        AND PD.COLOR = #{color}
+        AND PD.SIZE_SML = #{sizeSml}
+        AND PD.STOCK = #{stock}
+    )
+</update>
+    
+
 
 
 
@@ -182,9 +168,25 @@
 
     <!-- 카테고리별 제품 전체 리스트 조회 -->
 	<select id="selectProductListByCategory" parameterType="string" resultMap="productResultMap">
-		<include refid="productListSql" /> 
-		AND CATEGORY = #{category}
-		ORDER BY NO DESC
+	  SELECT 
+		    P.NO, 
+		    P.CATEGORY, 
+		    P.NAME, 
+		    P.PRICE, 
+		    P.CONTENT, 
+		    P.COMPANY, 
+		    P.DISCOUNTRATE, 
+		    P.SELLING, 
+		    P.STATUS, 
+		    P.IMAGE, 
+		    P.WISH,
+		    PD.COLOR, 
+		    PD.SIZE_SML, 
+		    PD.STOCK
+	 FROM PRODUCT P
+	 JOIN PRODUCTDETAIL PD ON P.NO = PD.NO
+	 WHERE P.CATEGORY = #{category}
+	 ORDER BY P.NO DESC
 	</select>
 	
 	<!-- 카테고리별 제품 전체 개수 -->

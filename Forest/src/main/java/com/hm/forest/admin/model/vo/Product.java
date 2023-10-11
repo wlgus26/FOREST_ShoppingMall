@@ -33,6 +33,8 @@ public class Product {
 	
 	private int wish;
 	
+//	private List<ProductDetail> productDetail;
+	
 	
 	// 다른 속성들
     private String color;

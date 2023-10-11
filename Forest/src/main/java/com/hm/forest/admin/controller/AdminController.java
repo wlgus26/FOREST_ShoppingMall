@@ -172,7 +172,7 @@ public class AdminController {
 		
 		
 		
-		 // 관리자페이지_제품 수정
+		 // 관리자페이지_제품 수정 ★★★★★★★
 		 @PostMapping("/productMgmtUpdate")
 		 public ModelAndView update (ModelAndView modelAndView, 
 				 					 @RequestParam("upfile") MultipartFile upfile,
@@ -182,7 +182,7 @@ public class AdminController {
 				 					 @RequestParam("price") int price,
 				 					 @RequestParam("stock") int stock,
 				 					 @RequestParam("sizeSml") String sizeSml,
-				 					 @RequestParam("content") String content) {
+				 					 @RequestParam("content") String content ) {
 			 
 			 int result = 0;
 			 Product product = null;
@@ -223,8 +223,8 @@ public class AdminController {
 						e.printStackTrace();
 					}
 				 }
+			 
 			
-
 			 product.setName(name);
 			 product.setPrice(price);
 			 product.setColor(color);
@@ -236,6 +236,8 @@ public class AdminController {
 			 log.info("★ 보드 : {}", product);
 				 
 		     result = adminService.save(product);
+		     
+		     System.out.println(result + "★★★★result★★★");
 		 
 				 if ( result > 0 ) {
 					 modelAndView.addObject("msg", "게시글 수정 성공");
