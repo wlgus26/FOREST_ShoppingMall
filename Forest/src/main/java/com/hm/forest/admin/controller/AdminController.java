@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
-import com.hm.forest.admin.model.vo.Program;
 import com.hm.forest.common.util.MultipartFileUtil;
 import com.hm.forest.common.util.PageInfo;
 
@@ -177,10 +176,6 @@ public class AdminController {
 				 					 @RequestParam("no") int no,
 				 					 @RequestParam("name") String name,
 				 					 @RequestParam("price") int price,
-				 					 @RequestParam("color") String color,
-//				 					 @RequestParam("amount") int amount,
-				 					 @RequestParam("stock") int stock,
-				 					 @RequestParam("sizeSml") String sizeSml,
 				 					 @RequestParam("content") String content,
 				 					 @RequestParam("selling") String selling) {
 			 
@@ -227,10 +222,6 @@ public class AdminController {
 
 			 product.setName(name);
 			 product.setPrice(price);
-			 product.setColor(color);
-//			 product.setAmount(amount);
-			 product.setStock(stock);
-			 product.setSizeSml(sizeSml);
 			 product.setContent(content);
 			 product.setSelling(selling);
 		
@@ -285,89 +276,6 @@ public class AdminController {
 			
 			return modlAndView;
 		}
-		
-		
-		
-		 // 관리자페이지_프로그램 등록 ★★★
-		@PostMapping("/programMgmt/insert")
-		public ModelAndView programInsert(ModelAndView modelAndView,
-								   Program program,
-								   @RequestParam("upfile") MultipartFile upfile) {
-			
-			
-		    int result = 0;
-		    Map<String, Object> map = new HashMap<>();
-		    
-		    if (upfile != null && !upfile.isEmpty()) {
-				String location = null;
-				String renamedFileName = null;
-				
-				try {
-					location = resourceLoader.getResource("/static/upload/program/").getFile().getPath();
-
-					renamedFileName = MultipartFileUtil.save(upfile, location);
-					
-					if (renamedFileName != null) {
-						program.setOriginalFilename(upfile.getOriginalFilename());
-						program.setRenamedFilename(renamedFileName);
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-			}
-		    
-	
-		    result = adminService.programSave(program);
-
-		    map.put("resultCode", result);
-		    map.put("program", program);
-
-
-		    if (result > 0) {
-		        // Insert 성공
-		    	modelAndView.addObject("msg", "클래스가 등록되었습니다.");
-		    } else {
-		        // Insert 실패
-		    	modelAndView.addObject("msg", "클래스 등록에 실패하였습니다.");
-		    }
-
-		    System.out.println(map);
-		    
-		    modelAndView.setViewName("redirect:/admin/programMgmtList");
-		    
-		    return modelAndView;
-		}
-		
-		
-		//// 관리자 페이지_제품목록 리스트
-		@GetMapping("/programMgmtList")
-		public ModelAndView programList(ModelAndView modelAndView, 
-								 @RequestParam(defaultValue =  "1") int page) {
-			
-			int listCount = 0;
-			PageInfo pageInfo = null;
-			List<Program> programlists = null; 
-			
-			listCount = adminService.getProgramBoardCount();
-			pageInfo = new PageInfo(page, 10, listCount, 10);
-			programlists = adminService.getProgramBoardList(pageInfo);
-			
-			log.info("Page : {}", page);
-			log.info("ListCount : {}", listCount);
-
-			modelAndView.addObject("pageInfo", pageInfo);
-			modelAndView.addObject("programlists", programlists);
-			
-			System.out.println();
-			
-			modelAndView.setViewName("page/admin/programMgmtList");
-			
-			return modelAndView;
-		}
-		
-		
-
 		
 		
 		// 관리자페이지_회원관리로 이동

@@ -35,7 +35,4 @@ public interface AdminMapper {
 	// 카테고리 별 제품 목록 전체 개수
 	int selectProductCountByCategory(String category);
 
-
-
-
 }

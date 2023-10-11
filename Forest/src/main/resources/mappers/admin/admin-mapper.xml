@@ -24,65 +24,67 @@
 			   WISH
 		FROM PRODUCT
 		WHERE STATUS = 'Y' 
-		</sql>
+	</sql>
 
 
-
-		<resultMap id="productResultMap" type="Product">
+	<resultMap id="productResultMap" type="Product">
 		<id property="no" column="NO"/>
 		<result property="category" column="CATEGORY"/>
 		<result property="name" column="NAME"/>
 		<result property="price" column="PRICE"/>
 		<result property="content" column="CONTENT"/>
-		<result property="color" column="COLOR"/>
-		<result property="amount" column="AMOUNT"/>
-		<result property="sizeSml" column="SIZE_SML"/>
-		<result property="stock" column="STOCK"/>
 		<result property="company" column="COMPANY"/>
 		<result property="discountrate" column="DISCOUNTRATE"/>
 		<result property="selling" column="SELLING"/>
 		<result property="status" column="STATUS"/>
 		<result property="image" column="IMAGE"/>
 		<result property="wish" column="WISH"/>
+		<result property="color" column="COLOR"/>
+		<result property="sizeSml" column="SIZE_SML"/>
+		<result property="stock" column="STOCK"/>
 	</resultMap>
-
-		<insert id="insertProduct" parameterType="Product">
-
-	  	<selectKey resultType="_int" keyProperty="no" order="BEFORE">
-	  	SELECT SEQ_PD_NO.NEXTVAL FROM DUAL
-	  	</selectKey>
 	
-		INSERT INTO PRODUCT (
-				NO, 
-				CATEGORY,
-				NAME, 
-				PRICE, 
-				CONTENT, 
-				COLOR, 
-				AMOUNT, 
-				SIZE_SML, 
-				STOCK, 
-				COMPANY, 
-				DISCOUNTRATE, 
-				SELLING,
-				IMAGE, 
-				WISH
-			) VALUES (
-				#{no},
-				#{category}, 
-				#{name}, 
-				#{price}, 
-				#{content}, 
-				#{color}, 
-				#{amount}, 
-				#{sizeSml}, 
-				#{stock}, 
-				#{company}, 
-				#{discountrate}, 
-				#{selling},
-				#{image}, 
-				#{wish}
-			)
+	
+	<insert id="insertProduct" parameterType="Product">
+		 <selectKey resultType="_int" keyProperty="no" order="BEFORE">
+		 SELECT SEQ_PD_NO.NEXTVAL FROM DUAL
+		 </selectKey>
+
+		INSERT ALL
+	    INTO PRODUCT (
+	      NO, 
+	      CATEGORY,
+	      NAME, 
+	      PRICE, 
+	      CONTENT, 
+	      COMPANY, 
+	      DISCOUNTRATE, 
+	      SELLING,
+	      IMAGE, 
+	      WISH
+	    ) VALUES (
+	      #{no},
+	      #{category}, 
+	      #{name}, 
+	      #{price}, 
+	      #{content},
+	      #{company}, 
+	      #{discountrate}, 
+	      #{selling},
+	      #{image}, 
+	      #{wish}
+	    )
+	    INTO PRODUCTDETAIL (
+	      NO,
+	      COLOR,
+	      SIZE_SML,
+	      STOCK
+	    ) SELECT
+	      #{no},
+	      #{color},
+	      #{sizeSml},
+	      #{stock}
+	    FROM DUAL
 	</insert>
 
 	<select id="selectProductBoardCount" resultType="_int">
@@ -90,45 +92,46 @@
 	</select>
 
 	<select id="selectAll" resultMap="productResultMap">
-		SELECT NO,
-			   CATEGORY, 
-			   NAME, 
-			   PRICE, 
-			   CONTENT, 
-			   COLOR,
-               AMOUNT,
-               SIZE_SML,
-               STOCK,
-               COMPANY,
-               DISCOUNTRATE,
-               SELLING,
-               STATUS,
-               IMAGE,
-               WISH
-		FROM PRODUCT
-		WHERE STATUS = 'Y'
+		SELECT
+	    P.NO,
+	    P.CATEGORY,
+	    P.NAME,
+	    P.PRICE,
+	    P.CONTENT,
+	    P.COMPANY,
+	    P.DISCOUNTRATE,
+	    P.SELLING,
+	    P.STATUS,
+	    P.IMAGE,
+	    P.WISH,
+	    PD.COLOR,
+	    PD.SIZE_SML,
+	    PD.STOCK
+		FROM PRODUCT P
+		JOIN PRODUCTDETAIL PD ON P.NO = PD.NO
 		ORDER BY NO DESC
 	</select>
 	
 	
 	 <select id="selectProductBoardByNo" parameterType="_int" resultMap="productResultMap">
-	 	SELECT NO,
-			   CATEGORY, 
-			   NAME, 
-			   PRICE, 
-			   CONTENT, 
-			   COLOR,
-               AMOUNT,
-               SIZE_SML,
-               STOCK,
-               COMPANY,
-               DISCOUNTRATE,
-               SELLING,
-               STATUS,
-               IMAGE,
-               WISH
-		FROM PRODUCT
-		WHERE STATUS = 'Y' AND NO = #{no}
+		SELECT
+		    P.NO,
+		    P.CATEGORY,
+		    P.NAME,
+		    P.PRICE,
+		    P.CONTENT,
+		    P.COMPANY,
+		    P.DISCOUNTRATE,
+		    P.SELLING,
+		    P.STATUS,
+		    P.IMAGE,
+		    P.WISH,
+		    PD.COLOR,
+		    PD.SIZE_SML,
+		    PD.STOCK
+		FROM PRODUCT P
+		JOIN PRODUCTDETAIL PD ON P.NO = PD.NO
+		WHERE P.STATUS = 'Y' AND P.NO = #{no}
 	 </select>
 	 
 	 <update id="updateProduct" parameterType="Product">
