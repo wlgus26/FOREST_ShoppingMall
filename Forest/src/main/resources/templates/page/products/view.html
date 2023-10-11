@@ -114,7 +114,7 @@
 				    <label>옵션 : </label>
 				    <select id="selectedOpt" class="form-control opt_select" name="selectedOpt">
 				    	<option value="" selected>--- 선택 ---</option>
-				        <option value="S">F</option>
+				        <option value="F">F</option>
 				        <option value="S">S</option>
 				        <option value="M">M</option>
 				        <option value="L">L</option>
@@ -157,22 +157,23 @@
 
 	var loginMember = [[${loginMember}]];
 	var select = document.getElementById("selectedOpt");
-	var selectedOpt = select.options[select.selectedIndex].value;
 	
 	// 장바구니 버튼
     $('#btnCart').on('click', (event) => {
         event.preventDefault(); // 버튼의 기본 동작 중지 
 		
-        console.log('옵션:' + selectedOpt);
+		var selectedOpt = select.options[select.selectedIndex].value; // 옵션 값 저장
+        
         // 장바구니 버튼 클릭 시, 로그인 여부 체크 
         if(loginMember != null){
+        	// 옵션 선택 여부 체크
         	if(selectedOpt == ""){
         		
         		alert('옵션을 선택해 주세요');
         	} else if(selectedOpt != "") {
-        		// cart테이블에 insert 로직 수행 . 
+        		// cart테이블에 insert 로직 수행
         		// insert 성공시
-        		console.log(selectedOpt);
+        		
         		if (confirm('장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?')) {
                 window.location.href = '/myPage/cart';
             	}        		
@@ -184,21 +185,26 @@
         }
     });
 	
+	
  	// 주문하기 버튼
     $('#btnOrder').on('click', (event) => {
         event.preventDefault(); 
-        var loginMember = [[${loginMember}]]; 
+        var selectedOpt = select.options[select.selectedIndex].value; // 옵션 값 저장
         
         // 주문하기 버튼 클릭 시, 로그인 여부 체크 
-        if(loginMember == null){
-             if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
-                window.location.href = '/login';
-             } 
+        if(loginMember != null){
+        	// 옵션 선택 여부 체크
+        	if(selectedOpt == ""){
+        		alert('옵션을 선택해 주세요');
+        	} else if(selectedOpt != "") {
+        		
+	            window.location.href = '/pay';
+           		
+        	}     	 
         } else {
-            /*
-            	여기에 결제페이지로 이동할 코드 작성
-            	ex. window.location.href = '/login';
-            */ 
+			if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
+			       window.location.href = '/login';
+			} 
         }
     });
 </script>

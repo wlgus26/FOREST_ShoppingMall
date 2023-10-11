@@ -121,16 +121,16 @@ public class HomeController {
 		return modlAndView;
 	}
 	
-	// 장바구니로 이동 
-//	@GetMapping("/cart")
-//	public ModelAndView cart (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember) {
-//		
-//		modlAndView.addObject("pageName", "cart");
-//		modlAndView.addObject("loginMember", loginMember);
-//		modlAndView.setViewName("page/cart");
-//		
-//		return modlAndView;
-//	}
+	// 결제페이지로 이동 
+	@GetMapping("/pay")
+	public ModelAndView pay (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember) {
+		
+		modlAndView.addObject("pageName", "pay");
+		modlAndView.addObject("loginMember", loginMember);
+		modlAndView.setViewName("page/pay");
+		
+		return modlAndView;
+	}
 	
 	@GetMapping("/myPage")
 	public ModelAndView myPage (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember) {
