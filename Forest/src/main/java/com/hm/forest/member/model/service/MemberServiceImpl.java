@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.mapper.MemberMapper;
+import com.hm.forest.member.model.vo.Cart;
 import com.hm.forest.member.model.vo.Member;
 
 @Service
@@ -21,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
 //	private SqlSession session;
 	
 	@Autowired
-	private MemberMapper mapper;
+	private MemberMapper memberMapper;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -29,7 +30,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member findMemberById(String id) {
 		
-		return mapper.selectMemberById(id);
+		return memberMapper.selectMemberById(id);
 	}
 
 	@Override
@@ -39,12 +40,12 @@ public class MemberServiceImpl implements MemberService {
 		
 		if (member.getNo() > 0) {
 			// update
-			result = mapper.updateMember(member);
+			result = memberMapper.updateMember(member);
 		} else {
 			// insert
 			member.setPassword(passwordEncoder.encode(member.getPassword()));
 			
-			result = mapper.insertMember(member);
+			result = memberMapper.insertMember(member);
 		}
 		
 //		if (true) {
@@ -64,11 +65,48 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	public int delete(int no) {
 
-		return mapper.updateMemberStatus("N", no);
+		return memberMapper.updateMemberStatus("N", no);
 	}
 
 
 	
+	@Override
+	public List<Member> getmemberlists(PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage()-1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return memberMapper.getmemberlists(rowBounds);
+	}
+	
+	@Override
+	public int selectmembercount() {
+		
+		return memberMapper.selectmembercount();
+	}
+
+	// 장바구니 상품 담기
+	@Override
+	@Transactional
+	public int save(Cart cart) {
+		return memberMapper.insertIntoCart(cart);
+	}
+
+	// 장바구니 제품 목록 조회
+	@Override
+	public List<Cart> getCartListsByMemberNo(int memberNo) {
+		return memberMapper.selectCartLists(memberNo);
+	}
+
+	// 장바구니 제품 목록 삭제
+	@Override
+	@Transactional
+	public int delete(String cartNo) {
+		return memberMapper.deleteSelectedCartList(cartNo);
+	}
+
+
 	
 //	@Override
 //	public int selectMemberCountByStatus(String status) {

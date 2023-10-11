@@ -72,6 +72,7 @@
 		    <!-- 10개 페이지 목록 -->
 			<span th:each="pageNumber : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
 			    <a class="a-pagination current-page" th:if="${pageNumber == pageInfo.currentPage}" disabled="disabled" th:text="${pageNumber}"></a>
+			    <a th:if="${pageNumber >= 1}" class="a-pagination" th:unless="${pageNumber == pageInfo.currentPage}" th:href="@{/products/eco(page=${pageNumber})}" th:text="${pageNumber}"></a>
 			    <a class="a-pagination" th:unless="${pageNumber == pageInfo.currentPage}" th:href="@{/products/kitchen(page=${pageNumber})}" th:text="${pageNumber}"></a>
 			</span>
 		

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
+import com.hm.forest.member.model.vo.Cart;
 import com.hm.forest.member.model.vo.Member;
 
 @Mapper
@@ -25,4 +26,19 @@ public interface MemberMapper {
 	int selectMemberCountByStatus(@Param("status") String status);
 	
 	List<Member> selectMemberlistsByStatus(@Param("status") String status, RowBounds bounds);
+
+	// 관리자_멤버 (민지)
+	
+	List<Member> getmemberlists (RowBounds rowBounds);
+
+	int selectmembercount();
+
+	// 장바구니 상품 담기
+	int insertIntoCart(Cart cart);
+
+	// 장바구니 제품 목록 조회
+	List<Cart> selectCartLists(int memberNo);
+
+	// 장바구니 제품 목록 삭제
+	int deleteSelectedCartList(String cartNo);
 }

@@ -3,19 +3,185 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
+      
+<!-- csrf 토큰을 비동기통신으로 넘기기 위한 설정 -->
+<meta th:name="_csrf_header" th:content="${_csrf.headerName}">
+<meta th:name="_csrf" th:content="${_csrf.token}">
 
 <th:block th:with="pageName='cart'"></th:block>      
-<!-- cart.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/cart.css}" >-->
+<style>
+td > i {
+cursor: pointer;
+}
+</style>
 </th:block>
 <!-- cart.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <!-- ex)  <script th:src="@{/js/page/cart.js}"></script>-->
+    <!-- 이모티콘 -->
+    <script src="https://kit.fontawesome.com/74362490cf.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </th:block>
 
 <!-- Content -->
 <div layout:fragment="content">
-   <h5> templates > page > cart.html > Content </h5>
+   	<div id="content-background">
+	  <div class="table-div">
+	    <table class="table table pull-right" style="margin-top: 50px;" >
+		  <thead>
+		    <tr class="border-bottom" >
+		      <th scope="col" colspan="5" class="th-custom-style" style="border-bottom-width: 3px;
+				  border-bottom-color: #082f1c;
+				  color: #082f1c;">장바구니
+			  </th>
+			  <th scope="col" class="th-custom-style" style="border-bottom-width: 3px;
+				  border-bottom-color: #082f1c;
+				  color: #082f1c; text-align: right;"><input type="button" id="itemDeleteBtn" class="btn btn-outline-delete"  value="선택삭제"></th>
+		    </tr>
+	 	  </thead>
+
+		  <tbody>
+		  	    <tr style="text-align: center;">
+		  	    	<th><i id="item-selectall" class="fa-sharp fa-regular fa-square-check fa-xl" style="color: #0f5132; cursor: pointer;"></i></th>
+					<th colspan="2" style="width:50%;">상품정보</th>
+					<th>수량</th>
+					<th>금액</th>
+					<th>배송비</th>
+				</tr>
+				<!-- 장바구니에 상품이 없는 경우 -->
+				<tr th:if="${#lists.isEmpty(cartLists)}" class="tb-style-none">
+			        <td colspan="5" style="text-align: center;">장바구니에 담긴 상품이 없습니다.<br> 원하는 상품을 장바구니에 담아보세요!</td>
+			    </tr>
+			    
+			    <!-- 장바구니에 상품이 있는 경우 -->
+				<tr th:if="${cartLists != null}" class="viewPage tb-style-none" style="text-align: center;" th:each="cart : ${cartLists}">
+					<td><i id="item-selectbox" class="fa-sharp fa-regular fa-square-check fa-xl" style="color: #0f5132;" th:attr="data-cart-no=${cart.no}"></i></td>
+			        <td style="width:10%;"><img th:src="@{/static/upload/product/} + ${cart.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;"></td>
+			        <td>
+			        <div style="display: flex; position: absolute; flex-direction: column; align-items: flex-start;">
+			        	<div th:text="${cart.category}" style="font-weight: bold; font-size: 13px; margin-top: 5px;"></div>
+			        	<div th:text="${cart.name}" style="font-weight: bold; font-size: 15px; margin-top: 5px;"></div>
+			        	<div>
+			        	<a th:text="(${cart.price} * 0.8) + '원 '" style="font-weight: bold; font-size: 12px; margin-top: 20px; margin-right: 5px;"></a>
+			        	<a th:text=" ${cart.price} + '원'" style="font-weight: bold; color: darkgray;  text-decoration: line-through; font-size: 13px; margin-top: 20px;"></a>
+			        	</div>
+			        </div>
+			        </td>
+			        <td>
+					    <i id="reduceQuantity" class="fa-solid fa-square-minus" style="color: #c9c9c9;"></i>
+					    <span th:text="  ${cart.quantity} + '개  '"></span>
+					    <i id="increaseQuantity" class="fa-solid fa-square-plus" style="color: #c9c9c9;"></i>
+					</td>
+			        <td th:text="${cart.price} * ${cart.quantity} + '원'"></td>
+			        <td>2500원</td>
+			    </tr>
+			    <tr style="text-align: center;">
+					<td colspan="7" style="border-color: white;">
+				        <input type="button" class="btn btn-outline-secondary"  value="선택주문" style="margin-right: 15px;">
+				        <input type="button" class="btn btn-outline-secondary"  value="전체주문">
+					</td>
+				</tr>
+		  </tbody>
+	  </table>
+	</div>
+   	</div>
+ 	
+<script>
+$(document).ready(function() {
+	 // 전체 체크박스 토글 동작
+    $('#item-selectall').on('click', function() {
+        var checkboxes = $('[data-cart-no], #item-selectall');
+        var allChecked = checkboxes.filter('.fa-solid').length === checkboxes.length;
+        checkboxes.each(function() {
+            if (allChecked) {
+                // 모두 체크되어 있다면 체크 해제
+                $(this).removeClass('fa-solid');
+                $(this).addClass('fa-regular');
+            } else {
+                // 하나라도 체크되지 않았다면 모두 체크
+                $(this).removeClass('fa-regular');
+                $(this).addClass('fa-solid');
+            }
+        });
+    });
+
+    // 개별 체크박스 클릭 시
+    $('[data-cart-no]').on('click', function() {
+        if ($(this).hasClass('fa-regular')) {
+            // 체크되지 않았다면 체크 아이콘으로 변경
+            $(this).removeClass('fa-regular');
+            $(this).addClass('fa-solid');
+        } else {
+            // 체크되어 있다면 체크 해제 아이콘으로 변경
+            $(this).removeClass('fa-solid');
+            $(this).addClass('fa-regular');
+        }
+    });
+});
+
+</script>
+
+
+<!-- 주문 수량 조절하는 함수 -->
+
+<!-- 장바구니에서 제품 삭제하는 함수 -->
+<script>
+	
+	<!-- csrf 토큰을 JavaScript 변수로 저장 -->
+	var csrfToken = '[[${_csrf.token}]]';
+	var csrfHeader = '[[${_csrf.headerName}]]';
+
+
+	$('#itemDeleteBtn').on('click', () => {
+	    var selectedCartNo = []; // 선택된 cart.no 값을 저장할 배열
+	    
+	    // 체크박스에 체크표시된 행의 cart.no 값을 배열에 저장
+	    $('[data-cart-no]').each(function() {  
+	        if ($(this).hasClass('fa-solid')) { 
+	            selectedCartNo.push($(this).attr('data-cart-no'));
+	        }
+	    });
+
+	    // 체크박스에 표시된 행의 개수 
+	    var count = selectedCartNo.length;
+	    
+
+		 // 배열 요소를 쉼표로 구분한 문자열로 변환
+		 var cartNo = selectedCartNo.join(',');
+		 
+	    // 체크 여부 확인하여 삭제 로직 수행
+	    if (count > 0) {
+	        if(confirm('선택하신 ' + count + '개 상품을 장바구니에서 삭제하시겠습니까?')){
+	        	$.ajax({
+			        type: 'POST',
+			        url: '/myPage/cart/delete', // API 엔드포인트
+			        data: cartNo, 
+	                contentType: 'application/json;charset=UTF-8', // 데이터 형식 설정
+	                beforeSend: function(xhr) {
+		                // 요청을 보내기 전, CSRF 토큰을 헤더에 설정
+		                xhr.setRequestHeader(csrfHeader, csrfToken);
+		            },
+			        success: function (obj) {
+			            // 서버에서 반환한 JSON 데이터 처리
+			            if (obj.message === "성공") {
+			                // 장바구니 제품 삭제 성공시 알림 메세지를 띄운 후 장바구니 페이지 로드ㄴ
+			               alert('삭제되었습니다.');
+			               window.location.href="/myPage/cart";
+			            } else {
+			                // 장바구니 제품 삭제 실패시
+			                alert("정상적으로 처리되지 않았습니다.");
+			            }
+			        },
+			        error: function (error) {
+			            console.error('삭제 중 오류가 발생하였습니다 :', error);
+			        },
+			    });
+	        }
+	    } else {
+	        alert('삭제하실 상품을 선택해 주세요.');
+	    }
+	});
+</script>
+
 </div>
 </html>

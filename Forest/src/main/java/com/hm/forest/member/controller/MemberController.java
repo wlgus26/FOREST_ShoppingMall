@@ -35,12 +35,12 @@ public class MemberController {
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
-	private MemberService service;
+	private MemberService memberService;
 	
 	@PostMapping("/enroll")
 	public ModelAndView enroll(ModelAndView modelAndView, Member member) {
 		
-		int result = service.save(member);
+		int result = memberService.save(member);
 		
 		if (result > 0) {
 			modelAndView.addObject("msg", "회원 가입 성공");
@@ -59,7 +59,7 @@ public class MemberController {
 	public ResponseEntity<Map<String, Boolean>> idCheck(@RequestParam String userId) {
 		Map<String, Boolean> map = new HashMap<>();
 		
-		map.put("duplicate", service.isDuplicateId(userId));
+		map.put("duplicate", memberService.isDuplicateId(userId));
 		
 		return ResponseEntity.ok()
 							 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -82,10 +82,10 @@ public class MemberController {
 	        
 	        member.setPassword(passwordEncoder.encode(password));
 	        
-	        int result = service.save(member);
+	        int result = memberService.save(member);
 	        
 	        if (result > 0) {
-	            modelAndView.addObject("loginMember", service.findMemberById(loginMember.getId()));
+	            modelAndView.addObject("loginMember", memberService.findMemberById(loginMember.getId()));
 	            modelAndView.addObject("msg", "회원 정보 수정 완료");
 	        } else {
 	            modelAndView.addObject("msg", "회원 정보 수정 실패");
@@ -106,7 +106,7 @@ public class MemberController {
 	    if (authentication != null && authentication.getPrincipal() instanceof Member) {
 	        Member loginMember = (Member) authentication.getPrincipal();
 
-	        int result = service.delete(loginMember.getNo());
+	        int result = memberService.delete(loginMember.getNo());
 
 	        if (result > 0) {
 	            // 사용자를 로그아웃합니다.
