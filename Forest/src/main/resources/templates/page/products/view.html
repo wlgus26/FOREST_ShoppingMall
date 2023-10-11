@@ -127,7 +127,7 @@
 		
 			<div class="form-horizontal" style="text-align: left;">
 			    <label for="select_count">구매수량 : </label>
-			    <input type="number" class="form-control" id="select_count" name="orderQuantity" min="1">
+			    <input type="number" class="form-control" id="select_count" name="orderQuantity" min="1" value="1">
 			</div>
 			<hr>
 			
@@ -136,7 +136,9 @@
 				</div>
 				<div style="text-align: center;">
 					<button class="btn btn-default" >주문하기</button>
-					<button class="btn btn-default" onclick="addToCart()">장바구니</button>
+					<button id="btnCart" class="btn btn-default btn-cart" >장바구니</button>
+					<button class="btn btn-default" th:if="${loginMember != null}" >id </button>
+					<button class="btn btn-default" th:if="${loginMember == null}">null</button>
 	  		</div>
 			</div>
 			<hr>	
@@ -159,10 +161,6 @@
 		        <li><a href="#">상품문의</a></li>
 		    </ul>
 		</div>
-
-
-
-
 
 
   <table class="table">
@@ -280,10 +278,18 @@
 
 </div>
 </form>
-	
-	<!-- CKEditor  -->
-	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
-	<script>		
+<script>
+$(document).ready(function() {
+    $('#btnCart').on('click', function() {
+        console.log('장바구니 버튼 클릭');
+        alert('장바구니 버튼 클릭');
+    });
+});
+
+</script>
+<!-- CKEditor  -->
+<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+<script>		
 	ClassicEditor
 	.create(document.querySelector('.editor'))
 	.then(editor => {
@@ -295,6 +301,8 @@
 		console.error(error);
 	});
 </script>
+
+
 
 <!-- 카테고리별로 해당 목록으로 이동  -->
 <script>
@@ -325,15 +333,7 @@
 </script>
 
 
-<script>
-    function addToCart() {
-        var productNo = document.getElementById("productNo").value;
-        var selectedOpt = document.querySelector(".opt_select").value;
-        var orderQuantity = document.getElementById("select_count").value;
-        var url = "/myPage/cart?productNo=" + productNo + "&selectedOpt=" + selectedOpt + "&orderQuantity=" + orderQuantity;
-        window.location.href = url;
-    }
-</script>
+
 			
 
 </html>

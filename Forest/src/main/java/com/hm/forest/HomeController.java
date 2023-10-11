@@ -1,8 +1,11 @@
 package com.hm.forest;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.hm.forest.member.model.vo.Member;
 
 @Controller
 public class HomeController {
@@ -10,8 +13,9 @@ public class HomeController {
 	
 	// home으로 이동
 	@GetMapping("/")
-	public ModelAndView home (ModelAndView modlAndView) {
+	public ModelAndView home (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember) {
 		modlAndView.addObject("pageName", "home");
+		modlAndView.addObject("loginMember", loginMember);
 		modlAndView.setViewName("page/home");
     
         return modlAndView;

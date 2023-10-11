@@ -3832,6 +3832,25 @@ textarea.form-control-lg {
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
+
+.nav-link-id {
+  float: left;
+  display: block;
+  padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+  font-size: var(--bs-nav-link-font-size);
+  font-weight: bold;
+  color: #0f5132;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.nav-link-id:hover {
+  cursor: auto;
+  color: black;
+}
+
+
+
 @media (prefers-reduced-motion: reduce) {
   .nav-link {
     transition: none;
