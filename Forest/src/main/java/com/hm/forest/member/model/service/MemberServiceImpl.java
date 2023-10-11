@@ -69,7 +69,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<Member> getmemberlists(String searchType, PageInfo pageInfo) {
-	    return memberMapper.getmemberlists(searchType, pageInfo);
+	    return mapper.getmemberlists(searchType, pageInfo);
 	}
 	
 //	@Override
