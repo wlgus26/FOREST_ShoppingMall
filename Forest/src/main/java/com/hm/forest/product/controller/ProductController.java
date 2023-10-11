@@ -119,13 +119,13 @@ public class ProductController {
 	public ModelAndView view(ModelAndView modelAndView,
 							 @RequestParam("no") int no, @AuthenticationPrincipal Member loginMember) {
 		
-		log.info("view() 호출 : {}", no);
+		log.info("productNo값 : {}", no);
 
 		Product product = null;
 		
-		product =adminService.getProductBoardByNo(no);
+		product = adminService.getProductBoardByNo(no);
 		
-		modelAndView.addObject("pageName", "view");
+		modelAndView.addObject("pageName", "productView");
 		modelAndView.addObject("products", product);
 		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.setViewName("page/products/view");

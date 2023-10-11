@@ -12,10 +12,18 @@
 <!-- cart.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
     <!-- ex)  <script th:src="@{/js/page/cart.js}"></script>-->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </th:block>
 
 <!-- Content -->
 <div layout:fragment="content">
-   <h5> templates > page > cart.html > Content </h5>
+   <button id="btnCart">button</button>
+   
+   
+   <script> 
+   	$('#btnCart').on('click', () => {
+   		alert('click');
+   	});
+   </script>
 </div>
 </html>

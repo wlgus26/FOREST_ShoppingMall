@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/default_layout}">
 
 
-<th:block th:with="pageName='view'"></th:block>      
+<th:block th:with="pageName='productView'"></th:block>      
 
 <th:block layout:fragment="css">
     <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
@@ -80,79 +80,67 @@
 <!-- Content -->
 
 <div layout:fragment="content">
-<form>
-<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-
-
-
-<div class="container" style="width: 80%">
-		
-		<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;" th:text="${products.no}"></h1>
+	<form >
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		<div class="container" style="width: 80%">
+			
+			<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;" th:text="${products.no}"></h1>
 			<input type="hidden" value="${products.no}" id="productNo">
-		</div>
-		<div class="row" style="float: left; text-align: center; width:35%;">
-			<img th:src="@{/static/upload/product/} + ${products.image}" style="width: 500px; height: 500px; overflow: hidden; object-fit: cover;">
-		</div>
-
-		<div class="row productInfo" style="width: 40%;" >
-			<div class="form-group" style="text-align: center;">
-				<h3 class="page-header" style="text-align: left;" th:text="${products.name}"></h3>
 			</div>
-			<div class="form-group" style="text-align: left;">
-				<label>가격 : </label><span>&nbsp; <fmt:formatNumber th:text="${products.price}" type="number"/></span><span>&nbsp;원</span>
-				<input type="hidden" value="${products.price}" id="price">
+			<div class="row" style="float: left; text-align: center; width:35%;">
+				<img th:src="@{/static/upload/product/} + ${products.image}" style="width: 500px; height: 500px; overflow: hidden; object-fit: cover;">
 			</div>
-			<div class="form-group" style="text-align: left;">
-				<label>배송비 : </label><span>&nbsp;2500원</span>
-				<p>도서산간지역 배송비 5000원 / 3만원 이상 결제시 무료배송</p>
-			</div>
-			
-			<!-- 
-			<div class="form-group" style="text-align: left;">
-				<label>적립금 : </label><span><fmt:parseNumber var="test" value="${productInfo.price / 100}" integerOnly="true"/> ${test}&nbsp;원</span>
-			</div>
-			 -->
-
-			<div class="form-horizontal" style="text-align: left;">
-			    <label>옵션 : </label>
-			    <select class="form-control opt_select" name="selectedOpt">
-			    	<option value="" selected>--- 선택 ---</option>
-			        <option value="S">F</option>
-			        <option value="S">S</option>
-			        <option value="M">M</option>
-			        <option value="L">L</option>
-			    </select>
-			</div>
-		
-			<div class="form-horizontal" style="text-align: left;">
-			    <label for="select_count">구매수량 : </label>
-			    <input type="number" class="form-control" id="select_count" name="orderQuantity" min="1" value="1">
-			</div>
-			<hr>
-			
-			<div class="row">
-				<div class="selected_option" style="text-align: right;">
+	
+			<div class="row productInfo" style="width: 40%;" >
+				<div class="form-group" style="text-align: center;">
+					<h3 class="page-header" style="text-align: left;" th:text="${products.name}"></h3>
 				</div>
-				<div style="text-align: center;">
-					<button class="btn btn-default" >주문하기</button>
-					<button id="btnCart" class="btn btn-default btn-cart" >장바구니</button>
-					<button class="btn btn-default" th:if="${loginMember != null}" >id </button>
-					<button class="btn btn-default" th:if="${loginMember == null}">null</button>
-	  		</div>
+				<div class="form-group" style="text-align: left;">
+					<label>가격 : </label><span>&nbsp; <fmt:formatNumber th:text="${products.price}" type="number"/></span><span>&nbsp;원</span>
+					<input type="hidden" value="${products.price}" id="price">
+				</div>
+				<div class="form-group" style="text-align: left;">
+					<label>배송비 : </label><span>&nbsp;2500원</span>
+					<p>도서산간지역 배송비 5000원 / 3만원 이상 결제시 무료배송</p>
+				</div>
+				
+				<!-- 
+				<div class="form-group" style="text-align: left;">
+					<label>적립금 : </label><span><fmt:parseNumber var="test" value="${productInfo.price / 100}" integerOnly="true"/> ${test}&nbsp;원</span>
+				</div>
+				 -->
+	
+				<div class="form-horizontal" style="text-align: left;">
+				    <label>옵션 : </label>
+				    <select id="selectedOpt" class="form-control opt_select" name="selectedOpt">
+				    	<option value="" selected>--- 선택 ---</option>
+				        <option value="S">F</option>
+				        <option value="S">S</option>
+				        <option value="M">M</option>
+				        <option value="L">L</option>
+				    </select>
+				</div>
+			
+				<div class="form-horizontal" style="text-align: left;">
+				    <label for="select_count">구매수량 : </label>
+				    <input type="number" class="form-control" id="select_count" name="orderQuantity" min="1" value="1">
+				</div>
+				<hr>
+				<div class="row">
+					<div class="selected_option" style="text-align: right;"></div>
+					<div style="text-align: center;">
+						<button id="btnOrder" class="btn btn-default" >주문하기</button>
+						<button id="btnCart" class="btn btn-default btn-cart">장바구니</button>
+		  			</div>
+				</div>		
+				<hr>	
 			</div>
-			<hr>	
 		</div>
-	</div>
-</form>	
+	</form>	
 
 	
-		<br><br><br><br>
-		<br><br><br><br>
-		<br><br><br><br>
-		<br><br><br><br>
-		<br><br><br><br>
-		<br><br><br><br>
+		<br><br><br><br><br><br><br>
+		
 		<!-- With this -->
 		<div class="sub-menu1">
 		    <ul>
@@ -163,177 +151,72 @@
 		</div>
 
 
-  <table class="table">
-	  <thead>
-	    <tr class="border-bottom" >
-	      <th scope="col" colspan="2" class="th-custom-style" style="border-bottom-width: 3px; 
-				border-bottom-color: #082f1c; color: #082f1c;">제품 상세 보기
-		  </th>
-	    </tr>
-	  </thead> 	
-	  <tbody>
-	    <tr>
-    		<th>카테고리</th>
-	    	<td style="text-align: left;">
-	        	<span th:if="${products.category == 'kitchen'}">주방</span>
-	        	<span th:if="${products.category == 'style'}">패션</span>
-	        	<span th:if="${products.category == 'eco'}">친환경키트</span>
-	    	</td>
-		</tr>
-	 
-	    <tr>
-	      <th>제품명</th>
-	      <td style="text-align: left;" th:text="${products.name}"></td>
-	    </tr>
-	    <tr>
-	      <th>판매가</th>
-	      <td style="text-align: left;" th:text="${products.price}"></td>
-	    </tr>
-	    <tr>
-	      <th>제품색상</th>
-	      <td style="text-align: left;" th:text="${products.color}"></td>
-	    </tr>
-	    <tr>
-	      <th>제품수량</th>
-	      <td style="text-align: left;" th:text="${products.amount}"></td>
-	    </tr>
-	    <tr>
-	      <th>제품사이즈</th>
-	      <td style="text-align: left;" th:text="${products.sizeSml}"></td>
-	    </tr>
-	    <tr>
-	      <th>설명</th>
-	      <td  rows="3" cols="100" resize="none" class="editor" style="text-align: left; max-width:100%; height:auto;" th:utext="${products.content}"></td>
-	    </tr>
-	    <tr>
-	      <th>대표이미지</th>
-	      <td>
-	        <img th:src="@{/static/upload/product/} + ${products.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
-	      </td>
-	    </tr>
-	    <tr>
-	      <th>상세이미지</th>
-	      <td></td>
-	    </tr>
-	    <!-- 
-	       <tr>
-    		<th>판매상태</th>
-	    	<td style="text-align: left;">
-	        	<span th:if="${product.status == 'Y'}">판매중</span>
-	        	<span th:if="${product.status == 'N'}">품절</span>
-	    	</td>
-		</tr>
-	     -->
-	    <tr>
-	      <th></th>
-	      <td>
-		      <a class="btn btn-sm btn-outline-secondary" type="button" th:href="@{'/admin/productMgmtUpdate?no=' + ${products.no}}">수정</a>
-			  
-			  <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-				  장바구니
-				</button>
-				
-				<!-- Modal -->
-				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">
-				       				</h5>
-				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				      </div>
-				      <div class="modal-body text-center" style="height:100px;">
-					      <i id="remember-me-icon" class="far fa-check-circle"></i>
-							<br> 
-						  제품을 장바구니에 넣겠습니까?
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-md btn-outline-secondary" data-bs-dismiss="modal">취소</button>
-				        <a type="button" class="btn btn-md btn-primary" th:href="@{'/admin/productMgmtDelete?no=' + ${products.no}}">삭제</a>
-			         </div>
-				    </div>
-				  </div>
-				</div>
-		      <a class="btn btn-sm btn-outline-secondary" type="button" th:href="@{productMgmtList}">취소</a>
-		      
-		      <!-- 게시판 공통 -->
-				<!-- 카테고리 별로 해당 게시판 목록으로 이동 -->
-				<tr style="text-align: center;">
-					<td colspan="6" style="border-color: white;">
-				       <th:block th:if="${products.category eq 'eco'}">
-					        <input type="button" class="btn btn-outline-secondary" onclick="redirectToBoard('eco')" value="목록으로">
-					   </th:block>
-					   <th:block th:if="${products.category eq 'ktichen'}">
-					        <input type="button" class="btn btn-outline-secondary" onclick="redirectToBoard('ktichen')" value="목록으로">
-					   </th:block>
-					   <th:block th:if="${products.category eq 'style'}">
-					        <input type="button" class="btn btn-outline-secondary" onclick="redirectToBoard('style')" value="목록으로">
-					   </th:block>
-					</td>
-				</tr>
-	      </td>
-	      </tr>
-	  </tbody>
-	  </table>
 
-</div>
-</form>
-<script>
-$(document).ready(function() {
-    $('#btnCart').on('click', function() {
-        console.log('장바구니 버튼 클릭');
-        alert('장바구니 버튼 클릭');
+<!-- 장바구니, 주문하기 버튼 관련 함수-->
+<script th:inline="javascript"> 
+
+	var loginMember = [[${loginMember}]];
+	var select = document.getElementById("selectedOpt");
+	var selectedOpt = select.options[select.selectedIndex].value;
+	
+	// 장바구니 버튼
+    $('#btnCart').on('click', (event) => {
+        event.preventDefault(); // 버튼의 기본 동작 중지 
+		
+        console.log('옵션:' + selectedOpt);
+        // 장바구니 버튼 클릭 시, 로그인 여부 체크 
+        if(loginMember != null){
+        	if(selectedOpt == ""){
+        		
+        		alert('옵션을 선택해 주세요');
+        	} else if(selectedOpt != "") {
+        		// cart테이블에 insert 로직 수행 . 
+        		// insert 성공시
+        		console.log(selectedOpt);
+        		if (confirm('장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?')) {
+                window.location.href = '/myPage/cart';
+            	}        		
+        	}     	 
+        } else {
+			if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
+			       window.location.href = '/login';
+			} 
+        }
     });
-});
-
+	
+ 	// 주문하기 버튼
+    $('#btnOrder').on('click', (event) => {
+        event.preventDefault(); 
+        var loginMember = [[${loginMember}]]; 
+        
+        // 주문하기 버튼 클릭 시, 로그인 여부 체크 
+        if(loginMember == null){
+             if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
+                window.location.href = '/login';
+             } 
+        } else {
+            /*
+            	여기에 결제페이지로 이동할 코드 작성
+            	ex. window.location.href = '/login';
+            */ 
+        }
+    });
 </script>
+
+
+
 <!-- CKEditor  -->
 <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
 <script>		
-	ClassicEditor
-	.create(document.querySelector('.editor'))
-	.then(editor => {
-		console.log('Editor was initialized');
-		
-		
-	})
-	.catch(error => {
-		console.error(error);
-	});
+//	ClassicEditor
+//	.create(document.querySelector('.editor'))
+//	.then(editor => {
+//		console.log('Editor was initialized');	
+//	})
+//	.catch(error => {
+//		console.error(error);
+//	});
 </script>
 
-
-
-<!-- 카테고리별로 해당 목록으로 이동  -->
-<script>
-		function redirectToBoard(type){
-			window.location.href = '/products/' + category;
-		}
-		
-		// 모달 창 
-		var myModal = document.getElementById('myModal')
-		var myInput = document.getElementById('myInput')
-
-		myModal.addEventListener('shown.bs.modal', function () {
-		  myInput.focus()
-		});
-</script>
-
-<script>
-    // JavaScript를 사용하여 옵션 동적 생성
-    var selectCount = document.getElementById("select_count");
-    var productAmount = ${products.amount}; // JSP 표현식을 사용하여 재고 정보 가져오기
-
-    for (var count = 1; count <= productAmount; count++) {
-        var option = document.createElement("option");
-        option.value = count;
-        option.text = count;
-        selectCount.appendChild(option);
-    }
-</script>
-
-
-
-			
-
+</div>
 </html>
