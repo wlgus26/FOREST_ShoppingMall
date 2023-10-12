@@ -48,7 +48,7 @@ public class AdminController {
 		@GetMapping("/salesMgmt")
 		public ModelAndView salesMgmt (ModelAndView modlAndView) {
 			
-			
+
 			modlAndView.addObject("pageName", "salesMgmt");
 			modlAndView.setViewName("page/admin/salesMgmt");
 			
