@@ -48,7 +48,7 @@ public class AdminController {
 		@GetMapping("/salesMgmt")
 		public ModelAndView salesMgmt (ModelAndView modlAndView) {
 			
-			
+
 			modlAndView.addObject("pageName", "salesMgmt");
 			modlAndView.setViewName("page/admin/salesMgmt");
 			
@@ -252,7 +252,6 @@ public class AdminController {
 			 product.setName(name);
 			 product.setPrice(price);
 			 product.setColor(color);
-			 product.setAmount(amount);
 			 product.setSizeSml(sizeSml);
 			 product.setContent(content);
 		

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.vo.Cart;
 import com.hm.forest.member.model.vo.Member;
 
 @Mapper
@@ -38,4 +39,13 @@ public interface MemberMapper {
 	int updatememberstatus(@Param("status") String status,@Param("no") int no);
 	
 	int activateMember(@Param("status") String status, @Param("no") int no);
+	
+	// 장바구니 상품 담기
+	int insertIntoCart(Cart cart);
+
+	// 장바구니 제품 목록 조회
+	List<Cart> selectCartLists(int memberNo);
+
+	// 장바구니 제품 목록 삭제
+	int deleteSelectedCartList(String cartNo);
 }
