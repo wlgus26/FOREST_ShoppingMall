@@ -36,21 +36,6 @@
 		<result property="updateDate" column="UPDATE_DATE"/>
 		<result property="role" column="ROLE"/>
 	</resultMap>
-	
-	<resultMap id="cartResultMap" type="Cart">
-		<id property="no" column="NO"/>
-		<result property="memberNo" column="MB_NO"/>
-		<result property="productNo" column="PD_NO"/>
-		<result property="quantity" column="QUANTITY"/>
-		<result property="color" column="COLOR"/>
-		<result property="size" column="SIZE_SML"/>
-		<result property="price" column="PRICE"/>
-		<result property="image" column="IMAGE"/>
-		<result property="category" column="CATEGORY"/>
-		<result property="name" column="NAME"/>
-		<result property="discountrate" column="DISCOUNTRATE"/>
-		<result property="status" column="STATUS"/>
-	</resultMap>
 
 	<select id="selectCount" resultType="_int">
 		SELECT COUNT(*) FROM MEMBER
@@ -127,17 +112,26 @@
 		WHERE STATUS
 	</select>
 	
+	<!-- 회원 수 카운드 -->
 	<select id="selectmembercount" resultType="_int">
-	<!-- 
-		<include refid="selectMemberSql"/>
-	 -->
 		SELECT COUNT(*) FROM MEMBER
 	</select>
 	
+	<!-- 회원 목록 조회 -->
+	
 	<select id="getmemberlists" resultMap="memberResultMap">
-	<!-- 
-		<include refid="selectMemberSql"/>
-	 -->
+	  SELECT NO, ID, PASSWORD, NAME, EMAIL, PHONE, PCODE, ADDRESS1, ADDRESS2, STATUS, CREATE_DATE, UPDATE_DATE, ROLE
+	  FROM MEMBER
+	  <where>
+	    <!-- 모든 계정 또는 특정 계정 유형에 따라 동적으로 검색 -->
+	    <if test="searchType == 'A'"> AND 1=1 </if>
+	    <if test="searchType == 'Y'"> AND STATUS = 'Y' </if>
+	    <if test="searchType == 'N'"> AND STATUS = 'N' </if>
+	  </where>
+</select>
+	
+	<!--  	
+	<select id="getmemberlists" resultMap="memberResultMap">
 		SELECT NO,
 			   ID,
 			   PASSWORD,
@@ -153,52 +147,23 @@
 			   ROLE
 		FROM MEMBER 
 	</select>
+	-->
 	
-	<!-- 장바구니에 제품 추가 -->
-	<insert id="insertIntoCart" parameterType="Cart">
-	<selectKey resultType="_int" keyProperty="no" order="BEFORE">
-		SELECT SEQ_CART_NO.NEXTVAL FROM DUAL
-	</selectKey>
-		INSERT INTO CART(
-			NO,
-			MB_NO,
-		    PD_NO,
-		    COLOR,
-		    QUANTITY,
-		    SIZE_SML
-		) VALUES(
-			#{no},
-			#{memberNo},
-			#{productNo},
-			#{color},
-			#{quantity},
-			#{size}
-		)
-	</insert>
-
-	<!-- 장바구니에 추가된 제품 목록 조회 -->
-	<select id="selectCartLists" parameterType="_int" resultMap="cartResultMap">
-		SELECT C.NO,
-			   P.CATEGORY,
-			   C.MB_NO, 
-		       C.PD_NO,
-		       P.IMAGE, 
-		       P.NAME, 
-		       P.PRICE,
-		       P.STATUS,
-		       P.DISCOUNTRATE, 
-		       C.COLOR,
-		       C.QUANTITY,
-		       C.SIZE_SML
-		FROM CART C
-		LEFT OUTER JOIN PRODUCT P ON (C.PD_NO = P.NO)
-		WHERE MB_NO = #{memberNo}
-		ORDER BY C.NO DESC
-	</select>
+	<!-- 회원 상태값 바꾸기 -->
+	<update id="updatememberstatus" parameterType="map">
+		UPDATE MEMBER
+		SET
+			STATUS = #{status}
+		WHERE
+			NO = #{no}
+	</update>
 	
-	<!-- 장바구니에 추가된 제품 목록 삭제 -->
-	<delete id="deleteSelectedCartList" parameterType="string">
-	  DELETE FROM CART
-	  WHERE NO IN #{cartNo}
-	</delete>
+		<update id="activateMember" parameterType="map">
+		UPDATE MEMBER
+		SET
+			STATUS = #{status}
+		WHERE
+			NO = #{no}
+	</update>
+	
 </mapper>

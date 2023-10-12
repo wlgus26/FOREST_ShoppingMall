@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.mapper.MemberMapper;
-import com.hm.forest.member.model.vo.Cart;
 import com.hm.forest.member.model.vo.Member;
 
 @Service
@@ -22,7 +21,7 @@ public class MemberServiceImpl implements MemberService {
 //	private SqlSession session;
 	
 	@Autowired
-	private MemberMapper memberMapper;
+	private MemberMapper mapper;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -30,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member findMemberById(String id) {
 		
-		return memberMapper.selectMemberById(id);
+		return mapper.selectMemberById(id);
 	}
 
 	@Override
@@ -40,12 +39,12 @@ public class MemberServiceImpl implements MemberService {
 		
 		if (member.getNo() > 0) {
 			// update
-			result = memberMapper.updateMember(member);
+			result = mapper.updateMember(member);
 		} else {
 			// insert
 			member.setPassword(passwordEncoder.encode(member.getPassword()));
 			
-			result = memberMapper.insertMember(member);
+			result = mapper.insertMember(member);
 		}
 		
 //		if (true) {
@@ -65,47 +64,41 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	public int delete(int no) {
 
-		return memberMapper.updateMemberStatus("N", no);
+		return mapper.updateMemberStatus("N", no);
 	}
 
-
-	
 	@Override
-	public List<Member> getmemberlists(PageInfo pageInfo) {
-		int limit = pageInfo.getListLimit();
-		int offset = (pageInfo.getCurrentPage()-1) * limit;
-		
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return memberMapper.getmemberlists(rowBounds);
+	public List<Member> getmemberlists(String searchType, PageInfo pageInfo) {
+	    return mapper.getmemberlists(searchType, pageInfo);
 	}
 	
+//	@Override
+//	public List<Member> getmemberlists(String status, String searchType, String type, PageInfo pageInfo) {
+//		int limit = pageInfo.getListLimit();
+//		int offset = (pageInfo.getCurrentPage()-1) * limit;
+//		
+//		RowBounds rowBounds = new RowBounds(offset, limit);
+//		
+//		return mapper.getmemberlists(status, searchType, type, rowBounds);
+//	}
+	
 	@Override
-	public int selectmembercount() {
+	public int selectmembercount(String type, String searchType, String status) {
 		
-		return memberMapper.selectmembercount();
+		return mapper.selectmembercount(type, searchType, status);
 	}
 
-	// 장바구니 상품 담기
 	@Override
-	@Transactional
-	public int save(Cart cart) {
-		return memberMapper.insertIntoCart(cart);
-	}
+	public int updatememberstatus(String status, int no) {
 
-	// 장바구니 제품 목록 조회
+		return mapper.updatememberstatus("N", no);
+	}
+	
 	@Override
-	public List<Cart> getCartListsByMemberNo(int memberNo) {
-		return memberMapper.selectCartLists(memberNo);
-	}
+	public int activateMember(String status, int no) {
 
-	// 장바구니 제품 목록 삭제
-	@Override
-	@Transactional
-	public int delete(String cartNo) {
-		return memberMapper.deleteSelectedCartList(cartNo);
+		return mapper.updatememberstatus("Y", no);
 	}
-
 
 	
 //	@Override
