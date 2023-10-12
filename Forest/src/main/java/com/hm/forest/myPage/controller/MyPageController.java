@@ -73,7 +73,7 @@ public class MyPageController {
 		return modelAndView;
 	}
 	
-	// 장바구니 상품 담기 요청
+	// 장바구니 상품 담기
 	@PostMapping("/cart/add")	
 	public ResponseEntity<Map<String, Object>> cart(@AuthenticationPrincipal Member loginMember, @RequestBody Cart cart)  {
 		int result = 0;

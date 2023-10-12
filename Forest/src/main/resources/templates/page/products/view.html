@@ -8,6 +8,7 @@
 <meta th:name="_csrf_header" th:content="${_csrf.headerName}">
 <meta th:name="_csrf" th:content="${_csrf.token}">
 
+
 <th:block th:with="pageName='productView'"></th:block>      
 
 <th:block layout:fragment="css">
@@ -215,7 +216,7 @@
 			               }   
 			           } else {
 			          	  // 4. 장바구니 추가 실패 시 메세지
-			               alert("제품을 장바구니에 추가하는 도중 오류가 발생했습니다.");
+			               alert("상품을 장바구니에 추가하는 도중 오류가 발생했습니다.");
 			           };
 			           
 			        },
@@ -252,8 +253,8 @@
         	} else  {
         		// 3. 결제페이지로 전달        
         		alert('주문자 번호: ' + loginMember.no + ', 상품번호: '+ productNo + ', 수량 : ' + quantity + ', detailNo : ' + detailNo);
-        		
-        	}     	 
+
+            }
         } else {
 			if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
 			       window.location.href = '/login';

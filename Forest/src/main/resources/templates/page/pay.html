@@ -35,7 +35,6 @@
      
      
 
-<body>
   <!-- 상품 정보 영역-->
   <div class="title">상품 정보</div>
   <p>토스 티셔츠</p>
@@ -44,13 +43,67 @@
     <input type="checkbox" id="coupon"/>5,000원 할인받기 
   </form>
   <hr>	
+  
+    <div class="table-div">
+	  
+	    <table class="table table pull-right" style="margin-top: 50px;" >
+		  <thead>  	
+		    <tr class="border-bottom" >
+		      <th scope="col" colspan="6" class="th-custom-style" style="border-bottom-width: 3px;
+				  border-bottom-color: #082f1c;
+				  color: #082f1c;">주문/결제
+			  </th>
+			 </tr>
+	 	  </thead>
+
+		  <tbody>
+		  	    <tr style="text-align: center;">
+		  	    	<th colspan="2" style="width:50%;">상품정보</th>
+					<th>수량</th>
+					<th>판매가</th>
+					<th>배송비</th>
+					<th>결제금액</th>
+				</tr>
+			    
+			    <!-- 주문 내역 정보 출력 -->
+				<tr th:if="${cartLists != null}" class="viewPage tb-style-none" style="text-align: center;" th:each="cart : ${cartLists}">
+					<td style="width:10%;"><img th:src="@{/static/upload/product/} + ${product.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;"></td>
+			        <td>
+			        <div style="display: flex; position: absolute; flex-direction: column; align-items: flex-start;">
+			        	<div th:text="${cart.category}" style="font-weight: bold; font-size: 13px; margin-top: 5px;"></div>
+			        	<div th:text="${cart.name}" style="font-weight: bold; font-size: 15px; margin-top: 5px;"></div>
+			        	<div>
+			        	<a th:text="(${cart.price} * 0.8) + '원 '" style="font-weight: bold; font-size: 12px; margin-top: 20px; margin-right: 5px;"></a>
+			        	<a th:text=" ${cart.price} + '원'" style="font-weight: bold; color: darkgray;  text-decoration: line-through; font-size: 13px; margin-top: 20px;"></a>
+			        	</div>
+			        </div>
+			        </td>
+			        <td>
+					    <i id="reduceQuantity" class="fa-solid fa-square-minus" style="color: #c9c9c9;"></i>
+					    <span th:text="  ${cart.quantity} + '개  '"></span>
+					    <i id="increaseQuantity" class="fa-solid fa-square-plus" style="color: #c9c9c9;"></i>
+					</td>
+			        <td th:text="${cart.price} * ${cart.quantity} + '원'"></td>
+			        <td>2500원</td>
+			        <td>2500원</td>
+			    </tr>
+			    <tr style="text-align: center;">
+					<td colspan="7" style="border-color: white;">
+				        <a class="btn btn-outline-secondary" th:href="@{/myPage/myPage}" style="margin-right:10px;">마이페이지</a>
+				        <a class="btn btn-outline-secondary" th:href="@{/}">메인으로</a>
+					</td>
+				</tr>
+		  </tbody>
+	  </table>
+	</div>
+  
 
   <!-- 결제 방법 영역-->
   <div class="title">결제 방법</div>
   <div id="payment-method"></div>
   <div id="agreement"></div> 
   <button id="payment-button">결제하기</button>
-</body>
+
 
 <script>
   const clientKey = 'test_ck_yL0qZ4G1VOmBQp0jw7v8oWb2MQYg' // 상점을 특정하는 키
