@@ -310,7 +310,7 @@ public class AdminController {
 		
 		
 		
-		
+		// 회원 목록 가져오기
 		
 		@GetMapping("/memberMgmt")
 		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
