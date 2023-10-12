@@ -16,9 +16,15 @@ public interface MemberService {
 	int delete(int no);
 
 	// 수정2
-	int selectmembercount();
+	int selectmembercount(String type, String searchType, String status);
 
-	List<Member> getmemberlists(PageInfo pageInfo);
+	List<Member> getmemberlists(String searchType, PageInfo pageInfo);
+	
+//	List<Member> getmemberlists(String status, String searchType, String type, PageInfo pageInfo);
+
+	int updatememberstatus(String status, int no);
+	
+	int activateMember(String status, int no);
 
 
 	

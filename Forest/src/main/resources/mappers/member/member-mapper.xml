@@ -112,17 +112,26 @@
 		WHERE STATUS
 	</select>
 	
+	<!-- 회원 수 카운드 -->
 	<select id="selectmembercount" resultType="_int">
-	<!-- 
-		<include refid="selectMemberSql"/>
-	 -->
 		SELECT COUNT(*) FROM MEMBER
 	</select>
 	
+	<!-- 회원 목록 조회 -->
+	
 	<select id="getmemberlists" resultMap="memberResultMap">
-	<!-- 
-		<include refid="selectMemberSql"/>
-	 -->
+	  SELECT NO, ID, PASSWORD, NAME, EMAIL, PHONE, PCODE, ADDRESS1, ADDRESS2, STATUS, CREATE_DATE, UPDATE_DATE, ROLE
+	  FROM MEMBER
+	  <where>
+	    <!-- 모든 계정 또는 특정 계정 유형에 따라 동적으로 검색 -->
+	    <if test="searchType == 'A'"> AND 1=1 </if>
+	    <if test="searchType == 'Y'"> AND STATUS = 'Y' </if>
+	    <if test="searchType == 'N'"> AND STATUS = 'N' </if>
+	  </where>
+</select>
+	
+	<!--  	
+	<select id="getmemberlists" resultMap="memberResultMap">
 		SELECT NO,
 			   ID,
 			   PASSWORD,
@@ -138,4 +147,23 @@
 			   ROLE
 		FROM MEMBER 
 	</select>
+	-->
+	
+	<!-- 회원 상태값 바꾸기 -->
+	<update id="updatememberstatus" parameterType="map">
+		UPDATE MEMBER
+		SET
+			STATUS = #{status}
+		WHERE
+			NO = #{no}
+	</update>
+	
+		<update id="activateMember" parameterType="map">
+		UPDATE MEMBER
+		SET
+			STATUS = #{status}
+		WHERE
+			NO = #{no}
+	</update>
+	
 </mapper>
