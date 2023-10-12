@@ -86,7 +86,7 @@
 
 
 
-<div class="container" style="width: 70%">
+<div class="container" style="width: 80%">
 		
 		<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;" th:text="${products.no}"></h1>
 			<input type="hidden" value="${products.no}" id="productNo">
@@ -95,7 +95,7 @@
 			<img th:src="@{/static/upload/product/} + ${products.image}" style="width: 500px; height: 500px; overflow: hidden; object-fit: cover;">
 		</div>
 
-		<div class="row productInfo" style="width: 40%; float: right;" >
+		<div class="row productInfo" style="width: 40%;" >
 			<div class="form-group" style="text-align: center;">
 				<h3 class="page-header" style="text-align: left;" th:text="${products.name}"></h3>
 			</div>
@@ -142,7 +142,7 @@
 			<hr>	
 		</div>
 	</div>
-	
+</form>	
 
 	
 		<br><br><br><br>
@@ -194,10 +194,6 @@
 	    <tr>
 	      <th>제품색상</th>
 	      <td style="text-align: left;" th:text="${products.color}"></td>
-	    </tr>
-	    <tr>
-	      <th>제품수량</th>
-	      <td style="text-align: left;" th:text="${products.amount}"></td>
 	    </tr>
 	    <tr>
 	      <th>제품사이즈</th>

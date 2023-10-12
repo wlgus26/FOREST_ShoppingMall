@@ -22,15 +22,11 @@ public interface AdminService {
 	// 관리자_특정 제품 조회
 	Product getProductBoardByNo(int no);
 
-
 	
-    // < 메인 제품보기 >
-	
-	// 제품 리스트 카테고리별로 전체 목록 조회
+	// 메인_(제품보기) 제품 리스트 카테고리별로 전체 목록 조회
 	List<Product> getProductBoardList(String category, PageInfo pageInfo);
 	
-	// 제품 목록 카테고리별 리스트 전체 개수
+	// 메인_(제품보기) 제품 목록 카테고리별 리스트 전체 개수
 	int getProductBoardCountByCategory(String category);
-
 
 }

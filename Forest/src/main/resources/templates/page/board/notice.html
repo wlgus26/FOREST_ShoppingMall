@@ -3,11 +3,13 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <th:block th:with="pageName='/board/notice'"></th:block>      
 <!-- notice.html 고유 CSS 추가 -->
-<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</th:block>
 <!-- notice.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script"></th:block>
 
@@ -82,7 +84,6 @@
 		<div id="pageBar">
 		  
 		    <!-- 이전 페이지로 -->
-		    <i class="fa-sharp fa-regular fa-angle-left" style="color: #0f5132;"></i>
 		    <a class="a-pagination-move" th:href="@{/board/notice?(searchType=${searchType},keyWord=${keyWord},page=${pageInfo.prevPage})}" th:text="'&lt;'" style="color: #082f1c;"></a>
 
 		    <!-- 10개 페이지 목록 -->

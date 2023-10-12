@@ -3,6 +3,7 @@ package com.hm.forest.product.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,13 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-
 @RequestMapping("/products")
 public class ProductController {
 		
@@ -27,7 +28,7 @@ public class ProductController {
 	
 	@GetMapping("/kitchen")
 	public ModelAndView kitchen(ModelAndView modelAndView, 
-							 @RequestParam(defaultValue =  "1") int page) {
+							 @RequestParam(defaultValue =  "1") int page, @AuthenticationPrincipal Member loginMember) {
 		
 		String category = "kitchen";
 		int listCount = 0;
@@ -44,6 +45,7 @@ public class ProductController {
 
 		modelAndView.addObject("pageName", "kitchen");
 		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.addObject("productlists", productlists);
 		
 		System.out.println();
@@ -56,7 +58,7 @@ public class ProductController {
 	
 	@GetMapping("/style")
 	private ModelAndView style (ModelAndView modelAndView, 
-			 @RequestParam(defaultValue =  "1") int page) {
+			 @RequestParam(defaultValue =  "1") int page, @AuthenticationPrincipal Member loginMember) {
 		
 		String category = "style";
 		int listCount = 0;
@@ -72,6 +74,7 @@ public class ProductController {
 
 		modelAndView.addObject("pageName", "style");
 		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.addObject("productlists", productlists);
 		
 		System.out.println();
@@ -83,7 +86,7 @@ public class ProductController {
 	
 	@GetMapping("/eco")
 	private ModelAndView kit (ModelAndView modelAndView, 
-			 @RequestParam(defaultValue =  "1") int page) {
+			 @RequestParam(defaultValue =  "1") int page, @AuthenticationPrincipal Member loginMember) {
 		
 		String category = "eco";
 		int listCount = 0;
@@ -99,6 +102,7 @@ public class ProductController {
 
 		modelAndView.addObject("pageName", "eco");
 		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.addObject("productlists", productlists);
 		
 		System.out.println();
@@ -113,16 +117,17 @@ public class ProductController {
 	
 	@GetMapping("/view")
 	public ModelAndView view(ModelAndView modelAndView,
-							 @RequestParam("no") int no) {
+							 @RequestParam("no") int no, @AuthenticationPrincipal Member loginMember) {
 		
-		log.info("view() 호출 - {}", no);
+		log.info("productNo값 : {}", no);
 
 		Product product = null;
 		
-		product =adminService.getProductBoardByNo(no);
+		product = adminService.getProductBoardByNo(no);
 		
-		modelAndView.addObject("pageName", "view");
+		modelAndView.addObject("pageName", "productView");
 		modelAndView.addObject("products", product);
+		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.setViewName("page/products/view");
 		
 		return modelAndView;	

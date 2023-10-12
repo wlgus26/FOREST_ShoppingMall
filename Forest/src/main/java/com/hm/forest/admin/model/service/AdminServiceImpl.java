@@ -14,6 +14,7 @@ import com.hm.forest.member.model.mapper.MemberMapper;
 
 @Service
 public class AdminServiceImpl implements AdminService {
+	
 	@Autowired
 	private AdminMapper adminMapper;
 	
@@ -90,6 +91,5 @@ public class AdminServiceImpl implements AdminService {
 		
 		return adminMapper.selectProductCountByCategory(category);
 	}
-
 
 }

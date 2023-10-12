@@ -60,12 +60,13 @@
 				            	<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 								    <!-- CSRF 토큰 추가 -->
 								    <li class="nav-item" >
-								    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />								    
+								    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />	
+								    <a class="nav-link-id" sec:authorize="hasRole('USER')" th:text="${loginMember.id + ' 님 '}"></a>							    
 								    <button type="submit" class="nav-link" style="border: none; background-color: transparent; cursor: pointer;">
 								    로그아웃
 								    </button>
 								    </li>
-								    <li class="nav-item" >
+								    <li class="nav-item">
 								    <a class="nav-link" href="/myPage/myPage" sec:authorize="hasRole('USER')"> 마이페이지</a>
 								    
 								    <a class="nav-link" href="/admin/salesMgmt" sec:authorize="hasRole('ADMIN')">관리자페이지</a>
@@ -73,13 +74,17 @@
 				            	</ul>
 						    	</form>
 						   	</li>
+						   	<th:block th:if="${loginMember != null}" sec:authorize="hasRole('USER')" >
 				            <li class="nav-item"><a class="nav-link">&#124;</a></li>
-				            <li class="nav-item"><a class="nav-link" href="/cart">장바구니</a></li>
-				        </ul>
-				            <button class="btn btn-outline-dark" type="submit">
+				            <li class="nav-item"><a class="nav-link" href="/myPage/cart">장바구니</a></li>
+				            </th:block>
+				            </ul>
+				            <th:block th:if="${loginMember != null}" sec:authorize="hasRole('USER')" >
+				            <button th:if="${loginMember != null}" class="btn btn-outline-dark" type="submit">
 				                <i class="bi-cart-fill me-1" style="color:#426D39"></i>
 				                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
 				            </button>
+				            </th:block>
 				    </div>
 				</div>
 
@@ -92,11 +97,9 @@
                         <li class="nav-item"><a class="nav-link" href="/program">참여하기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/products/kitchen">제품보기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/board/notice">소통하기</a></li>
-                        
-                        <li class="nav-item"><a class="nav-link" href="/myPage/myPage"
-                        sec:authorize="hasRole('USER')">마이페이지</a></li>
+
  
-                       <li class="nav-item dropdown"  sec:authorize="hasRole('ADMIN')">
+                        <li class="nav-item dropdown"  sec:authorize="hasRole('ADMIN')">
 						    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">관리자페이지</a>
 						    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 						        <li><a class="dropdown-item" href="/admin/salesMgmt">매출관리</a></li>
