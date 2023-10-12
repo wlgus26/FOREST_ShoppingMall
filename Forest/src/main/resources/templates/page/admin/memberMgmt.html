@@ -89,44 +89,50 @@
 		   
 		</div>
 	</div>
-
-
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-	<script>
-	
-	
-//	$(document).ready(() => {
-//	    $('#btnSearch').on('click', () => {
-//	        let status = $('#status').val();
-
-	        // 모든 행을 숨김
-//	        $('tr.clickable-row').hide();
-
-	        // 선택된 상태에 따라 행을 필터링하여 보여줌
-//	        if (status === 'Y' || status === 'N') {
-//          $(`tr.clickable-row[data-href*="${status}"]`).show();
-//   		 }
-//	    });
-//	});
-	
-//	$(document).ready(() => {
-//	    $('.toggle-status-button').on('click', function() {
-//	        const memberId = $(this).data('no');
-
-//	        $.post('/admin/memberMgmt', { no: no }, function(response) {
-	            // 서버 응답에 따른 처리
-//	            if (response.success) {
-	                // 성공 메시지 또는 화면 업데이트
-//	                alert('사용자 상태가 변경되었습니다.');
-//	            } else {
-	                // 오류 메시지 또는 에러 핸들링
-//	                alert('오류가 발생했습니다.');
-//	            }
-//	        });
-//	    });
-//	});
-	
-	</script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+	    $(document).ready(function() {
+	        // 초기 페이지 로드 시 실행할 함수
+	        loadPage(1, '');  // 페이지 1 로딩
+	        
+	        // "검색" 버튼 클릭 시
+	        $('#btn-search').click(function() {
+	            var searchType = $('#searchType').val();
+	            loadPage(1, searchType);
+	        });
+	        
+	        // "이전" 버튼 클릭 시
+	        $('#pageBar').on('click', '.a-pagination-move-left', function() {
+	            var prevPage = $(this).data('prevPage');
+	            var searchType = $('#searchType').val();
+	            loadPage(prevPage, searchType);
+	        });
+	        
+	        // "다음" 버튼 클릭 시
+	        $('#pageBar').on('click', '.a-pagination-move-right', function() {
+	            var nextPage = $(this).data('nextPage');
+	            var searchType = $('#searchType').val();
+	            loadPage(nextPage, searchType);
+	        });
+	        
+	        // 페이지 로드 함수
+	        function loadPage(page, searchType) {
+	            // 서버로 AJAX 요청 보내기
+	            $.ajax({
+	                type: 'GET',
+	                url: '/admin/memberMgmt',
+	                data: {
+	                    page: page,
+	                    searchType: searchType
+	                },
+	                success: function(data) {
+	                    // 서버에서 받은 데이터로 테이블 업데이트
+	                    $('#Member').html(data);
+	                }
+	            });
+	        }
+	    });
+    
+    </script>
 </div>
 </html>

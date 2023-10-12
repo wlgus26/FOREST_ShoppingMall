@@ -306,37 +306,8 @@ public class AdminController {
 		
 		
 		
-//		// 회원 목록 가져오기
-//		
-//		@GetMapping("/memberMgmt")
-//		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
-//										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String status) {
-//			
-//			String type = "memberMgmt";
-//			int listcount = 0;
-//			PageInfo pageInfo = null;
-//			List<Member> memberlists = null;
-//			
-//			
-//			listcount = memberService.selectmembercount(type, status, searchType);
-//			pageInfo = new PageInfo(page, 30, listcount, 15);
-//			memberlists = memberService.getmemberlists(searchType, pageInfo);
-//			
-//			log.info("Page : {}", page);
-//			log.info("ListCount : {}", listcount);
-//			
-//			modelAndView.addObject("pageName", "memberMgmt");
-//			modelAndView.addObject("searchType", searchType);
-//			modelAndView.addObject("pageInfo", pageInfo);
-//			modelAndView.addObject("memberlists", memberlists);
-//			
-//			modelAndView.setViewName("page/admin/memberMgmt");
-//			
-//			return modelAndView;
-//		}
-		
-		
-		
+		// 회원 목록 가져오기
+
 		@GetMapping("/memberMgmt")
 		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
 										@RequestParam(required = false) String searchType) {
