@@ -41,6 +41,9 @@ public class MyPageController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private MemberService adminService;
+	
 	// myPage 이동
 	@GetMapping("/myPage")
 	public ModelAndView myPage (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {

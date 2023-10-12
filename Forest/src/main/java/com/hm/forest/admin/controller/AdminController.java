@@ -252,7 +252,6 @@ public class AdminController {
 			 product.setName(name);
 			 product.setPrice(price);
 			 product.setColor(color);
-			 product.setAmount(amount);
 			 product.setSizeSml(sizeSml);
 			 product.setContent(content);
 		
