@@ -164,6 +164,7 @@
 		    </ul>
 		</div>
 
+
 <!-- 장바구니, 주문하기 버튼 관련 함수-->
 <script th:inline="javascript"> 
 	<!-- csrf 토큰을 JavaScript 변수로 저장 -->
@@ -179,6 +180,8 @@
     $('#btnCart').on('click', (event) => {
     	event.preventDefault(); // 버튼의 기본 동작 중지 
 		
+    	
+    	
 		var productNo = product.no; // 상품 번호
 		var quantity = document.getElementById("orderQuantity").value; // 주문 수량 저장
 		var color = selectedColor.options[selectedColor.selectedIndex].value; // 색상 값 저장
@@ -197,6 +200,7 @@
 		        	color,
 		        	size
         		};
+        		
         		$.ajax({
     				url: '/myPage/cart/add', // API 엔드포인트 
    		         	type: 'POST',
@@ -217,22 +221,23 @@
 			           } else {
 			          	  // 4. 장바구니 추가 실패 시 메세지
 			               alert("상품을 장바구니에 추가하는 도중 오류가 발생했습니다.");
-			           };
+			           }
 			           
 			        },
 			        error: function (error) {
 			            console.error('장바구니 작업 중 오류가 발생하였습니다 :', error);
-			        },
+			        }
     			}); 
-        		
-        	}     	 
+        	};     	 
         } else {
 			if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
 			       window.location.href = '/login';
 			} 
-        }
+        };
     });
 	
+	
+
 	
  	// 주문하기 버튼
     $('#btnOrder').on('click', (event) => {
@@ -261,7 +266,13 @@
 			} 
         }
     });
+   
+	
 </script>
+
+
+
+
 
  	
 <!-- CKEditor  -->

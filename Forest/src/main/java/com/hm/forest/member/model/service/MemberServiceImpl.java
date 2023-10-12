@@ -93,6 +93,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.deleteSelectedCartList(cartNo);
 	}
 	
+	// 장바구니 제품 목록 개수
+	@Override
+	public int selectCartItemsCount(int memberNo) {
+		return memberMapper.selectCartItemsCount(memberNo);
+	}
+	
 	
 //	@Override
 //	public List<Member> getmemberlists(String status, String searchType, String type, PageInfo pageInfo) {
@@ -121,6 +127,7 @@ public class MemberServiceImpl implements MemberService {
 
 		return memberMapper.updatememberstatus("Y", no);
 	}
+
 
 
 	

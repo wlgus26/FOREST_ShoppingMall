@@ -229,4 +229,11 @@
 	  WHERE NO IN #{cartNo}
 	</delete>
 	
+	<!-- 장바구니 담긴 제품 개수 -->
+	<select id="selectCartItemsCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM CART 
+		WHERE MB_NO = #{memberNo}
+	</select>
+	
 </mapper>
