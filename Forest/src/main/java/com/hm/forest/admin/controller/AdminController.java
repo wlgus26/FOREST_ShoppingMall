@@ -309,18 +309,7 @@ public class AdminController {
 		
 		
 		
-//		// 관리자페이지_회원관리로 이동
-//		@GetMapping("/memberMgmt")
-//		public ModelAndView memberMgmt (ModelAndView modlAndView) {
-//			
-//			modlAndView.addObject("pageName", "memberMgmt");
-//			modlAndView.setViewName("page/admin/memberMgmt");
-//			
-//			return modlAndView;
-//		}
-		
-		
-		
+		// 회원 목록 가져오기
 		
 		@GetMapping("/memberMgmt")
 		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
@@ -331,18 +320,10 @@ public class AdminController {
 			PageInfo pageInfo = null;
 			List<Member> memberlists = null;
 			
-			 int searchTypeInt = 0;
-			    if (!searchType.isEmpty()) {
-			        try {
-			            searchTypeInt = Integer.parseInt(searchType);
-			        } catch (NumberFormatException e) {
-			            // 예외 처리 (유효하지 않은 값 처리)
-			        }
-			    }
 			
 			listcount = memberService.selectmembercount(type, status, searchType);
 			pageInfo = new PageInfo(page, 30, listcount, 15);
-//			memberlists = memberService.getmemberlists(status, type, searchType, pageInfo);
+			memberlists = memberService.getmemberlists(searchType, pageInfo);
 			
 			log.info("Page : {}", page);
 			log.info("ListCount : {}", listcount);
@@ -359,51 +340,77 @@ public class AdminController {
 		
 		
 		
+//		@GetMapping("/memberMgmt")
+//		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
+//										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String status) {
+//			
+//			String type = "memberMgmt";
+//			int listcount = 0;
+//			PageInfo pageInfo = null;
+//			List<Member> memberlists = null;
+//			
+//			 int searchTypeInt = 0;
+//			    if (!searchType.isEmpty()) {
+//			        try {
+//			            searchTypeInt = Integer.parseInt(searchType);
+//			        } catch (NumberFormatException e) {
+//			            // 예외 처리 (유효하지 않은 값 처리)
+//			        }
+//			    }
+//			
+//			listcount = memberService.selectmembercount(type, status, searchType);
+//			pageInfo = new PageInfo(page, 30, listcount, 15);
+//			memberlists = memberService.getmemberlists(status, type, searchType, pageInfo);
+//			
+//			log.info("Page : {}", page);
+//			log.info("ListCount : {}", listcount);
+//			
+//			modelAndView.addObject("pageName", "memberMgmt");
+//			modelAndView.addObject("searchType", searchType);
+//			modelAndView.addObject("pageInfo", pageInfo);
+//			modelAndView.addObject("memberlists", memberlists);
+//			
+//			modelAndView.setViewName("page/admin/memberMgmt");
+//			
+//			return modelAndView;
+//		}
 		
 		
-		// 사용계정 --> 휴면계정으로 바꾸기 커밋 X
+		
+		
+		
+		// 사용계정 --> 휴면계정으로 바꾸기
 		
 		 @PostMapping("/updatememberstatus")
 		 public String updateMemberStatus(@RequestParam("no") int no) {
 			    int result = memberService.updatememberstatus("N", no);
 
 			    if (result > 0) {
-			        // 변경 성공 시, 리다이렉트 URL을 반환합니다.
+			        
 			        return "redirect:/admin/memberMgmt";
 			    } else {
-			        // 변경 실패 시, 오류 메시지를 표시하거나 다른 작업을 수행할 수 있습니다.
-			        // 오류 메시지를 표시하는 페이지로 리다이렉트할 수도 있습니다.
+			        
 			        return "redirect:/admin/memberMgmt?error=사용자%20상태%20변경에%20실패했습니다.";
 			    }
 			}
 		 
-		// 휴면계정 --> 휴면계정으로 바꾸기 커밋 X
+		// 휴면계정 --> 사용계정으로 바꾸기
 		 
 		 @PostMapping("/activateMember")
 		 public String activateMember(@RequestParam("no") int no) {
 		     int result = memberService.activateMember("Y", no);
 
 		     if (result > 0) {
-		         // 변경 성공 시, 페이지를 다시 로드하거나 리다이렉트할 수 있습니다.
+		    	 
 		         return "redirect:/admin/memberMgmt";
 		     } else {
-		         // 변경 실패 시, 오류 메시지를 표시하거나 다른 작업을 수행할 수 있습니다.
-		         return "errorPage"; // 오류 페이지로 리다이렉트 또는 다른 뷰를 반환
+		    	 
+		         return "errorPage"; 
 		     }
 		 }
 		 
 
 		 
-//		    public ResponseEntity<String> toggleMemberStatus(@Param("status") String status, @Param("no") int no) {
-//		        // memberId를 사용하여 사용자 상태를 변경하는 로직을 수행
-//		        boolean success = memberService.updatememberstatus(status, no);
-//
-//		        if (success) {
-//		            return ResponseEntity.ok("사용자 상태가 변경되었습니다.");
-//		        } else {
-//		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사용자 상태 변경에 실패했습니다.");
-//		        }
-//		    }
 
 	
 		// 관리자페이지_게시판관리로 이동
