@@ -68,9 +68,9 @@ cursor: pointer;
 			        </div>
 			        </td>
 			        <td>
-					    <i id="reduceQuantity" class="fa-solid fa-square-minus" style="color: #c9c9c9;"></i>
+					    <i id="minusQuantity" class="fa-solid fa-square-minus" style="color: #c9c9c9;"></i>
 					    <span th:text="  ${cart.quantity} + '개  '"></span>
-					    <i id="increaseQuantity" class="fa-solid fa-square-plus" style="color: #c9c9c9;"></i>
+					    <i id="plusQuantity" class="fa-solid fa-square-plus" style="color: #c9c9c9;"></i>
 					</td>
 			        <td th:text="${cart.price} * ${cart.quantity} + '원'"></td>
 			        <td>2500원</td>
@@ -85,7 +85,8 @@ cursor: pointer;
 	  </table>
 	</div>
    	</div>
- 	
+
+<!-- 선택삭제_체크박스 토글 함수 -->	
 <script>
 $(document).ready(function() {
 	 // 전체 체크박스 토글 동작
@@ -121,8 +122,50 @@ $(document).ready(function() {
 
 </script>
 
+<!-- 주문 수량 비동기로 가져오기 -->
+<!-- 장바구니에서 수량 가져오기 -->
+<script>
+$(document).ready(function() {
+	
+	 // 각 행의 수량 가져오기 및 업데이트
+    $('[data-cart-no]').each(function() {
+        var row = $(this).closest('tr');
+        var cartNo = $(this).attr('data-cart-no');
+        var quantitySpan = row.find('.item-quantity');
 
-<!-- 주문 수량 조절하는 함수 -->
+        console.log(cartNo);
+        
+        getCartQuantity(cartNo, function(data) {
+            if (data && data.quantity) {
+                var currentQuantity = data.quantity;
+                quantitySpan.text(currentQuantity);
+            }
+        });
+    });
+	
+	
+    // 수량 가져오기 함수
+    function getCartQuantity(cartNo) {
+    	
+        $.ajax({
+            type: 'GET',
+            url: '/myPage/cart/' + cartNo, // 서버에서 수량 가져오는 엔드포인트
+            dataType: 'json',
+            success: function(data) {
+                successCallback(data);
+            },
+            error: function(error) {
+                console.error('수량을 가져오는 중 오류 발생: ', error);
+            }
+        });
+    }
+
+   
+});
+</script>
+
+
+
 
 <!-- 장바구니에서 제품 삭제하는 함수 -->
 <script>

@@ -256,9 +256,10 @@
         	 	// 2. 옵션[색상/사이즈] 선택 여부 체크
         		alert('옵션을 선택해 주세요');
         	} else  {
-        		// 3. 결제페이지로 전달        
-        		alert('주문자 번호: ' + loginMember.no + ', 상품번호: '+ productNo + ', 수량 : ' + quantity + ', detailNo : ' + detailNo);
-
+        		// 3. 결제페이지로 전달    
+        		if (confirm('주문자 번호: ' + loginMember.no + ', 상품번호: '+ productNo + ', 수량 : ' + quantity + ', detailNo : ' + detailNo)) {
+			       window.location.href = '/pay?productNo=' + productNo + '&detailNo' + detailNo + '&quantity=' + quantity;
+				} 				
             }
         } else {
 			if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
