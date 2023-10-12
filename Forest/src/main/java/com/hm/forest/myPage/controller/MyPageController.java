@@ -97,15 +97,14 @@ public class MyPageController {
 		return ResponseEntity.ok(map);
 	}
 	
-	
+	// 장바구니 상품 삭제 
 	@PostMapping("/cart/delete")
 	public ResponseEntity<Map<String, Object>> cart(@AuthenticationPrincipal Member loginMember, @RequestBody String cartNo)  {
 		int result = 0;
 		
 		Map<String, Object> map = new HashMap<>();
 		
-		System.out.println("@@@@@@@" + cartNo);
-		log.info("{}", cartNo);
+		log.info("cartNo : {}", cartNo);
 
 		result = memberService.delete(cartNo);
 		 
