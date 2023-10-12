@@ -71,22 +71,44 @@
 	</div>
 </div>
 	<script>
+	
+    // 검색 버튼 클릭 시 실행되는 함수
+    document.getElementById("btnSearch").addEventListener("click", function () {
+        // 선택한 옵션 가져오기
+        var selectAll = document.getElementById("status").value;
+
+        // 테이블의 모든 행 가져오기
+        var rows = document.querySelectorAll(".clickable-row");
+
+        // 선택한 옵션에 따라 행을 숨기거나 보여주기
+        rows.forEach(function (row) {
+            var statusCell = row.querySelector("td:nth-child(6)"); // 상태값 열
+            var statusValue = statusCell.textContent.trim();
+
+            if (selectedStatus === "" || selectedStatus === statusValue) {
+                row.style.display = ""; // 선택한 옵션이나 모두인 경우 보여주기
+            } else {
+                row.style.display = "none"; // 선택한 옵션과 일치하지 않는 경우 숨기기
+            }
+        });
+    });
 		
-	$(document).ready(() => {
-	    $('#btnSearch').on('click', () => {
-	        let selectedStatus = $('#status').val();
-	        
+    
+	// $(document).ready(() => {
+	//    $('#btnSearch').on('click', () => {
+	//        let selectedStatus = $('#status').val();
+	  //      
 	        // 모든 행을 숨김
-	        $('tr.clickable-row').hide();
+	//        $('tr.clickable-row').hide();
 
 	        // 선택된 상태에 따라 행을 필터링하여 보여줌
-	        if (selectedStatus === '') {
-	            $('tr.clickable-row').show();
-	        } else {
-	            $('tr.clickable-row[data-href*="' + status + '"]').show();
-	        }
-	    });
-	});;
+//	        if (selectedStatus === '') {
+	//            $('tr.clickable-row').show();
+	  //      } else {
+	    //        $('tr.clickable-row[data-href*="' + status + '"]').show();
+	      //  }
+//	    });
+//	});;
 	</script>
 
 
