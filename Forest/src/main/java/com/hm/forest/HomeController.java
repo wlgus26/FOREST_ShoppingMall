@@ -2,6 +2,7 @@ package com.hm.forest;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,6 +11,29 @@ import com.hm.forest.member.model.vo.Member;
 @RestController
 public class HomeController {
 	
+	@GetMapping("/success")
+	public ModelAndView success(ModelAndView modelAndView, @RequestParam String paymentType, @AuthenticationPrincipal Member loginMember) {
+		
+		System.out.println(paymentType);
+		modelAndView.addObject("pageName", "paysv");
+		modelAndView.addObject("loginMember", loginMember);
+		modelAndView.addObject("paymentType", paymentType);
+		modelAndView.setViewName("page/paysv");
+    
+//		modelAndView.addObject("msg", "결제가 완료되었습니다.");
+//		modelAndView.addObject("location", "view?no=" + board.getNo());	
+//	}	
+//} else {
+//	modelAndView.addObject("msg", "게시글 등록에 실패하였습니다.");
+//	modelAndView.addObject("location", "write?type=" + board.getType());				
+//
+//}
+//modelAndView.setViewName("page/common/msg");
+//		
+//		
+        return modelAndView;
+		
+	}
 	
 	// home으로 이동
 	@GetMapping("/")
