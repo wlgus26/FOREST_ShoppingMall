@@ -84,7 +84,6 @@
 
 <div layout:fragment="content">
 <form>
-<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
 <div class="container" style="width: 80%">
 
@@ -218,11 +217,7 @@
 			          	  // 4. 장바구니 추가 실패 시 메세지
 			               alert("제품을 장바구니에 추가하는 도중 오류가 발생했습니다.");
 			           };
-			              // 
-			          //  } else {
-			                // 4. 장바구니 추가 실패 시 메세지
-			          //      alert("제품을 장바구니에 추가하는 도중 오류가 발생했습니다.");
-			          //  }
+			           
 			        },
 			        error: function (error) {
 			            console.error('장바구니 작업 중 오류가 발생하였습니다 :', error);
@@ -241,17 +236,23 @@
  	// 주문하기 버튼
     $('#btnOrder').on('click', (event) => {
         event.preventDefault(); 
-        var selectedOpt = select.options[select.selectedIndex].value; // 옵션 값 저장
         
-        // 주문하기 버튼 클릭 시, 로그인 여부 체크 
-        if(loginMember != null){
-        	// 옵션 선택 여부 체크
-        	if(selectedOpt == ""){
+        var productNo = product.no; // 상품 번호
+		var quantity = document.getElementById("orderQuantity").value; // 주문 수량 저장
+		var color = selectedColor.options[selectedColor.selectedIndex].value; // 색상 값 저장
+		var size = selectedSize.options[selectedSize.selectedIndex].value; // 사이즈 값 저장
+		var detailNo = 1; // 제품 디테일 번호 임의로 저장
+        
+        
+     // 1. 주문하기 버튼 클릭 시, 로그인 여부 체크 
+        if(loginMember != null){        	
+        	if(size == "" || color == ""){
+        	 	// 2. 옵션[색상/사이즈] 선택 여부 체크
         		alert('옵션을 선택해 주세요');
-        	} else if(selectedOpt != "") {
+        	} else  {
+        		// 3. 결제페이지로 전달        
+        		alert('주문자 번호: ' + loginMember.no + ', 상품번호: '+ productNo + ', 수량 : ' + quantity + ', detailNo : ' + detailNo);
         		
-	            window.location.href = '/pay';
-           		
         	}     	 
         } else {
 			if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
