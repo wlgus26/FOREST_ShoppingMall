@@ -5,11 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -309,37 +306,8 @@ public class AdminController {
 		
 		
 		
-		// 회원 목록 가져오기
-		
-		@GetMapping("/memberMgmt")
-		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
-										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String status) {
-			
-			String type = "memberMgmt";
-			int listcount = 0;
-			PageInfo pageInfo = null;
-			List<Member> memberlists = null;
-			
-			
-			listcount = memberService.selectmembercount(type, status, searchType);
-			pageInfo = new PageInfo(page, 30, listcount, 15);
-			memberlists = memberService.getmemberlists(searchType, pageInfo);
-			
-			log.info("Page : {}", page);
-			log.info("ListCount : {}", listcount);
-			
-			modelAndView.addObject("pageName", "memberMgmt");
-			modelAndView.addObject("searchType", searchType);
-			modelAndView.addObject("pageInfo", pageInfo);
-			modelAndView.addObject("memberlists", memberlists);
-			
-			modelAndView.setViewName("page/admin/memberMgmt");
-			
-			return modelAndView;
-		}
-		
-		
-		
+//		// 회원 목록 가져오기
+//		
 //		@GetMapping("/memberMgmt")
 //		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
 //										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String status) {
@@ -349,18 +317,10 @@ public class AdminController {
 //			PageInfo pageInfo = null;
 //			List<Member> memberlists = null;
 //			
-//			 int searchTypeInt = 0;
-//			    if (!searchType.isEmpty()) {
-//			        try {
-//			            searchTypeInt = Integer.parseInt(searchType);
-//			        } catch (NumberFormatException e) {
-//			            // 예외 처리 (유효하지 않은 값 처리)
-//			        }
-//			    }
 //			
 //			listcount = memberService.selectmembercount(type, status, searchType);
 //			pageInfo = new PageInfo(page, 30, listcount, 15);
-//			memberlists = memberService.getmemberlists(status, type, searchType, pageInfo);
+//			memberlists = memberService.getmemberlists(searchType, pageInfo);
 //			
 //			log.info("Page : {}", page);
 //			log.info("ListCount : {}", listcount);
@@ -377,6 +337,49 @@ public class AdminController {
 		
 		
 		
+		@GetMapping("/memberMgmt")
+		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
+										@RequestParam(required = false) String searchType) {
+			
+			int listcount = 0;
+			PageInfo pageInfo = null;
+			List<Member> memberlists = null;
+			
+			log.info("@@@@ 검색 값: {}", searchType);
+			log.info("Page : {}", page);
+			log.info("ListCount : {}", listcount);
+			
+			// 검색값이 있는 경우
+			 if (searchType != null) {
+				 listcount = memberService.selectmembercountvalue(searchType);
+				 pageInfo = new PageInfo(page, 10, listcount, 10);
+				 memberlists = memberService.getmemberlistsvalue(searchType, pageInfo);
+				 
+				 modelAndView.addObject("pageName", "memberMgmt");
+				 modelAndView.addObject("pageInfo", pageInfo);
+				 modelAndView.addObject("memberlists", memberlists);
+				 modelAndView.addObject("searchType", searchType); // 페이징 처리를 위해 searchType값을 넘겨준다. 
+			
+			// 검색값이 없는 경우
+			} else {
+				listcount = memberService.selectmembercount();
+				pageInfo = new PageInfo(page, 10, listcount, 10);
+				memberlists = memberService.getmemberlists(pageInfo);
+				
+				
+				modelAndView.addObject("pageName", "memberMgmt");
+				modelAndView.addObject("pageInfo", pageInfo);
+				modelAndView.addObject("memberlists", memberlists);
+			
+			}
+			 
+			 log.info("ListCount : {}", listcount);
+			 log.info("MemberLists : {}", memberlists);
+			 
+			 modelAndView.setViewName("page/admin/memberMgmt");
+			 
+			 return modelAndView;
+		}
 		
 		
 		// 사용계정 --> 휴면계정으로 바꾸기
@@ -410,9 +413,6 @@ public class AdminController {
 		 }
 		 
 
-		 
-
-	
 		// 관리자페이지_게시판관리로 이동
 		@GetMapping("/boardMgmt")
 		public ModelAndView boardMgmt (ModelAndView modlAndView) {

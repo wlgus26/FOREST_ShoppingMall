@@ -18,16 +18,22 @@ public interface MemberService {
 
 	// 수정2
 	
-	// 회원 수 가져오기
-	int selectmembercount(String type, String searchType, String status);
-	// 회원 목록 가져오기
-	List<Member> getmemberlists(String searchType, PageInfo pageInfo);
+	// 검색값이 없을 때 회원 수 가져오기
+	int selectmembercount();
 	
-//	List<Member> getmemberlists(String status, String searchType, String type, PageInfo pageInfo);
+	// 검색값이 없을 때 회원 목록 가져오기
+	List<Member> getmemberlists(PageInfo pageInfo);
 	
-	// 사용계정
+	// 검색값 있을 때 회원 수 가져오기
+	int selectmembercountvalue(String searchType);
+	
+	// 검색값 있을 떄 회원 목록 가져오기
+	List<Member> getmemberlistsvalue(String searchType, PageInfo pageInfo);
+	
+	// 사용계정 --> 휴면계정 변경
 	int updatememberstatus(String status, int no);
 	
+	// 휴면계정 --> 사용계정으로 변경
 	int activateMember(String status, int no);
 
 	// 장바구니 제품 담기

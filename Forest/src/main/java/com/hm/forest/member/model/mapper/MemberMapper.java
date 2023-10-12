@@ -30,14 +30,22 @@ public interface MemberMapper {
 
 	// 관리자_멤버 (민지)
 	
-	List<Member> getmemberlists(@Param("searchType") String searchType, @Param("pageInfo") PageInfo pageInfo);
+	// 검색값 없을때 회원 수 조회
+	int selectmembercount();
 	
-//	List<Member> getmemberlists (@Param("status") String status, @Param("type") String type,@Param("searchType") String searchType, RowBounds rowBounds);
-
-	int selectmembercount(@Param("status") String status, @Param("type") String type,@Param("searchType") String searchType);
+	// 검색값 없을 떄 회원 목록 조회
+	List<Member> getmemberlists (RowBounds rowBounds);
 	
+	// 검색값 있을 때 회원 수 조회
+	int selectmembercountvalue(@Param("searchType") String searchType);
+		
+	// 검색값 있을 때 회원 목록 조회
+	List<Member> getmemberlistsvalue (@Param("searchType") String searchType, RowBounds rowBounds);
+	
+	// 사용계정 --> 휴면계정 변경
 	int updatememberstatus(@Param("status") String status,@Param("no") int no);
 	
+	// 휴면계정 --> 사용계정으로 변경
 	int activateMember(@Param("status") String status, @Param("no") int no);
 	
 	// 장바구니 상품 담기

@@ -67,11 +67,6 @@ public class MemberServiceImpl implements MemberService {
 
 		return memberMapper.updateMemberStatus("N", no);
 	}
-
-	@Override
-	public List<Member> getmemberlists(String searchType, PageInfo pageInfo) {
-	    return memberMapper.getmemberlists(searchType, pageInfo);
-	}
 	
 	// 장바구니 상품 담기
 	@Override
@@ -93,34 +88,64 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.deleteSelectedCartList(cartNo);
 	}
 	
-	
 //	@Override
-//	public List<Member> getmemberlists(String status, String searchType, String type, PageInfo pageInfo) {
-//		int limit = pageInfo.getListLimit();
-//		int offset = (pageInfo.getCurrentPage()-1) * limit;
-//		
-//		RowBounds rowBounds = new RowBounds(offset, limit);
-//		
-//		return mapper.getmemberlists(status, searchType, type, rowBounds);
+//	public List<Member> getmemberlists(String searchType, PageInfo pageInfo) {
+//	    return memberMapper.getmemberlists(searchType, pageInfo);
 //	}
 	
+	// 검색값이 없을 때 회원 수 가져오기
+		@Override
+		public int selectmembercount() {
+			
+			return memberMapper.selectmembercount();
+		}
+	
+	// 검색값이 없을 때 회원 목록 조회
 	@Override
-	public int selectmembercount(String type, String searchType, String status) {
+	public List<Member> getmemberlists(PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
 		
-		return memberMapper.selectmembercount(type, searchType, status);
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return memberMapper.getmemberlists(rowBounds);
+	}
+	
+	// 검색값 있을 때 회원 수 가져오기
+	@Override
+	public int selectmembercountvalue(String searchType) {
+
+		return memberMapper.selectmembercountvalue(searchType);
 	}
 
+	// 검색값 있을 때 회원 목록 가져오기
+	@Override
+	public List<Member> getmemberlistsvalue(String searchType, PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+	
+		return memberMapper.getmemberlistsvalue(searchType, rowBounds);
+	}
+	
+	
+
+	// 사용계정 --> 휴면계정 변경
 	@Override
 	public int updatememberstatus(String status, int no) {
 
 		return memberMapper.updatememberstatus("N", no);
 	}
 	
+	// 휴면계정 --> 사용계정으로 변경
 	@Override
 	public int activateMember(String status, int no) {
 
 		return memberMapper.updatememberstatus("Y", no);
 	}
+
+
 
 
 	
