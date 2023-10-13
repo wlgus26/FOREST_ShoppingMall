@@ -42,6 +42,7 @@
 <form class="container" action="/admin/productMgmt/insert" method="post" enctype="multipart/form-data">
 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
+
 <div class="table-div">
   <table class="table">
 	  <thead>
@@ -73,12 +74,14 @@
 	      <td><input type="text" id="price" name="price"> </td>
 	    </tr>
 	    
+	    <!-- 
+	    	제품 옵션(재고, 색상, 사이즈) 
 	    <tr>
 	      <th scope="row">제품색상</th>
 	      <td><input type="text" id="color" name="color"></td>
 	    </tr>
 	    <tr>
-	      <th scope="row">재고</th>
+	      <th scope="row">제품재고</th>
 	      <td><input type="text" min="0" id="stock" name="stock"></td>
 	    </tr>
 	    <tr>
@@ -93,6 +96,7 @@
 		    </select>
 		  </td>
 	    </tr>
+	    -->
 	
 	     
 	    <tr>
@@ -132,9 +136,7 @@
 </form>
  
 
- 
-
-<!-- CKEditor -->
+	<!-- CKEditor -->
    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
 	
    <script>
@@ -156,44 +158,28 @@
 			   
 			   CKEDITOR.replace("content", ckeditor_config);
 	</script>
-
-
-	<!-- 
-	<script>		
-	ClassicEditor
-	.create(document.querySelector('.editor'))
-	.then(editor => {
-		console.log('Editor was initialized');
-	})
-	.catch(error => {
-		console.error(error);
-	});
-</script>
-	 -->
-
-
-
-<!-- 등록버튼 누르면 ajax로 처리 -->
-<script>
-$(document).ready(function() {
-    $('#btnInsert').click(function(e) {
-        e.preventDefault(); 
-
-        var formData = $('form').serialize();
-
-        $.ajax({
-            type: 'POST',
-            url: '/admin/productMgmt/insert',
-            data: formData,
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.error(error);
+	
+	<script>
+	$(document).ready(function () {
+    $.ajax({
+        url: '/admin/detail', // API 엔드포인트 경로
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if (data != null) {
+                // 서버에서 반환한 데이터(data)를 사용하여 목록을 업데이트
+                console.log('조회 성공!', data);
+            } else {
+                alert('조회된 목록 없음!');
             }
-        });
+        },
+        error: function (error) {
+            console.error('제품 목록을 가져오는 중 오류 발생: ', error);
+        }
     });
-</script>
-
-
+	});
+	</script>
+	
+	
+</div>
 </html>

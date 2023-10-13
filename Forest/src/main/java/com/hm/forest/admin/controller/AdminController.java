@@ -11,6 +11,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +42,7 @@ public class AdminController {
 	@Autowired
 	private MemberService memberService;
 	
+	// 이미지 업로드 
 	private final ResourceLoader resourceLoader;
 	
 	
@@ -66,28 +68,11 @@ public class AdminController {
 		}
 
 		
-		// 관리자페이지_제품등록
-//		@PostMapping("/productMgmt/insert")
-//		@ResponseBody
-//		public String insert (Product  product) {
-//
-//			System.out.println("getName :" + product.getName());
-//			System.out.println("getPrice :" + product.getPrice());
-//			System.out.println("getColor :" + product.getColor());
-//			
-//			adminService.save(product);
-//
-//			return "redirect:/productMgmtList";
-//		}
-//		
-	
-	
         // 관리자페이지_제품등록
 		@PostMapping("/productMgmt/insert")
 		public ModelAndView insert(ModelAndView modelAndView,
 								   Product product,
 								   @RequestParam("upfile") MultipartFile upfile) {
-			
 			
 		    int result = 0;
 		    Map<String, Object> map = new HashMap<>();
@@ -97,14 +82,11 @@ public class AdminController {
 				String renamedFileName = null;
 				
 				try {
-
-
 					location = resourceLoader.getResource("/static/upload/product").getFile().getPath();
 
 					renamedFileName = MultipartFileUtil.save(upfile, location);
 					
 					if (renamedFileName != null) {
-						
 						product.setImage(renamedFileName);
 					}
 				} catch (IOException e) {
@@ -114,7 +96,6 @@ public class AdminController {
 				System.out.println(location + "★★★★★★★");
 			}
 		    
-	
 		    result = adminService.save(product);
 
 		    map.put("resultCode", result);
@@ -131,10 +112,34 @@ public class AdminController {
 
 		    System.out.println(map);
 		    
-		    modelAndView.setViewName("redirect:/admin/productMgmtList");
-		    
+		    modelAndView.setViewName("redirect:/admin/productMgmt");
 		    return modelAndView;
 		}
+		
+		// 비동기 통신 응답
+		// 게시글에 달린 댓글 목록 조회
+		@GetMapping("/detail")
+		public ResponseEntity<List<Product>> getDetailsByProductNo() {
+			
+		    List<Product> details = adminService.getDetailsByProductNo();
+		    
+		    return ResponseEntity.ok(details); // 성공적인 경우 Product 목록 반환
+		}
+
+	
+		
+	
+
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		

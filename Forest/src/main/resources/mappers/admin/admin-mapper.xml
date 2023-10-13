@@ -64,7 +64,6 @@
 		 <selectKey resultType="_int" keyProperty="no" order="BEFORE">
 		 SELECT SEQ_PD_NO.NEXTVAL FROM DUAL
 		 </selectKey>
-
 		INSERT INTO PRODUCT (
 	      NO, 
 	      CATEGORY,
@@ -226,7 +225,40 @@
 		WHERE STATUS = 'Y' AND CATEGORY =#{category}
 	</select>
 	
-
+	
+	<!-- 비동기로 저장된 값 보여주기 -->
+	<select id="selectProductByProductNo" parameterType="_int" resultMap="productResultMap">
+		SELECT  
+		      NO, 
+		      CATEGORY,
+		      NAME, 
+		      PRICE, 
+		      CONTENT, 
+		      COMPANY, 
+		      DISCOUNTRATE, 
+		      SELLING,
+		      IMAGE, 
+		      WISH
+		FROM PRODUCT
+		WHERE STATUS = 'Y' AND NO = #{No}
+	</select>
+	
+	
+	
+	<select id="selectDetailsByProductNo" parameterType="int" resultMap="productResultMap">
+    SELECT NO, 
+           CATEGORY,
+           NAME, 
+           PRICE, 
+           CONTENT, 
+           COMPANY, 
+           DISCOUNTRATE, 
+           SELLING,
+           IMAGE, 
+           WISH
+    FROM PRODUCT
+    WHERE STATUS = 'Y'
+</select>
 
 </mapper>
 
