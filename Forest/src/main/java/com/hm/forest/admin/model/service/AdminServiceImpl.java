@@ -28,6 +28,7 @@ public class AdminServiceImpl implements AdminService {
 		if (product.getNo() > 0) {
 			// update
 			result = adminMapper.updateProduct(product);
+
 		} else {
 			// insert
 			result = adminMapper.insertProduct(product);

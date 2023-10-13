@@ -33,43 +33,7 @@ public class Product {
 	
 	private int wish;
 	
-//	private List<ProductDetail> productDetail;
-	
-	
-	// 다른 속성들
-    private String color;
-    
-    
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-    
-  
-    private String sizeSml;
-    
-    
-    public String getSizeSml() {
-        return sizeSml;
-    }
-
-    public void setSizeSml(String sizeSml) {
-        this.sizeSml = sizeSml;
-    }
-    
-   
-    private int stock;
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
+	private List<Detail> Details;
     
     
 

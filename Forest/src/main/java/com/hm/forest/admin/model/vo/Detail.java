@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDetail {
+public class Detail {
 	private int no;
 	
-	private String color;
+	private String productNo;
 	
 	private String sizeSml;
 	
 	private int stock;
+	
+	private String color;
 }

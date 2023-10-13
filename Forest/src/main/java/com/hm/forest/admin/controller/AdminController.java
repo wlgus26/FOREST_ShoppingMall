@@ -178,22 +178,24 @@ public class AdminController {
 				 					 @RequestParam("upfile") MultipartFile upfile,
 				 					 @RequestParam("no") int no,
 				 					 @RequestParam("name") String name,
-				 					 @RequestParam("color") String color,
+//				 					 @RequestParam("color") String color,
 				 					 @RequestParam("price") int price,
-				 					 @RequestParam("stock") int stock,
-				 					 @RequestParam("sizeSml") String sizeSml,
+//				 					 @RequestParam("stock") int stock,
+//				 					 @RequestParam("sizeSml") String sizeSml,
 				 					 @RequestParam("content") String content ) {
 			 
 			 int result = 0;
 			 Product product = null;
+
 	 
 			 product = adminService.getProductBoardByNo(no);
-			 
+	 
 			 
 			 if (upfile != null && !upfile.isEmpty()) {
 					 String location = null;
 					 String renamedFileName = null;
 					 
+			
 					 try {
 						location = resourceLoader.getResource("/static/upload/product/")
 						 						  .getFile()
@@ -223,19 +225,19 @@ public class AdminController {
 						e.printStackTrace();
 					}
 				 }
-			 
-			
+
 			 product.setName(name);
 			 product.setPrice(price);
-			 product.setColor(color);
-			 product.setStock(stock);
-			 product.setSizeSml(sizeSml);
+//			 product.setColor(color);
+//			 product.setStock(stock);
+//			 product.setSizeSml(sizeSml);
 			 product.setContent(content);
+			 
 
-		
 			 log.info("★ 보드 : {}", product);
 				 
 		     result = adminService.save(product);
+		     
 		     
 		     System.out.println(result + "★★★★result★★★");
 		 
