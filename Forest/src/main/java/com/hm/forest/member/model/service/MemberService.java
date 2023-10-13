@@ -39,6 +39,9 @@ public interface MemberService {
 	// 장바구니 제품 목록 삭제
 	int delete(String cartNo);
 
+	// 장바구니 제품 개수
+	int selectCartItemsCount(int memberNo);
+
 
 	
 	

@@ -25,6 +25,7 @@
 		  href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
 		/>
 		<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>	
+  		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		
 		<!--css 초기화-->
   		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">	
@@ -82,7 +83,7 @@
 				            <th:block th:if="${loginMember != null}" sec:authorize="hasRole('USER')" >
 				            <button th:if="${loginMember != null}" class="btn btn-outline-dark" type="submit">
 				                <i class="bi-cart-fill me-1" style="color:#426D39"></i>
-				                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+				                <span class="badge bg-dark text-white ms-1 rounded-pill cartItemCount"></span>
 				            </button>
 				            </th:block>
 				    </div>
@@ -295,12 +296,29 @@
         </script>
     
     
- 
-	
- 
-
-   
-	
+	<script>
+		$(document).ready(function () {
+		    updateCartCount();
+		});
+		
+		// 장바구니 수 업데이트하는 함수
+		function updateCartCount() {
+		    $.ajax({
+		        url: '/myPage/cart/count',
+		        type: 'GET',
+		        dataType: 'json',
+		        success: function (obj) {
+		            // 장바구니 제품 목록 수 가져와서 변수에 저장
+		            var cartCount = obj.listCount; 
+		            
+		            $('.cartItemCount').text(cartCount); // 장바구니 수 표시(업데이트)
+		        },
+		        error: function (error) {
+		            console.error('장바구니 수를 가져오는 중 오류 발생: ', error);
+		        }
+		    });
+		}
+	</script>
 
 
 </div>

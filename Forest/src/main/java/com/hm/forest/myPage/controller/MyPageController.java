@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,13 +59,12 @@ public class MyPageController {
 	// 장바구니 페이지 요청
 	@GetMapping("/cart")
 	public ModelAndView cart (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {
+		
 		List<Cart> cartLists = null;
-		
 		int memberNo = loginMember.getNo();
-		
+
 		cartLists = memberService.getCartListsByMemberNo(memberNo);
 		
-		log.info("{} : ", cartLists);
 		modelAndView.addObject("pageName", "cart");
 		modelAndView.addObject("cartLists", cartLists);
 		modelAndView.addObject("loginMember", loginMember);
@@ -73,7 +73,20 @@ public class MyPageController {
 		return modelAndView;
 	}
 	
-	// 장바구니 상품 담기 요청
+	// 비동기 통신 응답
+	// 장바구니 제품 목록 개수
+	@GetMapping("/cart/count")
+	public ResponseEntity<Map<String, Object>> selectCartItemsCount(@AuthenticationPrincipal Member loginMember) {
+		Map<String, Object> map = new HashMap<>();
+		int memberNo = loginMember.getNo();
+		
+		map.put("listCount", memberService.selectCartItemsCount(memberNo));
+
+		return ResponseEntity.ok(map);
+	}
+		
+	
+	// 장바구니 상품 담기
 	@PostMapping("/cart/add")	
 	public ResponseEntity<Map<String, Object>> cart(@AuthenticationPrincipal Member loginMember, @RequestBody Cart cart)  {
 		int result = 0;
@@ -119,6 +132,7 @@ public class MyPageController {
 		return ResponseEntity.ok(map);
 	}
 	
+
 	
 	
 

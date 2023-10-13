@@ -39,19 +39,33 @@
 		<result property="status" column="STATUS"/>
 		<result property="image" column="IMAGE"/>
 		<result property="wish" column="WISH"/>
+	</resultMap>
+	
+	<resultMap id="productDetailResultMap" type="Product" extends="productResultMap"> 
+		<result property="productNo" column="PRODUCT_NO"/>
+		<result property="color" column="COLOR"/>
+		<result property="sizeSml" column="SIZE_SML"/>
+		<result property="stock" column="STOCK"/>
+		<collection property="details" ofType="Detail" javaType="arraylist" columnPrefix="D_" resultMap="detailResultMap" column="NO"/>
+	</resultMap>
+	
+
+	<resultMap id="detailResultMap" type="Detail">
+		<id property="no" column="NO"/>
+		<result property="productNo" column="PRODUCT_NO"/>
 		<result property="color" column="COLOR"/>
 		<result property="sizeSml" column="SIZE_SML"/>
 		<result property="stock" column="STOCK"/>
 	</resultMap>
 
 	
+	<!-- PRODUCT 제품 등록 -->
 	<insert id="insertProduct" parameterType="Product">
 		 <selectKey resultType="_int" keyProperty="no" order="BEFORE">
 		 SELECT SEQ_PD_NO.NEXTVAL FROM DUAL
 		 </selectKey>
 
-		INSERT ALL
-	    INTO PRODUCT (
+		INSERT INTO PRODUCT (
 	      NO, 
 	      CATEGORY,
 	      NAME, 
@@ -74,17 +88,26 @@
 	      #{image}, 
 	      #{wish}
 	    )
-	    INTO PRODUCTDETAIL (
-	      NO,
-	      COLOR,
-	      SIZE_SML,
-	      STOCK
-	    ) SELECT
-	      #{no},
-	      #{color},
-	      #{sizeSml},
-	      #{stock}
-	    FROM DUAL
+	</insert>
+	
+	<!-- DETAIL(STOCK,COLOR 등) 등록 -->
+	<insert id="insertDetail" parameterType="Detail">
+	<selectKey resultType="_int" keyProperty="no" order="BEFORE">
+		SELECT SEQ_DETAIL_NO.NEXTVAL FROM DUAL
+	</selectKey>
+	    INSERT INTO DETAIL(
+	    	NO,
+	    	PRODUCT_NO,
+	    	COLOR,
+	    	SIZE_SML,
+	    	STOCK
+	    ) VALUES(
+	    	#{no},
+	    	#{productNo},
+			#{COLOR},
+			#{SIZE_SML},
+			#{stock}
+		)
 	</insert>
 
 	<select id="selectProductBoardCount" resultType="_int">
@@ -104,55 +127,60 @@
 	    P.STATUS,
 	    P.IMAGE,
 	    P.WISH,
-	    PD.COLOR,
-	    PD.SIZE_SML,
-	    PD.STOCK
+	    D.COLOR,
+	    D.SIZE_SML,
+	    D.STOCK
 		FROM PRODUCT P
-		JOIN PRODUCTDETAIL PD ON P.NO = PD.NO
+		JOIN DETAIL D ON P.NO = D.productNo
 		WHERE P.STATUS = 'Y'
 		ORDER BY NO DESC
 	</select>
 	
-	
-	 <select id="selectProductBoardByNo" parameterType="_int" resultMap="productResultMap">
-		SELECT
-		    P.NO,
-		    P.CATEGORY,
-		    P.NAME,
-		    P.PRICE,
-		    P.CONTENT,
-		    P.COMPANY,
-		    P.DISCOUNTRATE,
-		    P.SELLING,
-		    P.STATUS,
-		    P.IMAGE,
-		    P.WISH,
-		    PD.COLOR,
-		    PD.SIZE_SML,
-		    PD.STOCK
-		FROM PRODUCT P
-		JOIN PRODUCTDETAIL PD ON P.NO = PD.NO
-		WHERE P.STATUS = 'Y' AND P.NO = #{no}
-	 </select>
+	 <!-- 제품 상세 조회(재고, 색상, 사이즈 포함) -->
+	 <select id="selectProductBoardByNo" parameterType="_int" resultMap="productDetailResultMap">
+		SELECT P.NO, 
+		       P.CATEGORY, 
+		       P.NAME, 
+		       P.PRICE, 
+		       P.CONTENT, 
+		       P.COMPANY, 
+		       P.DISCOUNTRATE, 
+		       P.SELLING, 
+		       P.STATUS, 
+		       P.IMAGE, 
+		       P.WISH,
+		       D.NO AS "D_NO", 
+		       D.PRODUCT_NO AS "D_PRODUCT_NO",
+		       D.COLOR AS "D_COLOR", 
+		       D.SIZE_SML AS "D_SIZE_SML", 
+		       D.STOCK AS "D_STOCK"
+		 FROM PRODUCT P
+		 JOIN DETAIL D ON P.NO = D.PRODUCT_NO
+		 WHERE P.NO = #{no}
+ 	 </select>
 	 
 	 
 	 <!-- 제품 수정 -->
-<update id="updateProduct" parameterType="Product">
-    UPDATE PRODUCT P
-    SET P.NAME = #{name},
-        P.PRICE = #{price},
-        P.CONTENT = #{content},
-        P.IMAGE = #{image}
-    WHERE P.NO = #{no}
-    AND EXISTS (
-        SELECT *
-        FROM PRODUCTDETAIL PD
-        WHERE PD.NO = P.NO
-        AND PD.COLOR = #{color}
-        AND PD.SIZE_SML = #{sizeSml}
-        AND PD.STOCK = #{stock}
-    )
-</update>
+	<update id="updateProduct" parameterType="Product">
+		UPDATE PRODUCT 
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="name != null">
+				NAME=#{name},
+			</if>
+			<if test="content != null">
+				CONTENT=#{content},
+			</if>
+			<if test="image != null">
+				IMAGE=#{image},			
+			</if>
+			<if test="price != null">			
+				PRICE=#{price},
+			</if>
+			
+		</trim>			
+		WHERE NO=#{no}
+	</update>
+	
     
 
 
@@ -180,11 +208,13 @@
 		    P.STATUS, 
 		    P.IMAGE, 
 		    P.WISH,
-		    PD.COLOR, 
-		    PD.SIZE_SML, 
-		    PD.STOCK
+		    D.NO AS "D_NO",
+		    D.PRODUCT_NO AS "D_PRODUCT_NO",
+		    D.COLOR AS "D_COLOR", 
+		    D.SIZE_SML AS "D_COLOR", 
+		    D.STOCK AS "D_STOCK"
 	 FROM PRODUCT P
-	 JOIN PRODUCTDETAIL PD ON P.NO = PD.NO
+	 JOIN DETAIL D ON P.NO = D.NO
 	 WHERE P.CATEGORY = #{category}
 	 ORDER BY P.NO DESC
 	</select>

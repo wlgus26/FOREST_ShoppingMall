@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
+import com.hm.forest.admin.model.vo.Detail;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.vo.Member;
@@ -118,17 +119,22 @@ public class ProductController {
 	@GetMapping("/view")
 	public ModelAndView view(ModelAndView modelAndView,
 							 @RequestParam("no") int no, @AuthenticationPrincipal Member loginMember) {
-		
+
 		log.info("productNo값 : {}", no);
 
 		Product product = null;
 		
 		product = adminService.getProductBoardByNo(no);
 		
+		List<Detail> details = product.getDetails();
+		
 		modelAndView.addObject("pageName", "productView");
 		modelAndView.addObject("products", product);
+		modelAndView.addObject("details", details);
 		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.setViewName("page/products/view");
+		
+		System.out.println(details);
 		
 		return modelAndView;	
 	}
