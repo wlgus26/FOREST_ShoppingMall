@@ -30,7 +30,7 @@ cursor: pointer;
 	    <table class="table table pull-right" style="margin-top: 50px;" >
 		  <thead>
 		    <tr class="border-bottom" >
-		      <th scope="col" colspan="5" class="th-custom-style" style="border-bottom-width: 3px;
+		      <th scope="col" colspan="6" class="th-custom-style" style="border-bottom-width: 3px;
 				  border-bottom-color: #082f1c;
 				  color: #082f1c;">장바구니
 			  </th>
@@ -43,44 +43,78 @@ cursor: pointer;
 		  <tbody>
 		  	    <tr style="text-align: center;">
 		  	    	<th><i id="item-selectall" class="fa-sharp fa-regular fa-square-check fa-xl" style="color: #0f5132; cursor: pointer;"></i></th>
-					<th colspan="2" style="width:50%;">상품정보</th>
+					<th colspan="2" style="width:40%;">상품정보</th>
+					<th>옵션</th>
 					<th>수량</th>
 					<th>금액</th>
 					<th>배송비</th>
 				</tr>
 				<!-- 장바구니에 상품이 없는 경우 -->
-				<tr th:if="${#lists.isEmpty(cartLists)}" class="tb-style-none">
-			        <td colspan="5" style="text-align: center;">장바구니에 담긴 상품이 없습니다.<br> 원하는 상품을 장바구니에 담아보세요!</td>
+				<th:block th:if="${#lists.isEmpty(cartLists)}">
+				<tr class="tb-style-none">
+			        <td colspan="7" style="text-align: center; height: 200px; vertical-align: middle;">장바구니에 담긴 상품이 없습니다.<br> 원하는 상품을 장바구니에 담아보세요!</td>
 			    </tr>
-			    
+			    </th:block>
 			    <!-- 장바구니에 상품이 있는 경우 -->
-				<tr th:if="${cartLists != null}" class="viewPage tb-style-none" style="text-align: center;" th:each="cart : ${cartLists}">
+			    <th:block th:if="${not #lists.isEmpty(cartLists)}">
+				<tr class="viewPage tb-style-none" style="text-align: center;" th:each="cart : ${cartLists}">
 					<td><i id="item-selectbox" class="fa-sharp fa-regular fa-square-check fa-xl" style="color: #0f5132;" th:attr="data-cart-no=${cart.no}"></i></td>
 			        <td style="width:10%;"><img th:src="@{/static/upload/product/} + ${cart.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;"></td>
 			        <td>
-			        <div style="display: flex; position: absolute; flex-direction: column; align-items: flex-start;">
-			        	<div th:text="${cart.category}" style="font-weight: bold; font-size: 13px; margin-top: 5px;"></div>
-			        	<div th:text="${cart.name}" style="font-weight: bold; font-size: 15px; margin-top: 5px;"></div>
-			        	<div>
-			        	<a th:text="(${cart.price} * 0.8) + '원 '" style="font-weight: bold; font-size: 12px; margin-top: 20px; margin-right: 5px;"></a>
-			        	<a th:text=" ${cart.price} + '원'" style="font-weight: bold; color: darkgray;  text-decoration: line-through; font-size: 13px; margin-top: 20px;"></a>
-			        	</div>
-			        </div>
+				        <div style="display: flex; position: absolute; flex-direction: column; align-items: flex-start;">
+				        	<div th:text="${cart.category}" style="font-weight: bold; font-size: 13px; margin-top: 5px;"></div>
+				        	<div th:text="${cart.name}" style="font-weight: bold; font-size: 15px; margin-top: 5px;"></div>
+				        	<div>			        	
+				        		<a th:text="${cart.price} + '원 '" style="font-weight: bold; font-size: 12px; margin-top: 40px; margin-right: 5px;"></a>
+				        	</div>
+				        </div>
 			        </td>
 			        <td>
-					    <i id="minusQuantity" class="fa-solid fa-square-minus" style="color: #c9c9c9;"></i>
+			        	<div th:text="${cart.color}" style="font-weight: bold; font-size: 15px;"></div>
+			        	<div th:text="${cart.size}" style="font-weight: bold;  font-size: 13px;"></div>
+			        </td>
+			        <td>
+			       		<span th:text="  ${cart.quantity} + '개  '"></span>
+					    <!-- <i id="minusQuantity" class="fa-solid fa-square-minus" style="color: #c9c9c9;"></i>
 					    <span th:text="  ${cart.quantity} + '개  '"></span>
 					    <i id="plusQuantity" class="fa-solid fa-square-plus" style="color: #c9c9c9;"></i>
+					     -->
 					</td>
 			        <td th:text="${cart.price} * ${cart.quantity} + '원'"></td>
 			        <td>2500원</td>
 			    </tr>
+		        <tr>
+			    	<td colspan="7" style="height: 100px; vertical-align: middle;">
+				    	<div style="display: flex; justify-content: center;">
+				    	 <div style="float:left; text-align: center; font-weight: bold;">
+					    	 상품 금액 
+					    	 <br>
+					    	 <a th:text="10000+ '원 '" style="font-weight: bold; margin-top: 20px; color: #0f5132;"></a>
+				    	 </div>   
+				    	 <a style="display: flex; vertical-align: middle; align-items: center; margin: 0 40px; font-weight: bold;"> + </a>
+				    	 <div style="float:left; text-align: center; font-weight: bold;">
+					    	 배송비 
+					    	 <br>
+					    	 <a th:text="2500+ '원 '" style="font-weight: bold;  margin-top: 20px; color: #0f5132; "></a>
+				    	 </div>
+						 <a style="display: flex; vertical-align: middle; align-items: center; margin: 0 40px; font-weight: bold;"> = </a>
+				    	 <div style="float:left; text-align: center; font-weight: bold;">
+				    	 	 총 결제금액 
+				    	 	 <br>
+					    	 <a th:text="12500+ '원 '" style="font-weight: bold;  margin-top: 20px;"></a>
+			    	 	</div>
+			    	 	
+			    	 	</div>
+			    	 
+			    	</td>
+				</tr>
 			    <tr style="text-align: center;">
 					<td colspan="7" style="border-color: white;">
 				        <input type="button" class="btn btn-outline-secondary"  value="선택주문" style="margin-right: 15px;">
 				        <input type="button" class="btn btn-outline-secondary"  value="전체주문">
 					</td>
 				</tr>
+				</th:block>
 		  </tbody>
 	  </table>
 	</div>
@@ -123,46 +157,6 @@ $(document).ready(function() {
 </script>
 
 <!-- 주문 수량 비동기로 가져오기 -->
-<!-- 장바구니에서 수량 가져오기 -->
-<script>
-$(document).ready(function() {
-	
-	 // 각 행의 수량 가져오기 및 업데이트
-    $('[data-cart-no]').each(function() {
-        var row = $(this).closest('tr');
-        var cartNo = $(this).attr('data-cart-no');
-        var quantitySpan = row.find('.item-quantity');
-
-        console.log(cartNo);
-        
-        getCartQuantity(cartNo, function(data) {
-            if (data && data.quantity) {
-                var currentQuantity = data.quantity;
-                quantitySpan.text(currentQuantity);
-            }
-        });
-    });
-	
-	
-    // 수량 가져오기 함수
-    function getCartQuantity(cartNo) {
-    	
-        $.ajax({
-            type: 'GET',
-            url: '/myPage/cart/' + cartNo, // 서버에서 수량 가져오는 엔드포인트
-            dataType: 'json',
-            success: function(data) {
-                successCallback(data);
-            },
-            error: function(error) {
-                console.error('수량을 가져오는 중 오류 발생: ', error);
-            }
-        });
-    }
-
-   
-});
-</script>
 
 
 
@@ -192,6 +186,7 @@ $(document).ready(function() {
 		 // 배열 요소를 쉼표로 구분한 문자열로 변환
 		 var cartNo = selectedCartNo.join(',');
 		 
+		
 	    // 체크 여부 확인하여 삭제 로직 수행
 	    if (count > 0) {
 	        if(confirm('선택하신 ' + count + '개 상품을 장바구니에서 삭제하시겠습니까?')){

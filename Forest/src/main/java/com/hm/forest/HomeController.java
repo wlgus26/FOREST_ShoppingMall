@@ -161,13 +161,12 @@ public class HomeController {
 	
 	// 결제페이지로 이동 
 	@GetMapping("/pay")
-	public ModelAndView pay (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember,
-							 @RequestParam("productNo") int productNo, @RequestParam("detailNo") int detailNo,
-						     @RequestParam("quantity") int quantity) {
+	public ModelAndView pay (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember
+							) {
 		Product product = null;
-		product = adminService.getProductBoardByNo(productNo);
+		//product = adminService.getProductBoardByNo(productNo);
 		
-		System.out.println(productNo +  detailNo + quantity);
+	//	System.out.println(productNo +  detailNo + quantity);
 		
 		modlAndView.addObject("pageName", "pay");
 		modlAndView.addObject("product", product);

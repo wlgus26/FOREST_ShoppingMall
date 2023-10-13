@@ -11,9 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.board.model.service.BoardService;
 import com.hm.forest.board.model.vo.Board;
-import com.hm.forest.board.model.vo.Reply;
 import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.service.MemberService;
 import com.hm.forest.member.model.vo.Cart;
@@ -64,6 +61,8 @@ public class MyPageController {
 		int memberNo = loginMember.getNo();
 
 		cartLists = memberService.getCartListsByMemberNo(memberNo);
+		
+		System.out.println(cartLists);
 		
 		modelAndView.addObject("pageName", "cart");
 		modelAndView.addObject("cartLists", cartLists);
