@@ -1,16 +1,54 @@
 package com.hm.forest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hm.forest.admin.model.service.AdminService;
+import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.member.model.vo.Member;
+import com.hm.forest.member.model.vo.Order;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+
+@Slf4j
 @RestController
 public class HomeController {
 	
+	@Autowired
+	private AdminService adminService;
+	
+	@GetMapping("/success")
+	public ModelAndView success(ModelAndView modelAndView, @RequestParam String paymentType, @AuthenticationPrincipal Member loginMember) {
+		
+		System.out.println(paymentType);
+		modelAndView.addObject("pageName", "paysv");
+		modelAndView.addObject("loginMember", loginMember);
+		modelAndView.addObject("paymentType", paymentType);
+		modelAndView.setViewName("page/paysv");
+    
+//		modelAndView.addObject("msg", "결제가 완료되었습니다.");
+//		modelAndView.addObject("location", "view?no=" + board.getNo());	
+//	}	
+//} else {
+//	modelAndView.addObject("msg", "게시글 등록에 실패하였습니다.");
+//	modelAndView.addObject("location", "write?type=" + board.getType());				
+//
+//}
+//modelAndView.setViewName("page/common/msg");
+//		
+//		
+        return modelAndView;
+		
+	}
+
 	
 	// home으로 이동
 	@GetMapping("/")
@@ -123,7 +161,27 @@ public class HomeController {
 	
 	// 결제페이지로 이동 
 	@GetMapping("/pay")
-	public ModelAndView pay (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember) {
+	public ModelAndView pay (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember,
+							 @RequestParam("productNo") int productNo, @RequestParam("detailNo") int detailNo,
+						     @RequestParam("quantity") int quantity) {
+		Product product = null;
+		product = adminService.getProductBoardByNo(productNo);
+		
+		System.out.println(productNo +  detailNo + quantity);
+		
+		modlAndView.addObject("pageName", "pay");
+		modlAndView.addObject("product", product);
+		modlAndView.addObject("loginMember", loginMember);
+		modlAndView.setViewName("page/pay");
+		
+		return modlAndView;
+	}
+	
+	// 제품 주문하기 -> 결제페이지 
+	@PostMapping("/pay")
+	public ModelAndView pay (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember, @RequestBody Order order) {
+		
+		log.info("@@@@@@@: {}", order);
 		
 		modlAndView.addObject("pageName", "pay");
 		modlAndView.addObject("loginMember", loginMember);
