@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -382,6 +384,15 @@ public class AdminController {
 		         return "errorPage"; 
 		     }
 		 }
+		 
+//		 // 회원 상태 쿠키 줘서 바꾸기
+//		 
+//		    @GetMapping("/memberMgmt")
+//		    public String setSessionData(@RequestParam String id, @RequestParam String status, HttpSession session) {
+//		        // 세션에 데이터 저장
+//		        session.setAttribute(id, status);
+//		        return "redirect:/";
+//		    }
 		 
 
 		// 관리자페이지_게시판관리로 이동

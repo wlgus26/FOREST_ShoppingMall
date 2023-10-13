@@ -4,6 +4,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
       
+ <!-- ----------------------------------------------------------------------------------     
+     <title>Session Data</title>     
+--> 
 
 <th:block th:with="pageName='memberMgmt'"></th:block>      
 <!-- memberMgmt.html 고유 CSS 추가 -->
@@ -20,6 +23,16 @@
 
 <!-- Content -->
 <div layout:fragment="content">
+
+ <!-- ---------------------------------------------------------------------------------- -->   
+ <!--
+
+ <h1>Session Data</h1>
+    <a href="/setSessionData?key=myKey&value=myValue">Set Session Data</a>
+    <p th:text="${session.myKey}">Session data for myKey: Default Value</p>
+</body>
+  ---------------------------------------------------------------------------------- -->   
+
 	<h6>전체 회원 조회</h6>
 	<form class="container" action="/admin/memberMgmt" method="GET">
 	<label for="status" style="margin-left: 60%; margin-bottom: 20px;">회원활동여부: </label>
