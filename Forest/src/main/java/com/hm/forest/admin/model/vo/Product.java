@@ -34,7 +34,8 @@ public class Product {
 	private int wish;
 	
 	private List<Detail> Details;
-    
+	
+ 
     
 
 }

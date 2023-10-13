@@ -113,18 +113,27 @@
 				<label>적립금 : </label><span><fmt:parseNumber var="test" value="${productInfo.price / 100}" integerOnly="true"/> ${test}&nbsp;원</span>
 			</div>
 			 -->
+			 
+<label for="color">색상 : </label>
+<select id="color" name="selectedColor">
+    <option selected value="">-------- 선택 --------</option>
+    <th:block th:each="detail : ${details}">
+        <option th:value="${detail.color}" th:text="${detail.color}"></option>
+    </th:block>
+</select>
 
-			<div class="form-horizontal" style="text-align: left;">
-			    <label>옵션 : </label>
-			    <select class="form-control opt_select" name="selectedOpt">
-			    	<option value="" selected>--- 선택 ---</option>
-			        <option value="S">F</option>
-			        <option value="S">S</option>
-			        <option value="M">M</option>
-			        <option value="L">L</option>
-			    </select>
-			</div>
+
+			
 		
+			        <!-- 
+			        <option value="S">S</option>
+			         -->
+			         
+	        
+			  
+			  
+			    
+
 			<div class="form-horizontal" style="text-align: left;">
 			    <label for="select_count">구매수량 : </label>
 			    <input type="number" class="form-control" id="select_count" name="orderQuantity" min="1">
@@ -165,114 +174,7 @@
 
 
 
-  <table class="table">
-	  <thead>
-	    <tr class="border-bottom" >
-	      <th scope="col" colspan="2" class="th-custom-style" style="border-bottom-width: 3px; 
-				border-bottom-color: #082f1c; color: #082f1c;">제품 상세 보기
-		  </th>
-	    </tr>
-	  </thead> 	
-	  <tbody>
-	    <tr>
-    		<th>카테고리</th>
-	    	<td style="text-align: left;">
-	        	<span th:if="${products.category == 'kitchen'}">주방</span>
-	        	<span th:if="${products.category == 'style'}">패션</span>
-	        	<span th:if="${products.category == 'eco'}">친환경키트</span>
-	    	</td>
-		</tr>
-	 
-	    <tr>
-	      <th>제품명</th>
-	      <td style="text-align: left;" th:text="${products.name}"></td>
-	    </tr>
-	    <tr>
-	      <th>판매가</th>
-	      <td style="text-align: left;" th:text="${products.price}"></td>
-	    </tr>
-	    <tr>
-	      <th>제품색상</th>
-	      <td style="text-align: left;" th:text="${products.color}"></td>
-	    </tr>
-	    <tr>
-	      <th>제품사이즈</th>
-	      <td style="text-align: left;" th:text="${products.sizeSml}"></td>
-	    </tr>
-	    <tr>
-	      <th>설명</th>
-	      <td  rows="3" cols="100" resize="none" class="editor" style="text-align: left; max-width:100%; height:auto;" th:utext="${products.content}"></td>
-	    </tr>
-	    <tr>
-	      <th>대표이미지</th>
-	      <td>
-	        <img th:src="@{/static/upload/product/} + ${products.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
-	      </td>
-	    </tr>
-	    <tr>
-	      <th>상세이미지</th>
-	      <td></td>
-	    </tr>
-	    <!-- 
-	       <tr>
-    		<th>판매상태</th>
-	    	<td style="text-align: left;">
-	        	<span th:if="${product.status == 'Y'}">판매중</span>
-	        	<span th:if="${product.status == 'N'}">품절</span>
-	    	</td>
-		</tr>
-	     -->
-	    <tr>
-	      <th></th>
-	      <td>
-		      <a class="btn btn-sm btn-outline-secondary" type="button" th:href="@{'/admin/productMgmtUpdate?no=' + ${products.no}}">수정</a>
-			  
-			  <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-				  장바구니
-				</button>
-				
-				<!-- Modal -->
-				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">
-				       				</h5>
-				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				      </div>
-				      <div class="modal-body text-center" style="height:100px;">
-					      <i id="remember-me-icon" class="far fa-check-circle"></i>
-							<br> 
-						  제품을 장바구니에 넣겠습니까?
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-md btn-outline-secondary" data-bs-dismiss="modal">취소</button>
-				        <a type="button" class="btn btn-md btn-primary" th:href="@{'/admin/productMgmtDelete?no=' + ${products.no}}">삭제</a>
-			         </div>
-				    </div>
-				  </div>
-				</div>
-		      <a class="btn btn-sm btn-outline-secondary" type="button" th:href="@{productMgmtList}">취소</a>
-		      
-		      <!-- 게시판 공통 -->
-				<!-- 카테고리 별로 해당 게시판 목록으로 이동 -->
-				<tr style="text-align: center;">
-					<td colspan="6" style="border-color: white;">
-				       <th:block th:if="${products.category eq 'eco'}">
-					        <input type="button" class="btn btn-outline-secondary" onclick="redirectToBoard('eco')" value="목록으로">
-					   </th:block>
-					   <th:block th:if="${products.category eq 'ktichen'}">
-					        <input type="button" class="btn btn-outline-secondary" onclick="redirectToBoard('ktichen')" value="목록으로">
-					   </th:block>
-					   <th:block th:if="${products.category eq 'style'}">
-					        <input type="button" class="btn btn-outline-secondary" onclick="redirectToBoard('style')" value="목록으로">
-					   </th:block>
-					</td>
-				</tr>
-	      </td>
-	      </tr>
-	  </tbody>
-	  </table>
+  
 
 </div>
 </form>
