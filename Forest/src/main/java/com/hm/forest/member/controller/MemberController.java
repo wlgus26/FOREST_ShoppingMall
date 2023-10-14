@@ -108,6 +108,7 @@ public class MemberController {
 				modelAndView.addObject("location", "/myPage");
 				
 				}
+				return modelAndView;
 		}
 
 	
