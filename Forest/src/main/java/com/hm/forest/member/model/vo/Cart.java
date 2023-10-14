@@ -1,5 +1,7 @@
 package com.hm.forest.member.model.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,4 +42,5 @@ public class Cart {
 	// 선택된 수량
 	private int quantity;
 
+	
 }

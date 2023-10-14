@@ -30,6 +30,7 @@ public interface MemberService {
 	
 	int activateMember(String status, int no);
 
+	/* 장바구니 로직 */
 	// 장바구니 제품 담기
 	int save(Cart cart);
 
@@ -41,6 +42,10 @@ public interface MemberService {
 
 	// 장바구니 제품 개수
 	int selectCartItemsCount(int memberNo);
+
+	/* 주문.결제 로직 */
+	// 로그인멤버별 주문서 상품 목록 조회
+	List<Cart> getCartListsByMemberNoAndCartNo(int memberNo, String cartNo);
 
 
 	

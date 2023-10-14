@@ -242,4 +242,31 @@
 		WHERE MB_NO = #{memberNo}
 	</select>
 	
+	
+	<!-- 로그인멤버별 주문서 상품 목록 조회 -->
+	<select id="selectCartOrderLists" parameterType="map" resultMap="cartResultMap">
+		SELECT C.NO,
+			   P.CATEGORY,
+			   C.MB_NO, 
+		       C.PD_NO,
+          	   C.DETAIL_NO,
+          	   C.QUANTITY,
+               D.COLOR,
+               D.SIZE_SML,
+               D.STOCK,
+		       P.IMAGE, 
+		       P.NAME, 
+		       P.PRICE,
+		       P.STATUS,
+		       P.DISCOUNTRATE
+		FROM CART C
+		LEFT OUTER JOIN PRODUCT P ON (C.PD_NO = P.NO)
+    	LEFT OUTER JOIN DETAIL D ON (C.DETAIL_NO = D.NO)
+		WHERE C.MB_NO = #{memberNo} AND C.NO IN
+	    <foreach collection="cartNo.split(',')" item="no" open="(" separator="," close=")">
+	      #{no}
+	    </foreach>
+		ORDER BY C.NO DESC
+	</select>
+	
 </mapper>

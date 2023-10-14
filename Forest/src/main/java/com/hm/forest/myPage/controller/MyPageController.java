@@ -62,8 +62,6 @@ public class MyPageController {
 
 		cartLists = memberService.getCartListsByMemberNo(memberNo);
 		
-		System.out.println(cartLists);
-		
 		modelAndView.addObject("pageName", "cart");
 		modelAndView.addObject("cartLists", cartLists);
 		modelAndView.addObject("loginMember", loginMember);

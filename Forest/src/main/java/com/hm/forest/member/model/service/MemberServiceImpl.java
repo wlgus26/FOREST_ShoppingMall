@@ -73,6 +73,7 @@ public class MemberServiceImpl implements MemberService {
 	    return memberMapper.getmemberlists(searchType, pageInfo);
 	}
 	
+	/* 장바구니 로직 */
 	// 장바구니 상품 담기
 	@Override
 	@Transactional
@@ -97,6 +98,14 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int selectCartItemsCount(int memberNo) {
 		return memberMapper.selectCartItemsCount(memberNo);
+	}
+	
+
+	/* 주문.결제 로직 */
+	// 로그인멤버별 주문서 상품 목록 조회
+	@Override
+	public List<Cart> getCartListsByMemberNoAndCartNo(int memberNo, String cartNo) {
+		return memberMapper.selectCartOrderLists(memberNo, cartNo);
 	}
 	
 	
@@ -127,6 +136,7 @@ public class MemberServiceImpl implements MemberService {
 
 		return memberMapper.updatememberstatus("Y", no);
 	}
+
 
 
 
