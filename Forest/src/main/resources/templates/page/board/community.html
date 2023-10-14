@@ -57,12 +57,18 @@
 					<th>작성일</th>
 					<th>조회</th>
 				</tr>
-				<tr class="viewPage" style="text-align: center;" th:each="board : ${boardLists}"  th:attr="data-href=@{/board/view?no={no}(no=${board.no})}">
+				<!-- 조회된 게시글이 없는 경우 -->
+				<tr th:if="${#lists.isEmpty(boardLists)}">
+			        <td colspan="5" style="text-align: center;">조회된 게시글이 없습니다.</td>
+			    </tr>
+			    
+			    <!-- 조회된 게시글이 있는 경우 -->
+				<tr th:if="${boardLists != null}" class="viewPage" style="text-align: center;" th:each="board : ${boardLists}"  th:attr="data-href=@{/board/view?no={no}(no=${board.no})}">
 			        <td th:text="${board.rowNum}"></td>
 			        <td th:text="${board.title}" style="text-align:left; width:55%;"></td>
 			        <td th:text="${board.writerId}"></td>
 			        <td th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
-			        <td th:text="${board.readCount}"  style="width:10%;"></td>
+			        <td th:text="${board.readCount}" style="width:10%;"></td>
 			    </tr>
 		  </tbody>
 	  </table>
@@ -82,7 +88,7 @@
 		    <!-- 10개 페이지 목록 -->
 			<span th:each="pageNumber : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
 			    <a class="a-pagination current-page" th:if="${pageNumber == pageInfo.currentPage}" disabled="disabled" th:text="${pageNumber}"></a>
-			    <a class="a-pagination" th:unless="${pageNumber == pageInfo.currentPage}" th:href="@{/board/community(searchType=${searchType},keyWord=${keyWord},page=${pageNumber})}" th:text="${pageNumber}"></a>
+			    <a th:if="${pageNumber >= 1}"  class="a-pagination" th:unless="${pageNumber == pageInfo.currentPage}" th:href="@{/board/community(searchType=${searchType},keyWord=${keyWord},page=${pageNumber})}" th:text="${pageNumber}"></a>
 			</span>
 		
 		    <!-- 다음 페이지로 -->

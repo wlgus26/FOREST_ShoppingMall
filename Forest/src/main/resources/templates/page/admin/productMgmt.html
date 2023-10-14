@@ -60,7 +60,7 @@
 			    <option value="" selected>--- 선택 ---</option>
 			    <option value="kitchen">주방</option>
 			    <option value="style">패션</option>
-			    <option value="kit">친환경키트</option>
+			    <option value="eco">친환경키트</option>
 		    </select>
 		 </td>
 	    </tr>
@@ -72,13 +72,14 @@
 	      <th scope="row">판매가</th>
 	      <td><input type="text" id="price" name="price"> </td>
 	    </tr>
+	    
 	    <tr>
 	      <th scope="row">제품색상</th>
 	      <td><input type="text" id="color" name="color"></td>
 	    </tr>
 	    <tr>
-	      <th scope="row">제품수량</th>
-	      <td><input type="number" min="0" id="amount" name="amount"></td>
+	      <th scope="row">재고</th>
+	      <td><input type="text" min="0" id="stock" name="stock"></td>
 	    </tr>
 	    <tr>
 	      <th scope="row">제품사이즈</th>
@@ -92,6 +93,8 @@
 		    </select>
 		  </td>
 	    </tr>
+	
+	     
 	    <tr>
 	      <th scope="row">설명</th>
 	      <td><textarea rows="3" cols="100" resize="none" id="content" class="editor" name="content"></textarea></td>
@@ -100,18 +103,20 @@
 	      <th scope="row">대표이미지</th>
 	      <td> <input type="file" id="image" name="upfile"></td>
 	    </tr>
+	    
 	    <!-- 
 	    <tr>
 	   	  <th scope="row">판매상태</th>
 	      <td>
-	      	<select id="status" name="status" >
+	      	<select id="selling" name="selling" >
 			    <option value="" selected>--- 선택 ---</option>
 			    <option value="Y">판매중</option>
-			    <option value="N">품절</option>
+			    <option value="N">일시품절</option>
 		    </select>
 		  </td>
 	    </tr>
 	     -->
+	     
 	    <tr>
 	      <th></th>
 	      <td> 
@@ -133,26 +138,24 @@
    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
 	
    <script>
-  
-   
-   ClassicEditor
-   .create(document.querySelector('.editor'))
-   .then(editor => {
-       console.log('CKEditor was initialized');
-   })
-   .catch(error => {
-       console.error(error);
-   });
-   
-   var ckeditor_config = {
-		     resize_enable : false,
-		     enterMode : CKEDITOR.ENTER_BR,
-		     shiftEnterMode : CKEDITOR.ENTER_P,
-		     filebrowserUploadUrl : "/admin/productMgmt/ckUpload"
-		   };
-		   
-		   CKEDITOR.replace("content", ckeditor_config);
-</script>
+	   ClassicEditor
+	   .create(document.querySelector('.editor'))
+	   .then(editor => {
+	       console.log('CKEditor was initialized');
+	   })
+	   .catch(error => {
+	       console.error(error);
+	   });
+	   
+	   var ckeditor_config = {
+			     resize_enable : false,
+			     enterMode : CKEDITOR.ENTER_BR,
+			     shiftEnterMode : CKEDITOR.ENTER_P,
+			     filebrowserUploadUrl : "/admin/productMgmt/ckUpload"
+			   };
+			   
+			   CKEDITOR.replace("content", ckeditor_config);
+	</script>
 
 
 	<!-- 

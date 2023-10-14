@@ -1,12 +1,14 @@
 package com.hm.forest.admin.model.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Product {
 	
 	private int no;
@@ -19,24 +21,21 @@ public class Product {
 	
 	private String content;
 	
-	private String color;
-	
-	private int amount;
-	
-	private String sizeSml;
-	
-	private int stock;
-	
 	private String company;
 	
 	private int discountrate;
+	
+	private String selling;
 	
 	private String status;
 	
 	private String image;
 	
 	private int wish;
+	
+	private List<Detail> Details;
+	
+ 
+    
 
-	
-	
 }
