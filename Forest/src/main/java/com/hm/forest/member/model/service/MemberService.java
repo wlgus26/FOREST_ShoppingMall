@@ -9,6 +9,8 @@ import com.hm.forest.member.model.vo.Member;
 public interface MemberService {
 
 	int save(Member member);
+	
+	boolean changePassword(int no, String newPassword, String pcode, String address1, String address2);
 
 	Boolean isDuplicateId(String id);
 

@@ -58,23 +58,24 @@
                     </tr>
                     <tr>
 					 	<th rowspan="3">비밀번호 변경</th>
-					    <td><input type="password" name="password" id="newPwd" class="form-control" placeholder="새 비밀번호" required></td>
+					    <td><input type="password" name="newPassword" id="newPassword" class="form-control" placeholder="새 비밀번호"></td>
 					</tr>
 					<tr>
-					    <td><input type="password" id="checkPwd" class="form-control" placeholder="새 비밀번호 확인" required></td>
+					    <td><input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="새 비밀번호 확인"><span id="message" style="font-size:13px;"></span></td>
+					    
 					</tr>
 					<tr>
-					    <td><input type="password" id="oldPwd" class="form-control" placeholder="현재 비밀번호" required></td>
+					    <td><input type="password" name="currentPassword" id="currentPassword" class="form-control" placeholder="현재 비밀번호"></td>
 					</tr>
                     <tr>
                         <th rowspan="3">주소</th>
                         <td><input type="text" class="form-control"  id="zip_code" name="pcode" onclick="openZipSearch();" th:value="${#authentication.principal.pcode}" readonly="readonly" placeholder="우편번호" required></td>
                     </tr>
                     <tr>
-                        <td><input type="text" class="form-control" id="addr" name="address1" onclick="openZipSearch();" th:value="${#authentication.principal.address1}" readonly="readonly" placeholder="주소" required></td>
+                        <td><input type="text" class="form-control" id="address1" name="address1" onclick="openZipSearch();" th:value="${#authentication.principal.address1}" readonly="readonly" placeholder="주소" required></td>
                     </tr>
                     <tr>
-                        <td><input type="text" class="form-control" name="address2" th:value="${#authentication.principal.address2}" placeholder="상세주소" required></td>
+                        <td><input type="text" class="form-control" id="address2" name="address2" th:value="${#authentication.principal.address2}" placeholder="상세주소" required></td>
                     </tr>
                     <tr>
                         <th rowspan="2">수신설정</th>
@@ -116,6 +117,24 @@
 </body>
 </html>
 <script>
+function checkPassword() {
+    var newPwd = document.getElementById("newPassword").value;
+    var checkPwd = document.getElementById("confirmPassword").value;
+    var message = document.getElementById("message");
+
+    if (newPwd === checkPwd) {
+        message.textContent = "비밀번호가 일치합니다.";
+        message.style.color = "green";
+    } else {
+        message.textContent = "비밀번호가 일치하지 않습니다.";
+        message.style.color = "red";
+    }
+}
+
+// 입력값이 변경될 때마다 비밀번호 확인 함수 호출
+document.getElementById("newPwd").addEventListener("input", checkPassword);
+document.getElementById("checkPwd").addEventListener("input", checkPassword);
+
 $(document).ready(() => {
     // 탈퇴 버튼을 클릭하면 모달 창을 보이도록 설정
     $('#btnDelete').on('click', () => {
