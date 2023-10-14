@@ -1,6 +1,7 @@
 package com.hm.forest.member.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,6 +24,7 @@ public interface MemberMapper {
 	
 	int updateMemberStatus(@Param("status") String status, @Param("no") int no);
 	
+	int updatePassword(Map<String, Object> paramMap);
 	
 	int selectMemberCountByStatus(@Param("status") String status);
 	

@@ -72,10 +72,10 @@
                         <td><input type="text" class="form-control"  id="zip_code" name="pcode" onclick="openZipSearch();" th:value="${#authentication.principal.pcode}" readonly="readonly" placeholder="우편번호" required></td>
                     </tr>
                     <tr>
-                        <td><input type="text" class="form-control" id="addr" name="address1" onclick="openZipSearch();" th:value="${#authentication.principal.address1}" readonly="readonly" placeholder="주소" required></td>
+                        <td><input type="text" class="form-control" id="address1" name="address1" onclick="openZipSearch();" th:value="${#authentication.principal.address1}" readonly="readonly" placeholder="주소" required></td>
                     </tr>
                     <tr>
-                        <td><input type="text" class="form-control" name="address2" th:value="${#authentication.principal.address2}" placeholder="상세주소" required></td>
+                        <td><input type="text" class="form-control" id="address2" name="address2" th:value="${#authentication.principal.address2}" placeholder="상세주소" required></td>
                     </tr>
                     <tr>
                         <th rowspan="2">수신설정</th>
