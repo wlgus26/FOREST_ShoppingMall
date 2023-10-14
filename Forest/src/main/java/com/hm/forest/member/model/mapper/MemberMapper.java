@@ -56,4 +56,6 @@ public interface MemberMapper {
 	/* 주문.결제 로직 */
 	// 로그인멤버별 주문서 상품 목록 조회
 	List<Cart> selectCartOrderLists(@Param("memberNo") int memberNo, @Param("cartNo") String cartNo);
+
+
 }

@@ -140,6 +140,8 @@ public class MemberServiceImpl implements MemberService {
 
 
 
+
+
 	
 //	@Override
 //	public int selectMemberCountByStatus(String status) {
