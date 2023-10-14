@@ -1,6 +1,8 @@
 package com.hm.forest;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,12 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
+import com.hm.forest.admin.model.vo.Detail;
+import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.member.model.service.MemberService;
 import com.hm.forest.member.model.vo.Cart;
 import com.hm.forest.member.model.vo.Member;
@@ -166,7 +172,7 @@ public class HomeController {
 	}
 
 	
-	// (장바구니/제품상세페이지) 주문하기 -> 결제페이지 
+	// [주문하기] 장바구니 주문하기 -> 결제페이지 
 	@PostMapping("/pay")
 	public ResponseEntity<String> pay(@RequestParam("cartNo") String cartNo, @RequestParam("totalPrice") int totalPrice, HttpSession session) {
 
@@ -175,6 +181,54 @@ public class HomeController {
 	    session.setAttribute("totalPrice", totalPrice);
 	    
 	    return ResponseEntity.ok().build(); // 응답은 비어있는 상태로 반환
+	}
+	
+	// [주문하기] 제품상세페이지 주문하기 -> 결제페이지 
+	@GetMapping("/pay/order")
+	public ModelAndView pay(ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember,
+							@RequestParam("productNo") int productNo,
+					        @RequestParam("detailNo") int detailNo,
+					        @RequestParam("quantity") int quantity) {
+		int totalPrice = 0;
+	    Product product = null;
+	    Cart cart = new Cart(); 
+	    List<Cart> cartLists = new ArrayList<>();
+	    
+	    // 해당하는 제품 세부 정보 조회
+	    product = adminService.getItemListsByProductNoAndDetailNo(productNo, detailNo);
+	    List<Detail> details = product.getDetails();
+	    Detail detail = details.get(0); // 제품 세부정보는 Detail 객체로 가져오기
+
+	    // cart객체 생성
+	    cart.setNo(0); 
+	    cart.setMemberNo(loginMember.getNo());
+	    cart.setProductNo(product.getNo());
+	    cart.setDetailNo(detail.getNo());
+	    cart.setColor(detail.getColor());
+	    cart.setSize(detail.getSizeSml());
+	    cart.setStock(detail.getStock());
+	    cart.setCategory(product.getCategory());
+	    cart.setName(product.getName());
+	    cart.setImage(product.getImage());
+	    cart.setPrice(product.getPrice());
+	    cart.setDiscountrate(product.getDiscountrate());
+	    cart.setStatus(product.getStatus());
+	    cart.setQuantity(quantity);
+	  
+	    // cart 객체를 cartLists에 추가
+	    cartLists.add(cart); 
+	    
+	    int amount = (cart.getPrice() * cart.getQuantity());
+	    totalPrice = amount >= 30000 ? amount : (amount + 2500);
+	   
+	    modelAndView.addObject("pageName", "pay");
+		modelAndView.addObject("cartLists", cartLists);
+	    modelAndView.addObject("totalPrice", totalPrice);
+	    modelAndView.addObject("loginMember", loginMember);
+	    
+	    modelAndView.setViewName("page/pay");
+
+	    return modelAndView; 
 	}
 	
 	// 결제페이지로 이동 
@@ -192,7 +246,7 @@ public class HomeController {
 		int memberNo = loginMember.getNo();
 		cartLists = memberService.getCartListsByMemberNoAndCartNo(memberNo, cartNo);
 		
-		log.info("??@@cartLists: {}", cartLists);
+		log.info("cartLists: {}", cartLists);
 		
 		modelAndView.addObject("pageName", "pay");
 		modelAndView.addObject("cartLists", cartLists);
@@ -211,7 +265,7 @@ public class HomeController {
 		
 		modelAndView.addObject("pageName", "myPage");
 		modelAndView.addObject("loginMember", loginMember);
-		modelAndView.setViewName("page/myPage/myPage");
+		modelAndView.setViewName("page/products/myPage");
 		
 		return modelAndView;
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
+import com.hm.forest.member.model.vo.Cart;
 
 public interface AdminService {
 	
@@ -27,5 +28,8 @@ public interface AdminService {
 	
 	// 메인_(제품보기) 제품 목록 카테고리별 리스트 전체 개수
 	int getProductBoardCountByCategory(String category);
+
+	// 단품 주문시 제품 정보 조회
+	Product getItemListsByProductNoAndDetailNo(int productNo, int detailNo);
 
 }

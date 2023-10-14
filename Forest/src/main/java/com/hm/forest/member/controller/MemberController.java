@@ -66,51 +66,50 @@ public class MemberController {
 							 .body(map);
 	}
 	
-	// 회원정보 수정
-	@PostMapping("/myPage")
-    public ModelAndView changePassword(ModelAndView modelAndView,
-            @RequestParam("currentPassword") String currentPassword,
-            @RequestParam("newPassword") String newPassword,
-            @RequestParam("confirmPassword") String confirmPassword,
-       @RequestParam("pcode") String pcode,
-       @RequestParam("address1") String address1,
-       @RequestParam("address2") String address2) {
+	// 회원 정보 수정	
+		@PostMapping("/myPage")
+		 public ModelAndView changePassword(
+				 ModelAndView modelAndView,
+				 @RequestParam("currentPassword") String currentPassword,
+				 @RequestParam("newPassword") String newPassword,
+				 @RequestParam("confirmPassword") String confirmPassword,
+				 @RequestParam("pcode") String pcode,
+				 @RequestParam("address1") String address1,
+				 @RequestParam("address2") String address2
+				 ) {
 
-           log.info("비밀번호 변경 요청");
-           
-           Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-           Member member = (Member) authentication.getPrincipal();
-           
-           if (!passwordEncoder.matches(currentPassword, member.getPassword())) {
-           modelAndView.addObject("msg", "현재 비밀번호가 올바르지 않습니다.");
-           modelAndView.addObject("location", "/myPage");
-           modelAndView.setViewName("page/common/msg");
-           return modelAndView;
-           }
-           
-           if (!newPassword.equals(confirmPassword)) {
-           modelAndView.addObject("msg", "새 비밀번호와 비밀번호 확인 값이 일치하지 않습니다.");
-           modelAndView.addObject("location", "/myPage");
-           modelAndView.setViewName("page/common/msg");
-           return modelAndView;
-           }
-           
-           boolean passwordChanged = memberService.changePassword(member.getNo(), newPassword, pcode, address1, address2);
-           
-           if (passwordChanged) {
-           modelAndView.addObject("msg", "회원정보가 변경되었습니다.");
-           modelAndView.addObject("location", "/myPage");
-           
-           } else {
-           modelAndView.addObject("msg", "회원정보 변경에 실패했습니다.");
-           modelAndView.addObject("location", "/myPage");
-           
-           }
-
-modelAndView.setViewName("page/common/msg");
-
-return modelAndView;
-}
+				log.info("비밀번호 변경 요청");
+				
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				Member member = (Member) authentication.getPrincipal();
+				
+				if (!passwordEncoder.matches(currentPassword, member.getPassword())) {
+				modelAndView.addObject("msg", "현재 비밀번호가 올바르지 않습니다.");
+				modelAndView.addObject("location", "/myPage");
+				modelAndView.setViewName("page/common/msg");
+				return modelAndView;
+				}
+				
+				if (!newPassword.equals(confirmPassword)) {
+				modelAndView.addObject("msg", "새 비밀번호와 비밀번호 확인 값이 일치하지 않습니다.");
+				modelAndView.addObject("location", "/myPage");
+				modelAndView.setViewName("page/common/msg");
+				return modelAndView;
+				}
+				
+				boolean passwordChanged = memberService.changePassword(member.getNo(), newPassword, pcode, address1, address2);
+				
+				if (passwordChanged) {
+				modelAndView.addObject("msg", "회원정보가 변경되었습니다.");
+				modelAndView.addObject("location", "/myPage");
+				
+				} else {
+				modelAndView.addObject("msg", "회원정보 변경에 실패했습니다.");
+				modelAndView.addObject("location", "/myPage");
+				
+				}
+				return modelAndView;
+		}
 
 	
 	// 회원 삭제
