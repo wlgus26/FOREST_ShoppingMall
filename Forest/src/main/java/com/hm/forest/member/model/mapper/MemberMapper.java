@@ -1,5 +1,7 @@
 package com.hm.forest.member.model.mapper;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +16,7 @@ public interface MemberMapper {
 	
 	int insertMember(Member member);
 	
-	int updateMember(Member member);
-	
 	int updateMemberStatus(@Param("status") String status, @Param("no") int no);
+
+	int updatePassword(Map<String, Object> paramMap);
 }

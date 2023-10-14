@@ -128,7 +128,7 @@ public class HomeController {
 	public ModelAndView myPage (ModelAndView modlAndView) {
 		
 		modlAndView.addObject("pageName", "myPage");
-		modlAndView.setViewName("page/products/myPage");
+		modlAndView.setViewName("page/myPage/myPage");
 		
 		return modlAndView;
 	}

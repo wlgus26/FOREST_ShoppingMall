@@ -12,4 +12,6 @@ public interface MemberService {
 
 	int delete(int no);
 
+	boolean changePassword(int no, String newPassword, String pcode, String address1, String address2);
+
 }

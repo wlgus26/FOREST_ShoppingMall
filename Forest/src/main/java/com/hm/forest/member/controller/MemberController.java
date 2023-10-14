@@ -66,37 +66,51 @@ public class MemberController {
 							 .body(map);
 	}
 	
-	// 회원 정보 수정
-	// 메소드의 리턴 타입이 void일 경우 Mapping URL을 유추해서 뷰를 찾는다.	
+	// 회원 정보 수정	
 	@PostMapping("/myPage")
-	public ModelAndView update(ModelAndView modelAndView, @RequestParam String password, Member member) {
-	    // Spring Security를 사용하여 현재 사용자 세션을 가져옴
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	 public ModelAndView changePassword(ModelAndView modelAndView,
+             @RequestParam("currentPassword") String currentPassword,
+             @RequestParam("newPassword") String newPassword,
+             @RequestParam("confirmPassword") String confirmPassword,
+		@RequestParam("pcode") String pcode,
+		@RequestParam("address1") String address1,
+		@RequestParam("address2") String address2) {
 
-	    if (authentication != null && authentication.getPrincipal() instanceof Member) {
-	        Member loginMember = (Member) authentication.getPrincipal();
-	        
-	        member.setPassword(password);
-	        
-	        member.setNo(loginMember.getNo());
-	        
-	        member.setPassword(passwordEncoder.encode(password));
-	        
-	        int result = service.save(member);
-	        
-	        if (result > 0) {
-	            modelAndView.addObject("loginMember", service.findMemberById(loginMember.getId()));
-	            modelAndView.addObject("msg", "회원 정보 수정 완료");
-	        } else {
-	            modelAndView.addObject("msg", "회원 정보 수정 실패");
-	        }
-	    } 
-	    
-	    modelAndView.addObject("location", "/");            
-	    modelAndView.setViewName("page/common/msg");
-	    
-	    return modelAndView;
-	}
+			log.info("비밀번호 변경 요청");
+			
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Member member = (Member) authentication.getPrincipal();
+			
+			if (!passwordEncoder.matches(currentPassword, member.getPassword())) {
+			modelAndView.addObject("msg", "현재 비밀번호가 올바르지 않습니다.");
+			modelAndView.addObject("location", "/myPage");
+			modelAndView.setViewName("page/common/msg");
+			return modelAndView;
+			}
+			
+			if (!newPassword.equals(confirmPassword)) {
+			modelAndView.addObject("msg", "새 비밀번호와 비밀번호 확인 값이 일치하지 않습니다.");
+			modelAndView.addObject("location", "/myPage");
+			modelAndView.setViewName("page/common/msg");
+			return modelAndView;
+			}
+			
+			boolean passwordChanged = service.changePassword(member.getNo(), newPassword, pcode, address1, address2);
+			
+			if (passwordChanged) {
+			modelAndView.addObject("msg", "회원정보가 변경되었습니다.");
+			modelAndView.addObject("location", "/myPage");
+			
+			} else {
+			modelAndView.addObject("msg", "회원정보 변경에 실패했습니다.");
+			modelAndView.addObject("location", "/myPage");
+			
+			}
+
+modelAndView.setViewName("page/common/msg");
+
+return modelAndView;
+}
 	
 	// 회원 삭제
 	@GetMapping("/delete")

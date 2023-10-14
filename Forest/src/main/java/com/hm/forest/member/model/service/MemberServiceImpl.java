@@ -1,5 +1,8 @@
 package com.hm.forest.member.model.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,11 +36,9 @@ public class MemberServiceImpl implements MemberService {
 	public int save(Member member) {
 		int result = 0;
 		
-		if (member.getNo() > 0) {
-			// update
-			result = mapper.updateMember(member);
-		} else {
-			// insert
+		if (member.getNo() == 0) {
+		
+		// insert
 			member.setPassword(passwordEncoder.encode(member.getPassword()));
 			
 			result = mapper.insertMember(member);
@@ -61,5 +62,20 @@ public class MemberServiceImpl implements MemberService {
 	public int delete(int no) {
 
 		return mapper.updateMemberStatus("N", no);
+	}
+
+	@Override
+	public boolean changePassword(int no, String newPassword, String pcode, String address1, String address2) {
+	    Map<String, Object> paramMap = new HashMap<>();
+
+	    paramMap.put("no", no);
+	    paramMap.put("newPassword", passwordEncoder.encode(newPassword));
+	    paramMap.put("pcode", pcode);
+	    paramMap.put("address1", address1);
+	    paramMap.put("address2", address2);
+
+	    int updatedRows = mapper.updatePassword(paramMap);
+
+	    return updatedRows > 0;
 	}
 }
