@@ -1,7 +1,6 @@
 package com.hm.forest;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,13 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
-import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.member.model.service.MemberService;
 import com.hm.forest.member.model.vo.Cart;
 import com.hm.forest.member.model.vo.Member;
@@ -214,7 +211,7 @@ public class HomeController {
 		
 		modelAndView.addObject("pageName", "myPage");
 		modelAndView.addObject("loginMember", loginMember);
-		modelAndView.setViewName("page/products/myPage");
+		modelAndView.setViewName("page/myPage/myPage");
 		
 		return modelAndView;
 	}
