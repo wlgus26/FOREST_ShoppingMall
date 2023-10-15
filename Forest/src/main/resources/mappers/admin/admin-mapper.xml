@@ -166,27 +166,25 @@
 
 	 <!-- 제품 상세 조회(재고, 색상, 사이즈 포함) -->
 	 <select id="selectProductBoardByNo" parameterType="_int" resultMap="productDetailResultMap">
-		  SELECT 
-		    P.NO, 
-		    P.CATEGORY, 
-		    P.NAME, 
-		    P.PRICE, 
-		    P.CONTENT, 
-		    P.COMPANY, 
-		    P.DISCOUNTRATE, 
-		    P.SELLING, 
-		    P.STATUS, 
-		    P.IMAGE, 
-		    P.WISH,
-		    D.NO AS "D_NO",
-		    D.PRODUCT_NO AS "D_PRODUCT_NO",
-		    D.COLOR AS "D_COLOR", 
-		    D.SIZE_SML AS "D_COLOR", 
-		    D.STOCK AS "D_STOCK"
-	 FROM PRODUCT P
-	 JOIN DETAIL D ON P.NO = D.NO
-	 WHERE P.CATEGORY = #{category}
-	 ORDER BY P.NO DESC
+		SELECT P.NO, 
+		       P.CATEGORY, 
+		       P.NAME, 
+		       P.PRICE, 
+		       P.CONTENT, 
+		       P.COMPANY, 
+		       P.DISCOUNTRATE, 
+		       P.SELLING, 
+		       P.STATUS, 
+		       P.IMAGE, 
+		       P.WISH,
+		       D.NO AS "D_NO", 
+		       D.PRODUCT_NO AS "D_PRODUCT_NO",
+		       D.COLOR AS "D_COLOR", 
+		       D.SIZE_SML AS "D_SIZE_SML", 
+		       D.STOCK AS "D_STOCK"
+		 FROM PRODUCT P
+		 JOIN DETAIL D ON P.NO = D.PRODUCT_NO
+		 WHERE P.NO = #{no}
  	 </select>
 
     <!-- 카테고리별 제품 전체 리스트 조회 -->
@@ -209,7 +207,7 @@
 		    D.SIZE_SML AS "D_COLOR", 
 		    D.STOCK AS "D_STOCK"
 	 FROM PRODUCT P
-	 JOIN DETAIL D ON P.NO = D.PRODUCT_NO
+	 JOIN DETAIL D ON P.NO = D.NO
 	 WHERE P.CATEGORY = #{category}
 	 ORDER BY P.NO DESC
 	</select>
