@@ -46,6 +46,12 @@ public class Board {
 	
 	private int readCount;
 	
+	private int likeCount;
+	
+	private int reportCount;
+	
+	private String reportDetail;
+	
 	private String status;
 	
 	private List<Reply> replies;

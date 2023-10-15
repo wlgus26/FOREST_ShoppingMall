@@ -1,6 +1,7 @@
 package com.hm.forest.member.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,6 +24,7 @@ public interface MemberMapper {
 	
 	int updateMemberStatus(@Param("status") String status, @Param("no") int no);
 	
+	int updatePassword(Map<String, Object> paramMap);
 	
 	int selectMemberCountByStatus(@Param("status") String status);
 	
@@ -40,6 +42,7 @@ public interface MemberMapper {
 	
 	int activateMember(@Param("status") String status, @Param("no") int no);
 	
+	/* 장바구니 로직 */
 	// 장바구니 상품 담기
 	int insertIntoCart(Cart cart);
 
@@ -51,4 +54,10 @@ public interface MemberMapper {
 
 	// 장바구니 제품 목록 개수
 	int selectCartItemsCount(@Param("memberNo") int memberNo);
+
+	/* 주문.결제 로직 */
+	// 로그인멤버별 주문서 상품 목록 조회
+	List<Cart> selectCartOrderLists(@Param("memberNo") int memberNo, @Param("cartNo") String cartNo);
+
+
 }

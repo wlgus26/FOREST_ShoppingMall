@@ -1,8 +1,9 @@
 package com.hm.forest.member.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,21 +39,30 @@ public class MemberServiceImpl implements MemberService {
 	public int save(Member member) {
 		int result = 0;
 		
-		if (member.getNo() > 0) {
-			// update
-			result = memberMapper.updateMember(member);
-		} else {
-			// insert
+		if (member.getNo() == 0) {
+		
+		// insert
 			member.setPassword(passwordEncoder.encode(member.getPassword()));
 			
 			result = memberMapper.insertMember(member);
 		}
 		
-//		if (true) {
-//			throw new RuntimeException("회원 가입 중 에러 발생");
-//		}
-		
 		return result;
+	}
+	
+	@Override
+	public boolean changePassword(int no, String newPassword, String pcode, String address1, String address2) {
+	    Map<String, Object> paramMap = new HashMap<>();
+
+	    paramMap.put("no", no);
+	    paramMap.put("newPassword", passwordEncoder.encode(newPassword));
+	    paramMap.put("pcode", pcode);
+	    paramMap.put("address1", address1);
+	    paramMap.put("address2", address2);
+
+	    int updatedRows = memberMapper.updatePassword(paramMap);
+
+	    return updatedRows > 0;
 	}
 
 	@Override
@@ -73,6 +83,7 @@ public class MemberServiceImpl implements MemberService {
 	    return memberMapper.getmemberlists(searchType, pageInfo);
 	}
 	
+	/* 장바구니 로직 */
 	// 장바구니 상품 담기
 	@Override
 	@Transactional
@@ -97,6 +108,14 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int selectCartItemsCount(int memberNo) {
 		return memberMapper.selectCartItemsCount(memberNo);
+	}
+	
+
+	/* 주문.결제 로직 */
+	// 로그인멤버별 주문서 상품 목록 조회
+	@Override
+	public List<Cart> getCartListsByMemberNoAndCartNo(int memberNo, String cartNo) {
+		return memberMapper.selectCartOrderLists(memberNo, cartNo);
 	}
 	
 	
@@ -127,6 +146,9 @@ public class MemberServiceImpl implements MemberService {
 
 		return memberMapper.updatememberstatus("Y", no);
 	}
+
+
+
 
 
 

@@ -11,6 +11,10 @@ import com.hm.forest.admin.model.mapper.AdminMapper;
 import com.hm.forest.admin.model.vo.Product;
 import com.hm.forest.common.util.PageInfo;
 
+import com.hm.forest.member.model.mapper.MemberMapper;
+import com.hm.forest.member.model.vo.Cart;
+
+
 @Service
 public class AdminServiceImpl implements AdminService {
 	
@@ -93,13 +97,20 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
-
-
-
 	@Override
 	public List<Product> getDetailsByProductNo() {
-		
-		return adminMapper.selectDetailsByProductNo();
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+
+	// 단품 주문시 상품 정보 조회
+	@Override
+	public Product getItemListsByProductNoAndDetailNo(int productNo, int detailNo) {
+		return adminMapper.selectItemLists(productNo, detailNo);
+
+	}
+
+
 
 }

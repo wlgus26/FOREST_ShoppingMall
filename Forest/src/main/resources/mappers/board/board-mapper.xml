@@ -36,6 +36,9 @@
 		<result property="originalFilename" column="ORIGINAL_FILENAME"/>
 		<result property="renamedFilename" column="RENAMED_FILENAME"/>
 		<result property="readCount" column="READCOUNT"/>
+		<result property="likeCount" column="LIKECOUNT"/>
+		<result property="reportCount" column="REPORTCOUNT"/>
+		<result property="reportDetail" column="REPORTDETAIL"/>
 		<result property="createDate" column="CREATE_DATE"/>
 	</resultMap>
 	
@@ -54,6 +57,8 @@
 		<result property="content" column="CONTENT"/>
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
+		<result property="reportCount" column="REPORTCOUNT"/>
+		<result property="reportDetail" column="REPORTDETAIL"/>
 	</resultMap>
 	
 	<!-- 게시판 타입별 게시글 전체 개수 -->

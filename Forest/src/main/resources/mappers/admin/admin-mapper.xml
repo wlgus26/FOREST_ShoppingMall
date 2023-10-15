@@ -204,7 +204,7 @@
 		    D.NO AS "D_NO",
 		    D.PRODUCT_NO AS "D_PRODUCT_NO",
 		    D.COLOR AS "D_COLOR", 
-		    D.SIZE_SML AS "D_COLOR", 
+		    D.SIZE_SML AS "D_SIZE_SML", 
 		    D.STOCK AS "D_STOCK"
 	 FROM PRODUCT P
 	 JOIN DETAIL D ON P.NO = D.NO
@@ -219,6 +219,7 @@
 		WHERE STATUS = 'Y' AND CATEGORY =#{category}
 	</select>
 	
+
 	
 	<!-- 비동기로 저장된 값 보여주기 -->
 	<select id="selectProductByProductNo" parameterType="_int" resultMap="productResultMap">
@@ -253,6 +254,30 @@
     FROM PRODUCT
     WHERE STATUS = 'Y'
 </select>
+
+	<!-- 단품 주문시 제품 정보 조회 -->
+	<select id="selectItemLists" parameterType="_int" resultMap="productDetailResultMap">
+		SELECT P.NO, 
+		       P.CATEGORY, 
+		       P.NAME, 
+		       P.PRICE, 
+		       P.CONTENT, 
+		       P.COMPANY, 
+		       P.DISCOUNTRATE, 
+		       P.SELLING, 
+		       P.STATUS, 
+		       P.IMAGE, 
+		       P.WISH,
+		       D.NO AS "D_NO", 
+		       D.PRODUCT_NO AS "D_PRODUCT_NO",
+		       D.COLOR AS "D_COLOR", 
+		       D.SIZE_SML AS "D_SIZE_SML", 
+		       D.STOCK AS "D_STOCK"
+		 FROM PRODUCT P
+		 JOIN DETAIL D ON P.NO = D.PRODUCT_NO
+		 WHERE P.NO = #{productNo} AND D.NO = #{detailNo}
+	</select>
+
 
 </mapper>
 

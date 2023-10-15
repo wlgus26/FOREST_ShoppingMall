@@ -23,4 +23,8 @@ public class Reply {
 	private Date createDate;
 	
 	private Date modifyDate;
+	
+	private int reportCount;
+	
+	private String reportDetail;
 }

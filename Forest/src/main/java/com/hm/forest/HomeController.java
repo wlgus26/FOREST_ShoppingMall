@@ -1,8 +1,16 @@
 package com.hm.forest;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,12 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
+import com.hm.forest.admin.model.vo.Detail;
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.member.model.service.MemberService;
+import com.hm.forest.member.model.vo.Cart;
 import com.hm.forest.member.model.vo.Member;
-import com.hm.forest.member.model.vo.Order;
 
 import lombok.extern.slf4j.Slf4j;
-
 
 
 @Slf4j
@@ -24,6 +33,9 @@ public class HomeController {
 	
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@GetMapping("/success")
 	public ModelAndView success(ModelAndView modelAndView, @RequestParam String paymentType, @AuthenticationPrincipal Member loginMember) {
@@ -52,88 +64,88 @@ public class HomeController {
 	
 	// home으로 이동
 	@GetMapping("/")
-	public ModelAndView home (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember) {
-		modlAndView.addObject("pageName", "home");
-		modlAndView.addObject("loginMember", loginMember);
-		modlAndView.setViewName("page/home");
+	public ModelAndView home (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {
+		modelAndView.addObject("pageName", "home");
+		modelAndView.addObject("loginMember", loginMember);
+		modelAndView.setViewName("page/home");
     
-        return modlAndView;
+        return modelAndView;
 	}
 	
 	// 캠페인 페이지_aesop으로 이동
 	@GetMapping("/campaign/aesop")
-	public ModelAndView aseop (ModelAndView modlAndView) {
-		modlAndView.addObject("pageName", "aesop");
-		modlAndView.setViewName("page/campaign/aesop");
+	public ModelAndView aseop (ModelAndView modelAndView) {
+		modelAndView.addObject("pageName", "aesop");
+		modelAndView.setViewName("page/campaign/aesop");
     
-        return modlAndView;
+        return modelAndView;
 	}
 	
 	// 캠페인 페이지_biotherm으로 이동
 	@GetMapping("/campaign/biotherm")
-	public ModelAndView biotherm (ModelAndView modlAndView) {
-		modlAndView.addObject("pageName", "biotherm");
-		modlAndView.setViewName("page/campaign/biotherm");
+	public ModelAndView biotherm (ModelAndView modelAndView) {
+		modelAndView.addObject("pageName", "biotherm");
+		modelAndView.setViewName("page/campaign/biotherm");
 		
-		return modlAndView;
+		return modelAndView;
 	}
 	
 	// 캠페인 페이지_brita으로 이동
 	@GetMapping("/campaign/brita")
-	public ModelAndView brita (ModelAndView modlAndView) {
-		modlAndView.addObject("pageName", "brita");
-		modlAndView.setViewName("page/campaign/brita");
+	public ModelAndView brita (ModelAndView modelAndView) {
+		modelAndView.addObject("pageName", "brita");
+		modelAndView.setViewName("page/campaign/brita");
 		
-		return modlAndView;
+		return modelAndView;
 	}
 	
 	// 캠페인 페이지_melixir으로 이동
 	@GetMapping("/campaign/melixir")
-	public ModelAndView melixir (ModelAndView modlAndView) {
-		modlAndView.addObject("pageName", "melixir");
-		modlAndView.setViewName("page/campaign/melixir");
+	public ModelAndView melixir (ModelAndView modelAndView) {
+		modelAndView.addObject("pageName", "melixir");
+		modelAndView.setViewName("page/campaign/melixir");
 		
-		return modlAndView;
+		return modelAndView;
 	}
 	
 	// 캠페인 페이지_boonbastick으로 이동
 	@GetMapping("/campaign/boonbastick")
-	public ModelAndView boonbastick (ModelAndView modlAndView) {
-		modlAndView.addObject("pageName", "boonbastick");
-		modlAndView.setViewName("page/campaign/boonbastick");
+	public ModelAndView boonbastick (ModelAndView modelAndView) {
+		modelAndView.addObject("pageName", "boonbastick");
+		modelAndView.setViewName("page/campaign/boonbastick");
 		
-		return modlAndView;
+		return modelAndView;
 	}
 	
 	// 캠페인 페이지_mbci으로 이동
 	@GetMapping("/campaign/mbci")
-	public ModelAndView mbci (ModelAndView modlAndView) {
-		modlAndView.addObject("pageName", "mbci");
-		modlAndView.setViewName("page/campaign/mbci");
+	public ModelAndView mbci (ModelAndView modelAndView) {
+		modelAndView.addObject("pageName", "mbci");
+		modelAndView.setViewName("page/campaign/mbci");
 		
-		return modlAndView;
+		return modelAndView;
 	}
 	
 	// about으로 이동
 	@GetMapping("/about")
-	public ModelAndView about (ModelAndView modlAndView,  @AuthenticationPrincipal Member loginMember) {
+	public ModelAndView about (ModelAndView modelAndView,  @AuthenticationPrincipal Member loginMember) {
 		
-		modlAndView.addObject("pageName", "about");
-		modlAndView.addObject("loginMember", loginMember);
-		modlAndView.setViewName("page/about");
+		modelAndView.addObject("pageName", "about");
+		modelAndView.addObject("loginMember", loginMember);
+		modelAndView.setViewName("page/about");
 		
-        return modlAndView;
+        return modelAndView;
 	}
 	
 	// 참여하기로 이동
 	@GetMapping("/program")
-	public ModelAndView program (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember) {
+	public ModelAndView program (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {
 		
-		modlAndView.addObject("pageName", "program");
-		modlAndView.addObject("loginMember", loginMember);
-		modlAndView.setViewName("page/program");
+		modelAndView.addObject("pageName", "program");
+		modelAndView.addObject("loginMember", loginMember);
+		modelAndView.setViewName("page/program");
 		
-		return modlAndView;
+		return modelAndView;
 	}
 	
 	
@@ -141,75 +153,133 @@ public class HomeController {
 	
 	// 로그인 페이지로 이동 
 	@GetMapping("/login")
-	public ModelAndView login (ModelAndView modlAndView) {
+	public ModelAndView login (ModelAndView modelAndView) {
 		
-		modlAndView.addObject("pageName", "login");
-		modlAndView.setViewName("page/login");
+		modelAndView.addObject("pageName", "login");
+		modelAndView.setViewName("page/login");
 		
-		return modlAndView;
+		return modelAndView;
 	}
 	
 	// 회원가입 페이지로 이동 
 	@GetMapping("/enroll")
-	public ModelAndView enroll (ModelAndView modlAndView) {
+	public ModelAndView enroll (ModelAndView modelAndView) {
 		
-		modlAndView.addObject("pageName", "enroll");
-		modlAndView.setViewName("page/enroll");
+		modelAndView.addObject("pageName", "enroll");
+		modelAndView.setViewName("page/enroll");
 		
-		return modlAndView;
+		return modelAndView;
+	}
+
+	
+	// [주문하기] 장바구니 주문하기 -> 결제페이지 
+	@PostMapping("/pay")
+	public ResponseEntity<String> pay(@RequestParam("cartNo") String cartNo, @RequestParam("totalPrice") int totalPrice, HttpSession session) {
+
+	    // 데이터를 세션에 저장
+	    session.setAttribute("cartNo", cartNo);
+	    session.setAttribute("totalPrice", totalPrice);
+	    
+	    return ResponseEntity.ok().build(); // 응답은 비어있는 상태로 반환
+	}
+	
+	// [주문하기] 제품상세페이지 주문하기 -> 결제페이지 
+	@GetMapping("/pay/order")
+	public ModelAndView pay(ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember,
+							@RequestParam("productNo") int productNo,
+					        @RequestParam("detailNo") int detailNo,
+					        @RequestParam("quantity") int quantity) {
+		int totalPrice = 0;
+	    Product product = null;
+	    Cart cart = new Cart(); 
+	    List<Cart> cartLists = new ArrayList<>();
+	    
+	    // 해당하는 제품 세부 정보 조회
+	    product = adminService.getItemListsByProductNoAndDetailNo(productNo, detailNo);
+	    List<Detail> details = product.getDetails();
+	    Detail detail = details.get(0); // 제품 세부정보는 Detail 객체로 가져오기
+
+	    // cart객체 생성
+	    cart.setNo(0); 
+	    cart.setMemberNo(loginMember.getNo());
+	    cart.setProductNo(product.getNo());
+	    cart.setDetailNo(detail.getNo());
+	    cart.setColor(detail.getColor());
+	    cart.setSize(detail.getSizeSml());
+	    cart.setStock(detail.getStock());
+	    cart.setCategory(product.getCategory());
+	    cart.setName(product.getName());
+	    cart.setImage(product.getImage());
+	    cart.setPrice(product.getPrice());
+	    cart.setDiscountrate(product.getDiscountrate());
+	    cart.setStatus(product.getStatus());
+	    cart.setQuantity(quantity);
+	  
+	    // cart 객체를 cartLists에 추가
+	    cartLists.add(cart); 
+	    
+	    int amount = (cart.getPrice() * cart.getQuantity());
+	    totalPrice = amount >= 30000 ? amount : (amount + 2500);
+	   
+	    modelAndView.addObject("pageName", "pay");
+		modelAndView.addObject("cartLists", cartLists);
+	    modelAndView.addObject("totalPrice", totalPrice);
+	    modelAndView.addObject("loginMember", loginMember);
+	    
+	    modelAndView.setViewName("page/pay");
+
+	    return modelAndView; 
 	}
 	
 	// 결제페이지로 이동 
 	@GetMapping("/pay")
-	public ModelAndView pay (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember,
-							 @RequestParam("productNo") int productNo, @RequestParam("detailNo") int detailNo,
-						     @RequestParam("quantity") int quantity) {
-		Product product = null;
-		product = adminService.getProductBoardByNo(productNo);
+	public ModelAndView pay (ModelAndView modelAndView, HttpSession session, @AuthenticationPrincipal Member loginMember) {
+		String cartNo = (String) session.getAttribute("cartNo");
+	    int totalPrice = (int) session.getAttribute("totalPrice");
+
+	    log.info("Received cartNo: {}", cartNo);
+		log.info("&&& totalPrie: {}", totalPrice);
 		
-		System.out.println(productNo +  detailNo + quantity);
+		List<Cart> cartLists = null; // 결제할 상품 목록들을 담을 객체
 		
-		modlAndView.addObject("pageName", "pay");
-		modlAndView.addObject("product", product);
-		modlAndView.addObject("loginMember", loginMember);
-		modlAndView.setViewName("page/pay");
+		// 로그인멤버별 주문서 상품 목록 조회
+		int memberNo = loginMember.getNo();
+		cartLists = memberService.getCartListsByMemberNoAndCartNo(memberNo, cartNo);
 		
-		return modlAndView;
+		log.info("cartLists: {}", cartLists);
+		
+		modelAndView.addObject("pageName", "pay");
+		modelAndView.addObject("cartLists", cartLists);
+	    modelAndView.addObject("totalPrice", totalPrice);
+	    modelAndView.addObject("loginMember", loginMember);
+	    
+	    modelAndView.setViewName("page/pay");
+	    
+	    return modelAndView;
+
 	}
 	
-	// 제품 주문하기 -> 결제페이지 
-	@PostMapping("/pay")
-	public ModelAndView pay (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember, @RequestBody Order order) {
-		
-		log.info("@@@@@@@: {}", order);
-		
-		modlAndView.addObject("pageName", "pay");
-		modlAndView.addObject("loginMember", loginMember);
-		modlAndView.setViewName("page/pay");
-		
-		return modlAndView;
-	}
 	
 	@GetMapping("/myPage")
-	public ModelAndView myPage (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember) {
+	public ModelAndView myPage (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {
 		
-		modlAndView.addObject("pageName", "myPage");
-		modlAndView.addObject("loginMember", loginMember);
-		modlAndView.setViewName("page/products/myPage");
+		modelAndView.addObject("pageName", "myPage");
+		modelAndView.addObject("loginMember", loginMember);
+		modelAndView.setViewName("page/products/myPage");
 		
-		return modlAndView;
+		return modelAndView;
 	}
 
 
 	// 제품 페이지로 이동
 	@GetMapping("/kitchen")
-	public ModelAndView products (ModelAndView modlAndView, @AuthenticationPrincipal Member loginMember) {
+	public ModelAndView products (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {
 		
-		modlAndView.addObject("pageName", "kitchen");
-		modlAndView.addObject("loginMember", loginMember);
-		modlAndView.setViewName("page/products/kitchen");
+		modelAndView.addObject("pageName", "kitchen");
+		modelAndView.addObject("loginMember", loginMember);
+		modelAndView.setViewName("page/products/kitchen");
 		
-		return modlAndView;
+		return modelAndView;
 	}
 
 }
