@@ -62,8 +62,17 @@ public interface BoardMapper {
 	// 댓글 수정
 	int updateReply(Reply reply);
 
-
-
+	// 게시글 전체 갯수
+	int selectboardcount();
+	
+	// 게시글 전체 조회
+	List<Board> getboardlist(RowBounds rowBounds);
+	
+	// 검색 게시글 갯수
+	int selectboardcountsearch(@Param("searchType") String searchType,@Param("keyWord") String keyWord);
+	
+	// 검색 게시글 조회
+	List<Board> getboardlistsearch(@Param("searchType") String searchType,@Param("keyWord") String keyWord, RowBounds rowBounds);
 
 
 }
