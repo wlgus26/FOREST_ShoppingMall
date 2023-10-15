@@ -339,7 +339,7 @@ public class AdminController {
 				pageInfo = new PageInfo(page, 10, listcount, 10);
 				memberlists = memberService.getmemberlists(pageInfo);
 				
-				
+				modelAndView.addObject("searchType", searchType);
 				modelAndView.addObject("pageName", "memberMgmt");
 				modelAndView.addObject("pageInfo", pageInfo);
 				modelAndView.addObject("memberlists", memberlists);
