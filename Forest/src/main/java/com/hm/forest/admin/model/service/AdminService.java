@@ -30,7 +30,6 @@ public interface AdminService {
 	int getProductBoardCountByCategory(String category);
 
 	// 제품 등록 후 비동기로 제품 정보 보여주기
-
 	List<Product> getDetailsByProductNo();
 
 

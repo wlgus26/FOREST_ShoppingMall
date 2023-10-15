@@ -23,6 +23,7 @@
 				  border-bottom-color: #082f1c;
 				  color: #082f1c;">등록한 제품 목록
 			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="redirectToWrite('productMgmt')">글쓰기</button>
+			  	<button class="btn btn-sm btn-outline-secondary" type="button" onclick="redirectToDetail('productMgmtDetail')">옵션등록</button>
 			  </th>
 		    </tr>
 		  </thead>
@@ -31,19 +32,18 @@
 		  	    <tr style="text-align: center;">
 					<th>번호</th>
 					<th>제목</th>
+					<th>가격</th>
 				
 				</tr>
 				<tr class="clickable-row" style="text-align: center;" th:each="product : ${productlists}" th:attr="data-href=@{/admin/productMgmtView?no={no}(no=${product.no})}">
-			        <td>
-			        <img th:src="@{/static/upload/product/} + ${product.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;">
-			        </td>
+			        <td><img th:src="@{/static/upload/product/} + ${product.image}" style="width: 100px; height: 100px; overflow: hidden; object-fit: cover;"></td>
 			        <td th:text="${product.name}" style="text-align:left; width:60%;"></td>   
-			        
+			        <td th:text="${product.price}" style="text-align:left; width:60%;"></td>  
 			    </tr>
-
 		  </tbody>
 	  </table>
 	</div>
+			         
 
 
 	  
@@ -83,6 +83,10 @@
 		    function redirectToWrite() {
 				   window.location.href = '/admin/productMgmt';
 				  };
+		  
+				  function redirectToDetail(url) {
+					    window.location.href = url;
+					}
 
 	</script>
 </div>
