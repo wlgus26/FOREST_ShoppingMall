@@ -265,7 +265,17 @@ public class HomeController {
 		
 		modelAndView.addObject("pageName", "myPage");
 		modelAndView.addObject("loginMember", loginMember);
-		modelAndView.setViewName("page/products/myPage");
+		modelAndView.setViewName("page/myPage/myPage");
+		
+		return modelAndView;
+	}
+	
+	@GetMapping("/orderList")
+	public ModelAndView orderList (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {
+		
+		modelAndView.addObject("pageName", "orderList");
+		modelAndView.addObject("loginMember", loginMember);
+		modelAndView.setViewName("page/myPage/orderList");
 		
 		return modelAndView;
 	}
