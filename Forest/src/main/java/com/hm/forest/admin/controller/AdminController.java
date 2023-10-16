@@ -395,7 +395,7 @@ public class AdminController {
 		 
 		// 게시물 전체 목록 조회(검색 기능 포함)
 		 @GetMapping("/boardMgmt")
-		 public ModelAndView FindAll(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,
+		 public ModelAndView boardMgmtlist(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,
 				 				 	 @RequestParam(required = false) String searchType, @RequestParam(defaultValue = "") String keyWord) {
 			 
 			 int listCount = 0;
@@ -414,6 +414,10 @@ public class AdminController {
 				 modelAndView.addObject("searchType", searchType); // 페이징 처리를 위해 searchType과 keyWord값을 넘겨준다. 
 				 modelAndView.addObject("keyWord", keyWord);
 				 modelAndView.addObject("boardLists", boardLists);
+				 
+				log.info("@@@@ 검색 값: {}", searchType);
+				log.info("Page : {}", page);
+				log.info("ListCount : {}", boardLists);
 			
 			// 검색값이 없는 경우
 			} else {
@@ -424,8 +428,11 @@ public class AdminController {
 				modelAndView.addObject("pageName", "boardMgmt");
 				modelAndView.addObject("pageInfo", pageInfo);
 				modelAndView.addObject("boardLists", boardLists);
+				
+				log.info("@@@@ 검색 값: {}", searchType);
+				log.info("Page : {}", page);
+				log.info("ListCount : {}", boardLists);
 			
-		      // log.info("boardLists : {}", boardLists);
 			}
 			 modelAndView.setViewName("page/admin/boardMgmt");
 			 
