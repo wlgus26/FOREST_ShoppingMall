@@ -3,6 +3,11 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
+      
+<!-- csrf 토큰을 비동기통신으로 넘기기 위한 설정 -->
+<meta th:name="_csrf_header" th:content="${_csrf.headerName}">
+<meta th:name="_csrf" th:content="${_csrf.token}">
+      
 
 <head>
   <meta charSet="utf-8"/>
@@ -131,20 +136,20 @@
 	 	 	</tr>
 	 	 	<tr style="border-bottom-color: white;">
 	 	 		<td style="padding-left: 10px;">수령인 </td>
-	 	 		<td><input type="text" class="form-control" style="width:90%;"></input> </td>
+	 	 		<td><input type="text" id="recipient" class="form-control" style="width:90%;"></input> </td>
 	 	 		<td>이름 </td>
 	 	 		<td colspan="2" th:text="${loginMember.name}"></td>
 	 	 	</tr>
 	 	 	<tr style="border-bottom-color: white;">
 	 	 		<td>연락처 </td>
-	 	 		<td><input type="text" class="form-control" style="width:90%;" placeholder="연락처 입력('-'제외 11자리 입력)"></input></td>
+	 	 		<td><input type="text" id="phone" class="form-control" style="width:90%;" placeholder="연락처 입력('-'제외 11자리 입력)"></input></td>
 	 	 		<td>연락처 </td>
 	 	 		<td colspan="2" th:text="${loginMember.phone}"></td>
 	 	 	</tr>
 	 	 	<tr rowspan="2" style="border-bottom-color: white; padding-bottom: 0px; border-bottom-width: 0px;">
 	 	 		<td>배송지 주소 </td>
 	 	 		<td style="padding-bottom: 0px; border-bottom-width: 0px;">
-	 	 		<input type="text" id="zip_code" class="form-control" style="width:30%; float: left; margin-right:10px;"></input>
+	 	 		<input type="text" id="pcode" class="form-control" style="width:30%; float: left; margin-right:10px;"></input>
 	 	 		<input type="button" class="btn btn-outline-secondary form-control" style="width:30%;" value="우편번호" onclick="openZipSearch();">
 	 	 		</td>
 	 	 		<td>이메일 </td>
@@ -153,14 +158,14 @@
 	 	 	<tr style="border-bottom-color: white;">
 	 	 		<td style="border-bottom-color: white;"></td>
 	 	 		<td style="border-bottom-color: white; padding-bottom: 0px; border-bottom-width: 0px;">
-	 	 		<input type="text" id="addr" class="form-control" style="width:90%;"></input>
+	 	 		<input type="text" id="address1" class="form-control" style="width:90%;"></input>
 	 	 		</td>
 	 	 		<td colspan="3" rowspan="3" style="font-size: 14px; font-weight:bold; color: #0f5132;">주문자 정보로 결제관련 정보가 제공됩니다.<br>정확한 정보로 등록되어있는지 확인해주세요.</td>
 	 	 	</tr>
 	 	 	<tr style="border-bottom-color: white;">
 	 	 		<td style="border-bottom-color: white;"></td>
 	 	 		<td style="border-bottom-color: white;">
-	 	 		<input type="text" id="addr_dtl" class="form-control" style="width:90%;"></input>
+	 	 		<input type="text" id="address2" class="form-control" style="width:90%;"></input>
 	 	 		</td>
 	 	 		<td></td>
 	 	 	</tr>
@@ -227,10 +232,10 @@
 				addr = data.jibunAddress;
 			}
 	
-			$("#zip_code").val(data.zonecode);
-			$("#addr").val(addr);
-			$("#addr_dtl").val("");
-			$("#addr_dtl").focus();
+			$("#pcode").val(data.zonecode);
+			$("#address1").val(addr);
+			$("#address2").val("");
+			$("#address2").focus();
 	        }
 	    }).open();
 	}
@@ -263,6 +268,10 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <script th:inline="javascript">
+<!-- csrf 토큰을 JavaScript 변수로 저장 -->
+var csrfToken = [[${_csrf.token}]];
+var csrfHeader = [[${_csrf.headerName}]];
+
 	function formatNumberWithCommas(number) {
 	    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "_");
 	}
@@ -285,10 +294,17 @@ document.addEventListener("DOMContentLoaded", function() {
   /*약관 영역 렌더링*/
   const paymentAgreement = paymentWidget.renderAgreement('#agreement')
   
+  
+  
+  
   /*결제창 열기*/
   document.querySelector("#payment-button").addEventListener("click",()=>{
 	  var cartLists = [[${cartLists}]]; // 주문서 정보
-	  var loginMember = [[${loginMember}]]; // 결제자 정보
+	  var loginMemberName = [[${loginMember.name}]]; // 결제자 정보
+	  var loginMemberEmail = [[${loginMember.email}]]; // 결제자 정보
+
+	  // 결제 정보 넘길 것 1. totalPrice,  2. List<Cart> cartLists, 3. Delivery delivery  
+	  // 결제 정보 넘길 것 1. totalPrice
 	  var totalPrice = [[${totalPrice}]]; // 최종 결제 금액
 	  
 	  var name;
@@ -298,23 +314,97 @@ document.addEventListener("DOMContentLoaded", function() {
 	      name = cartLists[1].name + ' 외 ' + (cartLists.length - 1) + ' 건';
 	  }
 
-	 
-    paymentWidget.requestPayment({
-      orderId: 'AD8aZDpbzXs4EQa-UkIX6',
-      orderName: name,
-      amount: totalPrice, // 동적으로 설정한 결제 금액 사용
-      successUrl: 'http://localhost:8099/success',
-      failUrl: 'http://localhost:8099/fail',
-      customerEmail: loginMember.email, 
-      customerName: loginMember.name,
-      }).catch(function (error) {
-          if (error.code === 'USER_CANCEL') {
-        	  alert('결제를 취소하였습니다.')
-          // 결제 고객이 결제창을 닫았을 때 에러 처리
-          } if (error.code === 'INVALID_CARD_COMPANY') {
-            // 유효하지 않은 카드 코드에 대한 에러 처리
-          }
-      })  
+
+	   // 결제 정보 넘길 것 2. List<Cart> cartLists, 3. Delivery delivery  
+	     var cartLists = [[${cartLists}]];
+	     var orderLists = []; // List<Order> orderLists
+	
+	     // Order 객체에 필요한 값만 지정해서 넘긴다. 
+	     for (var i = 0; i < cartLists.length; i++) {
+	        var cart = cartLists[i];
+	        var orderItem = {
+	            productNo: cart.productNo,
+	            detailNo: cart.detailNo,
+	            quantity: cart.quantity
+	        };
+	        orderLists.push(orderItem);
+	     }
+	   
+	   // 결제 정보 넘길 것 3. Delivery delivery  
+	   // Delivery 객체 생성
+	    var delivery = {
+	    	recipient: '', // 수령인 이름
+	    	phone: '',   // 연락처
+	    	pcode: '',   // 우편번호
+	        address1: '',  // 주소1
+	        address2: '',  // 주소2
+	        memo: ''  // 배송 메모
+	    };
+	   
+	    // 배송지 정보 수집
+	    delivery.recipient = document.querySelector("#recipient").value;
+	    delivery.phone = document.querySelector("#phone").value;
+	    delivery.pcode = document.querySelector("#pcode").value;
+	    delivery.address1 = document.querySelector("#address1").value;
+	    delivery.address2 = document.querySelector("#address2").value;
+	    
+	    // 배송 메모 정보 수집
+	    var deliveryMemoSelect = document.getElementById("deliveryMemoOption");
+	    var selectedOption = deliveryMemoSelect.options[deliveryMemoSelect.selectedIndex].value;
+	    if (selectedOption != '직접입력') {
+	        delivery.memo = selectedOption;
+	    } else {
+	        delivery.memo = document.querySelector("#del_memo").value;
+	    }
+	   
+	   console.log(totalPrice); 
+	   console.log(orderLists); 
+	   console.log(delivery); 
+	   console.log({totalPrice, orderLists, delivery});	
+	  
+	   // 결제 테이블에 데이터 입력
+	    if(delivery.recipient == "" || delivery.phone == "" || delivery.address1 == "" || delivery.address2 == ""){
+	    	// 배송정보 중 일부가 기입되지 않은 경우 
+	    	alert("배송정보를 정확히 입력해주세요");
+	    } else {
+	    	// 배송정보가 모두 기입된 경우
+			   $.ajax({
+				  	type: 'POST',
+				    url: '/pay/request',
+				    data: JSON.stringify({totalPrice, orderLists, delivery}),
+				    contentType: 'application/json;charset=UTF-8',  // JSON 데이터를 전송하므로 content type을 설정
+			        beforeSend: function(xhr) {
+			            // 요청을 보내기 전, CSRF 토큰을 헤더에 설정
+			            xhr.setRequestHeader(csrfHeader, csrfToken);
+			        },
+			        success: function(obj) {
+			            // 성공적으로 처리한 경우의 동작
+						// 결제 창 
+					    paymentWidget.requestPayment({
+					      orderId: 'AD8aZDpbzXs4EQa-UkIX6',
+					      orderName: name,
+					      amount: totalPrice, // 동적으로 설정한 결제 금액 사용
+					      successUrl: 'http://localhost:8099/pay/request?no=' + obj.no,
+					      failUrl: 'http://localhost:8099/fail',
+					      customerEmail: loginMemberEmail, 
+					      customerName: loginMemberName,
+					      }).catch(function (error) {
+					          if (error.code === 'USER_CANCEL') {
+					        	  alert('결제를 취소하였습니다.');
+					          // 결제 고객이 결제창을 닫았을 때 에러 처리
+					          } if (error.code === 'INVALID_CARD_COMPANY') {
+					            // 유효하지 않은 카드 코드에 대한 에러 처리
+					        	  alert('유효하지 않은 요청입니다. 관리자에게 문의하세요.');
+					          }
+					     });
+			        },
+			        error: function(error) {
+			            // 오류 발생 시 처리
+			            alert('Controller 전달 실패')
+			            console.error('결제 실패 Error during payment:', error);
+			        }
+			    });
+	 	   }
   });
   
   

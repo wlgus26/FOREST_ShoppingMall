@@ -1,4 +1,4 @@
-package com.hm.forest.member.model.vo;
+package com.hm.forest.payment.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

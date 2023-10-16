@@ -97,18 +97,18 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
-	@Override
-	public List<Product> getDetailsByProductNo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	// 단품 주문시 상품 정보 조회
 	@Override
 	public Product getItemListsByProductNoAndDetailNo(int productNo, int detailNo) {
 		return adminMapper.selectItemLists(productNo, detailNo);
 
+	}
+
+
+	@Override
+	public List<Product> getDetailsByProductNo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

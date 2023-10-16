@@ -130,7 +130,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.updateReplyStatus(no, "N");
 	}
 
-	// ㅔ시글 전체 갯수
+	// 게시글 전체 갯수
 	@Override
 	public int selectboardcount() {
 

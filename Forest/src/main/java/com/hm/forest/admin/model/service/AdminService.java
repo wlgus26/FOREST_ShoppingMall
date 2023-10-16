@@ -30,14 +30,8 @@ public interface AdminService {
 	// 메인_(제품보기) 제품 목록 카테고리별 리스트 전체 개수
 	int getProductBoardCountByCategory(String category);
 
-
 	// 제품 등록 후 비동기로 제품 정보 보여주기
 	List<Product> getDetailsByProductNo();
-
-
-
-	
-
 
 	// 단품 주문시 제품 정보 조회
 	Product getItemListsByProductNoAndDetailNo(int productNo, int detailNo);
