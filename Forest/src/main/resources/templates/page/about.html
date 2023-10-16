@@ -7,6 +7,62 @@
 <th:block th:with="pageName='about'"></th:block>      
 <!-- about.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
+
+<style>
+
+#contents {
+    align: center;
+    text-align: center;    
+    line-height: 40px;
+}
+
+#contents > p {
+    font-weight: 500;
+}
+
+span{
+    font-weight: bold;
+}
+
+.sp {
+    color: rgb(182, 182, 182);
+}
+
+
+.intro_common{
+    width: 100%;
+    font-size: 26px;
+}
+
+#intro_first {
+    background-color: #F3F0F0; 
+    padding:15px 0;
+    margin: 50px 0 70px 0;
+}
+
+#intro_tb {
+    font-size: 26px;
+}
+
+#intro_tb td {
+    padding: 0 20px;
+}
+
+#intro_act {
+    background-color: #e3f4e9; 
+    padding:20px 0 50px 0;
+    margin: 70px 0 70px 0;
+    font-size: 28px;
+}
+.center-table table {
+    margin: 0 auto;
+
+}
+
+
+
+
+</style>
     <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/about.css}" >-->
 </th:block>
 <!-- about.html 고유 스크립트 추가 -->
@@ -18,8 +74,8 @@
 <div layout:fragment="content">
   <div id="contents">
     <div id="intro_first" class="intro_common">
-        <h4 class="LSh4" style="margin-left: 10px;">지구를 지키는 LIFE STYLE</h4>
-         <p class="LSp" style="margin-left: 10px;"><span>FORE:ST</span>는 쓰임을 잃고 버려지는 물건의 가치를 발견하여 
+        <h4 class="LSh4" style="margin-left: 10px;"><strong>지구를 지키는 LIFE STYLE</strong></h4>
+         <p class="LSp" style="margin-left: 10px;"><span style="color: rgb(5, 71, 5); font-weight: 600;">FORE:ST</span>는 쓰임을 잃고 버려지는 물건의 가치를 발견하여 
              <br>
              지속가능한 세상을 추구하는 업사이클 라이프스타일 플랫폼입니다.
          </p>
@@ -28,9 +84,9 @@
  
      <div id="intro_name" class="intro_common">
          <h2 class="INh" style="margin-left: 10px; color: #0f5132;">FORE:ST</h2>
-         <p class="INp" style="margin-left: 10px;">FORE:ST는 자연과 함께하는 삶을 위한 4가지 행동이 사회에 널리 퍼지고, 울창한 울림으로 되돌아오길  희망합니다.</p>
+         <p class="INp" style="margin-left: 10px;"><span style="color: rgb(5, 71, 5); font:bold;">FORE:ST</span>는 자연과 함께하는 삶을 위한 4가지 행동이 사회에 널리 퍼지고, 울창한 울림으로 되돌아오길  희망합니다.</p>
          
-         <table align="center" id="intro_tb">
+         <table align="center" id="intro_tb" style="display: flex; justify-content: center;">
              <tr>
                  <td><img src="./images/intro_pic1.png" style="width: 480px; height: 300px; margin-left: 10px;"></td>
                  <td align="left" style="vertical-align: top; padding-top: 40px; line-height: 40px;">
@@ -56,7 +112,7 @@
  
      <br> 
  
-     <div id="intro_act" class="intro_common">
+     <div id="intro_act" class="intro_common" style="align-items: center; display: flex; flex-direction: column;">
          <h2 class="IA" style="margin-left: 10px;"><span>FORE:ST</span>의 <span style="color: #426D39">4가지 실천</span></h2>
          <p class="IAp" style="margin-left: 10px;">FOUR RE_ACT : OUR LIFE STYLE</p>
          
