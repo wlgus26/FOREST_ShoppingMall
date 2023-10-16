@@ -36,12 +36,12 @@ public interface AdminMapper {
 	// 카테고리 별 제품 목록 전체 개수
 	int selectProductCountByCategory(String category);
 
-<<<<<<< HEAD
+
 	// 제품 등록 후 비동기로 제품 정보 보여주기
 	List<Product> selectDetailsByProductNo();
-=======
+
 	// 단품 주문시 상품 정보 조회
 	Product selectItemLists(int productNo, int detailNo);
->>>>>>> main
+
 
 }
