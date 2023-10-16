@@ -5,23 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
-import com.hm.forest.board.model.service.BoardService;
-import com.hm.forest.board.model.vo.Board;
 import com.hm.forest.common.util.MultipartFileUtil;
 import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.service.MemberService;
@@ -43,9 +45,7 @@ public class AdminController {
 	@Autowired
 	private MemberService memberService;
 	
-	@Autowired
-	private BoardService boardservice;
-	
+	// 이미지 업로드 
 	private final ResourceLoader resourceLoader;
 	
 	
@@ -69,79 +69,103 @@ public class AdminController {
 			
 			return modelAndView;
 		}
-
 		
-		// 관리자페이지_제품등록
-//		@PostMapping("/productMgmt/insert")
-//		@ResponseBody
-//		public String insert (Product  product) {
-//
-//			System.out.println("getName :" + product.getName());
-//			System.out.println("getPrice :" + product.getPrice());
-//			System.out.println("getColor :" + product.getColor());
-//			
-//			adminService.save(product);
-//
-//			return "redirect:/productMgmtList";
-//		}
-//		
-	
-	
-        // 관리자페이지_제품등록
-		@PostMapping("/productMgmt/insert")
-		public ModelAndView insert(ModelAndView modelAndView,
-								   Product product,
-								   @RequestParam("upfile") MultipartFile upfile) {
+		// 관리자페이지_제품관리로 이동
+		@GetMapping("/productMgmtDetail")
+		public ModelAndView productMgmtDetail (ModelAndView modelAndView) {
 			
+			modelAndView.addObject("pageName", "productMgmtDetail");
+			modelAndView.setViewName("page/admin/productMgmtDetail");
 			
-		    int result = 0;
-		    Map<String, Object> map = new HashMap<>();
-		    
-		    if (upfile != null && !upfile.isEmpty()) {
-				String location = null;
-				String renamedFileName = null;
-				
-				try {
+			return modelAndView;
+		}
 
-
-					location = resourceLoader.getResource("/static/upload/product").getFile().getPath();
-
-					renamedFileName = MultipartFileUtil.save(upfile, location);
+		  // 관리자페이지_제품등록
+				@PostMapping("/productMgmt/insert")
+			
+				public ModelAndView insert(ModelAndView modelAndView,
+										   Product product,
+										   @RequestParam("upfile") MultipartFile upfile) {
 					
-					if (renamedFileName != null) {
+				    int result = 0;
+				    Map<String, Object> map = new HashMap<>();
+				    
+				    if (upfile != null && !upfile.isEmpty()) {
+						String location = null;
+						String renamedFileName = null;
 						
-						product.setImage(renamedFileName);
+						try {
+							location = resourceLoader.getResource("/static/upload/product").getFile().getPath();
+
+							renamedFileName = MultipartFileUtil.save(upfile, location);
+							
+							if (renamedFileName != null) {
+								product.setImage(renamedFileName);
+							}
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+						System.out.println(location + "★★★★★★★");
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
+				    
+				    result = adminService.save(product);
+
+				    map.put("resultCode", result);
+				    map.put("product", product);
+
+
+				    if (result > 0) {
+				        // Insert 성공
+				    	modelAndView.addObject("msg", "제품이 등록되었습니다.");
+				    } else {
+				        // Insert 실패
+				    	modelAndView.addObject("msg", "등록에 실패하였습니다.");
+				    }
+
+				    System.out.println(map);
+				    
+				    modelAndView.setViewName("redirect:/admin/productMgmtList");
+				    return modelAndView;
 				}
 				
-				System.out.println(location + "★★★★★★★");
-			}
-		    
-	
-		    result = adminService.save(product);
-
-		    map.put("resultCode", result);
-		    map.put("product", product);
-
-
-		    if (result > 0) {
-		        // Insert 성공
-		    	modelAndView.addObject("msg", "제품이 등록되었습니다.");
-		    } else {
-		        // Insert 실패
-		    	modelAndView.addObject("msg", "등록에 실패하였습니다.");
-		    }
-
-		    System.out.println(map);
-		    
-		    modelAndView.setViewName("redirect:/admin/productMgmtList");
-		    
-		    return modelAndView;
-		}
+//				@GetMapping("/productMgmtDetail")
+//				public ModelAndView Detail(ModelAndView modelAndView,
+//										 @RequestParam("no") int no) {
+//					
+//					log.info("view() 호출 - {}", no);
+//		
+//					Product product = null;
+//					
+//					product =adminService.getProductBoardByNo(no);
+//					
+//					modelAndView.addObject("pageName", "productMgmtDetail");
+//					modelAndView.addObject("product", product);
+//					modelAndView.setViewName("page/admin/productMgmtDetail");
+//					
+//					return modelAndView;	
+//				}
 		
 		
+		
+		
+		
+		
+		
+		// 비동기 통신 응답
+		// 게시글에 달린 댓글 목록 조회
+//		@GetMapping("/detail")
+//		public ResponseEntity<List<Product>> getDetailsByProductNo() {
+//			
+//		    List<Product> details = adminService.getDetailsByProductNo();
+//		    
+//		    return ResponseEntity.ok(details); // 성공적인 경우 Product 목록 반환
+//		}
+//		
+//		
+
+
+
 		
 		// 관리자 페이지_제품목록 리스트
 		@GetMapping("/productMgmtList")
@@ -328,50 +352,73 @@ public class AdminController {
 		
 		
 		// 회원 목록 가져오기
-
+		
 		@GetMapping("/memberMgmt")
 		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
-										@RequestParam(required = false) String searchType) {
+										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String status) {
 			
+			String type = "memberMgmt";
 			int listcount = 0;
 			PageInfo pageInfo = null;
 			List<Member> memberlists = null;
 			
-			log.info("@@@@ 검색 값: {}", searchType);
+			
+			listcount = memberService.selectmembercount(type, status, searchType);
+			pageInfo = new PageInfo(page, 30, listcount, 15);
+			memberlists = memberService.getmemberlists(searchType, pageInfo);
+			
 			log.info("Page : {}", page);
 			log.info("ListCount : {}", listcount);
 			
-			// 검색값이 있는 경우
-			 if (searchType != null) {
-				 listcount = memberService.selectmembercountvalue(searchType);
-				 pageInfo = new PageInfo(page, 10, listcount, 10);
-				 memberlists = memberService.getmemberlistsvalue(searchType, pageInfo);
-				 
-				 modelAndView.addObject("pageName", "memberMgmt");
-				 modelAndView.addObject("pageInfo", pageInfo);
-				 modelAndView.addObject("memberlists", memberlists);
-				 modelAndView.addObject("searchType", searchType); // 페이징 처리를 위해 searchType값을 넘겨준다. 
+			modelAndView.addObject("pageName", "memberMgmt");
+			modelAndView.addObject("searchType", searchType);
+			modelAndView.addObject("pageInfo", pageInfo);
+			modelAndView.addObject("memberlists", memberlists);
 			
-			// 검색값이 없는 경우
-			} else {
-				listcount = memberService.selectmembercount();
-				pageInfo = new PageInfo(page, 10, listcount, 10);
-				memberlists = memberService.getmemberlists(pageInfo);
-				
-				modelAndView.addObject("searchType", searchType);
-				modelAndView.addObject("pageName", "memberMgmt");
-				modelAndView.addObject("pageInfo", pageInfo);
-				modelAndView.addObject("memberlists", memberlists);
+			modelAndView.setViewName("page/admin/memberMgmt");
 			
-			}
-			 
-			 log.info("ListCount : {}", listcount);
-			 log.info("MemberLists : {}", memberlists);
-			 
-			 modelAndView.setViewName("page/admin/memberMgmt");
-			 
-			 return modelAndView;
+			return modelAndView;
 		}
+		
+		
+		
+//		@GetMapping("/memberMgmt")
+//		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
+//										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String status) {
+//			
+//			String type = "memberMgmt";
+//			int listcount = 0;
+//			PageInfo pageInfo = null;
+//			List<Member> memberlists = null;
+//			
+//			 int searchTypeInt = 0;
+//			    if (!searchType.isEmpty()) {
+//			        try {
+//			            searchTypeInt = Integer.parseInt(searchType);
+//			        } catch (NumberFormatException e) {
+//			            // 예외 처리 (유효하지 않은 값 처리)
+//			        }
+//			    }
+//			
+//			listcount = memberService.selectmembercount(type, status, searchType);
+//			pageInfo = new PageInfo(page, 30, listcount, 15);
+//			memberlists = memberService.getmemberlists(status, type, searchType, pageInfo);
+//			
+//			log.info("Page : {}", page);
+//			log.info("ListCount : {}", listcount);
+//			
+//			modelAndView.addObject("pageName", "memberMgmt");
+//			modelAndView.addObject("searchType", searchType);
+//			modelAndView.addObject("pageInfo", pageInfo);
+//			modelAndView.addObject("memberlists", memberlists);
+//			
+//			modelAndView.setViewName("page/admin/memberMgmt");
+//			
+//			return modelAndView;
+//		}
+		
+		
+		
 		
 		
 		// 사용계정 --> 휴면계정으로 바꾸기
@@ -404,62 +451,19 @@ public class AdminController {
 		     }
 		 }
 		 
-		 
-		 
-		// 게시물 전체 목록 조회(검색 기능 포함)
-		 @GetMapping("/boardMgmt")
-		 public ModelAndView FindAll(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,
-				 				 	 @RequestParam(required = false) String searchType, @RequestParam(defaultValue = "") String keyWord) {
-			 
-			 int listCount = 0;
-			 PageInfo pageInfo = null;
-			 List<Board> boardLists = null;
-			 
-	
-			 // 검색값이 있는 경우
-			 if (searchType != null && !keyWord.trim().equals("")) {
-				 listCount = boardservice.selectboardcountsearch(searchType, keyWord);
-				 pageInfo = new PageInfo(page, 10, listCount, 10);
-				 boardLists = boardservice.getboardlistsearch(pageInfo, searchType, keyWord);
-				 
-				 modelAndView.addObject("pageName", "boardMgmt");
-				 modelAndView.addObject("pageInfo", pageInfo);
-				 modelAndView.addObject("searchType", searchType); // 페이징 처리를 위해 searchType과 keyWord값을 넘겨준다. 
-				 modelAndView.addObject("keyWord", keyWord);
-				 modelAndView.addObject("boardLists", boardLists);
-			
-			// 검색값이 없는 경우
-			} else {
-				listCount = boardservice.selectboardcount();
-				pageInfo = new PageInfo(page, 10, listCount, 10);
-				boardLists = boardservice.getboardlist(pageInfo);
-				
-				modelAndView.addObject("pageName", "boardMgmt");
-				modelAndView.addObject("pageInfo", pageInfo);
-				modelAndView.addObject("boardLists", boardLists);
-			
-		      // log.info("boardLists : {}", boardLists);
-			}
-			 modelAndView.setViewName("page/admin/boardMgmt");
-			 
-			 return modelAndView;
-		}
-		 
-		 
-		 
-		 
-		 
+
 		 
 
+	
 		// 관리자페이지_게시판관리로 이동
-//		@GetMapping("/boardMgmt")
-//		public ModelAndView boardMgmt (ModelAndView modlAndView) {
-//			
-//			modlAndView.addObject("pageName", "boardMgmt");
-//			modlAndView.setViewName("page/admin/boardMgmt");
-//			
-//			return modlAndView;
-//		}
+		@GetMapping("/boardMgmt")
+		public ModelAndView boardMgmt (ModelAndView modlAndView) {
+			
+			modlAndView.addObject("pageName", "boardMgmt");
+			modlAndView.setViewName("page/admin/boardMgmt");
+			
+			return modlAndView;
+		}
 	
 
 }
