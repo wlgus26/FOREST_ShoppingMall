@@ -47,6 +47,18 @@ public interface BoardService {
 	// 댓글 삭제
 	int deleteReply(int no);
 
+	// 관리자 게시글 전체 갯수
+	int selectboardcount();
+
+	// 관리자 게시글 전체 조회
+	List<Board> getboardlist(PageInfo pageInfo);
+
+	// 관리자 검색 게시글 갯수
+	int selectboardcountsearch(String searchType, String keyWord);
+
+	// 관리자 검색 게시글 조회
+	List<Board> getboardlistsearch(PageInfo pageInfo, String searchType, String keyWord);
+
 
 
 
