@@ -113,7 +113,6 @@
 			</div>
         </form>
     </div>
-    
 </body>
 </html>
 <script>
@@ -132,8 +131,8 @@ function checkPassword() {
 }
 
 // 입력값이 변경될 때마다 비밀번호 확인 함수 호출
-document.getElementById("newPwd").addEventListener("input", checkPassword);
-document.getElementById("checkPwd").addEventListener("input", checkPassword);
+document.getElementById("newPassword").addEventListener("input", checkPassword);
+document.getElementById("confirmPassword").addEventListener("input", checkPassword);
 
 $(document).ready(() => {
     // 탈퇴 버튼을 클릭하면 모달 창을 보이도록 설정
