@@ -259,13 +259,24 @@ public class HomeController {
 
 	}
 	
-	
+	// 회원정보수정 페이지 이동
 	@GetMapping("/myPage")
 	public ModelAndView myPage (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {
 		
 		modelAndView.addObject("pageName", "myPage");
 		modelAndView.addObject("loginMember", loginMember);
-		modelAndView.setViewName("page/products/myPage");
+		modelAndView.setViewName("page/myPage/myPage");
+		
+		return modelAndView;
+	}
+	
+	// 주문내역 페이지 이동
+	@GetMapping("/orderList")
+	public ModelAndView orderList (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember) {
+		
+		modelAndView.addObject("pageName", "orderList");
+		modelAndView.addObject("loginMember", loginMember);
+		modelAndView.setViewName("page/myPage/orderList");
 		
 		return modelAndView;
 	}
