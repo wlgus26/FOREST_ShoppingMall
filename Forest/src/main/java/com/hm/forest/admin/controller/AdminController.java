@@ -363,9 +363,9 @@ public class AdminController {
 			List<Member> memberlists = null;
 			
 			
-			listcount = memberService.selectmembercount(type, status, searchType);
+			//listcount = memberService.selectmembercount(type, status, searchType);
 			pageInfo = new PageInfo(page, 30, listcount, 15);
-			memberlists = memberService.getmemberlists(searchType, pageInfo);
+			//memberlists = memberService.getmemberlists(searchType, pageInfo);
 			
 			log.info("Page : {}", page);
 			log.info("ListCount : {}", listcount);
