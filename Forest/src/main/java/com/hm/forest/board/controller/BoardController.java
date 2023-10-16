@@ -42,6 +42,7 @@ public class BoardController {
 			 int listCount = 0;
 			 PageInfo pageInfo = null;
 			 List<Board> boardLists = null;
+			 
 
 			 // 검색값이 있는 경우
 			 if (searchType != null && !keyWord.trim().equals("")) {

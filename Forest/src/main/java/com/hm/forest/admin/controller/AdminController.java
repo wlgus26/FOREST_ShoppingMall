@@ -10,10 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,6 +45,7 @@ public class AdminController {
 	@Autowired
 	private MemberService memberService;
 	
+	// 이미지 업로드 
 	private final ResourceLoader resourceLoader;
 	
 	
@@ -64,79 +69,103 @@ public class AdminController {
 			
 			return modelAndView;
 		}
-
 		
-		// 관리자페이지_제품등록
-//		@PostMapping("/productMgmt/insert")
-//		@ResponseBody
-//		public String insert (Product  product) {
-//
-//			System.out.println("getName :" + product.getName());
-//			System.out.println("getPrice :" + product.getPrice());
-//			System.out.println("getColor :" + product.getColor());
-//			
-//			adminService.save(product);
-//
-//			return "redirect:/productMgmtList";
-//		}
-//		
-	
-	
-        // 관리자페이지_제품등록
-		@PostMapping("/productMgmt/insert")
-		public ModelAndView insert(ModelAndView modelAndView,
-								   Product product,
-								   @RequestParam("upfile") MultipartFile upfile) {
+		// 관리자페이지_제품관리로 이동
+		@GetMapping("/productMgmtDetail")
+		public ModelAndView productMgmtDetail (ModelAndView modelAndView) {
 			
+			modelAndView.addObject("pageName", "productMgmtDetail");
+			modelAndView.setViewName("page/admin/productMgmtDetail");
 			
-		    int result = 0;
-		    Map<String, Object> map = new HashMap<>();
-		    
-		    if (upfile != null && !upfile.isEmpty()) {
-				String location = null;
-				String renamedFileName = null;
-				
-				try {
+			return modelAndView;
+		}
 
-
-					location = resourceLoader.getResource("/static/upload/product").getFile().getPath();
-
-					renamedFileName = MultipartFileUtil.save(upfile, location);
+		  // 관리자페이지_제품등록
+				@PostMapping("/productMgmt/insert")
+			
+				public ModelAndView insert(ModelAndView modelAndView,
+										   Product product,
+										   @RequestParam("upfile") MultipartFile upfile) {
 					
-					if (renamedFileName != null) {
+				    int result = 0;
+				    Map<String, Object> map = new HashMap<>();
+				    
+				    if (upfile != null && !upfile.isEmpty()) {
+						String location = null;
+						String renamedFileName = null;
 						
-						product.setImage(renamedFileName);
+						try {
+							location = resourceLoader.getResource("/static/upload/product").getFile().getPath();
+
+							renamedFileName = MultipartFileUtil.save(upfile, location);
+							
+							if (renamedFileName != null) {
+								product.setImage(renamedFileName);
+							}
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+						System.out.println(location + "★★★★★★★");
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
+				    
+				    result = adminService.save(product);
+
+				    map.put("resultCode", result);
+				    map.put("product", product);
+
+
+				    if (result > 0) {
+				        // Insert 성공
+				    	modelAndView.addObject("msg", "제품이 등록되었습니다.");
+				    } else {
+				        // Insert 실패
+				    	modelAndView.addObject("msg", "등록에 실패하였습니다.");
+				    }
+
+				    System.out.println(map);
+				    
+				    modelAndView.setViewName("redirect:/admin/productMgmtList");
+				    return modelAndView;
 				}
 				
-				System.out.println(location + "★★★★★★★");
-			}
-		    
-	
-		    result = adminService.save(product);
-
-		    map.put("resultCode", result);
-		    map.put("product", product);
-
-
-		    if (result > 0) {
-		        // Insert 성공
-		    	modelAndView.addObject("msg", "제품이 등록되었습니다.");
-		    } else {
-		        // Insert 실패
-		    	modelAndView.addObject("msg", "등록에 실패하였습니다.");
-		    }
-
-		    System.out.println(map);
-		    
-		    modelAndView.setViewName("redirect:/admin/productMgmtList");
-		    
-		    return modelAndView;
-		}
+//				@GetMapping("/productMgmtDetail")
+//				public ModelAndView Detail(ModelAndView modelAndView,
+//										 @RequestParam("no") int no) {
+//					
+//					log.info("view() 호출 - {}", no);
+//		
+//					Product product = null;
+//					
+//					product =adminService.getProductBoardByNo(no);
+//					
+//					modelAndView.addObject("pageName", "productMgmtDetail");
+//					modelAndView.addObject("product", product);
+//					modelAndView.setViewName("page/admin/productMgmtDetail");
+//					
+//					return modelAndView;	
+//				}
 		
 		
+		
+		
+		
+		
+		
+		// 비동기 통신 응답
+		// 게시글에 달린 댓글 목록 조회
+//		@GetMapping("/detail")
+//		public ResponseEntity<List<Product>> getDetailsByProductNo() {
+//			
+//		    List<Product> details = adminService.getDetailsByProductNo();
+//		    
+//		    return ResponseEntity.ok(details); // 성공적인 경우 Product 목록 반환
+//		}
+//		
+//		
+
+
+
 		
 		// 관리자 페이지_제품목록 리스트
 		@GetMapping("/productMgmtList")

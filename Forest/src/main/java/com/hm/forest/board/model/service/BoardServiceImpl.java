@@ -130,6 +130,42 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.updateReplyStatus(no, "N");
 	}
 
+	// ㅔ시글 전체 갯수
+	@Override
+	public int selectboardcount() {
+
+		return boardMapper.selectboardcount();
+	}
+
+	// 게시글 전체 조회
+	@Override
+	public List<Board> getboardlist(PageInfo pageInfo) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(limit, offset);
+		
+		return boardMapper.getboardlist(rowBounds);
+	}
+
+	// 검색 게시글 갯수
+	@Override
+	public int selectboardcountsearch(String searchType, String keyWord) {
+
+		return boardMapper.selectboardcountsearch(searchType, keyWord);
+	}
+
+	// 검색 게시글 조회
+	@Override
+	public List<Board> getboardlistsearch(PageInfo pageInfo, String searchType, String keyWord) {
+		int limit = pageInfo.getListLimit();
+		int offset = (pageInfo.getCurrentPage() - 1)* limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return boardMapper.getboardlistsearch(searchType, keyWord, rowBounds);
+	}
+
 
 
 
