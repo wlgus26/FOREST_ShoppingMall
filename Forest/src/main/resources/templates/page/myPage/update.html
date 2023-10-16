@@ -50,17 +50,21 @@
 			  </thead>
 			  
 			  <tbody>
+			   <tr>
+			      <th scope="row">문의유형</th>
+			      <td>
+			      	<select id="category" name="category" th:field="${board.category}">
+					    <option value="" selected>--- 선택 ---</option>
+					    <option value="상품">상품</option>
+					    <option value="배송">배송</option>
+					    <option value="주문/취소">주문/취소</option>
+					    <option value="교환/환불">교환/환불</option>
+				    </select>
+				 </td>
+			    </tr>	
 			    <tr>
 			      <th scope="row">제목</th>
 			      	<td><input type="text" name="title" style="width: 61%;" th:value="${board.title}"></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">작성자</th>
-			      <td><input type="text" name="writerId" style="width: 61%;" th:value="${board.writerId}"></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">첨부파일</th>
-			      <td><input type="text" name="originalFilename" style="width: 61%;"></td>
 			    </tr>
 			    <tr>
 			      <th scope="row">내용</th>

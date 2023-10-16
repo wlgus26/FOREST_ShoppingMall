@@ -24,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.admin.model.service.AdminService;
 import com.hm.forest.admin.model.vo.Product;
+import com.hm.forest.board.model.service.BoardService;
+import com.hm.forest.board.model.vo.Board;
 import com.hm.forest.common.util.MultipartFileUtil;
 import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.service.MemberService;
@@ -44,6 +46,9 @@ public class AdminController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	// 이미지 업로드 
 	private final ResourceLoader resourceLoader;
@@ -352,73 +357,51 @@ public class AdminController {
 		
 		
 		// 회원 목록 가져오기
-		
+
 		@GetMapping("/memberMgmt")
 		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
-										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String status) {
+										@RequestParam(required = false) String searchType) {
 			
-			String type = "memberMgmt";
 			int listcount = 0;
 			PageInfo pageInfo = null;
 			List<Member> memberlists = null;
 			
-			
-			listcount = memberService.selectmembercount(type, status, searchType);
-			pageInfo = new PageInfo(page, 30, listcount, 15);
-			memberlists = memberService.getmemberlists(searchType, pageInfo);
-			
+			log.info("@@@@ 검색 값: {}", searchType);
 			log.info("Page : {}", page);
 			log.info("ListCount : {}", listcount);
 			
-			modelAndView.addObject("pageName", "memberMgmt");
-			modelAndView.addObject("searchType", searchType);
-			modelAndView.addObject("pageInfo", pageInfo);
-			modelAndView.addObject("memberlists", memberlists);
+			// 검색값이 있는 경우
+			 if (searchType != null) {
+				 listcount = memberService.selectmembercountvalue(searchType);
+				 pageInfo = new PageInfo(page, 10, listcount, 10);
+				 memberlists = memberService.getmemberlistsvalue(searchType, pageInfo);
+				 
+				 modelAndView.addObject("pageName", "memberMgmt");
+				 modelAndView.addObject("pageInfo", pageInfo);
+				 modelAndView.addObject("memberlists", memberlists);
+				 modelAndView.addObject("searchType", searchType); // 페이징 처리를 위해 searchType값을 넘겨준다. 
 			
-			modelAndView.setViewName("page/admin/memberMgmt");
+			// 검색값이 없는 경우
+			} else {
+				listcount = memberService.selectmembercount();
+				pageInfo = new PageInfo(page, 10, listcount, 10);
+				memberlists = memberService.getmemberlists(pageInfo);
+				
+				modelAndView.addObject("searchType", searchType);
+				modelAndView.addObject("pageName", "memberMgmt");
+				modelAndView.addObject("pageInfo", pageInfo);
+				modelAndView.addObject("memberlists", memberlists);
 			
-			return modelAndView;
+			}
+			 
+			 log.info("ListCount : {}", listcount);
+			 log.info("MemberLists : {}", memberlists);
+			 
+			 modelAndView.setViewName("page/admin/memberMgmt");
+			 
+			 return modelAndView;
 		}
-		
-		
-		
-//		@GetMapping("/memberMgmt")
-//		public ModelAndView memberlist (ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page, 
-//										@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String status) {
-//			
-//			String type = "memberMgmt";
-//			int listcount = 0;
-//			PageInfo pageInfo = null;
-//			List<Member> memberlists = null;
-//			
-//			 int searchTypeInt = 0;
-//			    if (!searchType.isEmpty()) {
-//			        try {
-//			            searchTypeInt = Integer.parseInt(searchType);
-//			        } catch (NumberFormatException e) {
-//			            // 예외 처리 (유효하지 않은 값 처리)
-//			        }
-//			    }
-//			
-//			listcount = memberService.selectmembercount(type, status, searchType);
-//			pageInfo = new PageInfo(page, 30, listcount, 15);
-//			memberlists = memberService.getmemberlists(status, type, searchType, pageInfo);
-//			
-//			log.info("Page : {}", page);
-//			log.info("ListCount : {}", listcount);
-//			
-//			modelAndView.addObject("pageName", "memberMgmt");
-//			modelAndView.addObject("searchType", searchType);
-//			modelAndView.addObject("pageInfo", pageInfo);
-//			modelAndView.addObject("memberlists", memberlists);
-//			
-//			modelAndView.setViewName("page/admin/memberMgmt");
-//			
-//			return modelAndView;
-//		}
-		
-		
-		
+
 		
 		
 		// 사용계정 --> 휴면계정으로 바꾸기
@@ -453,17 +436,60 @@ public class AdminController {
 		 
 
 		 
-
+		// 게시물 전체 목록 조회(검색 기능 포함)
+		 @GetMapping("/boardMgmt")
+		 public ModelAndView boardMgmtlist(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,
+				 				 	 @RequestParam(required = false) String searchType, @RequestParam(defaultValue = "") String keyWord) {
+			 
+			 int listCount = 0;
+			 PageInfo pageInfo = null;
+			 List<Board> boardLists = null;
+			 
 	
-		// 관리자페이지_게시판관리로 이동
-		@GetMapping("/boardMgmt")
-		public ModelAndView boardMgmt (ModelAndView modlAndView) {
+			 // 검색값이 있는 경우
+			 if (searchType != null && !keyWord.trim().equals("")) {
+				 listCount = boardService.selectboardcountsearch(searchType, keyWord);
+				 pageInfo = new PageInfo(page, 10, listCount, 10);
+				 boardLists = boardService.getboardlistsearch(pageInfo, searchType, keyWord);
+				 
+				 modelAndView.addObject("pageName", "boardMgmt");
+				 modelAndView.addObject("pageInfo", pageInfo);
+				 modelAndView.addObject("searchType", searchType); // 페이징 처리를 위해 searchType과 keyWord값을 넘겨준다. 
+				 modelAndView.addObject("keyWord", keyWord);
+				 modelAndView.addObject("boardLists", boardLists);
+				 
+				log.info("@@@@ 검색 값: {}", searchType);
+				log.info("Page : {}", page);
+				log.info("ListCount : {}", boardLists);
 			
-			modlAndView.addObject("pageName", "boardMgmt");
-			modlAndView.setViewName("page/admin/boardMgmt");
+			// 검색값이 없는 경우
+			} else {
+				listCount = boardService.selectboardcount();
+				pageInfo = new PageInfo(page, 10, listCount, 10);
+				boardLists = boardService.getboardlist(pageInfo);
+				
+				modelAndView.addObject("pageName", "boardMgmt");
+				modelAndView.addObject("pageInfo", pageInfo);
+				modelAndView.addObject("boardLists", boardLists);
+				
+				log.info("@@@@ 검색 값: {}", searchType);
+				log.info("Page : {}", page);
+				log.info("ListCount : {}", boardLists);
 			
-			return modlAndView;
+			}
+			 modelAndView.setViewName("page/admin/boardMgmt");
+			 
+			 return modelAndView;
 		}
-	
+		 
+
+//		@GetMapping("/boardMgmt")
+//		public ModelAndView boardMgmt (ModelAndView modlAndView) {
+//			
+//			modlAndView.addObject("pageName", "boardMgmt");
+//			modlAndView.setViewName("page/admin/boardMgmt");
+//			
+//			return modlAndView;
+//		}
 
 }

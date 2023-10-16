@@ -165,7 +165,7 @@ public class MyPageController {
 	 
 	// 특정 게시글 보기(& 조회수 업데이트 & 쿠키 정보로 조회수 중복 방지)
 	@GetMapping("/view")
-	public ModelAndView view (ModelAndView modelAndView, @RequestParam("no") int no, HttpSession session, HttpServletResponse response) {
+	public ModelAndView view (ModelAndView modelAndView, @RequestParam("no") int no,  @AuthenticationPrincipal Member loginMember, HttpSession session, HttpServletResponse response) {
 		Board board = boardService.getBoardByNo(no);
 		
 		String sessionKey = no + ":cookie";
@@ -188,6 +188,7 @@ public class MyPageController {
 		modelAndView.addObject("pageName", "qnaView");
 		modelAndView.addObject("board", board);
 		modelAndView.setViewName("page/myPage/view");
+		modelAndView.addObject("loginMember", loginMember);
 		
 		return modelAndView;
 	}
@@ -228,11 +229,12 @@ public class MyPageController {
 	
 	// 게시글 수정 페이지 요청
 	@GetMapping("/update")
-	public ModelAndView update (ModelAndView modelAndView, @RequestParam("no") int no) {
+	public ModelAndView update (ModelAndView modelAndView, @AuthenticationPrincipal Member loginMember, @RequestParam("no") int no) {
 		Board board = boardService.getBoardByNo(no);
 		
 		modelAndView.addObject("pageName", "qnaUpdate");
 		modelAndView.addObject("board", board);
+		modelAndView.addObject("loginMember", loginMember);
 		modelAndView.setViewName("page/myPage/update");
 		
 		return modelAndView;

@@ -289,7 +289,9 @@
 	
 	<!-- 게시글 전체 갯수 -->
 	<select id="selectboardcount" parameterType="string" resultType="_int">
-		
+		SELECT COUNT(*)
+		FORM BOARD
+		WHERE STATUS
 	</select>
 	
 	<!-- 게시글 전체 조회 -->

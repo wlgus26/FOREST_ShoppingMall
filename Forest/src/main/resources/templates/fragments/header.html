@@ -69,7 +69,7 @@
 								    </button>
 								    </li>
 								    <li class="nav-item">
-								    <a class="nav-link" href="/myPage/myPage" sec:authorize="hasRole('USER')"> 마이페이지</a>
+								    <a class="nav-link" href="/orderList" sec:authorize="hasRole('USER')"> 마이페이지</a>
 								    <!-- 
 								    <a class="nav-link" href="/admin/salesMgmt" sec:authorize="hasRole('ADMIN')">관리자페이지</a>
 								    -->
@@ -214,7 +214,7 @@
 		 </th:block>
 		 
 		<!-- 마이페이지 -->
-	       <th:block th:if="${pageName eq 'myPage' or pageName eq 'qna' or pageName eq 'qnaWrite' or pageName eq 'qnaView' or pageName eq 'qnaUpdate'}">
+	       <th:block th:if="${pageName eq 'myPage' or pageName eq 'qna' or pageName eq 'qnaWrite' or pageName eq 'qnaView' or pageName eq 'qnaUpdate' or pageName eq 'orderList'}">
 	            <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
 	              <div class="container">
 	                   <div class="text-center text-white">                   
@@ -225,7 +225,7 @@
               	<div class="sub-menu">
 				  <ul>
 				    <li>
-				      <a th:href="@{/myPage/orderList}">주문 내역</a>
+				      <a th:href="@{/orderList}">주문 내역</a>
 				      <a th:href="@{/myPage/qna}" th:classappend="${pageName eq 'qna'} ? 'active-menu' : ''">1:1문의하기</a>
 				      <a th:href="@{/myPage/myPage}">개인정보 수정</a>
 				    </li>
@@ -264,7 +264,7 @@
        	 					  pageName eq 'boardMgmt' or pageName eq 'memberMgmt' or pageName eq 'notice' or 
        	 					  pageName eq 'faq' or pageName eq 'community' or pageName eq 'act' or pageName eq 'qna'or
        	 					  pageName eq 'boardWrite' or pageName eq 'boardUpdate' or pageName eq 'boardView' or
-       	 					  pageName eq 'qnaWrite' or pageName eq 'qnaUpdate' or pageName eq 'qnaView'
+       	 					  pageName eq 'qnaWrite' or pageName eq 'qnaUpdate' or pageName eq 'qnaView' or pageName eq 'orderList'
        	 					  }">
             <header class="bg-main-header py-5" style="background-image: url('/images/common_pic.png');">
               <div class="container">
