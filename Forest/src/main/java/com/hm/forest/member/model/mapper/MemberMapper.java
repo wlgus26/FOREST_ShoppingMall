@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
-import com.hm.forest.common.util.PageInfo;
 import com.hm.forest.member.model.vo.Cart;
 import com.hm.forest.member.model.vo.Member;
 

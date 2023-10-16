@@ -9,8 +9,9 @@
     <!-- myPage.html 고유 CSS 추가 -->
     <th:block layout:fragment="css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 	function openZipSearch() {
 	    new daum.Postcode({
@@ -30,7 +31,6 @@
 	    }).open();
 	}
 	</script>
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     </th:block>
 </head>
 <body>
@@ -40,9 +40,16 @@
             <h3 style="color: #0f5132; font-weight: bold;">개인 정보 수정</h3>
             <hr style="border-width: 1px 0 0 0; border-color: #ccc;">
         </div>
+        
+        <div id="checkedPwd" style="text-align: center; padding: 20px; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 5px; width: 300px; margin: 0 auto;">
+    <h2 style="font-size: 24px; color: black; font-weight: bold;">비밀번호를 입력하세요</h2>
+    <input type="password" id="userPasswordInput" style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin: 10px 0;">
+    <button id="checkPasswordButton" style="padding: 10px 20px; font-size: 16px; background-color: #0f5132; color: #fff; border: none; border-radius: 5px; cursor: pointer;">확인</button>
+</div>
 
-        <form class="validation-form" th:action="@{/myPage}" method="POST" style="width: 50%; margin: 0 auto;">
-            <div style="justify-content: center;display: flex;text-align: center;margin: 0 auto;">
+
+        <form class="validation-form" th:action="@{/myPage}" method="POST" style="width: 50%; margin: 0 auto; display: none;" id="updateInfo" >
+            <div style="justify-content: center;display: flex; text-align: center; margin: 0 auto;">
                 <table class="table">
                     <tr>
                         <th>아이디</th>
@@ -150,4 +157,33 @@ $(document).ready(() => {
         $('#myModal').modal('hide');
     });
 });
+
+function checkedPassword() {
+    var userPassword = document.getElementById("userPasswordInput").value; // 사용자가 입력한 비밀번호
+
+    // 서버에 비밀번호 확인 요청을 보냅니다.
+    $.ajax({
+    type: "GET",
+    url: "/member/passwordCheck",
+    data: { userPassword: userPassword },
+    success: function(response) {
+        if (userPassword === "") {
+            alert("비밀번호를 입력해주세요.");
+        } else if (response.duplicate) {
+            // 비밀번호가 일치하는 경우
+            $("#updateInfo").css("display", "block");
+            $("#checkedPwd").css("display", "none");
+        } else {
+            // 비밀번호가 일치하지 않는 경우
+            alert("비밀번호가 일치하지 않습니다.");
+        }
+    },
+    error: function() {
+        alert("비밀번호 확인 중 오류가 발생했습니다.");
+    }
+});
+}
+
+// HTML에서 비밀번호 확인 버튼에 이벤트 핸들러를 연결합니다.
+document.getElementById("checkPasswordButton").addEventListener("click", checkedPassword);
 </script>
