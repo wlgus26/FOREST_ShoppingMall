@@ -10,16 +10,14 @@ import lombok.NoArgsConstructor;
 public class Order {
 	private int no;
 
-	private int cartNo;
-	
-	private int memberNo;
-	
+	private int paymentNo;
+
 	private int productNo;
 	
 	private int detailNo;
 	
 	private int quantity;
 	
-	private String status;
+	private String status; // 주문 리스트 내의 제품 건별 상태값 
 
 }
