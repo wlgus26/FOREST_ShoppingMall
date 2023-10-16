@@ -10,9 +10,10 @@
 <th:block layout:fragment="css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
+<style>
+
 </style>
 </th:block>
-<!-- memberMgmt.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
 </th:block>
 
@@ -30,7 +31,7 @@
 
 
 
-<div class="table-div">
+  <div class="table-div">
 	  <table class="table table table-hover pull-right">
 	  	<form class="container" action="/admin/memberMgmt" method="GET">
 		  <thead>
@@ -98,14 +99,14 @@
 	  </table>
 	</div>
 
-	 
+
 	 <div class="table-div" style="margin-top: 100px;">
 		<div id="pageBar">
 		  
 		    <!-- 이전 페이지로 -->
 			<a class="a-pagination-move" th:href="@{/admin/memberMgmt(page=${pageInfo.prevPage}, searchType=${searchType})}" th:text="'&lt;'" style="color: #082f1c;"></a>
 			
-			<!-- 10개 페이지 목록 -->
+		    <!-- 10개 페이지 목록 -->
 			<span th:each="pageNumber : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
 			    <a class="a-pagination current-page" th:if="${pageNumber == pageInfo.currentPage}" disabled="disabled" th:text="${pageNumber}"></a>
 			    <a class="a-pagination" th:unless="${pageNumber == pageInfo.currentPage}" th:href="@{/admin/memberMgmt(page=${pageNumber}, searchType=${searchType})}" th:text="${pageNumber}"></a>
