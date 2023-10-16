@@ -266,7 +266,10 @@
 
 	<!-- 댓글 조회 비동기 요청 -->
 	<!-- 더보기 메뉴(수정/삭제, 신고) 토글 -->
-	<script>
+	<script th:inline="javascript">
+	
+	var loginMember = [[${loginMember}]];
+	
 	// 댓글 목록 조회하는 함수
 	function fetchComments() {
 		var boardNo = $('#boardNo').val(); 
@@ -301,9 +304,8 @@
 	        var profileImage = $('<img>').attr('src', '/images/BasicProfile.png').attr('alt', '프로필 사진').addClass('comment-img');
 	        
 	        //  댓글 번호는 hidden
-	        var replyNo =parseInt($('<span></span>').addClass('reply-no').text(reply.no));
-	        
-			console.log('line 305 댓글번호 ' + replyNo); 
+	        var replyNo = $('<input type="hidden"></input>').addClass('reply-no').text(reply.no);
+	       	        
 	       // 더보기 버튼 관련 요소 생성
 	        var moreButtonContainer = $('<span/><div class="opt_more_g" style="position: absolute; top: 10px; right: 20px; border: 1px solid;"></div>');
 	        var moreMenuContainer = $('<div id="more-menu-container" class="opt_container" style="top: 1343.44px; left: 1052.27px; z-index: 1; display: none;"></div>'); // 수정/삭제 메뉴 컨테이너
@@ -334,6 +336,7 @@
 	        // 댓글 작성자
 	        var writerId = $('<sub></sub>').addClass('comment-writer').text(reply.writerId + ' ');
 		 	
+	        
 	        // 댓글 작성 날짜
 		        // 1) reply.createDate 값을 JavaScript Date 객체로 파싱
 		        var datedata = new Date(reply.createDate);
@@ -352,11 +355,12 @@
 		     // commentPost에 replyNoInput을 추가
 	     	commentPost.append(replyNo);
 	        
-	        // listItem에 위에서 생성한 요소들 추가
-	        listItem.append(profileImage, commentPost, moreButtonContainer, writerId, createDate, replyText);
-
 	        // commentList에 listItem 추가
 	        commentList.append(listItem);
+
+	        // listItem에 위에서 생성한 요소들 추가
+	        listItem.append(profileImage, commentPost, moreButtonContainer, replyNo, writerId, createDate, replyText);
+
 	    });
 	}
 	
@@ -379,6 +383,7 @@
 	    var csrfToken = '[[${_csrf.token}]]';
 	    var csrfHeader = '[[${_csrf.headerName}]]';
 	
+	    // 댓글 등록 
 	    $(document).ready(function () {
 	        $('#btinReplyEnroll').click(function () {
 	            var boardNo = $('#boardNo').val();
@@ -472,7 +477,8 @@
 			    var listItem = $(this).closest('li'); // 클릭한 버튼의 가장 가까운 li 요소를 선택
 			    var replyNo = listItem.find('.reply-no').text(); // 댓글의 reply-no를 가져옴
 				
-		        //parseInt(listItem.find('.reply-no').text());
+			    console.log("삭제댓글번호" + replyNo);
+
 			    // 댓글 삭제 요청
 			    deleteComment(replyNo);
 		    }
@@ -510,7 +516,6 @@
 		    // 클릭한 '수정' 버튼이 속한 댓글의 내용을 가져옴
 		    var listItem = $(this).closest('li'); // 클릭한 버튼의 가장 가까운 li 요소를 선택
 		    var replyNo = listItem.find('.reply-no').text(); // 댓글 번호를 가져옴
-		    console.log('수정클릭후 댓번호 ' + replyNo);
 		    var writerId = listItem.find('.comment-writer').text(); // 댓글 작성자를 가져옴 
 		    var replyText = listItem.find('.reply-text').text(); // 댓글 내용을 가져옴
 		    
@@ -562,7 +567,7 @@
 			        commentTextarea.focus(); // textarea에 focus 준 후 함수 종료
 			        return;
 			    }
-				   
+				
 		         // AJAX 통해서 수정 내용을 서버로 전송
 				 $.ajax({
 				        type: 'POST',
@@ -571,7 +576,6 @@
 				        	replyNo: replyNo,
 				        	content: modifiedContent
 				        },
-				        contentType: 'application/json;charset=UTF-8',
 				        beforeSend: function(xhr) {
 			                // 요청을 보내기 전, CSRF 토큰을 헤더에 설정
 			                xhr.setRequestHeader(csrfHeader, csrfToken);

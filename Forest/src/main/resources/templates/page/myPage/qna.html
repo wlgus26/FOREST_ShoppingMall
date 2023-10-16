@@ -38,8 +38,8 @@
 					<th>상태</th>
 				</tr>
 				<!-- 본인이 작성한 게시글만 확인 가능 -->
-   				<th:block th:each="board : ${boardLists}" th:attr="data-href=@{/myPage/view?no={no}(no=${board.no})}"  th:if="${loginMember.id == board.writerId}">
-				<tr class="viewPage" style="text-align: center;">
+   				<th:block th:each="board : ${boardLists}" th:if="${loginMember.id == board.writerId}" >
+				<tr class="viewPage" style="text-align: center;" th:attr="data-href=@{/myPage/view?no={no}(no=${board.no})}">
 			        <td th:text="${board.category}"></td>
 			        <td th:text="${board.title}" style="text-align:left; width:55%;"></td>
 			        <td th:text="${board.writerId}"></td>
@@ -86,17 +86,24 @@
 	
 	
 	<script>
-		   // 각 행을 클릭할 때 해당 게시글 view 페이지로 이동
-		    var rows = document.querySelectorAll(".viewPage");
-		    rows.forEach(function(row) {
-		        row.addEventListener("click", function() {
-		            var href = row.getAttribute("data-href");
-		            if (href) {
-		                window.location.href = href;
-		            }
-		        });
-		    });
+		  // 각 행을 클릭할 때 해당 게시글 view 페이지로 이동
+	    var rows = document.querySelectorAll(".viewPage");
+	    rows.forEach(function(row) {
+	        row.addEventListener("click", function() {
+	            var href = row.getAttribute("data-href");
+	            if (href) {
+	                window.location.href = href;
+	            }
+	        });
+	    });
+  
 		  
+		  // view페이지로 이동 시 게시판 boardNo값을 파라미터 전달
+		  function redirectToView(no) {
+			  console.log(no);
+			  alert(no);
+		   window.location.href = '/myPage/view?no=' + no;
+		  };
 		  // write페이지로 이동 시 게시판 type값을 파라미터 전달
 		  function redirectToWrite(type) {
 		   window.location.href = '/myPage/write?type=' + type;
