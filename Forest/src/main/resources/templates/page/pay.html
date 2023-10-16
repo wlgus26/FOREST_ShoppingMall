@@ -309,6 +309,7 @@ document.addEventListener("DOMContentLoaded", function() {
       customerName: loginMember.name,
       }).catch(function (error) {
           if (error.code === 'USER_CANCEL') {
+        	  alert('결제를 취소하였습니다.')
           // 결제 고객이 결제창을 닫았을 때 에러 처리
           } if (error.code === 'INVALID_CARD_COMPANY') {
             // 유효하지 않은 카드 코드에 대한 에러 처리

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hm.forest.board.model.service.BoardService;
-import com.hm.forest.board.model.vo.Board;
 import com.hm.forest.board.model.vo.Reply;
 
 import lombok.extern.slf4j.Slf4j;
