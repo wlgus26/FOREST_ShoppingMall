@@ -312,6 +312,7 @@ a:not([href]):not([class]), a:not([href]):not([class]):hover {
   text-decoration: none;
 }
 
+
 /* pagination bar */
 .a-pagination {
 	color: #0f5132;

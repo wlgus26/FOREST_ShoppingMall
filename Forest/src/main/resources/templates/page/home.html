@@ -18,6 +18,8 @@
 <th:block layout:fragment="css">
     <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
     <style>
+	 	@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+
         #navi > li {
             display: inline-block;
             position: relative;
@@ -109,6 +111,11 @@
 		  font-weight: bold;
 		}
 		
+		.swiper-slide > a {
+		 text-decoration: none;
+		 color: darkslateblue;
+		}
+		
 		.material-icons {
 		  font-size: 30px;
 		  color: white;
@@ -176,6 +183,7 @@
 <div layout:fragment="content">
    <div>
         <div id="content1">
+           <!-- 
             <ul id="navi" style="text-align: center;">
                 <li><a href="/program"><img src="../images/home1.PNG"><span>원데이 클래스</span></a></li>
                 <li><a href="/program"><img src="../images/home1.PNG"><span>참여형 클래스</span></a></li>
@@ -183,13 +191,14 @@
                 <li><a href="/board/act"><img src="../images/home1.PNG"><span>실천인증</span></a></li>
                 <li><a href="board/notice"><img src="../images/home1.PNG"><span>공지사항</span></a></li>
             </ul>
+            -->
         </div>
         <br> <br>
         <div id="content2">
-            <h3 class="FRM" style="color: rgb(5, 71, 5);" >FORE:ST MISSION</h3>
+            <h3 class="FRM" style="color: rgb(5, 71, 5);" ><strong>FORE:ST MISSION</strong></h3>
                 <p class="FRP">일회용품 사용량 증가와 과잉 소비는 세계적인 환경 위기로 이어졌습니다.  <br>
                 쓰레기 대부분은 재활용이 가능함에도 불구하고 수익성이 없다는 이유로 재활용되기 보다는 소각 또는 매립되어 지구를 오염시키고 있습니다. <br>
-                FORE:ST의 미션은 Reduce Reuse Recycle Recovery의 4 RE_ACT를 통한 자원 순환입니다.</p>
+                <strong style="color: rgb(5, 71, 5);">FORE:ST</strong>의 미션은 <strong>R</strong>educe <strong>R</strong>euse <strong>R</strong>ecycle <strong>R</strong>ecovery의 <strong style="color: red;">4</strong> RE_ACT를 통한 자원 순환입니다.</p>
                 <div class="FRDIV">
                 <img src="../images/home2.PNG" style="width: 600px; height: 400px;">
                 <img src="../images/home3.PNG" style="width: 600px; height: 400px;"> <br>
@@ -208,48 +217,48 @@
                 
             </ul>
         </div>
-	<div class="swiper-container" style="background-color: lightyellow; padding-bottom: 20px; width: 100%;">
-    <h4 id="tt" style="color: rgb(5, 71, 5); margin-top: 150px; text-align: center; padding-top: 50px;">진행 중인 캠페인</h4>
-    <p style="text-align: center;">건강한 지구를 만들기 위한 자원 순환 캠페인</p>
-    <div class="swiper-wrapper" style="margin-top: 150px;">
+	<div class="swiper-container" style="background-color: aliceblue; padding-bottom: 20px; width: 100%;">
+    <h4 id="tt" style="color: rgb(5, 71, 5); margin-top: 150px; text-align: center; padding-top: 15px; font-size: 40px; font-weight: 500;">진행 중인 캠페인</h4>
+    <p style="text-align: center; font-size: 20px;">건강한 지구를 만들기 위한 자원 순환 캠페인</p>
+    <div class="swiper-wrapper" style="margin-top: 30px;">
         <!-- Each set of 3 campaigns is a group -->
         <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/aesop">
-                <span style="text-align: center;">신세계인터내셔날 S.I 뷰티 캠페인 <br> 화장품 공병 수거 캠페인</span><br>
-                <img src="../images/home14.PNG" style="width: 500px; height: 500px;">
+                <span style="text-align: center; font-weight: 500;  font-size: 20px;">신세계인터내셔날 S.I 뷰티 캠페인 <br> 화장품 공병 수거 캠페인</span><br>
+                <br><img src="../images/home14.PNG" style="width: 450px; height: 450px; border-radius: 20px / 20px;">
             </a>
         </div>
         <!-- Add the additional slides with the provided content -->
         <!-- Modify the following lines to add or remove slides as needed -->
         <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/biotherm">
-                <span style="text-align: center;">비오템 <br> 화장품 공병 재활용 캠페인</span>
-                <img src="../images/home15.PNG" style="width: 500px; height: 500px;">
+                <span style="text-align: center; font-weight: 500;  font-size: 20px;">비오템 <br> 화장품 공병 재활용 캠페인</span>
+                <br><br><img src="../images/home15.PNG" style="width: 450px; height: 450px; border-radius: 20px / 20px;">
             </a>
         </div>
         <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/brita">
-                <span style="text-align: center;">브리타 그린 리프 멤버십 <br> 필터 재활용 프로그램</span>
-                <img src="../images/home16.PNG" style="width: 500px; height: 500px;">
+                <span style="text-align: center; font-weight: 500;  font-size: 20px;">브리타 그린 리프 멤버십 <br> 필터 재활용 프로그램</span>
+                <br><br><img src="../images/home16.PNG" style="width: 450px; height: 450px; border-radius: 20px / 20px;">
             </a>
         </div>
  	<!-- Add the additional slides with the provided content -->
        <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/melixir">
-                <span style="text-align: center;">멜릭서 me:cycle 켐페인 <br> me:cycle <br></span>
-                <img src="../images/melixir.PNG" style="width: 500px; height: 500px;">
+                <span style="text-align: center; font-weight: 500; font-size: 20px;">멜릭서 me:cycle 켐페인 <br> me:cycle <br></span>
+                <br><img src="../images/melixir.PNG" style="width: 450px; height: 450px; border-radius: 20px / 20px;">
             </a>
         </div>
         <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/boonbastick">
-                <span style="text-align: center;">빙그레 분타스틱 캠페인 <br> 빙그레 바나나맛우유</span>
-                <img src="../images/boonbastick.PNG" style="width: 500px; height: 500px;">
+                <span style="text-align: center; font-weight: 500;  font-size: 20px;">빙그레 분타스틱 캠페인 <br> 빙그레 바나나맛우유</span>
+                <br><br><img src="../images/boonbastick.PNG" style="width: 450px; height: 450px; border-radius: 20px / 20px;">
             </a>
         </div>
         <div class="swiper-slide" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <a href="/campaign/mbci">
-                <span style="text-align: center;">가져와요 플라스틱, 지켜가요 우리바다 <br> Plastic Free Tomorrow </span>
-                <img src="../images/mbci.PNG" style="width: 500px; height: 500px;">
+                <span style="text-align: center; font-weight: 500;  font-size: 20px;">가져와요 플라스틱, 지켜가요 우리바다 <br> Plastic Free Tomorrow </span>
+                <br><br><img src="../images/mbci.PNG" style="width: 450px; height: 450px; border-radius: 20px / 20px;">
             </a>
         </div>
         <!-- End of additional slides -->
