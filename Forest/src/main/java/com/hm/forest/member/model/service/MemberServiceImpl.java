@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -172,13 +173,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> f82d9be4dfe0483c144428225382c97cc5aac996
 	
 //	@Override
 //	public int selectMemberCountByStatus(String status) {
@@ -196,7 +190,5 @@ public class MemberServiceImpl implements MemberService {
 //		
 //		return mapper.selectMemberlistsByStatus(status,bounds);
 //	}
-
-
 
 }
