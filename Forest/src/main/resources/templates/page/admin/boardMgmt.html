@@ -59,12 +59,11 @@
 					<th>상태</th>
 				</tr>
 			    
-			    <!-- 조회된 게시글이 있는 경우 -->
 				<tr class="viewPage" style="text-align: center;" th:each="board : ${boardLists}"  th:attr="data-href=@{/boardMgmt?no={no}(no=${board.no})}">
-			        <td th:text="${board.rowNum}"></td>
+		        	<td th:text="${board.rowNum}"></td>
 			        <td th:text="${board.title}" style="text-align:left; width:55%;"></td>
 			        <td th:text="${board.writerId}"></td>
-			        <td th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
+			        <td th:text="${#dates.format(board.createDate, 'yy-MM-dd')}"></td>
 			        <td th:text="${board.status}" style="width:10%;"></td>
 			    </tr>
 		  </tbody>

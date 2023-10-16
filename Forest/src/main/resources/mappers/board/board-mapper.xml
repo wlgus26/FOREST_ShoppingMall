@@ -284,57 +284,25 @@
 	
 	<!-- 게시글 전체 갯수 -->
 	<select id="selectboardcount" parameterType="string" resultType="_int">
-		SELECT COUNT(*)
-		FROM BOARD 
-		WHERE  STATUS = 'Y' AND TYPE = #{type}
+		
 	</select>
 	
 	<!-- 게시글 전체 조회 -->
 	<select id="getboardlist" parameterType="string" resultMap="boardResultMap">
 		<include refid="boardListSql" /> 
-		AND B.TYPE = #{type}
-		ORDER BY B.NO DESC
+		
 	</select>
 	
 	<!-- 검색 게시글 갯수 -->
 	<select id="selectboardcountsearch" parameterType="map" resultType="_int">
-		SELECT COUNT(*)
-		FROM BOARD B
-		INNER JOIN MEMBER M ON (B.WRITER_NO = M.NO)
-		WHERE B.STATUS = 'Y' AND B.TYPE = #{type} 
-		<if test="searchType != null">
-			<choose>
-				<when test='searchType.equals("writer")'>
-				AND M.ID LIKE '%' || #{keyWord} || '%'
-				</when>
-				<when test='searchType.equals("title")'>
-				AND B.TITLE LIKE '%' || #{keyWord} || '%'
-				</when>
-				<when test='searchType.equals("content")'>
-				AND B.CONTENT LIKE '%' || #{keyWord} || '%'
-				</when>
-			</choose>
-		</if>
+		<include refid="boardListSql" /> 
+		
 	</select>
 	
 	<!-- 검색 게시글 조회 -->
 	<select id="getboardlistsearch" parameterType="map" resultMap="boardResultMap">
 		<include refid="boardListSql" /> 
-		AND B.TYPE = #{type}
-		<if test="searchType != null">
-			<choose>
-				<when test='searchType.equals("writer")'>
-				AND M.ID LIKE '%' || #{keyWord} || '%'
-				</when>
-				<when test='searchType.equals("title")'>
-				AND B.TITLE LIKE '%' || #{keyWord} || '%'
-				</when>
-				<when test='searchType.equals("content")'>
-				AND B.CONTENT LIKE '%' || #{keyWord} || '%'
-				</when>
-			</choose>
-		</if>
-		ORDER BY B.NO DESC
+		
 	</select>
 	
 </mapper>
