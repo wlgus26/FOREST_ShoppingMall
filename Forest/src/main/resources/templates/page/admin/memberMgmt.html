@@ -3,22 +3,17 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
-      
- <!-- ----------------------------------------------------------------------------------     
-     <title>Session Data</title>     
---> 
+     
 
 <th:block th:with="pageName='memberMgmt'"></th:block>      
 <!-- memberMgmt.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <!-- ex)   <link rel="stylesheet" th:href="@{/css/page/memberMgmt.css}" >-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
-	
 </style>
 </th:block>
 <!-- memberMgmt.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <!-- ex)  <script th:src="@{/js/page/memberMgmt.js}"></script>-->
 </th:block>
 
 <!-- Content -->
@@ -33,119 +28,94 @@
 </body>
   ---------------------------------------------------------------------------------- -->   
 
-	<h6>전체 회원 조회</h6>
-	<form class="container" action="/admin/memberMgmt" method="GET">
-	<label for="status" style="margin-left: 60%; margin-bottom: 20px;">회원활동여부: </label>
-	<select id="searchType" name="searchType" >
-		<option value=" " selected>전체</option>
-		<option value="1">활동중인회원</option>
-		<option value="2">휴면 회원</option>
-	</select>
-	
-	<button type="submit" id="btn btn-sm-search btn-search">검색</button>
-	</form>
-	
-	
-	
-	 <table style="margin-left: 25%; margin-bottom: 20px;">
-	 	<tr>
-	 		<th>번호</th>
-	 		<th>아이디</th>
-	 		<th>이름</th>
-	 		<th>폰번호</th>
-	 		<th>이메일</th>
-	 		<th>상태값</th>
-	 		<th>가입일</th>
-	 	</tr>
-	 	<tr class="clickable-row" style="text-align: center;" th:each="member : ${memberlists}" th:attr="data-href=@{/admin/memberMgmt?no={no}(no=${member.no})}">
-		 	<td th:text="${member.no}"></td>
-		 	<td th:text="${member.id}"></td>
-		 	<td th:text="${member.name}"></td>
-		 	<td th:text="${member.phone}"></td>
-		 	<td th:text="${member.email}"></td>
-		 	<td th:text="${member.status}"></td>
-		 	<td th:text="${#dates.format(member.createDate, 'yy-MM-dd')}"></td>
-		 	
-		 	<td style="padding-left: 10px;">
-            <form action="/admin/updatememberstatus" method="post">
+
+
+<div class="table-div">
+	  <table class="table table table-hover pull-right">
+	  	<form class="container" action="/admin/memberMgmt" method="GET">
+		  <thead>
+		    <tr class="border-bottom" >
+		      <th scope="col" colspan="2" class="th-custom-style" style="border-bottom-width: 3px; 
+				  border-bottom-color: #082f1c;
+				  color: #082f1c;">회원 조회 </th>
+			  <!-- 검색 바 -->
+			   <td style="padding:8px 2px 8px 8px; border-bottom-width: 3px; 
+				  border-bottom-color: #082f1c;
+				  color: #082f1c;">
+				   <label for="status" style="margin-bottom: 40px;">회원활동여부: </label>
+					<select id="searchType" name="searchType" th:value="${searchType}" style="margin-left: 40px;">
+						<option value=" " selected>전체</option>
+						<option value="1">활동중인회원</option>
+						<option value="2">휴면 회원</option>
+					</select>
+               </td>
+               <td style="padding:8px 2px; border-bottom-width: 3px; 
+				  border-bottom-color: #082f1c;
+				  color: #082f1c;">
+				  <button type="submit" class="btn btn-sm-search btn-search">검색</button>
+			  </td>
+		    </tr>
+	 	  </thead>
+	   </form>
+		  
+		  <tbody>
+		  	    <tr style="text-align: center;">
+				<th style="padding-left: 10px; border-bottom: 1px solid #000; padding-bottom: 10px;">번호</th>
+		 		<th style="padding-left: 10px; border-bottom: 1px solid #000;">아이디</th>
+		 		<th style="padding-left: 40px; border-bottom: 1px solid #000;">이름</th>
+		 		<th style="padding-left: 50px; border-bottom: 1px solid #000;">폰번호</th>
+		 		<th style="padding-left: 100px; border-bottom: 1px solid #000;">이메일</th>
+		 		<th style="padding-left: 30px; border-bottom: 1px solid #000;">상태값</th>
+		 		<th style="padding-left: 30px; border-bottom: 1px solid #000;">가입일</th>
+				</tr>
+				
+			    <tr class="clickable-row" style="text-align: center;" th:each="member : ${memberlists}" th:attr="data-href=@{/admin/memberMgmt?no={no}(no=${member.no})}">
+			        <td style="padding-left: 10px; padding-top:15px; border-bottom: 1px solid #000; margin-bottom: 10px;" th:text="${member.no}"></td>
+				 	<td style="padding-left: 10px; border-bottom: 1px solid #000;" th:text="${member.id}"></td>
+				 	<td style="padding-left: 30px; border-bottom: 1px solid #000;" th:text="${member.name}"></td>
+				 	<td style="padding-left: 30px; border-bottom: 1px solid #000;" th:text="${member.phone}"></td>
+				 	<td style="padding-left: 60px; border-bottom: 1px solid #000;" th:text="${member.email}"></td>
+				 	<td style="padding-left: 30px; border-bottom: 1px solid #000;" th:text="${member.status}"></td>
+				 	<td style="padding-left: 20px; border-bottom: 1px solid #000;" th:text="${#dates.format(member.createDate, 'yy-MM-dd')}"></td>
+				 	
+				 	<td style="padding-left: 20px;">
+		            <form action="/admin/updatememberstatus" method="post">
+		            	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />	
+		                <input type="hidden" name="no" th:value="${member.no}">
+		                <button style="background-color: #082f1c; color: white; font-size: 15px; border-radius: 5px; margin-bottom: 10px; border: none; padding: 5px 10px;" type="submit">휴면으로 변경</button>
+		            </form>
+		        	</td>
+		        
+		       		 <td style="padding-left: 10px;">
+            	<form action="/admin/activateMember" method="post">
             	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />	
                 <input type="hidden" name="no" th:value="${member.no}">
-                <button type="submit" style="color: #082f1c;">휴면으로 변경</button>
-            </form>
-        	</td>
-        
-       		 <td style="padding-left: 10px;">
-            <form action="/admin/activateMember" method="post">
-            	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />	
-                <input type="hidden" name="no" th:value="${member.no}">
-                <button type="submit">사용으로 변경</button>
+                <button style="background-color: #082f1c; color: white; font-size: 15px; border-radius: 5px; margin-bottom: 10px; border: none; padding: 5px 10px;" type="submit">사용으로 변경</button>
             </form>
        		</td>	
-	 	</tr>
-	 </table>
+			    </tr>
+		  </tbody>
+	  </table>
+	</div>
+
 	 
 	 <div class="table-div" style="margin-top: 100px;">
 		<div id="pageBar">
 		  
 		    <!-- 이전 페이지로 -->
-		    <i class="fa-sharp fa-regular fa-angle-left" style="color: #0f5132;"></i>
-		    <a class="a-pagination-move" th:href="@{/admin/memberMgmt(page=${pageInfo.prevPage})}" th:text="'&lt;'" style="color: #082f1c;"></a>
-
-		    <!-- 10개 페이지 목록 -->
+			<a class="a-pagination-move" th:href="@{/admin/memberMgmt(page=${pageInfo.prevPage}, searchType=${searchType})}" th:text="'&lt;'" style="color: #082f1c;"></a>
+			
+			<!-- 10개 페이지 목록 -->
 			<span th:each="pageNumber : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
 			    <a class="a-pagination current-page" th:if="${pageNumber == pageInfo.currentPage}" disabled="disabled" th:text="${pageNumber}"></a>
-			    <a class="a-pagination" th:unless="${pageNumber == pageInfo.currentPage}" th:href="@{/admin/memberMgmt(page=${pageNumber})}" th:text="${pageNumber}"></a>
+			    <a class="a-pagination" th:unless="${pageNumber == pageInfo.currentPage}" th:href="@{/admin/memberMgmt(page=${pageNumber}, searchType=${searchType})}" th:text="${pageNumber}"></a>
 			</span>
-		
-		    <!-- 다음 페이지로 -->
-		    <a class="a-pagination-move" th:href="@{/admin/memberMgmt(page=${pageInfo.nextPage})}" th:text="'&gt;'" style="color: #082f1c;"></a>
-		   
+			
+			<!-- 다음 페이지로 -->
+			<a class="a-pagination-move" th:href="@{/admin/memberMgmt(page=${pageInfo.nextPage}, searchType=${searchType})}" th:text="'&gt;'" style="color: #082f1c;"></a>
+
 		</div>
 	</div>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script>
-	    $(document).ready(function() {
-	        // 초기 페이지 로드 시 실행할 함수
-	        loadPage(1, '');  // 페이지 1 로딩
-	        
-	        // "검색" 버튼 클릭 시
-	        $('#btn-search').click(function() {
-	            var searchType = $('#searchType').val();
-	            loadPage(1, searchType);
-	        });
-	        
-	        // "이전" 버튼 클릭 시
-	        $('#pageBar').on('click', '.a-pagination-move-left', function() {
-	            var prevPage = $(this).data('prevPage');
-	            var searchType = $('#searchType').val();
-	            loadPage(prevPage, searchType);
-	        });
-	        
-	        // "다음" 버튼 클릭 시
-	        $('#pageBar').on('click', '.a-pagination-move-right', function() {
-	            var nextPage = $(this).data('nextPage');
-	            var searchType = $('#searchType').val();
-	            loadPage(nextPage, searchType);
-	        });
-	        
-	        // 페이지 로드 함수
-	        function loadPage(page, searchType) {
-	            // 서버로 AJAX 요청 보내기
-	            $.ajax({
-	                type: 'GET',
-	                url: '/admin/memberMgmt',
-	                data: {
-	                    page: page,
-	                    searchType: searchType
-	                },
-	                success: function(data) {
-	                    // 서버에서 받은 데이터로 테이블 업데이트
-	                    $('#Member').html(data);
-	                }
-	            });
-	        }
-	    });
-    
-    </script>
+
 </div>
 </html>

@@ -385,14 +385,6 @@ public class AdminController {
 		     }
 		 }
 		 
-//		 // 회원 상태 쿠키 줘서 바꾸기
-//		 
-//		    @GetMapping("/memberMgmt")
-//		    public String setSessionData(@RequestParam String id, @RequestParam String status, HttpSession session) {
-//		        // 세션에 데이터 저장
-//		        session.setAttribute(id, status);
-//		        return "redirect:/";
-//		    }
 		 
 
 		// 관리자페이지_게시판관리로 이동
