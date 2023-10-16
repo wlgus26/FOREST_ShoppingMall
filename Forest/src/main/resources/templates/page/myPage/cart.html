@@ -357,13 +357,16 @@ $(document).ready(function() {
 	    var cartNo = cartLists.map(function(cart) {
 	        return cart.no;
 	    }).join(',');
+		
+	    var postFee = totalCartPrice >= 30000 ? 0 : (totalCartPrice === 0 ? 0 : 2500);
 	   
 	    // 2. 총 결제금액(cart.price * cart.quantity 합계)
-	    var totalPrice = cartLists.reduce(function (total, cart) {
+	    var totalCartPrice = cartLists.reduce(function (total, cart) {
 	        return total + (cart.price * cart.quantity);
 	    }, 0);
-
-	   
+	    
+	    var totalPrice = totalCartPrice >= 30000 ? totalCartPrice : (totalCartPrice + 2500);
+   
         if(confirm('전체 상품을 주문하시겠습니까?')){
 			// cart.no값과 totalPrice값을 pay 컨트롤러로 전달
 			// AJAX POST 요청

@@ -175,7 +175,7 @@ public class HomeController {
 	// [주문하기] 장바구니 주문하기 -> 결제페이지 
 	@PostMapping("/pay")
 	public ResponseEntity<String> pay(@RequestParam("cartNo") String cartNo, @RequestParam("totalPrice") int totalPrice, HttpSession session) {
-
+		
 	    // 데이터를 세션에 저장
 	    session.setAttribute("cartNo", cartNo);
 	    session.setAttribute("totalPrice", totalPrice);
