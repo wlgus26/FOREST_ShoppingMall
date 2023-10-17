@@ -105,6 +105,15 @@ public class HomeController {
 		return modelAndView;
 	}
 	
+	// 이벤트 페이지_maysum으로 이동
+	@GetMapping("/event/maysum")
+	public ModelAndView maysum (ModelAndView modelAndView) {
+		modelAndView.addObject("pageName", "maysum");
+		modelAndView.setViewName("page/event/maysum");
+		
+		return modelAndView;
+	}
+	
 	// about으로 이동
 	@GetMapping("/about")
 	public ModelAndView about (ModelAndView modelAndView,  @AuthenticationPrincipal Member loginMember) {
