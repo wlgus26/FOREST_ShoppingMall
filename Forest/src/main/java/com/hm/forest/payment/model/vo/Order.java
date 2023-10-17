@@ -12,6 +12,7 @@ public class Order {
 
 	private int paymentNo;
 
+	private int cartNo;
 	
 	private int productNo;
 	
