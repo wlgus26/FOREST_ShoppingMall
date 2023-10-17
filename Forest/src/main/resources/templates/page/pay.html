@@ -323,6 +323,7 @@ var csrfHeader = [[${_csrf.headerName}]];
 	     for (var i = 0; i < cartLists.length; i++) {
 	        var cart = cartLists[i];
 	        var orderItem = {
+	        	cartNo: cart.no,
 	            productNo: cart.productNo,
 	            detailNo: cart.detailNo,
 	            quantity: cart.quantity

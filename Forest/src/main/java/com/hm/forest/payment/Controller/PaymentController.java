@@ -170,7 +170,6 @@ public class PaymentController {
 	     }
 		 
 		map.put("no", payment.getNo()); // 결제 no 
-		log.info("obj.paymentNo: ", map.get("no"));
 		
 		return ResponseEntity.ok(map);
 	}
@@ -195,7 +194,6 @@ public class PaymentController {
 		if (paymentType.equals("NORMAL")) {
 			// 1. 재고 변경
 			//    1) 주문 수량 조회
-			log.info("PaymentNo : ",no);
 			System.out.println(no);
 			System.out.println(paymentType);
 			

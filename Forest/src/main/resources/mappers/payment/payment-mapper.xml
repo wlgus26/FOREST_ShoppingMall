@@ -26,6 +26,7 @@
 	<resultMap id="orderResultMap" type="Order">
 		<id property="no" column="NO"/>
 		<result property="paymentNo" column="PAYMENT_NO"/>
+		<result property="cartNo" column="CART_NO"/>
 		<result property="productNo" column="PRODUCT_NO"/>
 		<result property="detailNo" column="DETAIL_NO"/>
 		<result property="quantity" column="QUANTITY"/>
