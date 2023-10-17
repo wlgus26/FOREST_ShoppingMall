@@ -205,19 +205,27 @@ public class PaymentController {
 			
 			// 2. 해당 결제 건의 상태값 변경(N -> Y)
 			updatePaymentStatusResult = paymentService.updatePaymentStatusByNo(no, memberNo);
+			
+			 if (updateStockResult > 0 & updatePaymentStatusResult > 0) {
+					System.out.println("재고수량 변경, 결제상태변경 성공~");
+				}
 
-			// 3. 장바구니 삭제 memberno
-			// deleteCartResult = paymentService.deleteCartBy
-//			if (deleteCartResult > 0) {
-//				System.out.println("장바구니도 삭제 성공~");
-//			}
-			System.out.println(orderInfo);
-			// 4. 결제내역 정보
+			// 3. 장바구니 상품 삭제
+			 deleteCartResult = paymentService.deleteCartByCartNo(memberNo, orderInfo);			
+			 
+			// 4. 결제 내역 조회
+			 Delivery delivery = new Delivery();
+			 List<Cart> myOrderLists = new ArrayList<>();
+			//    1) 주문 내역
+			myOrderLists = paymentService.getOrderListsByNo(no, memberNo);
 			
-			
-			
+			//    2) 배송 내역
+			delivery = paymentService.getDeliveryByNo(no, memberNo);
+
 			modelAndView.addObject("pageName", "paysv");
 			modelAndView.addObject("loginMember", loginMember);
+			modelAndView.addObject("myOrderLists", myOrderLists);
+			modelAndView.addObject("delivery", delivery);
 			modelAndView.setViewName("page/paysv");
 		} else {
 			modelAndView.addObject("msg", "결제에 실패하였습니다.");
@@ -225,9 +233,7 @@ public class PaymentController {
 			modelAndView.setViewName("page/common/msg");
 		}
 	
-	
         return modelAndView;
-		
 	}
 	
 	

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hm.forest.member.model.vo.Cart;
 import com.hm.forest.payment.model.mapper.PaymentMapper;
 import com.hm.forest.payment.model.vo.Delivery;
 import com.hm.forest.payment.model.vo.Order;
@@ -75,10 +76,10 @@ public class PaymentServiceImpl implements PaymentService {
 	// 1. 재고 변경_재고 수량 감소
 	@Override
 	@Transactional
-	public int updateStockByOrderQuantity(List<Order> orderQuantity) {
+	public int updateStockByOrderQuantity(List<Order> orderInfo) {
 		   int totalUpdateResult = 0;
 		   
-		    for (Order order : orderQuantity) {
+		    for (Order order : orderInfo) {
 		        int result = paymentMapper.updateStockByOrderQuantity(order);
 		        totalUpdateResult += result;
 		    }
@@ -90,6 +91,31 @@ public class PaymentServiceImpl implements PaymentService {
 	@Transactional
 	public int updatePaymentStatusByNo(int no, int memberNo) {
 		return paymentMapper.updatePaymentStatusByNo(no, memberNo, "Y");
+	}
+
+	// 3. 장바구니 상품 삭제
+	@Override
+	@Transactional
+	public int deleteCartByCartNo(int memberNo, List<Order> orderInfo) {	
+		   int totalDeleteResult = 0;
+		   
+		    for (Order order : orderInfo) {
+		        int result = paymentMapper.deleteCartByCartNo(memberNo, order.getCartNo());
+		        totalDeleteResult += result;
+		    }
+		    return totalDeleteResult;
+	}
+
+	// 4. 결제 내역 조회_주문 내역
+	@Override
+	public List<Cart> getOrderListsByNo(int no, int memberNo) {
+		return paymentMapper.getOrderListsByNo(no, memberNo);
+	}
+
+	// 4. 결제 내역 조회_배송 내역
+	@Override
+	public Delivery getDeliveryByNo(int no, int memberNo) {
+		return paymentMapper.getDeliveryByNo(no, memberNo);
 	}
 
 }

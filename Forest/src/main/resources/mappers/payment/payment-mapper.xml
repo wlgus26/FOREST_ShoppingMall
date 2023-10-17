@@ -47,6 +47,24 @@
 		<result property="returnDate" column="RETURN_DATE"/>
 	</resultMap>
 	
+	<resultMap id="cartResultMap" type="Cart">
+		<id property="no" column="NO"/>
+		<result property="memberNo" column="MB_NO"/>
+		<result property="productNo" column="PD_NO"/>
+		<result property="detailNo" column="DETAIL_NO"/>
+		<result property="color" column="COLOR"/>
+		<result property="size" column="SIZE_SML"/>
+		<result property="stock" column="STOCK"/>
+		<result property="category" column="CATEGORY"/>
+		<result property="name" column="NAME"/>
+		<result property="price" column="PRICE"/>
+		<result property="discountrate" column="DISCOUNTRATE"/>
+		<result property="image" column="IMAGE"/>
+		<result property="status" column="STATUS"/>
+		<result property="quantity" column="QUANTITY"/>
+		<result property="totalPrice" column="TOTAL_PRICE"/>
+	</resultMap>
+	
 	<!-- 결제하기 클릭 시 입력되는 정보들 -->
 	<!-- 1. 결제 정보 설정(입력) -->
 	<insert id="insertPayment">	
@@ -137,6 +155,43 @@
 		WHERE NO = #{no} AND MEMBER_NO = #{memberNo}
 	</update>
 
-
+	<!-- 3. 장바구니 상품 삭제 -->
+	<delete id="deleteCartByCartNo" parameterType="_int">
+	   DELETE FROM CART
+	   WHERE NO IN #{cartNo} AND MB_NO = #{memberNo}
+	</delete>
 	
+	<!-- 4. 결제 내역 조회_주문 내역-->
+	<select id="getOrderListsByNo" parameterType="_int" resultMap="cartResultMap">
+		SELECT PD.IMAGE,
+		       PD.CATEGORY,
+		       PD.NAME,
+		       PD.PRICE,
+		       D.COLOR,
+		       D.SIZE_SML,
+		       O.QUANTITY
+		FROM PAYMENT PM 
+		JOIN ORDERINFO O ON (O.PAYMENT_NO = PM.NO)
+		JOIN PRODUCT PD ON (O.PRODUCT_NO = PD.NO)
+		JOIN DETAIL D ON (O.DETAIL_NO = D.NO)
+		WHERE PM.STATUS = 'Y' AND PM.NO = #{no} AND PM.MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 4. 결제 내역 조회_배송 내역-->
+	<select id="getDeliveryByNo" parameterType="_int" resultMap="deliveryResultMap">
+		SELECT PAYMENT_NO,
+		       RECIPIENT,
+		       PHONE,
+		       PCODE,
+		       ADDRESS1,
+		       ADDRESS2,
+		       MEMO,
+		       DELIVERY_DATE,
+		       RETURN_DATE,
+		       STATUS
+		FROM DELIVERY
+		WHERE PAYMENT_NO = #{no}	
+	</select>
+	
+
 </mapper>
