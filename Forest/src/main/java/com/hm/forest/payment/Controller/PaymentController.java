@@ -181,6 +181,7 @@ public class PaymentController {
 		// paymentType = "UNNORMAL";	
 		int updateStockResult = 0;
 		int updatePaymentStatusResult = 0;
+		int deleteCartResult = 0;
 		int memberNo = loginMember.getNo();
 		
 		// paymentType = NORMAL값 받는경우(결제성공) 처리할 로직(update)_컨트롤러 넘길값: productNo, deatilNo, quantity,Member loginMember
@@ -189,25 +190,28 @@ public class PaymentController {
 		// 3) 주문상품 장바구니에서 제거
 		// 4) 결제정보 상품 리스트 출력
 		
-		
 		// 결제 성공 시 
 		if (paymentType.equals("NORMAL")) {
 			// 1. 재고 변경
-			//    1) 주문 수량 조회
+			//    1) 주문 수량 조회 
 			System.out.println(no);
 			System.out.println(paymentType);
 			
-			List<Order> orderQuantity = paymentService.getOrderQuantityByNo(no);
+			List<Order> orderInfo = new ArrayList<>(); // 장바구니 번호, 제품 번호, 디테일 번호, 수량을 담을 객체 
+			orderInfo = paymentService.getOrderQuantityByNo(no);
 
 			//    2) 재고 수량 감소
-			updateStockResult = paymentService.updateStockByOrderQuantity(orderQuantity);
+			updateStockResult = paymentService.updateStockByOrderQuantity(orderInfo);
 			
 			// 2. 해당 결제 건의 상태값 변경(N -> Y)
 			updatePaymentStatusResult = paymentService.updatePaymentStatusByNo(no, memberNo);
 
 			// 3. 장바구니 삭제 memberno
-			
-			
+			// deleteCartResult = paymentService.deleteCartBy
+//			if (deleteCartResult > 0) {
+//				System.out.println("장바구니도 삭제 성공~");
+//			}
+			System.out.println(orderInfo);
 			// 4. 결제내역 정보
 			
 			

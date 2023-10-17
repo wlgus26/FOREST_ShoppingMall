@@ -25,7 +25,7 @@ public interface PaymentService {
 	List<Order> getOrderQuantityByNo(int no);
 
 	// 1. 재고 변경_재고수량 감소
-	int updateStockByOrderQuantity(List<Order> orderQuantity);
+	int updateStockByOrderQuantity(List<Order> orderInfo);
 
 	// 2. 해당 결제 건의 상태값 변경(N -> Y)
 	int updatePaymentStatusByNo(int no, int memberNo);
