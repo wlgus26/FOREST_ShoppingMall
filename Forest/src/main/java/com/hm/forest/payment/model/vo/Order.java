@@ -1,4 +1,4 @@
-package com.hm.forest.member.model.vo;
+package com.hm.forest.payment.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +12,8 @@ public class Order {
 
 	private int paymentNo;
 
+	private int cartNo;
+	
 	private int productNo;
 	
 	private int detailNo;

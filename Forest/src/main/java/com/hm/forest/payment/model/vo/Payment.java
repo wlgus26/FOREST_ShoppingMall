@@ -1,7 +1,9 @@
-package com.hm.forest.member.model.vo;
+package com.hm.forest.payment.model.vo;
 
 import java.util.Date;
 import java.util.List;
+
+import com.hm.forest.member.model.vo.Cart;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +29,6 @@ public class Payment {
 	
 	private List<Order> orderLists; // 주문 제품 정보 리스트
 	
-	private Delivery deliveryInfo; // 배송 정보 객체
+	private Delivery delivery; // 배송 정보 객체
 	
 }
