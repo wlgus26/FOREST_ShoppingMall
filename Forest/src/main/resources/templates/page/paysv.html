@@ -116,59 +116,108 @@
 	 	 	</tr>
 	 	 	<tr style="border-bottom-color: white;">
 	 	 		<td style="padding-left: 10px;">수령인 </td>
-	 	 		<td><input type="text" id="recipient" class="form-control" style="width:90%;"></input> </td>
+	 	 		<td th:text="${delivery.recipient}"></td>
 	 	 		<td>이름 </td>
 	 	 		<td colspan="2" th:text="${loginMember.name}"></td>
 	 	 	</tr>
 	 	 	<tr style="border-bottom-color: white;">
 	 	 		<td>연락처 </td>
-	 	 		<td><input type="text" id="phone" class="form-control" style="width:90%;" placeholder="연락처 입력('-'제외 11자리 입력)"></input></td>
+	 	 		<td th:text="${delivery.phone}"></td>
 	 	 		<td>연락처 </td>
 	 	 		<td colspan="2" th:text="${loginMember.phone}"></td>
 	 	 	</tr>
 	 	 	<tr rowspan="2" style="border-bottom-color: white; padding-bottom: 0px; border-bottom-width: 0px;">
 	 	 		<td>배송지 주소 </td>
-	 	 		<td style="padding-bottom: 0px; border-bottom-width: 0px;">
-	 	 		<input type="text" id="pcode" class="form-control" style="width:30%; float: left; margin-right:10px;"></input>
-	 	 		<input type="button" class="btn btn-outline-secondary form-control" style="width:30%;" value="우편번호" onclick="openZipSearch();">
-	 	 		</td>
+	 	 		<td th:text="${delivery.address1}"></td>
 	 	 		<td>이메일 </td>
 	 	 		<td colspan="2" th:text="${loginMember.email}" style="padding-bottom: 0px; border-bottom-width: 0px;"></td>
 	 	 	</tr>
 	 	 	<tr style="border-bottom-color: white;">
 	 	 		<td style="border-bottom-color: white;"></td>
-	 	 		<td style="border-bottom-color: white; padding-bottom: 0px; border-bottom-width: 0px;">
-	 	 		<input type="text" id="address1" class="form-control" style="width:90%;"></input>
+	 	 		<td style="border-bottom-color: white; padding-bottom: 0px; border-bottom-width: 0px;" th:text="${delivery.address2}">
 	 	 		</td>
-	 	 		<td colspan="3" rowspan="3" style="font-size: 14px; font-weight:bold; color: #0f5132;">주문자 정보로 결제관련 정보가 제공됩니다.<br>정확한 정보로 등록되어있는지 확인해주세요.</td>
+	 	 		<td colspan="3" rowspan="3" style="font-size: 14px; font-weight:bold; color: #0f5132;"></td>
 	 	 	</tr>
 	 	 	<tr style="border-bottom-color: white;">
 	 	 		<td style="border-bottom-color: white;"></td>
 	 	 		<td style="border-bottom-color: white;">
-	 	 		<input type="text" id="address2" class="form-control" style="width:90%;"></input>
 	 	 		</td>
 	 	 		<td></td>
 	 	 	</tr>
 	 	 	<tr style="border-bottom-color: white; padding-bottom: 0px; border-bottom-width: 0px;">
 	 	 		<td><label for="deliveryMemoOption">배송메모</label></td>
-	 	 		<td style="padding-bottom: 0px; border-bottom-width: 0px;">
-				<select id="deliveryMemoOption" class="form-control" name="deliveryMemoOption" style="width:90%;">
-				    <option value="부재시 경비실에 맡겨주세요." selected>부재시 경비실에 맡겨주세요.</option>
-				    <option value="배송 전에 미리 연락 바랍니다." >배송 전에 미리 연락 바랍니다.</option>
-				    <option value="부재시 전화 주시거나 문자 남겨주세요." >부재시 전화 주시거나 문자 남겨주세요.</option>
-				    <option value="직접입력" >직접 입력</option>
-				</select>
+	 	 		<td style="padding-bottom: 0px; border-bottom-width: 0px;" th:text="${delivery.memo}">
+	 	 		</td>
 	 	 		</td>
 	 	 		<td colspan="3" style="padding-bottom: 0px; border-bottom-width: 0px;"></td>
 	 	 	</tr>
-	 	 	<tr>
-	 	 		<td></td>
-	 	 		<td><input type="text" id="del_memo" class="form-control" style="width:90%;"></input></td>
-	 	 		<td colspan="3"></td>
-	 	 	</tr>
+	 	 	
+	 	 	<!-- 마이페이지, 메인으로 이동 -->
+			<tr style="text-align: center;">
+				<td colspan="6" style="border-color: white;">
+			        <input type="button" class="btn btn-outline-secondary" onclick="redirectToBoard('orderList')" value="마이페이지">
+			        <input type="button" class="btn btn-outline-secondary" onclick="redirectToBoard()" value="메인으로">
+				</td>
+			</tr>
 	 	  </tbody>
 	  </table>
 	</div>
    	</div>
+   	
+<!-- 게시판 타입에 따라 목록으로 이동 -->
+	<script>
+		function redirectToBoard(type){
+			window.location.href = '/'+  type;
+		}
+		
+		// 모달 창 
+		var myModal = document.getElementById('myModal')
+		var myInput = document.getElementById('myInput')
+
+		myModal.addEventListener('shown.bs.modal', function () {
+		  myInput.focus()
+		});
+		
+		 // textarea 엘리먼트에 id "commentTextarea"를 사용하여 참조
+	    var textarea = document.getElementById('commentTextarea');
+
+	    var handleResizeHeight = () => {
+	        textarea.style.height = 'auto'; // height 초기화
+	        textarea.style.height = textarea.scrollHeight + '10px';
+	    };
+
+	    // 초기 호출 및 입력 이벤트 리스너 추가
+	    handleResizeHeight();
+	    textarea.addEventListener('input', handleResizeHeight);
+	</script>   	
+   	
+<!-- 결제금액 정보 출력하는 함수 -->
+<script th:inline="javascript">
+	$(document).ready(function() {
+		var orderLists = [[${orderLists}]];
+		var totalPrice = 0; // 최종 결제 금액
+	
+	    // 총 상품 가격 계산
+	    var totalCartPrice = 0;
+	    for (var i = 0; i < orderLists.length; i++) {
+	        var order = orderLists[i];
+	        totalCartPrice += order.price * order.quantity;
+	    }
+	    // 총 배송비
+		var postFee = totalCartPrice >= 30000 ? 0 : (totalCartPrice === 0 ? 0 : 2500);
+		
+		console.log(orderLists);
+		console.log(totalPrice);
+		console.log(orderLists);
+		console.log(orderLists);
+		
+		// 출력
+		$('#itemsPrice').text(totalCartPrice + '원'); 
+		$('#postFee').text(postFee + '원'); 
+		$('#totalPrice').text(totalPrice + '원'); 
+	});
+</script>
+   	
+   	
 </div>
 </html>
