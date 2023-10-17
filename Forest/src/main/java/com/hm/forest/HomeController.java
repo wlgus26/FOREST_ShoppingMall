@@ -96,6 +96,15 @@ public class HomeController {
 		return modelAndView;
 	}
 	
+	// 이벤트 페이지_vokit으로 이동
+	@GetMapping("/event/bokit")
+	public ModelAndView vokit (ModelAndView modelAndView) {
+		modelAndView.addObject("pageName", "bokit");
+		modelAndView.setViewName("page/event/bokit");
+		
+		return modelAndView;
+	}
+	
 	// about으로 이동
 	@GetMapping("/about")
 	public ModelAndView about (ModelAndView modelAndView,  @AuthenticationPrincipal Member loginMember) {
