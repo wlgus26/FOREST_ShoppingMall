@@ -72,12 +72,14 @@
         INSERT INTO ORDERINFO (
         	NO,
         	PAYMENT_NO,
+        	CART_NO,
             PRODUCT_NO,
             DETAIL_NO,
             QUANTITY
         ) VALUES (
         	#{no},
         	#{paymentNo},
+        	#{cartNo},
             #{productNo},
             #{detailNo},
             #{quantity}
@@ -114,6 +116,7 @@
 	<!-- 1. 재고 변경_주문수량 조회 -->
 	<select id="getOrderQuantityByNo" parameterType="_int" resultMap="orderResultMap">
 		SELECT PRODUCT_NO, 
+			   CART_NO,
 			   DETAIL_NO, 
 			   QUANTITY
 		FROM ORDERINFO
