@@ -78,6 +78,24 @@ public class HomeController {
 		return modelAndView;
 	}
 	
+	// 이벤트 페이지_zeroweist으로 이동
+	@GetMapping("/event/zeroweist")
+	public ModelAndView zeroweist (ModelAndView modelAndView) {
+		modelAndView.addObject("pageName", "zeroweist");
+		modelAndView.setViewName("page/event/zeroweist");
+    
+        return modelAndView;
+	}
+	
+	// 이벤트 페이지_voive으로 이동
+	@GetMapping("/event/voive")
+	public ModelAndView voive (ModelAndView modelAndView) {
+		modelAndView.addObject("pageName", "voive");
+		modelAndView.setViewName("page/event/voive");
+		
+		return modelAndView;
+	}
+	
 	// about으로 이동
 	@GetMapping("/about")
 	public ModelAndView about (ModelAndView modelAndView,  @AuthenticationPrincipal Member loginMember) {

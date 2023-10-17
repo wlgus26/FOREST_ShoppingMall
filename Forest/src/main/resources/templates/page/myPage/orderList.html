@@ -17,8 +17,8 @@
     <!-- Content -->
     <div layout:fragment="content">
 	 	<div id="content-background">
+	  <form class="container" action="/myPage/orderList" method="GET">
 	  <div class="table-div">
-	  
 	    <table class="table table pull-right" style="margin-top: 50px;" >
 		  <thead>		  	
 		    <tr class="border-bottom" >
@@ -43,13 +43,12 @@
 			    </tr>
 			    
 			    <!-- 결제내역에 내용이 있는 경우 -->
-			    <tr th:if="${not #lists.isEmpty(cartLists)}" th:each="post : ${posts}">
-                        <td>
-                            <a th:href="@{/orderList}"><span th:text="${post.title}"></span></a>
-                        </td>
-                        <td><span th:text="${post.quantity}"></span></td>
-                        <td><span th:text="${post.modifyDate}"></span></td>
-                        <td><span th:text="${post.status}"></span></td>
+			    <tr th:if="${not #lists.isEmpty(orderLists)}">
+                       <td th:text="${orderList.productNo}"></td>
+			        <td th:text="${orderList.paymentNo}" style="text-align:left; width:60%;"></td>
+			        <td th:text="${orderList.quantity}"></td>
+			        <td th:text="${#dates.format(orderList.orderDate, 'yyyy-MM-dd')}"></td>
+			        <td th:text="${orderList.status}"></td>
                     </tr>
 			    
 			    <!-- 메인버튼 -->
@@ -61,6 +60,7 @@
 		  </tbody>
 	  </table>
 	</div>
+	</form>
    	</div>
 </div>
 </body>
