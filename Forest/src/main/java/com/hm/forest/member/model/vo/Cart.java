@@ -1,7 +1,5 @@
 package com.hm.forest.member.model.vo;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +16,6 @@ public class Cart {
 	private int productNo;
 
 	private int detailNo;	
-
 
 	// Detail
 	private String color;

@@ -21,8 +21,14 @@ public interface PaymentService {
 	int save(@Param("paymentNo") int paymentNo, Delivery delivery);
 
 	// 결제 성공 시 
-	// 1. 재고 수량 감소_ 주문수량 확인
+	// 1. 재고 변경_주문수량 조회
 	List<Order> getOrderQuantityByNo(int no);
+
+	// 1. 재고 변경_재고수량 감소
+	int updateStockByOrderQuantity(List<Order> orderQuantity);
+
+	// 2. 해당 결제 건의 상태값 변경(N -> Y)
+	int updatePaymentStatusByNo(int no, int memberNo);
 
 	
 }

@@ -63,34 +63,30 @@
 		)	
 	</insert>	
 	
-	<!-- 2. 해당 결제 건에 대한 여러 개의 주문 정보 등록  -->
-	<insert id="insertOrdersByPaymentNo" useGeneratedKeys="true" keyProperty="no">
-	    <!-- 사용자가 주문한 모든 상품에 대한 정보를 반복 삽입 -->
-		<selectKey resultType="_int" keyProperty="no" order="BEFORE">
-		SELECT SEQ_ORDER_NO.NEXTVAL FROM DUAL
-		</selectKey>
-	    <foreach collection="orderLists" item="order" separator=";">
-	        INSERT INTO ORDERINFO (
-	            NO,
-	            PAYMENT_NO,
-	            PRODUCT_NO,
-	            DETAIL_NO,
-	            QUANTITY
-	        ) VALUES (
-	            #{no},
-	            #{paymentNo},
-	            #{order.productNo},
-	            #{order.detailNo},
-	            #{order.quantity}
-	        )
-	    </foreach>
+	<!-- 2. 해당 결제 건에 대한 주문 정보 등록  -->
+	<insert id="insertOrdersByPaymentNo" parameterType="Order">
+	    <selectKey resultType="_int" keyProperty="no" order="BEFORE">
+	        SELECT SEQ_ORDER_NO.NEXTVAL FROM DUAL
+	    </selectKey>
+        INSERT INTO ORDERINFO (
+        	NO,
+        	PAYMENT_NO,
+            PRODUCT_NO,
+            DETAIL_NO,
+            QUANTITY
+        ) VALUES (
+        	#{no},
+        	#{paymentNo},
+            #{productNo},
+            #{detailNo},
+            #{quantity}
+        )
 	</insert>
 	
 	<!-- 3. 해당 결제 건에 대한 배송 정보 등록  -->
 	<insert id="insertDeliveryByPaymentNo" parameterType="Delivery">
-	    <!-- 사용자가 주문한 모든 상품에 대한 정보를 반복 삽입 -->
 		<selectKey resultType="_int" keyProperty="no" order="BEFORE">
-		SELECT SEQ_DELIVERY_NO.NEXTVAL FROM DUAL
+			SELECT SEQ_DELIVERY_NO.NEXTVAL FROM DUAL
 		</selectKey>
 	        INSERT INTO DELIVERY (
 	            NO,
@@ -113,14 +109,29 @@
 	        )
 	</insert>
 	
-	<select id="getOrderQuantityByNo" parameterType="_int" resultType="java.util.List">
+	<!-- 결제 성공 시 -->
+	<!-- 1. 재고 변경_주문수량 조회 -->
+	<select id="getOrderQuantityByNo" parameterType="_int" resultMap="orderResultMap">
 		SELECT PRODUCT_NO, 
 			   DETAIL_NO, 
 			   QUANTITY
 		FROM ORDERINFO
 		WHERE PAYMENT_NO = #{no}
 	</select>
-
+	
+	<!-- 1. 재고 변경_재고수량 감소 -->
+	<update id="updateStockByOrderQuantity" parameterType="Order">
+		UPDATE DETAIL
+		SET STOCK = STOCK - #{quantity}
+		WHERE NO = #{detailNo} AND PRODUCT_NO = #{productNo}
+	</update>
+	
+	<!-- 2. 해당 결제 건의 상태값 변경(N -> Y) -->
+	<update id="updatePaymentStatusByNo" parameterType="Payment">
+		UPDATE PAYMENT
+		SET STATUS = #{status}
+		WHERE NO = #{no} AND MEMBER_NO = #{memberNo}
+	</update>
 
 
 	

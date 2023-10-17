@@ -146,6 +146,8 @@ public class PaymentController {
 		Map<String, Object> map = new HashMap<>();
 		List<Order> orderLists = paymentRequest.getOrderLists();
 		Delivery delivery = paymentRequest.getDelivery();
+		
+		log.info("주문내역목록: {}", orderLists);
 
 		// 결제하기 클릭 시 입력되는 정보들
 		// 1. 결제 정보 설정(입력)
@@ -168,7 +170,7 @@ public class PaymentController {
 	     }
 		 
 		map.put("no", payment.getNo()); // 결제 no 
-		log.info("obj.paymentNo: ", payment.getNo());
+		log.info("obj.paymentNo: ", map.get("no"));
 		
 		return ResponseEntity.ok(map);
 	}
@@ -177,27 +179,40 @@ public class PaymentController {
 	@GetMapping("/request")
 	public ModelAndView request(ModelAndView modelAndView, @RequestParam String paymentType, @AuthenticationPrincipal Member loginMember, @RequestParam("no") int no) {
 		// 결제 실패 TEST용 코드
-		// paymentType = "UNNORMAL";
-		log.info("PaymentNo : ", no);
-		log.info("paymentType : ", paymentType);
+		// paymentType = "UNNORMAL";	
+		int updateStockResult = 0;
+		int updatePaymentStatusResult = 0;
+		int memberNo = loginMember.getNo();
 		
 		// paymentType = NORMAL값 받는경우(결제성공) 처리할 로직(update)_컨트롤러 넘길값: productNo, deatilNo, quantity,Member loginMember
-		// 1) 주문수량만큼 해당 제품의 재고테이블 수량 감소_productNo, detailNo, quantity 필요
+		// 1) 재고 변경
 		// 2) 결제 테이블 loginMemberNo 받아서 Status Y 로 변경 
-		// 3) 결제정보 상품 리스트 출력
+		// 3) 주문상품 장바구니에서 제거
+		// 4) 결제정보 상품 리스트 출력
+		
 		
 		// 결제 성공 시 
 		if (paymentType.equals("NORMAL")) {
-			// 1. 재고 수량 감소
-			// 주문수량 확인
+			// 1. 재고 변경
+			//    1) 주문 수량 조회
 			log.info("PaymentNo : ",no);
-			//List<Order> orderQuantity = paymentService.getOrderQuantityByNo(no);
+			System.out.println(no);
+			System.out.println(paymentType);
 			
-//			for (Order order : orderQuantity) {
-//			    System.out.println("ProductNo: " + order.getProductNo());
-//			    System.out.println("DetailNo: " + order.getDetailNo());
-//			    System.out.println("Quantity: " + order.getQuantity());
-//			}
+			List<Order> orderQuantity = paymentService.getOrderQuantityByNo(no);
+
+			//    2) 재고 수량 감소
+			updateStockResult = paymentService.updateStockByOrderQuantity(orderQuantity);
+			
+			// 2. 해당 결제 건의 상태값 변경(N -> Y)
+			updatePaymentStatusResult = paymentService.updatePaymentStatusByNo(no, memberNo);
+
+			// 3. 장바구니 삭제 memberno
+			
+			
+			// 4. 결제내역 정보
+			
+			
 			
 			modelAndView.addObject("pageName", "paysv");
 			modelAndView.addObject("loginMember", loginMember);

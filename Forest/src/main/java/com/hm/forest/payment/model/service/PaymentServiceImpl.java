@@ -34,14 +34,23 @@ public class PaymentServiceImpl implements PaymentService {
 		return result;
 	}
 
-	// 2. 해당 결제에 관련된 주문정보 등록
+	// 2. 해당 결제에 관련된 주문정보 등록(INSERT 반복)
 	@Override
+	@Transactional
 	public int insertOrderLists(int paymentNo, List<Order> orderLists) {
-		return paymentMapper.insertOrdersByPaymentNo(paymentNo, orderLists);
+		   int totalInsertedResult = 0;
+		   
+		    for (Order order : orderLists) {
+		    	order.setPaymentNo(paymentNo); // 해당 결제 번호 설정
+		        int result = paymentMapper.insertOrdersByPaymentNo(order);
+		        totalInsertedResult += result;
+		    }
+		    return totalInsertedResult;
 	}
 
 	// 3. 해당 결제에 관련된 배송정보 등록 
 	@Override
+	@Transactional
 	public int save(int paymentNo, Delivery delivery) {
 		int result = 0;
 		
@@ -50,16 +59,37 @@ public class PaymentServiceImpl implements PaymentService {
 		//	result = paymentMapper.updatePayment(payment);
 		} else {
 			// insert
+			//delivery.setPaymentNo(paymentNo); // 해당 결제 번호 설정
 			result = paymentMapper.insertDeliveryByPaymentNo(paymentNo, delivery);
 		}	
 		return result;
 	}
 
 	// 결제 성공 시 
-	// 1. 재고 수량 감소_ 주문수량 확인
+	// 1. 재고 변경_주문수량 조회
 	@Override
 	public List<Order> getOrderQuantityByNo(int no) {
 		return paymentMapper.getOrderQuantityByNo(no);
+	}
+	
+	// 1. 재고 변경_재고 수량 감소
+	@Override
+	@Transactional
+	public int updateStockByOrderQuantity(List<Order> orderQuantity) {
+		   int totalUpdateResult = 0;
+		   
+		    for (Order order : orderQuantity) {
+		        int result = paymentMapper.updateStockByOrderQuantity(order);
+		        totalUpdateResult += result;
+		    }
+		    return totalUpdateResult;
+	}
+
+	// 2. 해당 결제 건의 상태값 변경(N -> Y)
+	@Override
+	@Transactional
+	public int updatePaymentStatusByNo(int no, int memberNo) {
+		return paymentMapper.updatePaymentStatusByNo(no, memberNo, "Y");
 	}
 
 }

@@ -3,6 +3,8 @@ package com.hm.forest.payment.model.vo;
 import java.util.Date;
 import java.util.List;
 
+import com.hm.forest.member.model.vo.Cart;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
