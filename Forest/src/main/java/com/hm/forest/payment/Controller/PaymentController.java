@@ -176,27 +176,23 @@ public class PaymentController {
 	
 	// 결제 요청 처리(결제 성공시 처리 로직)
 	@GetMapping("/request")
-	public ModelAndView request(ModelAndView modelAndView, @RequestParam String paymentType, @AuthenticationPrincipal Member loginMember, @RequestParam("no") int no) {
-		// 결제 실패 TEST용 코드
-		// paymentType = "UNNORMAL";	
+	public ModelAndView request(ModelAndView modelAndView, @RequestParam String paymentType, 
+								@AuthenticationPrincipal Member loginMember, @RequestParam("no") int no) {
 		int updateStockResult = 0;
-		int updatePaymentStatusResult = 0;
 		int deleteCartResult = 0;
+		int updatePaymentStatusResult = 0;
 		int memberNo = loginMember.getNo();
 		
-		// paymentType = NORMAL값 받는경우(결제성공) 처리할 로직(update)_컨트롤러 넘길값: productNo, deatilNo, quantity,Member loginMember
-		// 1) 재고 변경
-		// 2) 결제 테이블 loginMemberNo 받아서 Status Y 로 변경 
-		// 3) 주문상품 장바구니에서 제거
-		// 4) 결제정보 상품 리스트 출력
+		// 결제 실패 TEST용 코드
+		// paymentType = "UNNORMAL";	
 		
+		// 결제 성공 TEST용 코드 
+		// paymentType = NORMAL값 받는경우 처리할 로직(update)_컨트롤러 넘길값: productNo, deatilNo, quantity,Member loginMember
+
 		// 결제 성공 시 
 		if (paymentType.equals("NORMAL")) {
 			// 1. 재고 변경
-			//    1) 주문 수량 조회 
-			System.out.println(no);
-			System.out.println(paymentType);
-			
+			//    1) 주문 수량 조회 			
 			List<Order> orderInfo = new ArrayList<>(); // 장바구니 번호, 제품 번호, 디테일 번호, 수량을 담을 객체 
 			orderInfo = paymentService.getOrderQuantityByNo(no);
 
@@ -207,7 +203,7 @@ public class PaymentController {
 			updatePaymentStatusResult = paymentService.updatePaymentStatusByNo(no, memberNo);
 			
 			 if (updateStockResult > 0 & updatePaymentStatusResult > 0) {
-					System.out.println("재고수량 변경, 결제상태변경 성공~");
+					System.out.println("재고수량 변경, 결제상태변경 성공");
 				}
 
 			// 3. 장바구니 상품 삭제

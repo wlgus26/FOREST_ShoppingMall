@@ -36,14 +36,15 @@ public class BoardController {
 		// 게시물 전체 목록 조회(검색 기능 포함)
 		 @GetMapping("/notice")
 		 public ModelAndView FindAll(ModelAndView modelAndView, @RequestParam(defaultValue = "1") int page,
-				 				 	 @RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String keyWord, @AuthenticationPrincipal Member loginMember) {
+				 				 	 @RequestParam(defaultValue = "") String searchType, 
+				 				 	 @RequestParam(defaultValue = "") String keyWord, 
+				 				 	 @AuthenticationPrincipal Member loginMember) {
 			 
 			 String type = "notice";
 			 int listCount = 0;
 			 PageInfo pageInfo = null;
 			 List<Board> boardLists = null;
 			 
-
 			 // 검색값이 있는 경우
 			 if (searchType != null && !keyWord.trim().equals("")) {
 				 listCount = boardService.selectBoardCountBySearchValue(type, searchType, keyWord);
@@ -143,9 +144,12 @@ public class BoardController {
 			return modelAndView;
 		}
 		
-		// 특정 게시글 보기(& 조회수 업데이트 & 쿠키 정보로 조회수 중복 방지)
+		// 특정 게시글 보기(조회수 업데이트 & 쿠키 정보로 조회수 중복 방지)
 		@GetMapping("/view")
-		public ModelAndView view (ModelAndView modelAndView, @RequestParam("no") int no,  @AuthenticationPrincipal Member loginMember, HttpSession session, HttpServletResponse response) {
+		public ModelAndView view (ModelAndView modelAndView, @RequestParam("no") int no,  
+								  @AuthenticationPrincipal Member loginMember, 
+								  HttpServletResponse response,
+								  HttpSession session) {
 			Board board = boardService.getBoardByNo(no);
 			
 			String sessionKey = no + ":cookie";
@@ -175,7 +179,8 @@ public class BoardController {
 		
 		// 게시글 작성 페이지 요청
 		@GetMapping("/write")
-		public ModelAndView write (ModelAndView modelAndView, @RequestParam("type") String type, @AuthenticationPrincipal Member loginMember) {
+		public ModelAndView write (ModelAndView modelAndView, @RequestParam("type") String type, 
+					  	         	@AuthenticationPrincipal Member loginMember) {
 			modelAndView.addObject("pageName", "boardWrite");
 			modelAndView.addObject("loginMember", loginMember);
 			modelAndView.addObject("type", type);
@@ -186,29 +191,30 @@ public class BoardController {
 		
 		// 게시글 작성(등록)
 		@PostMapping("/write")
-		public ModelAndView save (ModelAndView modelAndView, @RequestParam("type") String type, @RequestParam("writerNo") int writerNo,Board board) {
+		public ModelAndView save (ModelAndView modelAndView, @RequestParam("type") String type, 
+							  	   @RequestParam("writerNo") int writerNo, Board board) {
 			int result = 0;
-			System.out.println(board);
-			board.setType(type);
-			board.setWriterNo(writerNo);
-			
-			System.out.println(board);
+			board.setType(type); // 게시판별 타입값을 파라미터로 받아서 게시글 타입값으로 설정
+			board.setWriterNo(writerNo); // 회원번호를 파라미터로 받아서 게시글 작성자번호로 설정
 			
 			result = boardService.save(board);
 			
+			// 결과값이 0 이상인 경우, 게시글 등록 성공
 			if (result > 0) {
 				if (type.equals("faq")) {
+					// 자주묻는질문게시판 > 게시글 등록 성공 시, faq 목록들을 보여준다.
 					modelAndView.addObject("msg", "게시글이 정상적으로 등록되었습니다.");
 					modelAndView.addObject("board", board);
 					modelAndView.addObject("location", board.getType());	
 				} else {
+					// 공지사항, 자유게시판, 1:1문의게시판 > 게시글 등록 성공 시, 작성한 게시글을 보여준다.
 					modelAndView.addObject("msg", "게시글이 정상적으로 등록되었습니다.");
 					modelAndView.addObject("location", "view?no=" + board.getNo());	
 				}	
+			// 게시글 등록 실패 시, 해당하는 게시판의 게시글 작성 페이지를 보여준다.	
 			} else {
 				modelAndView.addObject("msg", "게시글 등록에 실패하였습니다.");
 				modelAndView.addObject("location", "write?type=" + board.getType());				
-
 			}
 			modelAndView.setViewName("page/common/msg");
 
@@ -217,10 +223,12 @@ public class BoardController {
 		
 		// 게시글 수정 페이지 요청
 		@GetMapping("/update")
-		public ModelAndView update (ModelAndView modelAndView, @RequestParam("no") int no) {
+		public ModelAndView update (ModelAndView modelAndView, @RequestParam("no") int no,
+								 	 @AuthenticationPrincipal Member loginMember) {
 			Board board = boardService.getBoardByNo(no);
 			
 			modelAndView.addObject("pageName", "boardUpdate");
+			modelAndView.addObject("loginMember", loginMember);
 			modelAndView.addObject("board", board);
 			modelAndView.setViewName("page/board/update");
 			
@@ -261,21 +269,16 @@ public class BoardController {
 			
 			board = boardService.getBoardByNo(no);
 			
-//			if (board != null && board.getWriterId().equals(loginMember.getId())) {
-				result = boardService.delete(board.getNo());
-				
-				if (result > 0) {
-					modelAndView.addObject("msg", "게시글이 정상적으로 삭제되었습니다.");
-					modelAndView.addObject("location", "/board/" + board.getType());			
-				} else {				
-					modelAndView.addObject("msg", "게시글 삭제에 실패하였습니다.");
-					modelAndView.addObject("location", "/board/view?no=" + board.getNo());				
-				}
-//			} else {
-//				modelAndView.addObject("msg", "잘못된 접근입니다.");
-//				modelAndView.addObject("location", "/board/list");
-//			}
+			result = boardService.delete(board.getNo());
 			
+			if (result > 0) {
+				modelAndView.addObject("msg", "게시글이 정상적으로 삭제되었습니다.");
+				modelAndView.addObject("location", "/board/" + board.getType());			
+			} else {				
+				modelAndView.addObject("msg", "게시글 삭제에 실패하였습니다.");
+				modelAndView.addObject("location", "/board/view?no=" + board.getNo());				
+			}
+
 			modelAndView.setViewName("page/common/msg");
 			
 			return modelAndView;

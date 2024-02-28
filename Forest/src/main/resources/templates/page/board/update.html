@@ -55,14 +55,6 @@
 			      	<td><input type="text" name="title" style="width: 61%;" th:value="${board.title}"></td>
 			    </tr>
 			    <tr>
-			      <th scope="row">작성자</th>
-			      <td><input type="text" name="writerId" style="width: 61%;" th:value="${board.writerId}"></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">첨부파일</th>
-			      <td><input type="text" name="originalFilename" style="width: 61%;" th:value="${board.title}"></td>
-			    </tr>
-			    <tr>
 			      <th scope="row">내용</th>
 			       <td>
 				       <textarea rows="3" cols="30" class="editor" name="content" style="display: none;" th:utext="${board.content}"></textarea>

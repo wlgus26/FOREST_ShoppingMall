@@ -87,8 +87,8 @@
 				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				      </div>
 				      <div class="modal-body text-center" style="height:100px;">
-					      <i id="remember-me-icon" class="far fa-check-circle"></i>
-							<br> 
+					      <i id="remember-me-icon" class="far fa-check-circle" style="padding-bottom:20px;"></i>
+							<br>
 						  게시글을 삭제하시겠습니까?
 				      </div>
 				      <div class="modal-footer">
@@ -127,10 +127,7 @@
 						<div class="cont_recommendation area_btn_g">
 							<div class="area_l">
 							<button id="comment-btn" type="button" class="btn-custom-reply comment-btn" style="font-size: 13px;">댓글 <span class="ReplyListCount"></span></button>
-							<!-- todo: 추천된 상태일 때 ico_on 추가 -->
-							<button id="recommend-btn" type="button" class="btn-custom-reply recommand-btn" onclick="" style="font-size: 13px;">
-							<i class="fa-regular fa-heart" style="color: #0f5132;"></i>
-							좋아요 <span class="txt_num">0</span></button>
+
 							</div>
 						</div>
 					</td>
@@ -265,9 +262,7 @@
 	
 
 	<!-- 댓글 조회 비동기 요청 -->
-	<!-- 더보기 메뉴(수정/삭제, 신고) 토글 -->
 	<script th:inline="javascript">
-	
 	var loginMember = [[${loginMember}]];
 	
 	// 댓글 목록 조회하는 함수
@@ -282,9 +277,9 @@
 	        success: function (obj) {
 	            // 서버에서 가져온 댓글 데이터를 사용하여 댓글 목록을 업데이트
 	            updateCommentList(obj.replies); 
-	            // 성공 시 댓글 수를 가져와 버튼에 업데이트
+	            // 성공 시 댓글 수를 가져와 댓글 개수 업데이트
 	            var commentCount = obj.listCount;
-	            $('.ReplyListCount').text(commentCount); // 댓글 수 버튼 내 숫자 업데이트
+	            $('.ReplyListCount').text(commentCount); // 댓글 개수 업데이트
 	        },
 	        error: function (error) {
 	            console.error('댓글을 가져오는 중 오류 발생: ', error);
@@ -302,6 +297,7 @@
 	        var listItem = $('<li></li>');
 	        var commentPost = $('<div>').addClass('comment_post');
 	        var profileImage = $('<img>').attr('src', '/images/BasicProfile.png').attr('alt', '프로필 사진').addClass('comment-img');
+	        var loginMember = [[${loginMember}]];
 	        
 	        //  댓글 번호는 hidden
 	        var replyNo = $('<input type="hidden"></input>').addClass('reply-no').text(reply.no);
@@ -312,22 +308,20 @@
 	        var moreMenu = $('<div class="opt_more_g open_layer"></div>');
 	        var moreButton = $('<button type="button" class="btn_g_ico btn_more_menu" onclick="toggleMoreMenu(this)"><span class="ico_bbs ico_more">더보기</span></button>');
 	        
-	        
-	  //      if(loginMember != null){
-	 //       	if(loginMember.no == reply.writerNo){
-			        // 수정/삭제 메뉴 아이템 생성
-			        var menuItems = $('<div class="box_opt_menu comment_type"></div>');
-			        var modifyMenuItem = $('<div class="menu_item"><a class="link_menu modify_comment">수정</a></div>');
-			        var deleteMenuItem = $('<div class="menu_item"><a class="link_menu delete_comment">삭제</a></div>');
-	        //	} else if(loginMember != null && loginMember.no != reply.writerNo){
-	        		 // 신고 메뉴 아이템 생성
-	    	  //      var menuItems = $('<div class="box_opt_menu comment_type"></div>');
-	    	  //      var reportMenuItem = $('<div class="menu_item"><a class="link_menu report_comment">신고</a></div>');
-	   //     	}		        
-	//        } 
-//
+	  	        
+	   	        	if(loginMember.no == reply.writerNo){
+	   			        // 수정/삭제 메뉴 아이템 생성
+	   			        var menuItems = $('<div class="box_opt_menu comment_type"></div>');
+	   			        var modifyMenuItem = $('<div class="menu_item"><a class="link_menu modify_comment">수정</a></div>');
+	   			        var deleteMenuItem = $('<div class="menu_item"><a class="link_menu delete_comment">삭제</a></div>');
+	   	        	} else if(loginMember == null || loginMember.no != reply.writerNo){
+	   	        		 // 신고 메뉴 아이템 생성
+	   	    	        var menuItems = $('<div class="box_opt_menu comment_type"></div>');
+	   	    	        var reportMenuItem = $('<div class="menu_item"><a class="link_menu report_comment">신고</a></div>');
+	   	        	}		        
+
 	        // 메뉴 아이템(수정/삭제)을 메뉴 컨테이너에 추가
-	        menuItems.append(modifyMenuItem, deleteMenuItem);
+	        menuItems.append(modifyMenuItem, deleteMenuItem, reportMenuItem);
 	        moreMenuContainer.append(menuItems);
 
 	        // 더보기버튼과 메뉴 컨테이너를 행에 추가
@@ -363,11 +357,12 @@
 
 	    });
 	}
-	
+
+	<!-- 더보기 메뉴(수정/삭제) 토글 -->
 	// 더보기 버튼 클릭 시 수정/삭제 메뉴를 토글하는 함수
 	function toggleMoreMenu(buttonElement) {
-	    var listItem = $(buttonElement).closest('li'); // 현재 버튼이 속한 댓글 행을 찾고,
-	    var moreMenuContainer = listItem.find('.opt_container'); // 댓글 행 내의 메뉴 컨테이너를 찾음
+	    var listItem = $(buttonElement).closest('li'); // 버튼이 속한 댓글 행을 찾고,
+	    var moreMenuContainer = listItem.find('.opt_container'); // 댓글 행 내의 메뉴 컨테이너를 찾는다.
 	
 	    // 메뉴를 표시하거나 숨김
 	    moreMenuContainer.toggle();
@@ -383,20 +378,21 @@
 	    var csrfToken = '[[${_csrf.token}]]';
 	    var csrfHeader = '[[${_csrf.headerName}]]';
 	
-	    // 댓글 등록 
+	    // 1. 댓글 등록 
 	    $(document).ready(function () {
 	        $('#btinReplyEnroll').click(function () {
 	            var boardNo = $('#boardNo').val();
 	            var writerNo = $('#writerNo').val();
 	            var content = $('#commentTextarea').val();
 	            
-	            // 내용이 공백인지 확인
+	            // 입력한 내용이 공백인지 확인
 			    if (content.trim() === '') {
 			        alert("내용을 입력해주세요"); // 공백이면 알림 띄우고, 
 			        commentTextarea.focus(); // textarea 에 focus 준 후 함수 종료
 			        return;
 			    }
 	            
+	            // 입력한 내용이 공백이 아닌 경우 처리
 	            // 댓글 객체 형성
 	            var reply = {
 	                boardNo,
@@ -416,19 +412,20 @@
 		            },
 	                success: function (obj) {
 	                	// 성공 시 처리할 내용
+	                	// 1) 댓글 등록 알림 메세지
 	                    console.log('댓글이 성공적으로 제출되었습니다.');
 	                	let reply = obj.reply;
 	                	
-	                    // 댓글 데이터를 화면에 추가
+	                    // 2) 댓글 데이터를 댓글 목록에 추가하는 함수
 	                    appendComment(reply);
 
-	                   // 댓글 작성 후 댓글 입력창 비우기
+	                    // 3) 댓글 입력창 비우기
 	                    $('#commentTextarea').val('');
 	                   
-	                    // 댓글 제출 후 새로운 댓글 목록을 불러온다.(작성자 id, 작성일시, 프로필 등)
+	                    // 4) 댓글 제출 후 새로운 댓글 목록을 불러온다.
 	                    fetchComments();  
 
-	                   // 텍스트 영역 입력 길이를 0으로 설정
+	                    // 5) 텍스트 영역 입력 길이를 0으로 설정
 	                    handleTextareaInput();
 	                },
 	                error: function (error) {
@@ -468,7 +465,7 @@
 	    }
 	    
 	    
-	 // 댓글 삭제 이벤트
+	 // 3. 댓글 삭제
 		$(document).on('click', '.delete_comment', function (event) {
 		    event.preventDefault(); // 기본 동작 방지
 
@@ -509,7 +506,7 @@
 		}
 	 
 
-	 // 댓글 수정 이벤트
+	 // 2. 댓글 수정
 		$(document).on('click', '.modify_comment', function (event) {
 		    event.preventDefault(); // 기본 동작 방지
 
@@ -523,16 +520,15 @@
             showModifyForm(listItem, writerId, replyNo, replyText);
 		});
 	    
-		// '수정' 버튼 클릭 시 수정 폼을 표시하는 함수
-		// 댓글 수정 요청을 서버로 전송
+		// 1) '수정' 버튼 클릭 시 수정 폼을 표시하는 함수
 		function showModifyForm(listItem, writerId, replyNo, replyText) {
-		    // 클릭한 '수정' 버튼이 속한 댓글의 내용을 가져옴
+		    // (1) 클릭한 '수정' 버튼이 속한 댓글의 내용을 가져옴
 		    console.log("replyNo : " + replyNo);
 		    console.log("replyText : " + replyText);
 		    console.log("writerId : " + writerId);
 		    
 		    
-		    // 댓글 내용을 수정 폼으로 교체
+		    // (2) 댓글 내용을 수정 폼으로 교체
 		    var modifyForm = $('<form id="enrollForm"></form>');
 		    var commentWriter = $('<div class="CommentWriter"></div>'); 
 		    var comment_inbox = $('<div class="comment_inbox"></div>');
@@ -546,7 +542,7 @@
 			var attach_box = $('<div class="attach_box"><label for="attach3" class="button_file"><i class="fa-solid fa-camera"></i></label></div>');
 			var register_box = $('<div class="register_box"><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/><input type="hidden" th:value="${_csrf.headerName}"/><input type="hidden" id="boardNo" th:value="${board.no}"><input type="hidden" id="writerNo" value="${loginMember.id}"><a type="button" id="btinReplyModifyCancel" class="btn_cancel btn-sm">취소</a><a type="button" id="btinReplyModifyEnroll" class="button btn-sm">등록</a></div>');
 			
-		// 수정 폼을 새로운 내용으로 교체
+		// (3) 수정 폼을 새로 입력한 내용으로 교체
 		   listItem.empty().append(modifyForm);
 		   modifyForm.append(commentWriter);
 		   commentWriter.append(comment_inbox, comment_attach);
@@ -554,51 +550,50 @@
 		   comment_attach.append(attach_box, register_box);
 		
 
-		// 	수정 폼 내의 등록 버튼 클릭 시 
+		// 2) 수정_'등록' 버튼 클릭 시 : 댓글 수정 요청을 서버로 전송
 		 var btinReplyModifyEnroll = register_box.find('#btinReplyModifyEnroll');
-			 btinReplyModifyEnroll.on('click', function () {
+		 btinReplyModifyEnroll.on('click', function () {
 				 
-			   var modifiedContent = commentTextarea.val();
-			   console.log("컨텐츠내용 : "  + modifiedContent);
-				 
-			   // 내용이 공백인지 확인
-			    if (modifiedContent.trim() === '') {
-			        alert("내용을 입력해주세요"); // 공백이면 알림 띄우고, 
-			        commentTextarea.focus(); // textarea에 focus 준 후 함수 종료
-			        return;
-			    }
-				
-		         // AJAX 통해서 수정 내용을 서버로 전송
-				 $.ajax({
-				        type: 'POST',
-				        url: '/reply/update', // API 엔드포인트
-				        data: {
-				        	replyNo: replyNo,
-				        	content: modifiedContent
-				        },
-				        beforeSend: function(xhr) {
-			                // 요청을 보내기 전, CSRF 토큰을 헤더에 설정
-			                xhr.setRequestHeader(csrfHeader, csrfToken);
-			            },
-				        success: function (obj) {
-				            // 서버에서 반환한 JSON 데이터 처리
-				            if (obj.message === "성공") {
-				                // 댓글 삭제 성공시 알림 메세지를 띄운 후 댓글 목록 업데이트
-				               alert("댓글이 성공적으로 수정되었습니다.");
-				               fetchComments(); // 댓글 목록 업데이트
-				            } else {
-				                // 댓글 삭제 실패시
-				                alert("댓글 수정에 실패하였습니다.");
-				            }
-				        },
-				        error: function (error) {
-				            console.error('댓글 수정 중 오류가 발생하였습니다 :', error);
-				        },
-				    });
-		        });
+		   var modifiedContent = commentTextarea.val();
+		   console.log("컨텐츠내용 : "  + modifiedContent);
 			 
+		   // (1) 내용이 공백인지 확인
+		    if (modifiedContent.trim() === '') {
+		        alert("내용을 입력해주세요"); // 공백이면 알림 띄우고, 
+		        commentTextarea.focus(); // textarea에 focus 준 후 함수 종료
+		        return;
+		    }
+			
+	         // (2) AJAX 통해서 수정 내용을 서버로 전송
+			 $.ajax({
+			        type: 'POST',
+			        url: '/reply/update', // API 엔드포인트
+			        data: {
+			        	replyNo: replyNo,
+			        	content: modifiedContent
+			        },
+			        beforeSend: function(xhr) {
+		                // 요청을 보내기 전, CSRF 토큰을 헤더에 설정
+		                xhr.setRequestHeader(csrfHeader, csrfToken);
+		            },
+			        success: function (obj) {
+			            // 서버에서 반환한 JSON 데이터 처리
+			            if (obj.message === "성공") {
+			                // 댓글 삭제 성공시 알림 메세지를 띄운 후 댓글 목록 업데이트
+			               alert("댓글이 성공적으로 수정되었습니다.");
+			               fetchComments(); // 댓글 목록 업데이트
+			            } else {
+			                // 댓글 삭제 실패시
+			                alert("댓글 수정에 실패하였습니다.");
+			            }
+			        },
+			        error: function (error) {
+			            console.error('댓글 수정 중 오류가 발생하였습니다 :', error);
+			        },
+			    });
+	        });			 
 		 
-		// 취소 버튼 클릭 시 이전 댓글을 복원
+		// 3) 수정_'취소' 버튼 클릭 시 : 이전 댓글을 복원 후 댓글 목록 업데이트
 		    var btinReplyModifyCancel = register_box.find('#btinReplyModifyCancel');
 		    btinReplyModifyCancel.on('click', function () {
 		    	fetchComments(); // 댓글 목록 업데이트 
@@ -614,7 +609,8 @@
 
 		    var handleTextareaInput = function () {
 		        var textLength = textarea.value.length;   // textarea에 입력된 텍스트 길이 가져오기
-		        inboxCountElement.textContent = (textLength === 0) ? '0' : textLength;  // 텍스트 길이가 0인 경우에는 0으로 표시, 그 외에는 텍스트 길이로 업데이트
+		        // 텍스트 길이가 0인 경우에는 0으로 표시, 그 외에는 텍스트 길이로 업데이트
+		        inboxCountElement.textContent = (textLength === 0) ? '0' : textLength;  
 
 		        // 텍스트 길이가 최대 입력 길이를 초과 시 maxLength가 되도록 설정
 		        if (textLength > maxLength) {
@@ -638,6 +634,13 @@
 		    textarea.addEventListener('input', handleTextareaInput);
 
 		}
+		
+		 // 4. 댓글 신고
+		$(document).on('click', '.report_comment', function (event) {
+		    event.preventDefault(); // 기본 동작 방지
+		    alert("이 댓글을 신고하시겠습니까?"); });
+		
+		
 
 	</script>
 
@@ -674,7 +677,8 @@
 
     var handleTextareaInput = function () {
         var textLength = textarea.value.length;   // textarea에 입력된 텍스트 길이 가져오기
-        inboxCountElement.textContent = (textLength === 0) ? '0' : textLength;  // 텍스트 길이가 0인 경우에는 0으로 표시, 그 외에는 텍스트 길이로 업데이트
+        // 텍스트 길이가 0인 경우에는 0으로 표시, 그 외에는 텍스트 길이로 업데이트
+        inboxCountElement.textContent = (textLength === 0) ? '0' : textLength; 
 
         if (textLength > maxLength) {
             textarea.value = textarea.value.substring(0, maxLength);

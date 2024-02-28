@@ -52,17 +52,9 @@
 			  <tbody>
 			    <tr>
 			      <th scope="row">제목</th>
-			      	<td><input type="text" name="title" style="width: 61%;"></td>
+			      	<td><input type="text" name="title" style="width: 61%; border-color: #ccced1; border-width: 0.8px;"></td>
 			    </tr>
 			    <th:block th:if="${type != 'faq'}">
-				    <tr>
-				      <th scope="row">작성자</th>
-				      <td><input type="text" name="writerId" th:value="${loginMember.id}" style="width: 61%;"></td>
-				    </tr>
-				    <tr>
-				      <th scope="row">첨부파일</th>
-				      <td><input type="file" name="originalFilename"> </td>
-				    </tr>
 				    <tr>
 				      <th scope="row">내용</th>
 				       <td>
@@ -91,14 +83,13 @@
 			    <tr>
 			      <th></th>
 			      <td> 
-				      <input type="submit" value="등록">
-				      <input type="reset" value="취소"> 
+				      <input type="submit" class="btn btn-sm btn-outline-secondary" value="등록">
 				      <!-- 게시판 type에 따라 해당 게시판 목록으로 이동 -->
 				       <th:block th:if="${type eq 'notice'}">
-					        <input type="button" onclick="redirectToBoard('notice')" value="목록으로">
+					        <input type="button" onclick="redirectToBoard('notice')" value="취소">
 					   </th:block>
 					   <th:block th:if="${type eq 'community'}">
-					        <input type="button" onclick="redirectToBoard('community')" value="목록으로">
+					        <input type="button" class="btn btn-sm btn-outline-secondary" onclick="redirectToBoard('community')" value="취소">
 					   </th:block>
 			      </td>
 			    </tr>
